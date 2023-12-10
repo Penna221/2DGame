@@ -11,7 +11,7 @@ public class Launcher {
 
     }
     public static void main(String[] args) {
-        File f = new File("res\\init.json");
+        File f = new File("res\\json\\init.json");
         if(!f.exists()){
             System.out.println("Init file not found.");
         }else{
