@@ -5,6 +5,7 @@ import java.awt.image.BufferStrategy;
 
 import gfx.AssetStorage;
 import states.State;
+import tiles.Tile;
 
 import java.awt.Graphics;
 import java.awt.Color;
@@ -29,6 +30,9 @@ public class Game extends Engine{
         System.out.println("Loading Assets");
         AssetStorage.loadImages();
         AssetStorage.loadTexts();
+
+        System.out.println("Loading Tile Data");
+        Tile.loadTiles();
         System.out.println("Creating States");
         State.createStates();
         State.setState(State.gameState);

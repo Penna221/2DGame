@@ -1,8 +1,8 @@
 {
     "images":{
-        "img1":{
-            "file":""
-        }
+        "void":"res\\gfx\\tiles\\void.png",
+        "grassTile_1":"res\\gfx\\tiles\\grassTile_1.png",
+        "grassTile_2":"res\\gfx\\tiles\\grassTile_2.png"
     },
     "texts":{
         "txt1":{
