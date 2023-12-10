@@ -3,6 +3,7 @@ package main;
 import utils.pennanen.Engine;
 import java.awt.image.BufferStrategy;
 
+import gfx.AssetStorage;
 import states.State;
 
 import java.awt.Graphics;
@@ -25,6 +26,9 @@ public class Game extends Engine{
     public void init() {
         System.out.println("Creating Window");
         w = new Window(title,width,height);
+        System.out.println("Loading Assets");
+        AssetStorage.loadImages();
+        AssetStorage.loadTexts();
         System.out.println("Creating States");
         State.createStates();
         State.setState(State.gameState);
