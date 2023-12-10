@@ -2,6 +2,9 @@ package main;
 
 import utils.pennanen.Engine;
 import java.awt.image.BufferStrategy;
+
+import states.State;
+
 import java.awt.Graphics;
 import java.awt.Color;
 public class Game extends Engine{
@@ -22,6 +25,9 @@ public class Game extends Engine{
     public void init() {
         System.out.println("Creating Window");
         w = new Window(title,width,height);
+        System.out.println("Creating States");
+        State.createStates();
+        State.setState(State.gameState);
     }
 
     @Override
@@ -36,8 +42,9 @@ public class Game extends Engine{
         g.setColor(Color.black);
         g.fillRect(0, 0, w.getWidth(), w.getHeight());
 
-        
-
+        if(State.getState()!=null){
+            State.getState().render(g);
+        }
         g.dispose();
         bs.show();
     }
@@ -45,6 +52,9 @@ public class Game extends Engine{
     @Override
     public void update() {
         
+        if(State.getState()!=null){
+            State.getState().update();
+        }
     }
     
 }
