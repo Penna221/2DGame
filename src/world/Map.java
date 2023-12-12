@@ -3,12 +3,16 @@ package world;
 import java.awt.Graphics;
 import java.util.Random;
 
+import entities.Entity;
+import main.Game;
 import tiles.Tile;
 
 public class Map {
     public int[][] map;
     public int width, height;
     public String biomeName;
+    public boolean[][] visibleMap;
+    public int startX, startY, endX, endY;
     public Map(int type, int width, int height){
         this.width = width;
         this.height = height;
@@ -163,7 +167,6 @@ public class Map {
                 count++;
             }
             if(count==4){
-                System.out.println("All 4 sides");
                 return true;
             }
         }
@@ -188,11 +191,40 @@ public class Map {
 
 
 
-
+    public void updateVisible(Entity e){
+        int centerX = (int)(e.x/Tile.tileSize);
+        int centerY = (int)(e.y/Tile.tileSize);
+        int screenWidth = Game.w.getWidth();
+        int screenHeight = Game.w.getHeight();
+        int wTiles = screenWidth/Tile.tileSize;
+        int hTiles = screenHeight/Tile.tileSize;
+        startX = centerX - wTiles/2 - 1;
+        startY = centerY - hTiles/2 - 1;
+        endX = centerX + wTiles/2 +2;
+        endY = centerY + hTiles/2 +2;
+    }
     public void render(Graphics g){
-        for(int y = 0; y < map[0].length; y++){
-            for(int x = 0; x < map.length; x++){
-                g.drawImage(Tile.getTileByID(map[x][y]).texture, x*Tile.tileSize, y*Tile.tileSize,Tile.tileSize,Tile.tileSize, null);
+        
+
+        //avoid outOfBounds exception
+        if(startX < 0){
+            startX = 0;
+        }
+        if(endX > map.length){
+            endX = map.length;
+        }
+        if(startY < 0){
+            startY = 0;
+        }
+        if(endY > map[0].length){
+            endY = map[0].length;
+        }
+        double xOffset = World.camera.getXOffset();
+        double yOffset = World.camera.getYOffset();
+        for(int y = startY; y < endY; y++){
+            for(int x = startX; x < endX; x++){
+                
+                g.drawImage(Tile.getTileByID(map[x][y]).texture, (int)((x*Tile.tileSize) - xOffset), (int)((y*Tile.tileSize) - yOffset),Tile.tileSize,Tile.tileSize, null);
             }
         }
     }

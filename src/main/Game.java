@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import gfx.AssetStorage;
+import io.KeyManager;
 import states.State;
 import tiles.Tile;
 import utils.pennanen.Engine;
@@ -36,6 +37,10 @@ public class Game extends Engine{
         System.out.println("Loading Biome Data");
         Biome.loadBiomeData();
 
+
+        //INPUT
+        KeyManager km = new KeyManager();
+        w.getCanvas().addKeyListener(km);
 
         System.out.println("Creating States");
         State.createStates();

@@ -16,10 +16,10 @@ public class GameState extends State{
 
     @Override
     public void render(Graphics g) {
+        world.render(g);
         g.setColor(Color.white);
         g.setFont(new Font("Serif",Font.BOLD,25));
         g.drawString("Game", 25, 50);
-        world.render(g);
     }
 
     @Override
