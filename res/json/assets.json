@@ -2,7 +2,12 @@
     "images":{
         "void":"res\\gfx\\tiles\\void.png",
         "grassTile_1":"res\\gfx\\tiles\\grassTile_1.png",
-        "grassTile_2":"res\\gfx\\tiles\\grassTile_2.png"
+        "grassTile_2":"res\\gfx\\tiles\\grassTile_2.png",
+        "treeTile_1":"res\\gfx\\tiles\\treeTile_1.png",
+        "wallTile":"res\\gfx\\tiles\\wall.png",
+        "bushTile":"res\\gfx\\tiles\\bushTile.png",
+        "roseTile":"res\\gfx\\tiles\\roseTile.png",
+        "smallBushTile":"res\\gfx\\tiles\\smallBushTile.png"
     },
     "texts":{
         "txt1":{

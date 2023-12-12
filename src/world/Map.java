@@ -32,14 +32,16 @@ public class Map {
         biomeName = b.name;
         Tile[] nonSolidTiles = b.nonSolidTiles;
         Tile[] solidTiles = b.solidTiles;
+        Tile[] borderTiles = b.borderTiles;
         
         map = new int[width][height];
         
         step1();
-        step2(4);
+        step2(5);
         step3(nonSolidTiles);
-        step4();
-        lastStep(solidTiles);
+        step4(solidTiles,borderTiles);
+        step5();
+        lastStep(5);
     }
 
     //init everything to 0
@@ -111,16 +113,73 @@ public class Map {
             }
         }
     }
+    //change every 0 on map to -> something solid.
+    private void step4(Tile[] solidTiles, Tile[] borderTiles){
+        int w = map.length;
+        int h = map[0].length;
+        int[][] newMap = new int[w][h];
+        
+        for(int y = 0; y < map[0].length; y++){
+            for(int x = 0; x < map.length; x++){
+                newMap[x][y] = map[x][y];
+            }
+        }
+        Random r = new Random();
+        for(int y = 0; y < map[0].length; y++){
+            for(int x = 0; x < map.length; x++){
+                if(map[x][y]==0){
+                    if(checkIfSurrounded(x, y)){
+                        newMap[x][y] = solidTiles[0].id;
+                    }else{
+                        int rr = r.nextInt(borderTiles.length);
+                        int id = borderTiles[rr].id;
+                        newMap[x][y] = id;
+                    }
+                }
+            }
+        }
+        map = newMap;
+    }
+    private boolean checkIfSurrounded(int x, int y){
+        if(x < 2 || x >= map.length-1 || y < 2 ||y >= map[0].length-1){
+            
+            return true;
+        }else{
+            int count = 0;
+            int west = map[x-1][y];
+            int north = map[x][y-1];
+            int east = map[x+1][y];
+            int south = map[x][y+1];
+            if(west == 0){
+                count++;
+            }
+            if(north == 0){
+                count++;
+            }
+            if(east == 0){
+                count++;
+            }
+            if(south == 0){
+                count++;
+            }
+            if(count==4){
+                System.out.println("All 4 sides");
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Generate some patches of interesting stuff
-    private void step4(){
+    private void step5(){
 
     }
     //Generate border
-    private void lastStep(Tile[] solidTiles){
+    private void lastStep(int id){
         for(int y = 0; y < map[0].length; y++){
             for(int x = 0; x < map.length; x++){
                 if(x <2||x > map.length-3 || y < 2|| y > map[0].length-3){
-                    map[x][y] = solidTiles[0].id;
+                    map[x][y] = id;
                 }
 
             }
