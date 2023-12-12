@@ -43,10 +43,15 @@ public class Map {
         
         step1();
         step2(5);
+        step3(nonSolidTiles);
+        step4(solidTiles,borderTiles);
+        step5();
+        lastStep(5);
         binaryMap = new boolean[width][height];
         for(int y = 0; y < map[0].length; y++){
             for(int x = 0; x < map.length; x++){
-                if(map[x][y]==0){
+                boolean solid = Tile.getTileByID(map[x][y]).solid;
+                if(solid){
                     binaryMap[x][y] = false;
                 } else{
                     binaryMap[x][y] = true;
@@ -54,10 +59,6 @@ public class Map {
                 }
             }
         }
-        step3(nonSolidTiles);
-        step4(solidTiles,borderTiles);
-        step5();
-        lastStep(5);
     }
 
     //init everything to 0

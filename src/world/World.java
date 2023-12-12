@@ -1,10 +1,12 @@
 package world;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 import entities.BrownMushroom;
 import entities.EntityManager;
 import entities.Player;
+import entities.RedMushroom;
 import tiles.Tile;
 
 public class World {
@@ -17,7 +19,7 @@ public class World {
     public int type;
 
     public Map map;
-    private Player player;
+    public static Player player;
     public static EntityManager entityManager;
     public static Camera camera;
     public World(int type){
@@ -44,7 +46,13 @@ public class World {
             for(int x = 0; x < bm.length; x++){
                 
                 if(bm[x][y]){
-                    entityManager.addEntity(new BrownMushroom(x*Tile.tileSize, y*Tile.tileSize));
+                    Random r = new Random();
+                    int rr = r.nextInt(10);
+                    if(rr == 1){
+                        entityManager.addEntity(new BrownMushroom(x*Tile.tileSize, y*Tile.tileSize));
+                    }else if(rr == 2){
+                        entityManager.addEntity(new RedMushroom(x*Tile.tileSize, y*Tile.tileSize));
+                    }
                 }
             }
         }

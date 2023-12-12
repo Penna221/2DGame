@@ -4,9 +4,9 @@ import java.awt.Graphics;
 
 import world.World;
 
-public class BrownMushroom extends Collectable{
+public class RedMushroom extends Collectable{
 
-    public BrownMushroom(double x, double y) {
+    public RedMushroom(double x, double y) {
         super(x, y);
     }
 
@@ -17,7 +17,7 @@ public class BrownMushroom extends Collectable{
 
     @Override
     public void init() {
-        info = EntityManager.entityInfos.get("brownMushroom");
+        info = EntityManager.entityInfos.get("redMushroom");
         id = info.id;
         rarity = info.rarity;
         value = info.value;

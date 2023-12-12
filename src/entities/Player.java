@@ -23,7 +23,7 @@ public class Player extends Entity{
         id = info.id;
         speed = info.speed;
         calculateBounds();
-        distance = 200;
+        distance = 400;
 
         viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + bounds.width),(int)(distance*2 + bounds.height));
     }
