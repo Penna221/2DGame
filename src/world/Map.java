@@ -11,7 +11,6 @@ public class Map {
     public int[][] map;
     public int width, height;
     public String biomeName;
-    public boolean[][] visibleMap;
     public int startX, startY, endX, endY;
     public Map(int type, int width, int height){
         this.width = width;
@@ -191,6 +190,7 @@ public class Map {
 
 
 
+    //Can there be added some kind of rayCasting to set viewable area?
     public void updateVisible(Entity e){
         int centerX = (int)(e.x/Tile.tileSize);
         int centerY = (int)(e.y/Tile.tileSize);
