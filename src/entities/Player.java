@@ -19,7 +19,7 @@ public class Player extends Creature{
 
     @Override
     public void init() {
-        info = EntityManager.entityInfos.get("Player");
+        info = EntityManager.entityInfos.get("player");
         texture = info.texture;
         speed = info.speed;
         health =info.health;
@@ -64,8 +64,8 @@ public class Player extends Creature{
     @Override
     public void renderAdditional(Graphics g) {
         drawBounds(g);
-        int currentTileX = (int)(bounds.x/Tile.tileSize);
-        int currentTileY = (int)(bounds.y/Tile.tileSize);
+        int currentTileX = (int)((bounds.x + bounds.width/2)/Tile.tileSize);
+        int currentTileY = (int)((bounds.y + bounds.height/2)/Tile.tileSize);
         g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);
         //g.drawRect((int)(viewRectangle.x - xOffset), (int)(viewRectangle.y-yOffset), viewRectangle.width,viewRectangle.height);
         

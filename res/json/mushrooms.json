@@ -1,13 +1,11 @@
 {
     "brownMushroom":{
-        "id":1,
         "name":"Brown Mushroom",
         "rarity":0,
         "texture":"brownMushroom",
         "value":10
     },
     "redMushroom":{
-        "id":2,
         "name":"Red Mushroom",
         "rarity":0,
         "texture":"redMushroom",

@@ -10,7 +10,9 @@
         "smallBushTile":"res\\gfx\\tiles\\smallBushTile.png",
 
         "brownMushroom":"res\\gfx\\mushrooms\\brownMushroom.png",
-        "redMushroom":"res\\gfx\\mushrooms\\redMushroom.png"
+        "redMushroom":"res\\gfx\\mushrooms\\redMushroom.png",
+
+        "spruceTree":"res\\gfx\\entities\\spruce.png"
     },
     "texts":{
         "txt1":{

@@ -1,0 +1,12 @@
+{
+    "spruce":{
+        "name":"Spruce Tree",
+        "parts":[""],
+        "anchors":[
+            {
+                "x":10,
+                "y":10
+            }
+        ]
+    }
+}

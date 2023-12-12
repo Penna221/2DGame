@@ -31,11 +31,11 @@ public class EntityManager {
         for(KeyValuePair c : kv.getObject()){
             String key = c.getKey();
             String name = c.findChild("name").getString();
-            int id = c.findChild("id").getInteger();
+            
             int value = c.findChild("value").getInteger();
             int rarity = c.findChild("rarity").getInteger();
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(key, new EntityInfo(id, name, value, rarity, texture));
+            entityInfos.put(key, new EntityInfo(name, value, rarity, texture));
         }
 
         JSON json2 = new JSON(new File("res\\json\\entities.json"));
@@ -43,11 +43,12 @@ public class EntityManager {
         for(KeyValuePair c : kv2.getObject()){
             String key = c.getKey();
             String name = c.findChild("name").getString();
-            int id = c.findChild("id").getInteger();
-            int speed = c.findChild("speed").getInteger();
+            
+            double speed = c.findChild("speed").getFloat();
+            int health = c.findChild("health").getInteger();
             
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(key, new EntityInfo(id, name, texture,speed));
+            entityInfos.put(key, new EntityInfo(name, texture,speed,health));
         }
 
 
