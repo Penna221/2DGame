@@ -6,8 +6,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import io.KeyManager;
+import tiles.Tile;
 import world.World;
-public class Player extends Entity{
+public class Player extends Creature{
 
     private double speed;
     private Rectangle viewRectangle;
@@ -20,27 +21,29 @@ public class Player extends Entity{
     public void init() {
         info = EntityManager.entityInfos.get("Player");
         texture = info.texture;
-        id = info.id;
         speed = info.speed;
+        health =info.health;
         calculateBounds();
-        distance = 400;
+        distance = 800;
 
         viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + bounds.width),(int)(distance*2 + bounds.height));
     }
 
     @Override
     public void update() {
+        ySpeed = 0;
+        xSpeed = 0;
         if(KeyManager.up){
-            y-= speed;
+            ySpeed = -speed;
         }
         if(KeyManager.down){
-            y+= speed;
+            ySpeed= speed;
         }
         if(KeyManager.left){
-            x-= speed;
+            xSpeed = -speed;
         }
         if(KeyManager.right){
-            x+= speed;
+            xSpeed = speed;
         }
         ArrayList<Entity> entities = World.entityManager.getEntities();
         for(Entity e : entities){
@@ -54,16 +57,18 @@ public class Player extends Entity{
         viewRectangle.x = (int)(x- distance);
         viewRectangle.y = (int)(y - distance);
         
+        move();
         updateBounds();
     }
 
     @Override
     public void renderAdditional(Graphics g) {
-        g.setColor(Color.white);
-        double xOffset = World.camera.getXOffset();
-        double yOffset = World.camera.getYOffset();
-        g.drawRect((int)(bounds.x-xOffset), (int)(bounds.y-yOffset), bounds.width,bounds.height);
-        g.drawRect((int)(viewRectangle.x - xOffset), (int)(viewRectangle.y-yOffset), viewRectangle.width,viewRectangle.height);
+        drawBounds(g);
+        int currentTileX = (int)(bounds.x/Tile.tileSize);
+        int currentTileY = (int)(bounds.y/Tile.tileSize);
+        g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);
+        //g.drawRect((int)(viewRectangle.x - xOffset), (int)(viewRectangle.y-yOffset), viewRectangle.width,viewRectangle.height);
+        
     }
     
 }

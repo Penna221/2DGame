@@ -1,16 +1,17 @@
 package entities;
 
-import java.awt.Rectangle;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import world.World;
 
 public abstract class Entity {
-    public int id;
     public double x, y;
     public Rectangle bounds;
 
+   
     public String name;
     public BufferedImage texture;
     public boolean inView = true;
@@ -42,5 +43,11 @@ public abstract class Entity {
         double yOffset = World.camera.getYOffset();
         g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
         renderAdditional(g);
+    }
+    public void drawBounds(Graphics g){
+        g.setColor(Color.white);
+        double xOffset = World.camera.getXOffset();
+        double yOffset = World.camera.getYOffset();
+        g.drawRect((int)(x - xOffset), (int)(y - yOffset), bounds.width,bounds.height);
     }
 }

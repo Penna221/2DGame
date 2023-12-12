@@ -7,6 +7,7 @@ import entities.BrownMushroom;
 import entities.EntityManager;
 import entities.Player;
 import entities.RedMushroom;
+import entities.SpruceTree;
 import tiles.Tile;
 
 public class World {
@@ -18,7 +19,7 @@ public class World {
     public static final int FOREST = 0;
     public int type;
 
-    public Map map;
+    public static Map map;
     public static Player player;
     public static EntityManager entityManager;
     public static Camera camera;
@@ -38,7 +39,7 @@ public class World {
     private void generateEntities(int type){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
-        player = new Player(100,100);
+        player = new Player(400,400);
         Camera.setEntityToCenter(player);
 
         boolean[][] bm = map.binaryMap;
@@ -47,11 +48,13 @@ public class World {
                 
                 if(bm[x][y]){
                     Random r = new Random();
-                    int rr = r.nextInt(10);
+                    int rr = r.nextInt(30);
                     if(rr == 1){
                         entityManager.addEntity(new BrownMushroom(x*Tile.tileSize, y*Tile.tileSize));
                     }else if(rr == 2){
                         entityManager.addEntity(new RedMushroom(x*Tile.tileSize, y*Tile.tileSize));
+                    }else if(rr == 3){
+                        //entityManager.addEntity(new SpruceTree(x*Tile.tileSize, y*Tile.tileSize));
                     }
                 }
             }
