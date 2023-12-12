@@ -2,6 +2,7 @@ package world;
 
 import java.awt.Graphics;
 
+import entities.EntityManager;
 import entities.Player;
 
 public class World {
@@ -15,6 +16,7 @@ public class World {
 
     public Map map;
     private Player player;
+    public static EntityManager entityManager;
     public static Camera camera;
     public World(int type){
         this.type = type;
@@ -30,6 +32,7 @@ public class World {
         map = new Map(type,500,500);
     }
     private void generateEntities(int type){
+        entityManager = new EntityManager();
         player = new Player(100,100);
         Camera.setEntityToCenter(player);
     }

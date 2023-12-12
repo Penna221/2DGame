@@ -12,6 +12,7 @@ public abstract class Entity {
 
     public String name;
     public BufferedImage texture;
+    public boolean inView = false;
     public Entity(double x, double y){
         this.x = x;
         this.y = y;
@@ -26,6 +27,10 @@ public abstract class Entity {
     }
     public void calculateBounds(){
         bounds = new Rectangle((int)x,(int)y,texture.getWidth(),texture.getHeight());
+    }
+    public void updateBounds(){
+        bounds.x = (int)x;
+        bounds.y = (int)y;
     }
     public abstract void init();
     public abstract void renderAdditional(Graphics g);
