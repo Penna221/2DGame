@@ -44,7 +44,6 @@ public class AssetStorage {
         int h = img.getHeight();
         int nw = (int)(scale*w);
         int nh = (int)(scale*h);
-        System.out.println(nw + " "+ nh);
         BufferedImage newImage = new BufferedImage(nw, nh, BufferedImage.TYPE_INT_ARGB);
         Graphics g = newImage.createGraphics();
         g.drawImage(img, 0, 0,nw,nh, null);

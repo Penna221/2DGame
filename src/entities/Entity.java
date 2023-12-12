@@ -7,12 +7,14 @@ import java.awt.image.BufferedImage;
 import world.World;
 
 public abstract class Entity {
+    public int id;
     public double x, y;
     public Rectangle bounds;
 
     public String name;
     public BufferedImage texture;
-    public boolean inView = false;
+    public boolean inView = true;
+    protected EntityInfo info;
     public Entity(double x, double y){
         this.x = x;
         this.y = y;

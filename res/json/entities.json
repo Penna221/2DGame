@@ -1,0 +1,9 @@
+{
+    "Player":{
+        "id":0,
+        "name":"Player",
+        "texture":"brownMushroom",
+        "speed":10
+    }
+
+}

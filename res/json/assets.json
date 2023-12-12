@@ -7,7 +7,10 @@
         "wallTile":"res\\gfx\\tiles\\wall.png",
         "bushTile":"res\\gfx\\tiles\\bushTile.png",
         "roseTile":"res\\gfx\\tiles\\roseTile.png",
-        "smallBushTile":"res\\gfx\\tiles\\smallBushTile.png"
+        "smallBushTile":"res\\gfx\\tiles\\smallBushTile.png",
+
+        "brownMushroom":"res\\gfx\\mushrooms\\brownMushroom.png",
+        "redMushroom":"res\\gfx\\mushrooms\\redMushroom.png"
     },
     "texts":{
         "txt1":{

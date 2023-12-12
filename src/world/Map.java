@@ -9,6 +9,8 @@ import tiles.Tile;
 
 public class Map {
     public int[][] map;
+    //Binary map is used to find places where entities can be generated.
+    public boolean[][] binaryMap;
     public int width, height;
     public String biomeName;
     public int startX, startY, endX, endY;
@@ -41,6 +43,17 @@ public class Map {
         
         step1();
         step2(5);
+        binaryMap = new boolean[width][height];
+        for(int y = 0; y < map[0].length; y++){
+            for(int x = 0; x < map.length; x++){
+                if(map[x][y]==0){
+                    binaryMap[x][y] = false;
+                } else{
+                    binaryMap[x][y] = true;
+                    
+                }
+            }
+        }
         step3(nonSolidTiles);
         step4(solidTiles,borderTiles);
         step5();
