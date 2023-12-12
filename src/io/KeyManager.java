@@ -3,6 +3,8 @@ package io;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import world.World;
+
 public class KeyManager implements KeyListener{
 
     public static boolean up, down, left, right;
@@ -27,6 +29,8 @@ public class KeyManager implements KeyListener{
             case KeyEvent.VK_DOWN:
                 down = true;
                 break;
+            case KeyEvent.VK_F2:
+                World.map.generate(World.FOREST);
             default:
                 break;
         }

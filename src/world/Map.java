@@ -20,7 +20,7 @@ public class Map {
         generate(type);
 
     }
-    private void generate(int type){
+    public void generate(int type){
         switch (type) {
             case World.FOREST:
                 generateForest();        
