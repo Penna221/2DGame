@@ -1,21 +1,18 @@
 {
-    "scale":4.0,
+    "scale":0.5,
     "void":{
         "id":0,
         "texture":"void",
-        "biome":"void",
         "solid":false
     },
     "grassTile_1":{
         "id":1,
         "texture":"grassTile_1",
-        "biome":"forest",
         "solid":false
     },
     "grassTile_2":{
         "id":2,
         "texture":"grassTile_2",
-        "biome":"forest",
         "solid":false
     }
 }

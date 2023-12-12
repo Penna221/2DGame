@@ -1,0 +1,40 @@
+package world;
+
+import java.awt.Graphics;
+
+public class World {
+    //World contains everything. Entitites, map, player, mobs, everything. Even the Camera.
+    
+    //Can the map change in world? or are there multiple worlds? each with own map, with own player, with own entitites...
+    //Different worlds. each with own data.
+
+    public static final int FOREST = 0;
+    public int type;
+
+    public Map map;
+
+    public World(int type){
+        this.type = type;
+        generate();
+    }
+    public void generate(){
+        generateMap(type);
+        generateEntities(type);
+        generateMushrooms(type);
+    }
+    private void generateMap(int type){
+        map = new Map(type,50,50);
+    }
+    private void generateEntities(int type){
+
+    }
+    private void generateMushrooms(int type){
+
+    }
+    public void update(){
+        
+    }
+    public void render(Graphics g){
+        map.render(g);
+    }
+}

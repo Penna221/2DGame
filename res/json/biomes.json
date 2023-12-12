@@ -1,0 +1,14 @@
+{
+    "forest":{
+        "nonSolidTiles":[1,2],
+        "solidTiles":[0],
+        "mushrooms":[1,2],
+        "entitites":[0]
+    },
+    "other":{
+        "nonSolidTiles":[1,2],
+        "solidTiles":[0],
+        "mushrooms":[0],
+        "entitites":[0]
+    }
+}

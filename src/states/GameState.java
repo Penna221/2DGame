@@ -4,14 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import gfx.AssetStorage;
-import tiles.Tile;
+import world.World;
 
 public class GameState extends State{
-
+    public World world;
+    private boolean alreadyInitialized = false;
     @Override
     public void update() {
-        
+        world.update();
     }
 
     @Override
@@ -19,7 +19,14 @@ public class GameState extends State{
         g.setColor(Color.white);
         g.setFont(new Font("Serif",Font.BOLD,25));
         g.drawString("Game", 25, 50);
-        g.drawImage(Tile.getTileByID(3).texture, 25, 25, null);
+        world.render(g);
+    }
+
+    @Override
+    public void init() {
+        if(!alreadyInitialized){
+            world = new World(World.FOREST);
+        }
     }
     
 }

@@ -17,5 +17,10 @@ public class MenuState extends State{
         g.setFont(new Font("Serif",Font.BOLD,25));
         g.drawString("MENU", 25, 50);
     }
+
+    @Override
+    public void init() {
+        
+    }
     
 }

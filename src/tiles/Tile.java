@@ -9,16 +9,14 @@ import json.JSON;
 import json.KeyValuePair;
 
 public class Tile {
-    
+    public static int tileSize;
     public int id;
     private static Tile[] tiles;
     public boolean solid;
-    public String biome;
     public BufferedImage texture;
-    public Tile(int id, boolean solid, String biome, BufferedImage img){
+    public Tile(int id, boolean solid, BufferedImage img){
         this.id = id;
         this.solid = solid;
-        this.biome = biome;
         this.texture = img;
         tiles[id] = this;
     }
@@ -30,6 +28,7 @@ public class Tile {
         int size = arr.size();
         tiles = new Tile[size-1]; // Minus 1 because scale is not tile.
         AssetStorage.scaleImages(scale);
+        tileSize = AssetStorage.images.get("void").getWidth();
         System.out.println("Total of " + tiles.length + " tiles.");
         for(KeyValuePair i : arr){
             
@@ -40,10 +39,10 @@ public class Tile {
             int id = i.findChild("id").getInteger();
             String textureKey = i.findChild("texture").getString();
             boolean solid = i.findChild("solid").getBoolean();
-            String biome = i.findChild("biome").getString();
+            
             System.out.println(name + " " + id);
             BufferedImage img = AssetStorage.images.get(textureKey);
-            new Tile(id,solid,biome,img);
+            new Tile(id,solid,img);
         }
     }
     public static Tile getTileByID(int id){
@@ -52,5 +51,8 @@ public class Tile {
         }else{
             return tiles[id];
         }
+    }
+    public static Tile[] getBiomeSpecificTiles(String biome){
+        return null;
     }
 }

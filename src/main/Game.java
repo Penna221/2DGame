@@ -1,14 +1,14 @@
 package main;
 
-import utils.pennanen.Engine;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import gfx.AssetStorage;
 import states.State;
 import tiles.Tile;
-
-import java.awt.Graphics;
-import java.awt.Color;
+import utils.pennanen.Engine;
+import world.Biome;
 public class Game extends Engine{
 
     private int width, height;
@@ -33,6 +33,10 @@ public class Game extends Engine{
 
         System.out.println("Loading Tile Data");
         Tile.loadTiles();
+        System.out.println("Loading Biome Data");
+        Biome.loadBiomeData();
+
+
         System.out.println("Creating States");
         State.createStates();
         State.setState(State.gameState);
