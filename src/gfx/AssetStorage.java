@@ -33,10 +33,23 @@ public class AssetStorage {
         KeyValuePair textObject = s.findChild("texts");
         //textObject.printAll(0);
     }
-    public static void scaleImages(double scale){
+    public static void scaleTiles(double scale){
         images.forEach((key,value)->{
-            images.put(key, scaleImage(value,scale));
+            if(key.contains("Tile")){
+                images.put(key, scaleImage(value,scale));
+            }else{
+                images.put(key, value);
+            }
             
+        });
+    }
+    public static void scaleOthers(double scale){
+        images.forEach((key,value)->{
+            if(!key.contains("Tile")){
+                images.put(key, scaleImage(value,scale));
+            }else{
+                images.put(key, value);
+            }
         });
     }
     private static BufferedImage scaleImage(BufferedImage img, double scale){

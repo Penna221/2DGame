@@ -39,6 +39,7 @@ public class World {
     private void generateEntities(int type){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
+        entityManager.loadMushroomData();
         player = new Player(400,400);
         Camera.setEntityToCenter(player);
 

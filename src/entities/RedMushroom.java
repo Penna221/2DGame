@@ -17,7 +17,7 @@ public class RedMushroom extends Collectable{
 
     @Override
     public void init() {
-        info = EntityManager.entityInfos.get("redMushroom");
+        MushroomInfo info = EntityManager.mushroomInfos.get("redMushroom");
         rarity = info.rarity;
         value = info.value;
         texture = info.texture;

@@ -17,7 +17,7 @@ public abstract class Entity {
     public String name;
     public BufferedImage texture;
     public boolean inView = true;
-    protected EntityInfo info;
+    public EntityInfo info;
     public Entity(double x, double y){
         this.x = x;
         this.y = y;

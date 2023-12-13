@@ -1,8 +1,8 @@
 {
-    "scale":6.0,
-    "void":{
+    "scale":12.0,
+    "voidTile":{
         "id":0,
-        "texture":"void",
+        "texture":"voidTile",
         "solid":false,
         "breakable":false
     },

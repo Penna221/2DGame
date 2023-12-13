@@ -27,9 +27,9 @@ public class Tile {
         double scale = kv.findChild("scale").getFloat();
         int size = arr.size();
         tiles = new Tile[size-1]; // Minus 1 because scale is not tile.
-        AssetStorage.scaleImages(scale);
-        tileSize = AssetStorage.images.get("void").getWidth();
-        System.out.println("Total of " + tiles.length + " tiles.");
+
+        AssetStorage.scaleTiles(scale);
+        tileSize = AssetStorage.images.get("voidTile").getWidth();
         for(KeyValuePair i : arr){
             
             String name = i.getKey();
@@ -40,7 +40,6 @@ public class Tile {
             String textureKey = i.findChild("texture").getString();
             boolean solid = i.findChild("solid").getBoolean();
             
-            System.out.println(name + " " + id);
             BufferedImage img = AssetStorage.images.get(textureKey);
             new Tile(id,solid,img);
         }

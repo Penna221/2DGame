@@ -1,6 +1,6 @@
 {
     "images":{
-        "void":"res\\gfx\\tiles\\void.png",
+        "voidTile":"res\\gfx\\tiles\\void.png",
         "grassTile_1":"res\\gfx\\tiles\\grassTile_1.png",
         "grassTile_2":"res\\gfx\\tiles\\grassTile_2.png",
         "treeTile_1":"res\\gfx\\tiles\\treeTile_1.png",

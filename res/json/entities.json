@@ -1,4 +1,5 @@
 {
+    "scale":1.5,
     "player":{
         "name":"Player",
         "texture":"mushroomDude",
