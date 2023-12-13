@@ -1,8 +1,8 @@
 {
     "player":{
         "name":"Player",
-        "texture":"brownMushroom",
-        "speed":24.5,
+        "texture":"mushroomDude",
+        "speed":12.0,
         "health":100
     }
 }

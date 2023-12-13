@@ -2,9 +2,11 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import gfx.Factory;
 import io.KeyManager;
 import tiles.Tile;
 import world.World;
@@ -13,6 +15,8 @@ public class Player extends Creature{
     private double speed;
     private Rectangle viewRectangle;
     public int distance;
+    private double angle;
+    
     public Player(double x, double y) {
         super(x, y);
     }
@@ -25,7 +29,7 @@ public class Player extends Creature{
         health =info.health;
         calculateBounds();
         distance = 800;
-
+        angle = 0;
         viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + bounds.width),(int)(distance*2 + bounds.height));
     }
 
@@ -33,6 +37,8 @@ public class Player extends Creature{
     public void update() {
         ySpeed = 0;
         xSpeed = 0;
+        angle += 2;
+        texture = Factory.rotateImage(info.texture, angle);
         if(KeyManager.up){
             ySpeed = -speed;
         }
@@ -64,6 +70,7 @@ public class Player extends Creature{
     @Override
     public void renderAdditional(Graphics g) {
         drawBounds(g);
+        g.setColor(new Color(255,255,255,40));
         int currentTileX = (int)((bounds.x + bounds.width/2)/Tile.tileSize);
         int currentTileY = (int)((bounds.y + bounds.height/2)/Tile.tileSize);
         g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);

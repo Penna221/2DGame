@@ -2,9 +2,11 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import gfx.Factory;
 import world.World;
 
 public abstract class Entity {
@@ -32,7 +34,7 @@ public abstract class Entity {
         bounds = new Rectangle((int)x,(int)y,texture.getWidth(),texture.getHeight());
     }
     public void updateBounds(){
-        bounds.x = (int)x;
+        bounds.x = (int)x ;
         bounds.y = (int)y;
     }
     public abstract void init();
@@ -41,7 +43,9 @@ public abstract class Entity {
     public void render(Graphics g){
         double xOffset = World.camera.getXOffset();
         double yOffset = World.camera.getYOffset();
-        g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
+        Point p = new Point((int)(x - xOffset + bounds.getWidth()/2),(int)((y - yOffset +bounds.getHeight()/2)));
+        Factory.drawCenteredAt(g, texture, p);
+        //g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
         renderAdditional(g);
     }
     public void drawBounds(Graphics g){
