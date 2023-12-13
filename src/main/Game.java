@@ -44,7 +44,6 @@ public class Game extends Engine{
 
         System.out.println("Creating States");
         State.createStates();
-        State.setState(State.gameState);
     }
 
     @Override

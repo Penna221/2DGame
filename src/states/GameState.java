@@ -11,7 +11,11 @@ public class GameState extends State{
     private boolean alreadyInitialized = false;
     @Override
     public void update() {
-        world.update();
+        if(running){
+            world.update();
+        }else{
+            State.transition.update();
+        }
     }
 
     @Override
@@ -20,13 +24,22 @@ public class GameState extends State{
         g.setColor(Color.white);
         g.setFont(new Font("Serif",Font.BOLD,25));
         g.drawString("Game", 25, 50);
+        if(transition !=null){
+            transition.render(g);
+        }
     }
 
     @Override
     public void init() {
         if(!alreadyInitialized){
             world = new World(World.FOREST);
+            alreadyInitialized = true;
         }
+    }
+
+    @Override
+    public void updateOnceBetweenTransitions() {
+        world.update();
     }
     
 }

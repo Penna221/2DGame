@@ -3,6 +3,7 @@ package io;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import states.State;
 import world.World;
 
 public class KeyManager implements KeyListener{
@@ -31,6 +32,13 @@ public class KeyManager implements KeyListener{
                 break;
             case KeyEvent.VK_F2:
                 World.map.generate(World.FOREST);
+                break;
+            case KeyEvent.VK_F3:
+                State.setState(State.menuState);
+                break;
+                case KeyEvent.VK_F4:
+                State.setState(State.gameState);
+                break;
             default:
                 break;
         }
