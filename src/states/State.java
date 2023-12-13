@@ -24,13 +24,11 @@ public abstract class State {
         transition = new Transition(2000){
             @Override
             public void task(){
-                System.out.println("Mid task");
                 currentState = s;
                 currentState.updateOnceBetweenTransitions();
             }
             @Override
             public void end(){
-                System.out.println("END");
                 State.running = true;
             }
         };
