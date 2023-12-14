@@ -11,6 +11,9 @@
 
         "brownMushroom":"res\\gfx\\mushrooms\\brownMushroom.png",
         "redMushroom":"res\\gfx\\mushrooms\\redMushroom.png",
+        "sheepPolypore":"res\\gfx\\mushrooms\\herkkutatti.png",
+        "chanterelle":"res\\gfx\\mushrooms\\kanttarelli.png",
+        "russulaPaludosa":"res\\gfx\\mushrooms\\isohapero.png",
 
         "spruceTree":"res\\gfx\\entities\\spruce.png",
         

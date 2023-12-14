@@ -3,11 +3,15 @@ package world;
 import java.awt.Graphics;
 import java.util.Random;
 
-import entities.BrownMushroom;
+import entities.Collectable;
 import entities.EntityManager;
 import entities.Player;
-import entities.RedMushroom;
-import entities.SpruceTree;
+import entities.mushrooms.BrownMushroom;
+import entities.mushrooms.ChantarelleMushroom;
+import entities.mushrooms.MushroomData;
+import entities.mushrooms.RedMushroom;
+import entities.mushrooms.RussulaPedulosaMushroom;
+import entities.mushrooms.SheepPolyporeMushroom;
 import tiles.Tile;
 
 public class World {
@@ -37,33 +41,76 @@ public class World {
         map = new Map(type,500,500);
     }
     private void generateEntities(int type){
+        
         entityManager = new EntityManager();
         entityManager.loadEntityData();
-        entityManager.loadMushroomData();
         player = new Player(400,400);
         Camera.setEntityToCenter(player);
 
+        
+
+    }
+    private void generateMushrooms(int type){
+        String biome;
+        switch (type) {
+            case FOREST:
+                biome = "forest";
+                break;
+        
+            default:
+                biome = "forest";
+                break;
+        }
+        MushroomData.loadMushrooms();
+        int[] availableMushrooms = Biome.biomes.get(biome).mushroomIds;
         boolean[][] bm = map.binaryMap;
         for(int y = 0; y < bm[0].length; y++){
             for(int x = 0; x < bm.length; x++){
                 
                 if(bm[x][y]){
+
+                    double posX = (x*Tile.tileSize) + Tile.tileSize/2;
+                    double posY = (y*Tile.tileSize)+ Tile.tileSize/2;
+
                     Random r = new Random();
                     int rr = r.nextInt(30);
-                    if(rr == 1){
-                        entityManager.addEntity(new BrownMushroom(x*Tile.tileSize, y*Tile.tileSize));
-                    }else if(rr == 2){
-                        entityManager.addEntity(new RedMushroom(x*Tile.tileSize, y*Tile.tileSize));
-                    }else if(rr == 3){
-                        //entityManager.addEntity(new SpruceTree(x*Tile.tileSize, y*Tile.tileSize));
+                    int i = 0;
+                    for(int j = 0; j < availableMushrooms.length; j++){
+                        if(rr == j){
+                            i = j;
+                            entityManager.addEntity(createMushroomWithID(availableMushrooms[i],posX, posY));
+                            break;
+                        }
                     }
+                    
                 }
             }
         }
-
     }
-    private void generateMushrooms(int type){
-
+    private Collectable createMushroomWithID(int id, double x, double y){
+        Collectable c;
+        switch (id) {
+            case 0:
+                c = new BrownMushroom(x, y);
+                break;
+            case 1:
+                c = new RedMushroom(x, y);
+                break;
+            case 2:
+                c = new SheepPolyporeMushroom(x, y);
+                break;
+            case 3:
+                c = new ChantarelleMushroom(x, y);
+                break;
+            case 4:
+                c = new RussulaPedulosaMushroom(x, y);
+                break;
+            
+            default:
+                c = new BrownMushroom(x, y);
+                break;
+        }
+        return c;
     }
     public void update(){
         player.update();

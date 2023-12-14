@@ -1,12 +1,13 @@
-package entities;
+package entities.mushrooms;
 
 import java.awt.Graphics;
 
+import entities.Collectable;
 import world.World;
 
-public class RedMushroom extends Collectable{
+public class RussulaPedulosaMushroom extends Collectable{
 
-    public RedMushroom(double x, double y) {
+    public RussulaPedulosaMushroom(double x, double y) {
         super(x, y);
     }
 
@@ -17,10 +18,7 @@ public class RedMushroom extends Collectable{
 
     @Override
     public void init() {
-        MushroomInfo info = EntityManager.mushroomInfos.get("redMushroom");
-        rarity = info.rarity;
-        value = info.value;
-        texture = info.texture;
+        loadMushroomData(4);
         calculateBounds();
     }
 

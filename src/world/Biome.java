@@ -13,16 +13,17 @@ public class Biome {
     public Tile[] nonSolidTiles;
     public Tile[] solidTiles;
     public Tile[] borderTiles;
+    public int[] mushroomIds;
     public static HashMap<String,Biome> biomes;
     //public Entity[] entitites;
     //public Mushroom[] mushrooms;
 
-    public Biome(String name, Tile[] nonSolidTiles,Tile[] solidTiles, Tile[] borderTiles){
+    public Biome(String name, Tile[] nonSolidTiles,Tile[] solidTiles, Tile[] borderTiles, int[]mushroomIds){
         this.nonSolidTiles = nonSolidTiles;
         this.solidTiles = solidTiles;
         this.borderTiles = borderTiles;
         this.name = name;
-
+        this.mushroomIds = mushroomIds;
     }
     public static void loadBiomeData(){
         biomes = new HashMap<String,Biome>();
@@ -30,6 +31,7 @@ public class Biome {
         KeyValuePair kv = json.parse("json");
         for(KeyValuePair bi : kv.getObject()){
             String name = bi.getKey();
+            //Tile stuff
             DataType[] nonsolid = bi.findChild("nonSolidTiles").getArray();
             DataType[] border = bi.findChild("borderTiles").getArray();
             DataType[] solid = bi.findChild("solidTiles").getArray();
@@ -48,7 +50,16 @@ public class Biome {
             for(int i = 0; i < len3; i++){
                 b[i] = Tile.getTileByID(border[i].getInteger());
             }
-            biomes.put(name, new Biome(name,ns,s,b));
+            
+            //Mushroom stuff
+            DataType[] mushrooms = bi.findChild("mushrooms").getArray();
+            int len4 = mushrooms.length;
+            int[] mids = new int[len4];
+            for(int i = 0; i < len4; i++){
+                mids[i] = mushrooms[i].getInteger();
+            }
+
+            biomes.put(name, new Biome(name,ns,s,b,mids));
 
         }
     }
