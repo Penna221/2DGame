@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 
 import gfx.AssetStorage;
 import io.KeyManager;
+import io.MouseManager;
 import states.State;
 import tiles.Tile;
 import utils.pennanen.Engine;
@@ -18,7 +19,7 @@ public class Game extends Engine{
 
     private BufferStrategy bs;
     private Graphics g;
-    
+    public static MouseManager mm;
     public Game(int width, int height, String title){
         this.width = width;
         this.height = height;
@@ -41,7 +42,10 @@ public class Game extends Engine{
         //INPUT
         KeyManager km = new KeyManager();
         w.getCanvas().addKeyListener(km);
-
+        mm = new MouseManager();
+        w.getCanvas().addMouseListener(mm);
+        w.getCanvas().addMouseMotionListener(mm);
+        w.getCanvas().requestFocus();
         System.out.println("Creating States");
         State.createStates();
     }
