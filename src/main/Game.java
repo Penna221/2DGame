@@ -9,6 +9,7 @@ import io.KeyManager;
 import io.MouseManager;
 import states.State;
 import tiles.Tile;
+import ui.UIFactory;
 import utils.pennanen.Engine;
 import world.Biome;
 public class Game extends Engine{
@@ -38,7 +39,7 @@ public class Game extends Engine{
         System.out.println("Loading Biome Data");
         Biome.loadBiomeData();
 
-
+        System.out.println("Creating input handling");
         //INPUT
         KeyManager km = new KeyManager();
         w.getCanvas().addKeyListener(km);
@@ -46,6 +47,11 @@ public class Game extends Engine{
         w.getCanvas().addMouseListener(mm);
         w.getCanvas().addMouseMotionListener(mm);
         w.getCanvas().requestFocus();
+        
+        //UI
+        System.out.println("Loading UI Data");
+        UIFactory.loadUIData();
+
         System.out.println("Creating States");
         State.createStates();
     }

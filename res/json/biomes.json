@@ -3,7 +3,7 @@
         "nonSolidTiles":[1,2],
         "solidTiles":[5],
         "borderTiles":[6,7],
-        "mushrooms":[1,2,3,4],
+        "mushrooms":[0,1,2,3,4],
         "entitites":[0]
     },
     "other":{

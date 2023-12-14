@@ -17,7 +17,36 @@
 
         "spruceTree":"res\\gfx\\entities\\spruce.png",
         
-        "mushroomDude":"res\\gfx\\entities\\mushroomDude.png"
+        "mushroomDude":"res\\gfx\\entities\\mushroomDude.png",
+        
+        "character_A":"res\\gfx\\alphabet\\letter_A.png",
+        "character_B":"res\\gfx\\alphabet\\letter_B.png",
+        "character_C":"res\\gfx\\alphabet\\letter_C.png",
+        "character_D":"res\\gfx\\alphabet\\letter_D.png",
+        "character_E":"res\\gfx\\alphabet\\letter_E.png",
+        "character_F":"res\\gfx\\alphabet\\letter_F.png",
+        "character_G":"res\\gfx\\alphabet\\letter_G.png",
+        "character_H":"res\\gfx\\alphabet\\letter_H.png",
+        "character_I":"res\\gfx\\alphabet\\letter_I.png",
+        "character_J":"res\\gfx\\alphabet\\letter_J.png",
+        "character_K":"res\\gfx\\alphabet\\letter_K.png",
+        "character_L":"res\\gfx\\alphabet\\letter_L.png",
+        "character_M":"res\\gfx\\alphabet\\letter_M.png",
+        "character_N":"res\\gfx\\alphabet\\letter_N.png",
+        "character_O":"res\\gfx\\alphabet\\letter_O.png",
+        "character_P":"res\\gfx\\alphabet\\letter_P.png",
+        "character_Q":"res\\gfx\\alphabet\\letter_Q.png",
+        "character_R":"res\\gfx\\alphabet\\letter_R.png",
+        "character_S":"res\\gfx\\alphabet\\letter_S.png",
+        "character_T":"res\\gfx\\alphabet\\letter_T.png",
+        "character_U":"res\\gfx\\alphabet\\letter_U.png",
+        "character_V":"res\\gfx\\alphabet\\letter_V.png",
+        "character_W":"res\\gfx\\alphabet\\letter_W.png",
+        "character_X":"res\\gfx\\alphabet\\letter_X.png",
+        "character_Y":"res\\gfx\\alphabet\\letter_Y.png",
+        "character_Z":"res\\gfx\\alphabet\\letter_Z.png",
+        "character_Ä":"res\\gfx\\alphabet\\letter_Ä.png",
+        "character_Ö":"res\\gfx\\alphabet\\letter_Ö.png"
 
     },
     "texts":{

@@ -19,6 +19,7 @@ public class AssetStorage {
         for(KeyValuePair i : imgObject.getObject()){
             String name = i.getKey();
             String path = i.getString();
+            System.out.println(name);
             BufferedImage img = ImageLoader.load(path);
             if(img!=null){
                 System.out.println("Correctly loaded: " + name + "  " + path);
