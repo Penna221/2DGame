@@ -316,10 +316,31 @@ public class UIFactory {
                 toReturn = alphabetCharacters.get("char_ö");
                 break;
 
+            case '.':
+                toReturn = alphabetCharacters.get("char_dot");
+                break;
+            case ',':
+                toReturn = alphabetCharacters.get("char_comma");
+                break;
+            case '!':
+                toReturn = alphabetCharacters.get("char_exclamation");
+                break;
+            case '?':
+                toReturn = alphabetCharacters.get("char_guestion");
+                break;
+            case '-':
+                toReturn = alphabetCharacters.get("char_dash");
+                break;
+            case '<':
+                toReturn = alphabetCharacters.get("char_less");
+                break;
+            case '>':
+                toReturn = alphabetCharacters.get("char_more");
+                break;
 
 
             default:
-                toReturn = null;
+                toReturn = alphabetCharacters.get("char_guestion");;
                 break;
         }
         return toReturn;

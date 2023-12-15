@@ -75,8 +75,15 @@
         "character_y":"res\\gfx\\alphabet\\lower_letter_y.png",
         "character_z":"res\\gfx\\alphabet\\lower_letter_z.png",
         "character_ä":"res\\gfx\\alphabet\\lower_letter_ä.png",
-        "character_ö":"res\\gfx\\alphabet\\lower_letter_ö.png"
-
+        "character_ö":"res\\gfx\\alphabet\\lower_letter_ö.png",
+        
+        "dot":"res\\gfx\\alphabet\\dot.png",
+        "comma":"res\\gfx\\alphabet\\comma.png",
+        "exclamation":"res\\gfx\\alphabet\\exclamation.png",
+        "guestion":"res\\gfx\\alphabet\\guestion.png",
+        "dash":"res\\gfx\\alphabet\\dash.png",
+        "less":"res\\gfx\\alphabet\\less.png",
+        "more":"res\\gfx\\alphabet\\more.png"
     },
     "texts":{
         "txt1":{

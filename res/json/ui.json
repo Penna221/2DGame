@@ -202,6 +202,27 @@
         },
         "char_ö":{
             "texture":"character_ö"
+        },
+        "char_dot":{
+            "texture":"dot"
+        },
+        "char_comma":{
+            "texture":"comma"
+        },
+        "char_exclamation":{
+            "texture":"exclamation"
+        },
+        "char_guestion":{
+            "texture":"guestion"
+        },
+        "char_dash":{
+            "texture":"dash"
+        },
+        "char_less":{
+            "texture":"less"
+        },
+        "char_more":{
+            "texture":"more"
         }
     }
 }
