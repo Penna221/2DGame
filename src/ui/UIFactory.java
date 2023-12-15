@@ -230,6 +230,94 @@ public class UIFactory {
             case 'Ö':
                 toReturn = alphabetCharacters.get("char_Ö");
                 break;
+
+            case 'a':
+                toReturn = alphabetCharacters.get("char_a");
+                break;
+            case 'b':
+                toReturn = alphabetCharacters.get("char_b");
+                break;
+            case 'c':
+                toReturn = alphabetCharacters.get("char_c");
+                break;
+            case 'd':
+                toReturn = alphabetCharacters.get("char_d");
+                break;
+            case 'e':
+                toReturn = alphabetCharacters.get("char_e");
+                break;
+            case 'f':
+                toReturn = alphabetCharacters.get("char_f");
+                break;
+            case 'g':
+                toReturn = alphabetCharacters.get("char_g");
+                break;
+            case 'h':
+                toReturn = alphabetCharacters.get("char_h");
+                break;
+            case 'i':
+                toReturn = alphabetCharacters.get("char_i");
+                break;
+            case 'j':
+                toReturn = alphabetCharacters.get("char_j");
+                break;
+            case 'k':
+                toReturn = alphabetCharacters.get("char_k");
+                break;
+            case 'l':
+                toReturn = alphabetCharacters.get("char_l");
+                break;
+            case 'm':
+                toReturn = alphabetCharacters.get("char_m");
+                break;
+            case 'n':
+                toReturn = alphabetCharacters.get("char_n");
+                break;
+            case 'o':
+                toReturn = alphabetCharacters.get("char_o");
+                break;
+            case 'p':
+                toReturn = alphabetCharacters.get("char_p");
+                break;
+            case 'q':
+                toReturn = alphabetCharacters.get("char_q");
+                break;
+            case 'r':
+                toReturn = alphabetCharacters.get("char_r");
+                break;
+            case 's':
+                toReturn = alphabetCharacters.get("char_s");
+                break;
+            case 't':
+                toReturn = alphabetCharacters.get("char_t");
+                break;
+            case 'u':
+                toReturn = alphabetCharacters.get("char_u");
+                break;
+            case 'v':
+                toReturn = alphabetCharacters.get("char_v");
+                break;
+            case 'w':
+                toReturn = alphabetCharacters.get("char_w");
+                break;
+            case 'x':
+                toReturn = alphabetCharacters.get("char_x");
+                break;
+            case 'y':
+                toReturn = alphabetCharacters.get("char_y");
+                break;
+            case 'z':
+                toReturn = alphabetCharacters.get("char_z");
+                break;
+            case 'ä':
+                toReturn = alphabetCharacters.get("char_ä");
+                break;
+            case 'ö':
+                toReturn = alphabetCharacters.get("char_ö");
+                break;
+
+
+
             default:
                 toReturn = null;
                 break;

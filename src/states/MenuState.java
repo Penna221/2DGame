@@ -38,7 +38,7 @@ public class MenuState extends State{
     @Override
     public void init() {
         container = new Container(20, 20, 500, 500);
-        t = new Text("ABC CDFG PSÄÖ",100,100,100);
+        t = new Text("Moi ISO pieni",100,100,100);
         if(!alreadyInitialized){
             alreadyInitialized = true;
         }
