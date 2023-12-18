@@ -12,8 +12,11 @@ public abstract class UIElement {
         this.y = y;
         bounds = new Rectangle(x,y,width,height);
     }
-    
     public UIElement(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
     }

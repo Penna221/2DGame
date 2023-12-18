@@ -1,13 +1,13 @@
 {
     "container":{
-        "bgColor":"FF523C3C",
-        "fgColor":"FFD19292",
-        "borderColor":"FFD19292",
+        "bgColor":"ff7c3f58",
+        "fgColor":"00000000",
+        "borderColor":"f9a875",
         "borderThickness":2
     },
     "text":{
-        "bgColor":"FF523C3C",
-        "fgColor":"FFD19292",
+        "bgColor":"00000000",
+        "fgColor":"FFf9a875",
         "borderColor":"FFD19292",
         "borderThickness":2
     },
@@ -18,9 +18,9 @@
         "borderThickness":2
     },
     "button":{
-        "bgColor":"FF523C3C",
-        "fgColor":"FFD19292",
-        "borderColor":"FFD19292",
+        "bgColor":"FFeb6b6f",
+        "fgColor":"00000000",
+        "borderColor":"FFfff6d3",
         "borderThickness":2
     },
     "button_highlighted":{

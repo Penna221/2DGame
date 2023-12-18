@@ -3,6 +3,7 @@ package states;
 import java.awt.Graphics;
 
 import gfx.Transition;
+import ui.UiHub;
 
 public abstract class State {
     public static State currentState;
@@ -17,15 +18,23 @@ public abstract class State {
         currentState = menuState;
     }
     public static void setState(State s){
+        UiHub.clear();
         
-        s.init();
         running = false;
 
         transition = new Transition(2000){
             @Override
             public void task(){
-                currentState = s;
-                currentState.updateOnceBetweenTransitions();
+                Thread t = new Thread(){
+                    @Override
+                    public void run(){
+                        s.init();
+                        currentState = s;
+                        currentState.updateOnceBetweenTransitions();
+                        transition.canContinue = true;
+                    }
+                };
+                t.start();
             }
             @Override
             public void end(){

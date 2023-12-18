@@ -1,6 +1,10 @@
 package gfx;
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.Random;
+import java.util.Set;
+
 import main.Game;
 public class Transition{
     
@@ -10,6 +14,11 @@ public class Transition{
     private int duration;
     private Color c;
     private boolean done = false;
+    private double angle = 0;
+    public boolean canContinue = true;
+    private BufferedImage logo;
+    private double n,l,e;
+
     public Transition(int duration){
         this.duration = duration;
     }
@@ -22,14 +31,28 @@ public class Transition{
         lastTime = System.currentTimeMillis();
         c = new Color(0,0,0,0);
         running = true;
+        //Logo rotation timer
+        e = 0;
+        l = System.currentTimeMillis();
+
+//Get random logo
+        String[] keys = {"brownMushroom","redMushroom","sheepPolypore","chanterelle","russulaPaludosa"};
+        Random random = new Random();
+        int r = random.nextInt(keys.length);
+        logo = AssetStorage.images.get(keys[r]);
+        
     }
     public void update(){
         if(running){
             now = System.currentTimeMillis();
-            elapsedTime += now-lastTime;
+            if(canContinue){
+                elapsedTime += now-lastTime;
+            }
             if(!done){
                 if(elapsedTime >= (duration/2)){
+                    canContinue = false;
                     task();
+                    now = System.currentTimeMillis();
                     done = true;
                 }
             }
@@ -63,8 +86,23 @@ public class Transition{
 
     public void render(Graphics g){
         if(running){
+            n = System.currentTimeMillis();
+            e += n-l;
+            if(e>=50){
+                angle+= 10;
+                e-=50;
+            }
+            BufferedImage lo = Factory.rotateImage(logo, angle);
+            int scale = 4;
+            int nw = lo.getWidth()*scale;
+            int nh = lo.getHeight()*scale;
+
             g.setColor(c);
             g.fillRect(0, 0, Game.w.getWidth(), Game.w.getHeight());
+            g.setColor(Color.white);
+            g.drawString("loading", 100,100);
+            g.drawImage(lo, Game.w.getWidth()/2 - nw/2, Game.w.getHeight()/2 - nh/2, nw,nh, null);
+            l = n;
         }
         
     }

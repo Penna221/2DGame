@@ -1,5 +1,8 @@
 package io;
 import java.awt.event.MouseMotionListener;
+
+import ui.UiHub;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 public class MouseManager implements MouseListener, MouseMotionListener{
@@ -20,6 +23,7 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+        UiHub.sendClick();
     }
 
     @Override
