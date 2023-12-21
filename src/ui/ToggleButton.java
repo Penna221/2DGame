@@ -1,30 +1,43 @@
 package ui;
 
 import java.awt.Graphics;
-
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 public class ToggleButton extends FunctionalElement{
-
-    public ToggleButton(int x, int y) {
+    private BufferedImage texture;
+    public ToggleButton(int x, int y, Text t) {
         super(x, y);
-        //TODO Auto-generated constructor stub
+        texture = UIFactory.generateBorder(t.textImage, UIFactory.buttonData.borderThickness);
+        bounds = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
     }
-
+    public ToggleButton(int x, int y, BufferedImage tex){
+        super(x, y);
+        this.texture = tex;
+        bounds = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
+    }
     @Override
     public void updateAdditional() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateAdditional'");
+        if(focused){
+            if(press){
+                task();
+            }
+        }
     }
 
     @Override
-    public void task() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'task'");
-    }
+    public void task() {}
 
+    
     @Override
     public void render(Graphics g) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'render'");
+        g.setColor(bg);
+        g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
+
+        
+        g.drawImage(texture, bounds.x, bounds.y, null);
+        
+        g.setColor(brd);
+        g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
     }
     
 }

@@ -30,12 +30,14 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+        UiHub.sendToggle(true);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+        UiHub.sendToggle(false);
     }
 
     @Override

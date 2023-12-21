@@ -5,6 +5,7 @@ import main.Game;
 public abstract class FunctionalElement extends UIElement{
     public Color bg, brd;
     public boolean focused;
+    public boolean press;
     public FunctionalElement(int x, int y) {
         super(x, y);
         UiHub.buttons.add(this);
@@ -25,6 +26,9 @@ public abstract class FunctionalElement extends UIElement{
         if(focused){
             task();
         }
+    }
+    public void toggle(boolean b){
+        press = b;
     }
     public abstract void updateAdditional();
     public abstract void task();

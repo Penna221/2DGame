@@ -15,6 +15,15 @@ public class UiHub {
             clear = false;
         }
     }
+    public static void sendToggle(boolean b){
+        for(FunctionalElement e : buttons){
+            e.toggle(b);
+        }
+        if(clear){
+            buttons.clear();
+            clear = false;
+        }
+    }
     public static void remove(FunctionalElement e){
         buttons.remove(e);
     }
