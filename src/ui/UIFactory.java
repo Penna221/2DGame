@@ -130,6 +130,49 @@ public class UIFactory {
 
         return img;
     }
+    public static BufferedImage generateBorder(BufferedImage img,int thick){
+        int w = img.getWidth();
+        int h = img.getHeight();
+        BufferedImage bb = AssetStorage.images.get("border");
+        int buffer = 20;
+        int nw = w+(buffer*2)+(bb.getWidth()*2*thick);
+        int nh = h+(buffer*2)+(bb.getWidth()*2*thick);
+        BufferedImage newImage = new BufferedImage(nw,nh,BufferedImage.TYPE_INT_ARGB);
+        Graphics g = newImage.createGraphics();
+        BufferedImage border = drawBorder(nw,nh,thick);
+
+        g.drawImage(border, 0,0, null);
+        g.drawImage(img, buffer+bb.getWidth()*thick, buffer+bb.getHeight()*thick, null);
+        return newImage;
+    }
+
+    private static BufferedImage drawBorder(int w, int h, int thick){
+        BufferedImage img = new BufferedImage(w,h,BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.createGraphics();
+        BufferedImage bb = AssetStorage.images.get("border");
+        int wr = w/bb.getWidth()+1;
+        int hr = h/bb.getWidth()+1;
+        for(int y = 0; y < hr; y++){
+            for(int x = 0; x < wr; x++){
+                g.drawImage(bb, x*bb.getWidth(), y*bb.getHeight(), null);
+            }
+        }
+        int startX = (int)(thick * bb.getWidth());
+        int startY = (int)(thick * bb.getHeight());
+        int endX = (int)(w - (thick*bb.getWidth()));
+        int endY =(int)( h - (thick*bb.getHeight()));
+        for(int y = startY; y < endY; y++){
+            for(int x = startX; x < endX; x++){
+                img.setRGB(x,y,0);
+            }
+        }
+
+        return img;
+    }
+
+
+
+
     private static int calculateWidth(String text){
         
         int width = 0;
@@ -139,8 +182,10 @@ public class UIFactory {
                 width += spaceWidth;
                 continue;
             }
+            //Take away last spacing.
             width += findWithChar(c).getWidth() + spacing;
         }
+        width -= spacing;
         return width;
     }
     private static BufferedImage findWithChar(char c){

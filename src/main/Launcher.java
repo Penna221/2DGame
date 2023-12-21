@@ -6,9 +6,10 @@ import json.JSON;
 import json.KeyValuePair;
 
 public class Launcher {
-
-    public Launcher(){
-
+    public static Game g;
+    public Launcher(int w, int h, String t){
+        g = new Game(w,h,t);
+        g.start();
     }
     public static void main(String[] args) {
         File f = new File("res\\json\\init.json");
@@ -24,8 +25,8 @@ public class Launcher {
             System.out.println("Width:" + width);
             System.out.println("Height:" + height);
             System.out.println("Title:" + title);
-            Game g = new Game(width,height,title);
-            g.start();
+            new Launcher(width,height,title);
+            
         }
     }
 }

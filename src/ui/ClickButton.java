@@ -4,16 +4,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 public class ClickButton extends FunctionalElement{
-    private Text t;
     private BufferedImage texture;
     public ClickButton(int x, int y, Text t) {
         super(x, y);
-        this.t = t;
-        bounds = new Rectangle(x,y,t.textImage.getWidth(),t.textImage.getHeight());
+        texture = UIFactory.generateBorder(t.textImage, UIFactory.buttonData.borderThickness);
+        bounds = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
     }
-    public ClickButton(int x, int y, BufferedImage texture){
+    public ClickButton(int x, int y, BufferedImage tex){
         super(x, y);
-        this.texture = texture;
+        this.texture = tex;
         bounds = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
     }
     @Override
@@ -30,11 +29,9 @@ public class ClickButton extends FunctionalElement{
         g.setColor(bg);
         g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
 
-        if(t !=null){
-            g.drawImage(t.textImage, bounds.x, bounds.y, null);
-        }else{
-            g.drawImage(texture, bounds.x, bounds.y, null);
-        }
+        
+        g.drawImage(texture, bounds.x, bounds.y, null);
+        
         g.setColor(brd);
         g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
     }

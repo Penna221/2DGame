@@ -83,7 +83,9 @@
         "guestion":"res\\gfx\\alphabet\\guestion.png",
         "dash":"res\\gfx\\alphabet\\dash.png",
         "less":"res\\gfx\\alphabet\\less.png",
-        "more":"res\\gfx\\alphabet\\more.png"
+        "more":"res\\gfx\\alphabet\\more.png",
+
+        "border":"res\\gfx\\border\\border.png"
     },
     "texts":{
         "txt1":{

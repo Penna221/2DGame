@@ -15,9 +15,10 @@ public class Container extends UIElement{
         for(UIElement e : elements){
             int w = e.bounds.width;
             e.bounds.x = bounds.width/2-w/2;
+
         }
     }
-
+    
     public void addElement(UIElement e){
         elements.add(e);
     }
