@@ -46,7 +46,7 @@ public class GameState extends State{
                 State.setState(State.menuState);
             }
         };
-        button2 = new ToggleButton(200, 100, AssetStorage.images.get("russulaPaludosa")){
+        button2 = new ToggleButton(200, 100, AssetStorage.images.get("arrow_up")){
             @Override
             public void task(){
                 System.out.println("press 1 ");

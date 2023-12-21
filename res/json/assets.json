@@ -85,7 +85,12 @@
         "less":"res\\gfx\\alphabet\\less.png",
         "more":"res\\gfx\\alphabet\\more.png",
 
-        "border":"res\\gfx\\border\\border.png"
+        "border":"res\\gfx\\border\\border.png",
+
+        "arrow_left":"res\\gfx\\gui\\arrow_left.png",
+        "arrow_right":"res\\gfx\\gui\\arrow_right.png",
+        "arrow_up":"res\\gfx\\gui\\arrow_up.png",
+        "arrow_down":"res\\gfx\\gui\\arrow_down.png"
     },
     "texts":{
         "txt1":{
