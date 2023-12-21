@@ -41,9 +41,13 @@ Is collecting mushrooms the core mechanic of the game?
 ## Improving idea
 Maybe the game has quests. Procedually generated levels. 1 level can be big as hell, like 1000 x 1000. That one level can have multiple biomes.
 Different biomes have different mushrooms, enemies, dangers...
+
 I don't want to make a fighting game. I want to make a game where user has to hide, lure, guide and advance without hurting enemies.
+
 Enemies should be animals, fantasy animals, or something like that. They have different behaviours. They are not evil.
+
 Maybe some mushrooms are only visible or present when some specific animal is near it.
+
 Some animals are territorial and they defend the area so player must somehow lure them away or try to sneak in and steal the food?
 Stealing is bad 😢
 Maybe player can make a trade? some mushrooms are needed to get others?
@@ -60,6 +64,7 @@ Player can collect stuff from the world and use them later?
 Game core idea.
 Basic UI so that user can navigate in views.
 
+Updated: 21-12-2023
 
 I will update this later... hopefully...
 
