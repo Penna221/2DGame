@@ -5,13 +5,13 @@ import java.util.Random;
 
 import entities.Collectable;
 import entities.EntityManager;
-import entities.Player;
 import entities.mushrooms.BrownMushroom;
 import entities.mushrooms.ChantarelleMushroom;
 import entities.mushrooms.MushroomData;
 import entities.mushrooms.RedMushroom;
 import entities.mushrooms.RussulaPedulosaMushroom;
 import entities.mushrooms.SheepPolyporeMushroom;
+import entities.player.Player;
 import tiles.Tile;
 
 public class World {
@@ -44,7 +44,9 @@ public class World {
         
         entityManager = new EntityManager();
         entityManager.loadEntityData();
-        player = new Player(400,400);
+        int mapCenterX = (map.map.length/2)*Tile.tileSize;
+        int mapCenterY = (map.map[0].length/2)*Tile.tileSize;
+        player = new Player(mapCenterX,mapCenterY);
         Camera.setEntityToCenter(player);
 
         

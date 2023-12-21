@@ -7,7 +7,7 @@ import ui.UiHub;
 
 public abstract class State {
     public static State currentState;
-    public static State gameState, menuState;
+    public static State gameState, menuState,nullState;
     protected static boolean running = true;
     public static Transition transition;
     public static void createStates(){
@@ -15,11 +15,16 @@ public abstract class State {
         gameState.init();
         menuState = new MenuState();
         menuState.init();
-        currentState = menuState;
+        //NullState just because i want loading transition for game launching.
+        nullState = new NullState();
+        nullState.init();
+        currentState = nullState;
     }
     public static void setState(State s){
-        UiHub.clear();
         
+        if(currentState !=nullState){
+            UiHub.clear();
+        }
         running = false;
 
         transition = new Transition(2000){
@@ -28,6 +33,7 @@ public abstract class State {
                 Thread t = new Thread(){
                     @Override
                     public void run(){
+                        
                         s.init();
                         currentState = s;
                         currentState.updateOnceBetweenTransitions();

@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Random;
-import java.util.Set;
 
 import main.Game;
 public class Transition{
@@ -100,7 +99,7 @@ public class Transition{
             g.setColor(c);
             g.fillRect(0, 0, Game.w.getWidth(), Game.w.getHeight());
             g.setColor(Color.white);
-            g.drawString("loading", 100,100);
+            g.drawString("loading", 10,25);
             g.drawImage(lo, Game.w.getWidth()/2 - nw/2, Game.w.getHeight()/2 - nh/2, nw,nh, null);
             l = n;
         }

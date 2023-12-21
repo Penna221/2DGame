@@ -1,11 +1,13 @@
-package entities;
+package entities.player;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import entities.Creature;
+import entities.Entity;
+import entities.EntityManager;
 import gfx.Factory;
 import io.KeyManager;
 import tiles.Tile;

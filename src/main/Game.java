@@ -81,6 +81,7 @@ public class Game extends Engine{
         
         status = "Everything loaded. Happy gaming :)";
         Thread.sleep(2000);
+        State.setState(State.menuState);
         loading = false;
 
     }
