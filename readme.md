@@ -31,11 +31,35 @@ But the AI gave me a response. A very good might i add...
 > 
 > Overall, "Fungal Harvesters" offers a relaxing yet engaging experience for players who appreciate the beauty of nature, the thrill of exploration, and the satisfaction of strategic foraging.
 
-So a game about a mystical world 
+So a game about a mystical world...
+
+But i don't think thats enough. I don't think game can be just about collecting mushrooms.
+What is the goal of the game?
+Why does the player collect mushrooms?
+Is collecting mushrooms the core mechanic of the game?
+
+## Improving idea
+Maybe the game has quests. Procedually generated levels. 1 level can be big as hell, like 1000 x 1000. That one level can have multiple biomes.
+Different biomes have different mushrooms, enemies, dangers...
+I don't want to make a fighting game. I want to make a game where user has to hide, lure, guide and advance without hurting enemies.
+Enemies should be animals, fantasy animals, or something like that. They have different behaviours. They are not evil.
+Maybe some mushrooms are only visible or present when some specific animal is near it.
+Some animals are territorial and they defend the area so player must somehow lure them away or try to sneak in and steal the food?
+Stealing is bad 😢
+Maybe player can make a trade? some mushrooms are needed to get others?
+
+Player spawns Where?
+There is a place where player returns after every run in randomly generated world.
+How is the world different? What is the reason for it? Fantasy creatures -> magical portal? 🧙‍♂️ 🌀
+Does it need a reason?
+
+Player can collect stuff from the world and use them later?
 
 ---
 # Currently working on
-Something mysterious... 🪄
+Game core idea.
+Basic UI so that user can navigate in views.
+
 
 I will update this later... hopefully...
 
