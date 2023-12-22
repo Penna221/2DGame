@@ -13,7 +13,10 @@ public class RussulaPedulosaMushroom extends Collectable{
 
     @Override
     public void collect() {
-        World.entityManager.removeEntity(this);
+        boolean b = World.player.inv.addItem(this);
+        if(b){
+            World.entityManager.removeEntity(this);
+        }
     }
 
     @Override

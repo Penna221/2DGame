@@ -19,8 +19,10 @@ public class Player extends Creature{
     public int distance;
     private double angle;
     
+    public Inventory inv;
     public Player(double x, double y) {
         super(x, y);
+        inv = new Inventory();
     }
 
     @Override
@@ -77,7 +79,7 @@ public class Player extends Creature{
         int currentTileY = (int)((bounds.y + bounds.height/2)/Tile.tileSize);
         g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);
         //g.drawRect((int)(viewRectangle.x - xOffset), (int)(viewRectangle.y-yOffset), viewRectangle.width,viewRectangle.height);
-        
+        inv.render(g);
     }
     
 }
