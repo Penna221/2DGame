@@ -3,6 +3,7 @@ package entities.mushrooms;
 import java.awt.Graphics;
 
 import entities.Collectable;
+import main.Game;
 import world.World;
 
 public class BrownMushroom extends Collectable{
@@ -28,7 +29,6 @@ public class BrownMushroom extends Collectable{
 
     @Override
     public void renderAdditional(Graphics g) {
-        
     }
 
     @Override
@@ -36,6 +36,7 @@ public class BrownMushroom extends Collectable{
         if(bounds.intersects(World.player.bounds)){
             collect();
         }
-    }
+        checkFocus();
+    }   
     
 }

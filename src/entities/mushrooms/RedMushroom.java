@@ -27,7 +27,6 @@ public class RedMushroom extends Collectable{
 
     @Override
     public void renderAdditional(Graphics g) {
-        
     }
 
     @Override
@@ -35,6 +34,7 @@ public class RedMushroom extends Collectable{
         if(bounds.intersects(World.player.bounds)){
             collect();
         }
+        checkFocus();
     }
     
 }

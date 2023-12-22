@@ -34,4 +34,30 @@ public class Factory {
         int drawY = (int)(p.getY()-(h/2));
         g.drawImage(img,drawX,drawY,null);
     }
+    public static BufferedImage highlightEdges(BufferedImage img){
+        BufferedImage img2 = new BufferedImage(img.getWidth(),img.getHeight(),BufferedImage.TYPE_INT_ARGB);
+        for(int y = 0; y < img.getHeight(); y++){
+            for(int x = 0; x < img.getWidth(); x++){
+                int c = img.getRGB(x, y);
+                if(c!=0){
+                    continue;
+                }
+                int lowX = x-1;
+                int highX = x+1;
+                int lowY = y-1;
+                int highY = y+1;
+                if(lowX < 0 || highX > img.getWidth()-1||lowY<0 || highY > img.getHeight()-1){
+                    continue;
+                }
+                int cUp = img.getRGB(x, y-1);
+                int cDown = img.getRGB(x, y+1);
+                int cLeft = img.getRGB(x-1, y);
+                int cRight = img.getRGB(x+1, y);
+                if(cUp!=0||cDown!=0||cLeft!=0||cRight!=0){
+                    img2.setRGB(x, y, Color.white.getRGB());
+                }
+            }
+        }
+        return img2;
+    }
 }

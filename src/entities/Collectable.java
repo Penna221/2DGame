@@ -1,6 +1,7 @@
 package entities;
 
 import entities.mushrooms.MushroomData;
+import gfx.Factory;
 
 public abstract class Collectable extends Entity{
 
@@ -20,6 +21,7 @@ public abstract class Collectable extends Entity{
             id = d.id;
             name = d.name;
             texture = d.texture;
+            highlight = Factory.highlightEdges(texture);
             rarity = d.rarity;
             value = d.value;
         }

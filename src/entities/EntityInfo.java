@@ -3,7 +3,6 @@ package entities;
 import java.awt.image.BufferedImage;
 
 public class EntityInfo {
-    
     public String name;
     public BufferedImage texture;
     public double speed;
