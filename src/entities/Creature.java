@@ -15,6 +15,49 @@ public abstract class Creature extends Entity{
         //Can you move?
         //are you frozen?
         //Collision?
+        
+        // -- Set correct animation
+        //east
+        if(xSpeed >0){
+            if(ySpeed ==0){
+                setAnimation(info.animations.get("walk_east"));
+            }else{
+                if(ySpeed>0){
+                    setAnimation(info.animations.get("walk_south_east"));
+                    
+                }else{
+                    setAnimation(info.animations.get("walk_north_east"));
+                }
+            }
+        }
+        //west
+        if(xSpeed <0){
+            if(ySpeed ==0){
+                setAnimation(info.animations.get("walk_west"));
+            }else{
+                if(ySpeed>0){
+                    setAnimation(info.animations.get("walk_south_west"));
+                    
+                }else{
+                    setAnimation(info.animations.get("walk_north_west"));
+                }
+            }
+        }
+        //south
+        if(ySpeed >0){
+            if(xSpeed ==0){
+                setAnimation(info.animations.get("walk_south"));
+            }
+        }
+        
+        //north
+        if(ySpeed <0){
+            if(xSpeed ==0){
+                setAnimation(info.animations.get("walk_north"));
+            }
+        }
+        
+
         moveX();
         moveY();
         if(xSpeed == 0 && ySpeed == 0){
@@ -28,12 +71,10 @@ public abstract class Creature extends Entity{
         if(xSpeed <0){
             //System.out.println("Moving left");
             canMove = checkTilesX();
-            setAnimation(info.animations.get("walk_left"));
             
         }else if(xSpeed >0){
             //System.out.println("Moving right");
             canMove = checkTilesX();
-            setAnimation(info.animations.get("walk_right"));
         }
         
         
@@ -47,12 +88,10 @@ public abstract class Creature extends Entity{
         if(ySpeed <0){
             //System.out.println("Moving up");
             canMove = checkTilesY();
-            setAnimation(info.animations.get("walk_up"));
             
         }else if(ySpeed >0){
             //System.out.println("Moving down");
             canMove = checkTilesY();
-            setAnimation(info.animations.get("walk_down"));
         }
 
 

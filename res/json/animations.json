@@ -1,22 +1,38 @@
 {
     "player_idle":{
-        "images":["character_A","character_B","character_C"],
-        "times":[1000,100,100]
+        "images":["player_idle_0","player_idle_1","player_idle_0","player_idle_1","player_idle_0","player_idle_1"],
+        "times":[4000,100,5000,100,100,100]
     },
-    "player_walk_left":{
-        "images":["character_L","character_E","character_F","character_T"],
-        "times":[100,100,100,100]
+    "player_walk_west":{
+        "images":["player_walk_west_0","player_walk_west_1","player_walk_west_2","player_walk_west_3","player_walk_west_4","player_walk_west_5","player_walk_west_6","player_walk_west_7"],
+        "times":[100,100,100,100,100,100,100,100]
     },
-    "player_walk_right":{
-        "images":["character_R","character_I","character_G","character_H","character_T"],
-        "times":[100,100,100,100,100]
+    "player_walk_east":{
+        "images":["player_walk_east_0","player_walk_east_1","player_walk_east_2","player_walk_east_3","player_walk_east_4","player_walk_east_5","player_walk_east_6","player_walk_east_7"],
+        "times":[100,100,100,100,100,100,100,100]
     },
-    "player_walk_up":{
-        "images":["character_U","character_P"],
-        "times":[100,100]
+    "player_walk_north":{
+        "images":["player_walk_north_0","player_walk_north_1","player_walk_north_2","player_walk_north_3","player_walk_north_4","player_walk_north_5","player_walk_north_6","player_walk_north_7"],
+        "times":[100,100,100,100,100,100,100,100]
     },
-    "player_walk_down":{
-        "images":["character_D","character_O","character_W","character_N"],
-        "times":[100,100,100,100]
+    "player_walk_north_east":{
+        "images":["player_walk_north_east_0","player_walk_north_east_1","player_walk_north_east_2","player_walk_north_east_3","player_walk_north_east_4","player_walk_north_east_5","player_walk_north_east_6","player_walk_north_east_7"],
+        "times":[100,100,100,100,100,100,100,100]
+    },
+    "player_walk_north_west":{
+        "images":["player_walk_north_west_0","player_walk_north_west_1","player_walk_north_west_2","player_walk_north_west_3","player_walk_north_west_4","player_walk_north_west_5","player_walk_north_west_6","player_walk_north_west_7"],
+        "times":[100,100,100,100,100,100,100,100]
+    },
+    "player_walk_south":{
+        "images":["player_walk_south_0","player_walk_south_1","player_walk_south_2","player_walk_south_3","player_walk_south_4","player_walk_south_5","player_walk_south_6","player_walk_south_7"],
+        "times":[100,100,100,100,100,100,100,100]
+    },
+    "player_walk_south_east":{
+        "images":["player_walk_south_east_0","player_walk_south_east_1","player_walk_south_east_2","player_walk_south_east_3","player_walk_south_east_4","player_walk_south_east_5","player_walk_south_east_6","player_walk_south_east_7"],
+        "times":[100,100,100,100,100,100,100,100]
+    },
+    "player_walk_south_west":{
+        "images":["player_walk_south_west_0","player_walk_south_west_1","player_walk_south_west_2","player_walk_south_west_3","player_walk_south_west_4","player_walk_south_west_5","player_walk_south_west_6","player_walk_south_west_7"],
+        "times":[100,100,100,100,100,100,100,100]
     }
 }

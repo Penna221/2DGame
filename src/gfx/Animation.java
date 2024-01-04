@@ -2,13 +2,13 @@ package gfx;
 import java.awt.image.BufferedImage;
 
 public class Animation {
-    private BufferedImage[]images;
+    private String[]images;
     private int[] times;
     
     private int index;
     private double now, lastTime, elapsedTime;
-    private BufferedImage currentImage;    
-    public Animation(BufferedImage[] images,int[] times){
+    private String currentImage;    
+    public Animation(String[] images,int[] times){
         this.images = images;
         this.times = times;
         index = 0;
@@ -33,6 +33,6 @@ public class Animation {
         lastTime = now;
     }
     public BufferedImage getFrame(){
-        return currentImage;
+        return AssetStorage.images.get(currentImage);
     }
 }

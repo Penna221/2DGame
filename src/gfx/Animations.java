@@ -24,13 +24,12 @@ public class Animations {
             DataType[] timeArray = times.getArray();
             
             int size = imgArray.length;
-            BufferedImage[] arr1 = new BufferedImage[size];
+            String[] arr1 = new String[size];
             int[] arr2 = new int[size];
             
             for(int i = 0; i < size; i++){
                 DataType d = imgArray[i];
-                String name = d.getString();
-                arr1[i] = AssetStorage.images.get(name);
+                arr1[i] = d.getString();
             }
             for(int i = 0; i < size; i++){
                 DataType d = timeArray[i];

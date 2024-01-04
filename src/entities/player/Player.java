@@ -47,7 +47,7 @@ public class Player extends Creature{
         angle += 2;
         
         texture = currentAnimation.getFrame();
-        texture = Factory.rotateImage(texture, angle);
+        //texture = Factory.rotateImage(texture, angle);
         if(KeyManager.up){
             ySpeed = -speed;
         }
