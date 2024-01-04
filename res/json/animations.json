@@ -1,0 +1,22 @@
+{
+    "player_idle":{
+        "images":["character_A","character_B","character_C"],
+        "times":[1000,100,100]
+    },
+    "player_walk_left":{
+        "images":["character_L","character_E","character_F","character_T"],
+        "times":[100,100,100,100]
+    },
+    "player_walk_right":{
+        "images":["character_R","character_I","character_G","character_H","character_T"],
+        "times":[100,100,100,100,100]
+    },
+    "player_walk_up":{
+        "images":["character_U","character_P"],
+        "times":[100,100]
+    },
+    "player_walk_down":{
+        "images":["character_D","character_O","character_W","character_N"],
+        "times":[100,100,100,100]
+    }
+}

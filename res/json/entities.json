@@ -4,6 +4,13 @@
         "name":"Player",
         "texture":"mushroomDude",
         "speed":6.0,
-        "health":100
+        "health":100,
+        "animations":{
+            "idle":"player_idle",
+            "walk_left":"player_walk_left",
+            "walk_right":"player_walk_right",
+            "walk_up":"player_walk_up",
+            "walk_down":"player_walk_down"
+        }
     }
 }

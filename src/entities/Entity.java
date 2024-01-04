@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import gfx.Animation;
 import gfx.Factory;
 import main.Game;
 import world.World;
@@ -19,9 +20,12 @@ public abstract class Entity {
     public BufferedImage texture, highlight;
     public boolean inView = true;
     public EntityInfo info;
+    
+    public Animation currentAnimation;
     public Entity(double x, double y){
         this.x = x;
         this.y = y;
+        
         init();
     }
     public void setTexture(BufferedImage img){
@@ -32,6 +36,18 @@ public abstract class Entity {
         this.x = x;
         this.y = y;
     }
+
+    public void setAnimation(Animation a){
+        if(a.equals(currentAnimation)){
+            //no change.
+            return;
+        }
+        currentAnimation = a;
+        currentAnimation.restart();
+    }
+
+
+
     public void calculateBounds(){
         bounds = new Rectangle((int)x,(int)y,texture.getWidth(),texture.getHeight());
     }

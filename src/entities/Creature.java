@@ -17,6 +17,9 @@ public abstract class Creature extends Entity{
         //Collision?
         moveX();
         moveY();
+        if(xSpeed == 0 && ySpeed == 0){
+            setAnimation(info.animations.get("idle"));
+        }
         
     }
     private void moveX(){
@@ -25,13 +28,15 @@ public abstract class Creature extends Entity{
         if(xSpeed <0){
             //System.out.println("Moving left");
             canMove = checkTilesX();
-
+            setAnimation(info.animations.get("walk_left"));
+            
         }else if(xSpeed >0){
             //System.out.println("Moving right");
             canMove = checkTilesX();
+            setAnimation(info.animations.get("walk_right"));
         }
-
-
+        
+        
         if(canMove){
             x += xSpeed;
         }
@@ -42,10 +47,12 @@ public abstract class Creature extends Entity{
         if(ySpeed <0){
             //System.out.println("Moving up");
             canMove = checkTilesY();
-
+            setAnimation(info.animations.get("walk_up"));
+            
         }else if(ySpeed >0){
             //System.out.println("Moving down");
             canMove = checkTilesY();
+            setAnimation(info.animations.get("walk_down"));
         }
 
 

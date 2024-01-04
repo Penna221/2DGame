@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import gfx.Animations;
 import gfx.AssetStorage;
 import io.KeyManager;
 import io.MouseManager;
@@ -51,6 +52,10 @@ public class Game extends Engine{
         System.out.println("Loading Assets");
         status = "Loading Assets";
         AssetStorage.loadImages();
+
+        status = "Laoding animations";
+        Animations.loadAnimations();
+
         status = "Loading Texts";
         AssetStorage.loadTexts();        
         System.out.println("Loading Tile Data");

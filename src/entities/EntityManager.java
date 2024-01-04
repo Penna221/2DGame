@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import gfx.Animation;
+import gfx.Animations;
 import gfx.AssetStorage;
 import json.JSON;
 import json.KeyValuePair;
@@ -37,9 +39,18 @@ public class EntityManager {
             
             double speed = c.findChild("speed").getFloat();
             int health = c.findChild("health").getInteger();
-            
+
+            HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
+            KeyValuePair animations = c.findChild("animations");
+            for(KeyValuePair ans: animations.getObject()){
+                String a = ans.getKey();
+                String b = ans.getString();
+                System.out.println("Animation nameName: " + a);
+                System.out.println("Animation val: " + b);
+                hashMap.put(a, Animations.animations.get(b));    
+            }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(key, new EntityInfo(name, texture,speed,health));
+            entityInfos.put(key, new EntityInfo(name, texture,speed,health,hashMap));
         }
 
 

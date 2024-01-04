@@ -35,6 +35,9 @@ public class Player extends Creature{
         distance = 800;
         angle = 0;
         viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + bounds.width),(int)(distance*2 + bounds.height));
+        
+        currentAnimation = info.animations.get("idle");
+        currentAnimation.restart();
     }
 
     @Override
@@ -42,7 +45,9 @@ public class Player extends Creature{
         ySpeed = 0;
         xSpeed = 0;
         angle += 2;
-        texture = Factory.rotateImage(info.texture, angle);
+        
+        texture = currentAnimation.getFrame();
+        texture = Factory.rotateImage(texture, angle);
         if(KeyManager.up){
             ySpeed = -speed;
         }
@@ -69,6 +74,7 @@ public class Player extends Creature{
         
         move();
         updateBounds();
+        currentAnimation.animate();
     }
 
     @Override
@@ -80,6 +86,7 @@ public class Player extends Creature{
         g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);
         //g.drawRect((int)(viewRectangle.x - xOffset), (int)(viewRectangle.y-yOffset), viewRectangle.width,viewRectangle.height);
         inv.render(g);
+        g.drawImage(currentAnimation.getFrame(),10,10,null);
     }
     
 }
