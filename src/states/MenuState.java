@@ -3,7 +3,9 @@ package states;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
+import gfx.AssetStorage;
 import main.Game;
 import main.Launcher;
 import ui.ClickButton;
@@ -13,7 +15,7 @@ import ui.Text;
 public class MenuState extends State{
     private boolean alreadyInitialized = false;
     
-    private ClickButton newGameButton, loadGameButton,exitButton;
+    private ClickButton newGameButton, loadGameButton,exitButton, settingsButton;
     
     private Container container;
     private Text title;
@@ -23,6 +25,7 @@ public class MenuState extends State{
             newGameButton.update();
             loadGameButton.update();
             exitButton.update();
+            settingsButton.update();
         }else{
             State.transition.update();
         }
@@ -65,11 +68,23 @@ public class MenuState extends State{
                 System.exit(x);
             }
         };
+
+        int bottomRow = Game.w.getHeight()-100;
+        BufferedImage gear = AssetStorage.images.get("gear");
+        settingsButton = new ClickButton(60, bottomRow-gear.getHeight()/2, gear){
+            @Override
+            public void task(){
+                State.setState(State.settingsState);
+            }
+        };
         container.addElement(title);
         container.addElement(newGameButton);
         container.addElement(loadGameButton);
         container.addElement(exitButton);
         container.centerElements();
+        container.spaceOutVertically(35);
+
+        container.addElement(settingsButton);
         if(!alreadyInitialized){
             alreadyInitialized = true;
         }

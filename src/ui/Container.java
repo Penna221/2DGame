@@ -18,7 +18,18 @@ public class Container extends UIElement{
 
         }
     }
-    
+    public void spaceOutVertically(int buffer){
+        int count = elements.size();
+        int space = bounds.height;
+        int startY = 0;
+        for(UIElement e : elements){
+            int h = e.bounds.height;
+            e.bounds.y = startY;
+            
+            startY += buffer + h;
+        }
+        
+    }
     public void addElement(UIElement e){
         elements.add(e);
     }

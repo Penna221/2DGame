@@ -92,6 +92,8 @@
         "arrow_up":"res\\gfx\\gui\\arrow_up.png",
         "arrow_down":"res\\gfx\\gui\\arrow_down.png",
         
+        "gear":"res\\gfx\\gui\\gear.png",
+        
         "player_idle_0":"res\\gfx\\entities\\player\\player_idle_0.png",
         "player_idle_1":"res\\gfx\\entities\\player\\player_idle_1.png",
         "player_walk_south_0":"res\\gfx\\entities\\player\\player_walk_south_0.png",
