@@ -11,8 +11,11 @@ I am trying to create a 2D game using java.
 ---
 # Currently working on
 **Reworking** Game core idea... 🛠️
+
 Learning about semantic versioning. 🧠
+
 Maybe try doing some art. 🖌️
+
 Updated: **22-1-2024**
 
 ---
