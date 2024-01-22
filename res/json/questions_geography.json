@@ -1,0 +1,31 @@
+{
+    "easy":[
+        {
+            "question":"Is world flat?",
+            "wrong":["No"],
+            "right":"correct"
+        },
+        {
+            "question":"What is sun",
+            "wrong":["planet","moon"],
+            "right":"star"
+        },
+        {
+            "question":"Where does camels live?",
+            "wrong":["desert","Snow"],
+            "right":"correct"
+        }
+    ],
+    "medium":[
+        {
+            "question":"What does rabbit eat",
+            "wrong":["milk","steak"],
+            "right":"Carrots"
+        },
+        {
+            "question":"9+3 =",
+            "wrong":["5","8"],
+            "right":"correct"
+        }
+    ]
+}
