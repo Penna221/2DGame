@@ -7,7 +7,6 @@ public class UiHub {
     
     private static boolean clear;
     public static void sendClick(){
-        System.out.println(buttons.size());
         for(FunctionalElement e : buttons){
             e.click();
         }

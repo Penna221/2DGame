@@ -23,13 +23,14 @@ public class QuestionDialog {
     }
     private void generateUI(){
         answers = new ArrayList<ClickButton>();
-        container = new Container(0, 0, Game.w.getWidth(), Game.w.getHeight());
+        container = new Container(100, 200, Game.w.getWidth()-200, Game.w.getHeight()-400);
         String t1 = q.question;
         String[] wrongs = q.wrongs;
         int l = wrongs.length;
         String correct = q.correct;
-        qu = new Text(t1,0,0,255,false);
-        container.addElement(qu);
+        qu = new Text(t1,0,container.y+25,255,false);
+        container.setHeader(qu);
+        
         for(int i = 0; i < l; i++){
             ClickButton b = new ClickButton(0, 0, new Text(wrongs[i],0,0,100,false)){
                 @Override
@@ -51,14 +52,15 @@ public class QuestionDialog {
         for(ClickButton e : answers){
             container.addElement(e);
         }
-        container.centerElements();
-        container.spaceOutVertically(10);
+        container.makeGrid(3);
 
     }
     private void wrongAnswer(){
-
+        System.out.println("Wrong");
+        
     }
     private void correctAnswer(){
+        System.out.println("Correct");
 
     }
     public void update(){

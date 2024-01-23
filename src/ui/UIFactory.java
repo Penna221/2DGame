@@ -183,7 +183,6 @@ public class UIFactory {
                 continue;
             }
             //Take away last spacing.
-            System.out.println(c);
             width += findWithChar(c).getWidth() + spacing;
         }
         width -= spacing;

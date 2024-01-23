@@ -2,7 +2,7 @@
     "easy":[
         {
             "question":"1+1 =",
-            "wrong":["5","8","tree","abc"],
+            "wrong":["5","8","tree","abc","task1","task2","task4","task1","task2","task4"],
             "right":"2"
         },
         {

@@ -77,7 +77,7 @@ public class MenuState extends State{
                 State.setState(State.settingsState);
             }
         };
-        container.addElement(title);
+        container.setHeader(title);
         container.addElement(newGameButton);
         container.addElement(loadGameButton);
         container.addElement(exitButton);
