@@ -5,6 +5,7 @@ import java.util.Random;
 
 import entities.Collectable;
 import entities.EntityManager;
+import entities.Fox;
 import entities.mushrooms.BrownMushroom;
 import entities.mushrooms.ChantarelleMushroom;
 import entities.mushrooms.MushroomData;
@@ -35,7 +36,7 @@ public class World {
         camera = new Camera();
         generateMap(type);
         generateEntities(type);
-        generateMushrooms(type);
+        //generateMushrooms(type);
     }
     private void generateMap(int type){
         map = new Map(type,500,500);
@@ -48,8 +49,9 @@ public class World {
         int mapCenterY = (map.map[0].length/2)*Tile.tileSize;
         player = new Player(mapCenterX,mapCenterY);
         Camera.setEntityToCenter(player);
-
-        
+        entityManager.addEntity(player);
+        Fox fox = new Fox(mapCenterX,mapCenterY);
+        entityManager.addEntity(fox);
 
     }
     private void generateMushrooms(int type){

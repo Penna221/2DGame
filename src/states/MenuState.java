@@ -58,7 +58,7 @@ public class MenuState extends State{
             @Override
             public void task(){
                 //Not implemented load game
-                State.setState(State.gameState);
+                State.setState(State.questionState);
             }
         };
         exitButton = new ClickButton(100, 440, new Text("Exit",0,0,100,false)){

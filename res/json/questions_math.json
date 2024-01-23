@@ -2,8 +2,8 @@
     "easy":[
         {
             "question":"1+1 =",
-            "wrong":["5","8"],
-            "right":"correct"
+            "wrong":["5","8","tree","abc"],
+            "right":"2"
         },
         {
             "question":"2+1 =",

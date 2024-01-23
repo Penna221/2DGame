@@ -76,6 +76,21 @@
         "character_z":"res\\gfx\\alphabet\\lower_letter_z.png",
         "character_ä":"res\\gfx\\alphabet\\lower_letter_ä.png",
         "character_ö":"res\\gfx\\alphabet\\lower_letter_ö.png",
+
+        "num_0":"res\\gfx\\alphabet\\num_0.png",
+        "num_1":"res\\gfx\\alphabet\\num_1.png",
+        "num_2":"res\\gfx\\alphabet\\num_2.png",
+        "num_3":"res\\gfx\\alphabet\\num_3.png",
+        "num_4":"res\\gfx\\alphabet\\num_4.png",
+        "num_5":"res\\gfx\\alphabet\\num_5.png",
+        "num_6":"res\\gfx\\alphabet\\num_6.png",
+        "num_7":"res\\gfx\\alphabet\\num_7.png",
+        "num_8":"res\\gfx\\alphabet\\num_8.png",
+        "num_9":"res\\gfx\\alphabet\\num_9.png",
+
+        "plus":"res\\gfx\\alphabet\\plus.png",
+        "minus":"res\\gfx\\alphabet\\minus.png",
+        "equal":"res\\gfx\\alphabet\\equal.png",
         
         "dot":"res\\gfx\\alphabet\\dot.png",
         "comma":"res\\gfx\\alphabet\\comma.png",
@@ -168,7 +183,9 @@
         "player_walk_north_east_4":"res\\gfx\\entities\\player\\player_walk_north_east_4.png",
         "player_walk_north_east_5":"res\\gfx\\entities\\player\\player_walk_north_east_5.png",
         "player_walk_north_east_6":"res\\gfx\\entities\\player\\player_walk_north_east_6.png",
-        "player_walk_north_east_7":"res\\gfx\\entities\\player\\player_walk_north_east_7.png"
+        "player_walk_north_east_7":"res\\gfx\\entities\\player\\player_walk_north_east_7.png",
+        
+        "fox":"res\\gfx\\entities\\fox\\fox.png"
     },
     "texts":{
         "txt1":{

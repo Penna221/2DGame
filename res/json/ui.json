@@ -223,6 +223,45 @@
         },
         "char_more":{
             "texture":"more"
+        },
+        "num_0":{
+            "texture":"num_0"
+        },
+        "num_1":{
+            "texture":"num_1"
+        },
+        "num_2":{
+            "texture":"num_2"
+        },
+        "num_3":{
+            "texture":"num_3"
+        },
+        "num_4":{
+            "texture":"num_4"
+        },
+        "num_5":{
+            "texture":"num_5"
+        },
+        "num_6":{
+            "texture":"num_6"
+        },
+        "num_7":{
+            "texture":"num_7"
+        },
+        "num_8":{
+            "texture":"num_8"
+        },
+        "num_9":{
+            "texture":"num_9"
+        },
+        "plus":{
+            "texture":"plus"
+        },
+        "minus":{
+            "texture":"minus"
+        },
+        "equal":{
+            "texture":"equal"
         }
     }
 }

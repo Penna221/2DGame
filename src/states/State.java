@@ -7,7 +7,7 @@ import ui.UiHub;
 
 public abstract class State {
     public static State currentState;
-    public static State gameState, menuState,nullState,settingsState;
+    public static State gameState, menuState,nullState,settingsState,questionState;
     protected static boolean running = true;
     public static Transition transition;
     public static void createStates(){
@@ -20,6 +20,8 @@ public abstract class State {
         nullState.init();
         settingsState = new SettingsState();
         settingsState.init();
+        questionState = new QuestionState();
+        questionState.init();
         currentState = nullState;
     }
     public static void setState(State s){

@@ -34,10 +34,13 @@ public class QuestionStorage {
 
         loadQuestions(g2,geo_easy);
         loadQuestions(g3,geo_medium);
-        printAll();
+        printAllFrom(math_easy);
+        printAllFrom(math_medium);
+        printAllFrom(geo_easy);
+        printAllFrom(geo_medium);
     }
-    public static void printAll(){
-        for(Question q : math_easy){
+    public static void printAllFrom(ArrayList<Question> questions){
+        for(Question q : questions){
             System.out.println(q.question);
             System.out.println("Answer: " + q.correct);
         }

@@ -183,6 +183,7 @@ public class UIFactory {
                 continue;
             }
             //Take away last spacing.
+            System.out.println(c);
             width += findWithChar(c).getWidth() + spacing;
         }
         width -= spacing;
@@ -360,7 +361,6 @@ public class UIFactory {
             case 'ö':
                 toReturn = alphabetCharacters.get("char_ö");
                 break;
-
             case '.':
                 toReturn = alphabetCharacters.get("char_dot");
                 break;
@@ -381,9 +381,43 @@ public class UIFactory {
                 break;
             case '>':
                 toReturn = alphabetCharacters.get("char_more");
+                break;    
+            case '0':
+                toReturn = alphabetCharacters.get("num_0");
                 break;
-
-
+            case '1':
+                toReturn = alphabetCharacters.get("num_1");
+                break;
+            case '2':
+                toReturn = alphabetCharacters.get("num_2");
+                break;
+            case '3':
+                toReturn = alphabetCharacters.get("num_3");
+                break;
+            case '4':
+                toReturn = alphabetCharacters.get("num_4");
+                break;
+            case '5':
+                toReturn = alphabetCharacters.get("num_5");
+                break;
+            case '6':
+                toReturn = alphabetCharacters.get("num_6");
+                break;
+            case '7':
+                toReturn = alphabetCharacters.get("num_7");
+                break;
+            case '8':
+                toReturn = alphabetCharacters.get("num_8");
+                break;
+            case '9':
+                toReturn = alphabetCharacters.get("num_9");
+                break;
+            case '+':
+                toReturn = alphabetCharacters.get("plus");
+                break;
+            case '=':
+                toReturn = alphabetCharacters.get("equal");
+                break;
             default:
                 toReturn = alphabetCharacters.get("char_guestion");;
                 break;
