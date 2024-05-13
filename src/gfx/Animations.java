@@ -16,7 +16,7 @@ public class Animations {
         KeyValuePair s = json.parse("JSON");
         for(KeyValuePair animation : s.getObject()){
             String key = animation.getKey();
-            System.out.println(key);
+            // System.out.println(key);
             KeyValuePair images = animation.findChild("images");
             KeyValuePair times = animation.findChild("times");
             

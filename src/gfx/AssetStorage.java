@@ -19,7 +19,7 @@ public class AssetStorage {
         for(KeyValuePair i : imgObject.getObject()){
             String name = i.getKey();
             String path = i.getString();
-            System.out.println(name);
+            // System.out.println(name);
             BufferedImage img = ImageLoader.load(path);
             if(img!=null){
                 System.out.println("Correctly loaded: " + name + "  " + path);
@@ -53,7 +53,7 @@ public class AssetStorage {
             }
         });
     }
-    private static BufferedImage scaleImage(BufferedImage img, double scale){
+    public static BufferedImage scaleImage(BufferedImage img, double scale){
         int w = img.getWidth();
         int h = img.getHeight();
         int nw = (int)(scale*w);

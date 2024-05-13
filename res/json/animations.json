@@ -34,5 +34,10 @@
     "player_walk_south_west":{
         "images":["player_walk_south_west_0","player_walk_south_west_1","player_walk_south_west_2","player_walk_south_west_3","player_walk_south_west_4","player_walk_south_west_5","player_walk_south_west_6","player_walk_south_west_7"],
         "times":[100,100,100,100,100,100,100,100]
+    },
+    "coin_idle":{
+        "images":["coin_1","coin_2","coin_3","coin_2"],
+        "times":[1000,400,1000,400]
     }
+    
 }

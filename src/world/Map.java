@@ -1,6 +1,10 @@
 package world;
 
 import java.awt.Graphics;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 
 import entities.Entity;
@@ -18,7 +22,42 @@ public class Map {
         this.width = width;
         this.height = height;
         generate(type);
+        
 
+    }
+    public Map(){}
+    public void loadMap(File f){
+        // mapLoaded = false;
+        String entityFile ="";
+        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+            String line = reader.readLine();
+            String[] dimensions = line.split(" ");
+            int w = Integer.parseInt(dimensions[0]);
+            width = w;
+            int h = Integer.parseInt(dimensions[1]);
+            height = h;
+            int[][] loadedMap = new int[w][h];
+            int row = 0;
+            entityFile = reader.readLine();
+            while((line = reader.readLine())!=null){
+                String[] ids = line.split(",");
+                for(int i = 0; i < ids.length; i++){
+
+                    int j = Integer.parseInt(ids[i]);
+                    loadedMap[i][row] = j;
+                }
+                row++;
+                
+            }
+            map = loadedMap;
+            // mapLoaded = true;
+            reader.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        generateBinaryMap();
+        
     }
     public void generate(int type){
         switch (type) {
@@ -47,6 +86,9 @@ public class Map {
         step4(solidTiles,borderTiles);
         step5();
         lastStep(5);
+        generateBinaryMap();
+    }
+    private void generateBinaryMap(){
         binaryMap = new boolean[width][height];
         for(int y = 0; y < map[0].length; y++){
             for(int x = 0; x < map.length; x++){

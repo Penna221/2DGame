@@ -2,49 +2,41 @@
     "scale":4.0,
     "voidTile":{
         "id":0,
-        "texture":"voidTile",
         "solid":false,
         "breakable":false
     },
     "grassTile_1":{
         "id":1,
-        "texture":"grassTile_1",
         "solid":false,
         "breakable":false
     },
     "grassTile_2":{
         "id":2,
-        "texture":"grassTile_2",
         "solid":false,
         "breakable":false
     },
     "treeTile_1":{
         "id":3,
-        "texture":"treeTile_1",
         "solid":true,
         "breakable":false
     },
     "wallTile":{
         "id":4,
-        "texture":"wallTile",
         "solid":true,
         "breakable":false
     },
     "bushTile":{
         "id":5,
-        "texture":"bushTile",
         "solid":true,
         "breakable":true
     },
     "roseTile":{
         "id":6,
-        "texture":"roseTile",
         "solid":false,
         "breakable":false
     },
     "smallBushTile":{
         "id":7,
-        "texture":"smallBushTile",
         "solid":true,
         "breakable":true
     }

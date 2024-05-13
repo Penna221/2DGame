@@ -52,7 +52,8 @@ public class GameState extends State{
             }
         };*/
         if(!alreadyInitialized){
-            world = new World(World.FOREST);
+            // world = new World(World.FOREST);
+            world = new World();
             alreadyInitialized = true;
         }
     }

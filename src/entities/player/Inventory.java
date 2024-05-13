@@ -3,7 +3,7 @@ package entities.player;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import entities.Collectable;
+import entities.Entity;
 import main.Game;
 
 public class Inventory {
@@ -23,13 +23,13 @@ public class Inventory {
         }
         //Load from saved data.
     }
-    public boolean addItem(Collectable c){
+    public boolean addItem(Entity c){
         boolean added = false;
         for(int i = 0; i < slots.length; i++){
             Slot s = slots[i];
             if(s.add(c)){
                 added = true;
-                System.out.println("Added item with id("+c.id+") to slot " + i);
+                System.out.println("Added item with id("+c.info.id+") to slot " + i);
                 break;
             }
         }
@@ -50,20 +50,20 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
-        public Collectable item;
+        public Entity item;
         public int amount;
         public Slot(){}
-        public boolean add(Collectable i){
+        public boolean add(Entity i){
             if(item ==null){
                 this.item = i;
                 amount++;
                 return true;
             }else{
-                if(i.id==item.id){
+                if(i.info.id==item.info.id){
                     amount++;
                     return true;
                 }else{
-                    System.out.println(i.id + " is not " + item.id);
+                    System.out.println(i.info.id + " is not " + item.info.id);
                     return false;
                 }
             }

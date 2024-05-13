@@ -1,13 +1,6 @@
 {
     "images":{
-        "voidTile":"res\\gfx\\tiles\\void.png",
-        "grassTile_1":"res\\gfx\\tiles\\grassTile_1.png",
-        "grassTile_2":"res\\gfx\\tiles\\grassTile_2.png",
-        "treeTile_1":"res\\gfx\\tiles\\treeTile_1.png",
-        "wallTile":"res\\gfx\\tiles\\wall.png",
-        "bushTile":"res\\gfx\\tiles\\bushTile.png",
-        "roseTile":"res\\gfx\\tiles\\roseTile.png",
-        "smallBushTile":"res\\gfx\\tiles\\smallBushTile.png",
+        "tilesheet":"res\\gfx\\tileset\\tilesheet.png",
 
         "brownMushroom":"res\\gfx\\mushrooms\\brownMushroom.png",
         "redMushroom":"res\\gfx\\mushrooms\\redMushroom.png",
@@ -185,7 +178,16 @@
         "player_walk_north_east_6":"res\\gfx\\entities\\player\\player_walk_north_east_6.png",
         "player_walk_north_east_7":"res\\gfx\\entities\\player\\player_walk_north_east_7.png",
         
-        "fox":"res\\gfx\\entities\\fox\\fox.png"
+        "fox":"res\\gfx\\entities\\fox\\fox.png",
+        "coin_1":"res\\gfx\\entities\\coin_1.png",
+        "coin_2":"res\\gfx\\entities\\coin_2.png",
+        "coin_3":"res\\gfx\\entities\\coin_3.png",
+        "rose":"res\\gfx\\entities\\rose.png",
+        "penquin":"res\\gfx\\entities\\penguin.png",
+        "sunflower":"res\\gfx\\entities\\sunflower.png",
+        "stone":"res\\gfx\\entities\\stone.png",
+        "tree":"res\\gfx\\entities\\tree.png",
+        "bench":"res\\gfx\\entities\\bench.png"
     },
     "texts":{
         "txt1":{

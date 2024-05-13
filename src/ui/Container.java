@@ -55,7 +55,7 @@ public class Container extends UIElement{
             }
             int w = e.bounds.width;
             int newX = bounds.x + buffer/2+(ws*i) - w/2;
-            System.out.println(newX);
+            // System.out.println(newX);
             int startY = 0;
             int newY = 0;
             if(header!=null){

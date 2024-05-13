@@ -16,7 +16,7 @@ public class EntityManager {
     private ArrayList<Entity> toRemove;
     private ArrayList<Entity> toAdd;
     private ArrayList<Entity> inView;
-    public static HashMap<String,EntityInfo> entityInfos;
+    public static HashMap<Integer,EntityInfo> entityInfos;
     public EntityManager() {
         entities = new ArrayList<Entity>();
         toRemove = new ArrayList<Entity>();
@@ -25,7 +25,7 @@ public class EntityManager {
         
     }
     public void loadEntityData(){
-        entityInfos = new HashMap<String,EntityInfo>();
+        entityInfos = new HashMap<Integer,EntityInfo>();
         JSON json2 = new JSON(new File("res\\json\\entities.json"));
         KeyValuePair kv2 = json2.parse("");
         for(KeyValuePair c : kv2.getObject()){
@@ -35,31 +35,46 @@ public class EntityManager {
                 AssetStorage.scaleOthers(scale);
                 continue;
             }
+            int id = c.findChild("id").getInteger();
             String name = c.findChild("name").getString();
             
             double speed = c.findChild("speed").getFloat();
             int health = c.findChild("health").getInteger();
+            String type = c.findChild("type").getString();
+            String ai = c.findChild("ai").getString();
 
             HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
             KeyValuePair animations = c.findChild("animations");
             for(KeyValuePair ans: animations.getObject()){
                 String a = ans.getKey();
                 String b = ans.getString();
-                System.out.println("Animation nameName: " + a);
-                System.out.println("Animation val: " + b);
+                // System.out.println("Animation nameName: " + a);
+                // System.out.println("Animation val: " + b);
                 hashMap.put(a, Animations.animations.get(b));    
             }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(key, new EntityInfo(name, texture,speed,health,hashMap));
+            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai));
         }
 
 
+    }
+    public Entity generateWithID(int id, int x, int y){
+        EntityInfo e = entityInfos.get(id);
+        System.out.println("Added: " + e.name);
+        Entity c = new Entity(e,x,y);
+        entities.add(c);
+        return c;
     }
     public void addEntity(Entity e){
         toAdd.add(e);
     }
     public void removeEntity(Entity e){
         toRemove.add(e);
+    }
+    public void clearEntities(){
+        for(Entity e : entities){
+            toRemove.add(e);
+        }
     }
     public void render(Graphics g){
         for(Entity e : inView){
@@ -73,6 +88,7 @@ public class EntityManager {
             if(e.inView)
                 inView.add(e);
         }
+        
         for(Entity e : inView){
             e.update();
         }

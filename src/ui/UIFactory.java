@@ -50,7 +50,7 @@ public class UIFactory {
         String fgColor = p.findChild("fgColor").getString();
         String borderColor = p.findChild("borderColor").getString();
         int borderThickness = p.findChild("borderThickness").getInteger();
-        System.out.println(bgColor);
+        // System.out.println(bgColor);
         Color c1 = parseColor(bgColor);
         Color c2 = parseColor(fgColor);
         Color c3 = parseColor(borderColor);

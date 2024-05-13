@@ -1,6 +1,8 @@
 {
     "scale":2.5,
     "player":{
+        "id":0,
+        "type":"Creature",
         "name":"Player",
         "texture":"mushroomDude",
         "speed":6.0,
@@ -15,23 +17,91 @@
             "walk_south_east":"player_walk_south_east",
             "walk_north_west":"player_walk_north_west",
             "walk_north_east":"player_walk_north_east"
-        }
+        },
+        "ai":"Player"
     },
     "fox":{
+        "id":1,
+        "type":"Creature",
         "name":"Fox",
         "texture":"fox",
         "speed":6.0,
         "health":100,
         "animations":{
-            "idle":"player_idle",
-            "walk_west":"player_walk_west",
-            "walk_east":"player_walk_east",
-            "walk_north":"player_walk_north",
-            "walk_south":"player_walk_south",
-            "walk_south_west":"player_walk_south_west",
-            "walk_south_east":"player_walk_south_east",
-            "walk_north_west":"player_walk_north_west",
-            "walk_north_east":"player_walk_north_east"
-        }
+            "idle":"player_idle"
+        },
+        "ai":"Fox"
+    },
+    "coin":{
+        "id":2,
+        "type":"Collectable",
+        "name":"Coin",
+        "texture":"coin_1",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"coin_idle"
+        },
+        "ai":"Collectable"
+    },
+    "rose":{
+        "id":3,
+        "type":"",
+        "name":"Rose",
+        "texture":"rose",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty"
+    },
+    "sun flower":{
+        "id":4,
+        "type":"",
+        "name":"Sun Flower",
+        "texture":"sunflower",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty"
+    },
+    "stone":{
+        "id":5,
+        "type":"",
+        "name":"Stone",
+        "texture":"stone",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty"
+    },
+    "bench":{
+        "id":6,
+        "type":"",
+        "name":"Bench",
+        "texture":"bench",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty"
+    },
+    "penquin":{
+        "id":7,
+        "type":"Creature",
+        "name":"Penguin",
+        "texture":"penquin",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty"
     }
 }

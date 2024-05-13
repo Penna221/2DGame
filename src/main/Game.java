@@ -61,7 +61,8 @@ public class Game extends Engine{
         AssetStorage.loadTexts();        
         System.out.println("Loading Tile Data");
         status = "Loading Tiles";
-        Tile.loadTiles();
+        //Tile.loadTiles();
+        Tile.loadTilesV2();
         System.out.println("Loading Biome Data");
         status = "Loading Biomes";
         Biome.loadBiomeData();
