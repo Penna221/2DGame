@@ -1,5 +1,5 @@
 {
-    "scale":2.5,
+    "scale":4.0,
     "player":{
         "id":0,
         "type":"Creature",
@@ -18,7 +18,9 @@
             "walk_north_west":"player_walk_north_west",
             "walk_north_east":"player_walk_north_east"
         },
-        "ai":"Player"
+        "ai":"Player",
+        "width":16,
+        "height":16
     },
     "fox":{
         "id":1,
@@ -30,7 +32,9 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"Fox"
+        "ai":"Fox",
+        "width":88,
+        "height":39
     },
     "coin":{
         "id":2,
@@ -42,7 +46,9 @@
         "animations":{
             "idle":"coin_idle"
         },
-        "ai":"Collectable"
+        "ai":"Collectable",
+        "width":16,
+        "height":16
     },
     "rose":{
         "id":3,
@@ -54,7 +60,9 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"empty"
+        "ai":"empty",
+        "width":16,
+        "height":16
     },
     "sun flower":{
         "id":4,
@@ -66,7 +74,9 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"empty"
+        "ai":"empty",
+        "width":16,
+        "height":32
     },
     "stone":{
         "id":5,
@@ -78,7 +88,9 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"empty"
+        "ai":"empty",
+        "width":32,
+        "height":32
     },
     "bench":{
         "id":6,
@@ -90,7 +102,9 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"empty"
+        "ai":"empty",
+        "width":48,
+        "height":32
     },
     "penquin":{
         "id":7,
@@ -102,6 +116,79 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"empty"
+        "ai":"empty",
+        "width":16,
+        "height":32
+    },
+    "dungeon overhang":{
+        "id":8,
+        "type":"Structure",
+        "name":"Dungeon Overhang",
+        "texture":"dungeon_overhang",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16
+    },
+    "gold chest":{
+        "id":9,
+        "type":"Structure",
+        "name":"Gold Chest",
+        "texture":"gold_chest",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty",
+        "width":32,
+        "height":16
+    },
+    "boss door":{
+        "id":10,
+        "type":"door",
+        "name":"Boss Door",
+        "texture":"boss_door",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"door",
+        "width":32,
+        "height":32,
+        "tunnel":"dungeon"
+    },
+    "ladder hole":{
+        "id":11,
+        "type":"Structure",
+        "name":"Ladder Hole",
+        "texture":"ladder_hole",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16
+    },
+    "trader":{
+        "id":12,
+        "type":"Creature",
+        "name":"Trader",
+        "texture":"trader",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty",
+        "width":32,
+        "height":32
     }
 }

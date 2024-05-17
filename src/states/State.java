@@ -2,15 +2,18 @@ package states;
 
 import java.awt.Graphics;
 
+import gfx.AssetStorage;
 import gfx.Transition;
 import ui.UiHub;
 
 public abstract class State {
     public static State currentState;
-    public static State gameState, menuState,nullState,settingsState,questionState;
+    public static State gameState, menuState,nullState,settingsState;
     protected static boolean running = true;
     public static Transition transition;
     public static void createStates(){
+        transition = new Transition(2500);
+        transition.getRandomImage();
         gameState = new GameState();
         gameState.init();
         menuState = new MenuState();
@@ -20,17 +23,22 @@ public abstract class State {
         nullState.init();
         settingsState = new SettingsState();
         settingsState.init();
-        questionState = new QuestionState();
-        questionState.init();
         currentState = nullState;
     }
-    public static void setState(State s){
+    public static void setState(State s, boolean trans){
         
         if(currentState !=nullState){
-            UiHub.clear();
+            //System.out.println("clearing buttons");
+        }
+        if(!trans){
+            s.init();
+            currentState = s;
+            currentState.updateOnceBetweenTransitions();
+            
+            UiHub.finalStep();
+            return;
         }
         running = false;
-
         transition = new Transition(2000){
             @Override
             public void task(){
@@ -41,7 +49,7 @@ public abstract class State {
                         s.init();
                         currentState = s;
                         currentState.updateOnceBetweenTransitions();
-                        transition.canContinue = true;
+                        canContinue = true;
                     }
                 };
                 t.start();
@@ -49,6 +57,7 @@ public abstract class State {
             @Override
             public void end(){
                 State.running = true;
+                UiHub.finalStep();
             }
         };
         transition.start();

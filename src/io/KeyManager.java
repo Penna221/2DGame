@@ -3,6 +3,8 @@ package io;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import gfx.Transition;
+import states.GameState;
 import states.State;
 import world.World;
 
@@ -34,10 +36,18 @@ public class KeyManager implements KeyListener{
                 World.map.generate(World.FOREST);
                 break;
             case KeyEvent.VK_F3:
-                State.setState(State.menuState);
+                State.setState(State.menuState,true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
                 break;
-                case KeyEvent.VK_F4:
-                State.setState(State.gameState);
+            case KeyEvent.VK_F4:
+                State.setState(State.gameState,false);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+                break;
+            case KeyEvent.VK_ESCAPE:
+                if(State.getState() == State.gameState)
+                    GameState.paused = !GameState.paused;
                 break;
             default:
                 break;

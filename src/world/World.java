@@ -1,14 +1,15 @@
 package world;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Random;
 
 import entities.Entity;
 import entities.EntityManager;
+import gfx.Transition;
 import tiles.Tile;
 
 public class World {
@@ -24,6 +25,8 @@ public class World {
     public static Entity player;
     public static EntityManager entityManager;
     public static Camera camera;
+    private static boolean ready = false, readyToUpdate = false;
+    private static Transition transition;
     public World(int type){
         this.type = type;
         entityManager = new EntityManager();
@@ -33,15 +36,47 @@ public class World {
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
-        load();
-    }
-    public void load(){
         camera = new Camera();
         map = new Map();
-        map.loadMap(new File("res/maps/map.csv"));
-        loadEntities(new File("res/maps/map_entities.csv"));
+        // load();
     }
-    public void loadEntities(File f){
+    
+    public static void load(String worldName){
+        readyToUpdate = false;
+        transition = new Transition(2000){
+            @Override
+            public void task(){
+                Thread t = new Thread(){
+                    @Override
+                    public void run(){
+                        try {
+                            ready = false;
+                            String mapName = worldName;
+                            String ent = mapName+"_entities";
+                            loadEntities(new File("res/maps/"+ent+".csv"));
+                            map.loadMap(new File("res/maps/"+mapName+".csv"));
+                            ready = true;
+                            readyToUpdate = true;
+                            update();
+                            Thread.sleep(3000);
+                            Transition.canContinue2 = true;
+                            
+                            Transition.canFinish = true;
+                            
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                t.start();
+            }
+            
+        };
+        transition.start();
+        
+    }
+    private static void loadEntities(File f){
         //Load Entities
         entityManager.clearEntities();
         
@@ -123,13 +158,22 @@ public class World {
     }
     
     public void update(){
-        
-        camera.update();
-        map.updateVisible(player);
-        entityManager.update();
+        if(readyToUpdate){
+            camera.update();
+            map.updateVisible(player);
+            entityManager.update();
+        }else{
+        }
+        transition.update();
     }
     public void render(Graphics g){
-        map.render(g);
-        entityManager.render(g);
+        if(!ready){
+            g.setColor(Color.white);
+            g.drawString("Loading...", 250, 25);
+        }else{
+            map.render(g);
+            entityManager.render(g);
+        }
+        transition.render(g);
     }
 }

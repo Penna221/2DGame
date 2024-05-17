@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+
 public class Factory {
     public static BufferedImage rotateImage(BufferedImage img,double angle){
         double rads = Math.toRadians(angle+90);

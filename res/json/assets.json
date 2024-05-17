@@ -187,7 +187,12 @@
         "sunflower":"res\\gfx\\entities\\sunflower.png",
         "stone":"res\\gfx\\entities\\stone.png",
         "tree":"res\\gfx\\entities\\tree.png",
-        "bench":"res\\gfx\\entities\\bench.png"
+        "bench":"res\\gfx\\entities\\bench.png",
+        "dungeon_overhang":"res\\gfx\\entities\\dungeon_overhang.png",
+        "gold_chest":"res\\gfx\\entities\\gold_chest.png",
+		"boss_door":"res\\gfx\\entities\\boss_door.png",
+		"ladder_hole":"res\\gfx\\entities\\ladder_hole.png",
+		"trader":"res\\gfx\\entities\\trader.png"
     },
     "texts":{
         "txt1":{

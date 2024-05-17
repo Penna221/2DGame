@@ -21,6 +21,7 @@ public class EmptyAI extends AI{
 
     @Override
     public void render(Graphics g) {
+        
     }
     
 }

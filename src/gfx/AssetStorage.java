@@ -19,6 +19,7 @@ public class AssetStorage {
         for(KeyValuePair i : imgObject.getObject()){
             String name = i.getKey();
             String path = i.getString();
+            
             // System.out.println(name);
             BufferedImage img = ImageLoader.load(path);
             if(img!=null){
@@ -34,23 +35,13 @@ public class AssetStorage {
         KeyValuePair textObject = s.findChild("texts");
         //textObject.printAll(0);
     }
-    public static void scaleTiles(double scale){
-        images.forEach((key,value)->{
-            if(key.contains("Tile")){
-                images.put(key, scaleImage(value,scale));
-            }else{
-                images.put(key, value);
-            }
-            
-        });
-    }
     public static void scaleOthers(double scale){
         images.forEach((key,value)->{
-            if(!key.contains("Tile")){
-                images.put(key, scaleImage(value,scale));
-            }else{
-                images.put(key, value);
-            }
+            images.put(key, scaleImage(value,scale));
+            // if(!key.contains("Tile")){
+            // }else{
+            //     images.put(key, value);
+            // }
         });
     }
     public static BufferedImage scaleImage(BufferedImage img, double scale){

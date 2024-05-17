@@ -14,12 +14,14 @@ public class Transition{
     private Color c;
     private boolean done = false;
     private double angle = 0;
-    public boolean canContinue = true;
-    private BufferedImage logo;
+    public static boolean canContinue = true, canContinue2 = false;
+    public BufferedImage logo;
+    public static boolean canFinish = false;
     private double n,l,e;
 
     public Transition(int duration){
         this.duration = duration;
+        canFinish = false;
     }
     public void task(){}
     public void end(){}
@@ -33,34 +35,49 @@ public class Transition{
         //Logo rotation timer
         e = 0;
         l = System.currentTimeMillis();
-
-//Get random logo
-        String[] keys = {"brownMushroom","redMushroom","sheepPolypore","chanterelle","russulaPaludosa"};
-        Random random = new Random();
-        int r = random.nextInt(keys.length);
-        logo = AssetStorage.images.get(keys[r]);
+        canContinue2 = false;
         
+        getRandomImage();
+
+}
+public void getRandomImage(){
+    
+    String[] keys = {"brownMushroom","redMushroom","sheepPolypore","chanterelle","russulaPaludosa"};
+    Random random = new Random();
+    int r = random.nextInt(keys.length-1);
+    System.out.println("logo index of " + r + " is "+ keys[r]);
+    logo = AssetStorage.images.get(keys[r]);
     }
     public void update(){
         if(running){
             now = System.currentTimeMillis();
-            if(canContinue){
-                elapsedTime += now-lastTime;
-            }
+            
             if(!done){
+                if(canContinue){
+                    elapsedTime += now-lastTime;
+                }
                 if(elapsedTime >= (duration/2)){
                     canContinue = false;
+                    System.out.println("Doing task");
                     task();
-                    now = System.currentTimeMillis();
+                    lastTime = System.currentTimeMillis();
                     done = true;
+                    canContinue = true;
+                }
+            }else{
+                if(canContinue && canContinue2){
+                    elapsedTime += now-lastTime;
+                }
+                if(elapsedTime >= duration){
+                    if(canFinish){
+                        end();
+                        finished = true;
+                        running = false;
+                    }
                 }
             }
-            if(elapsedTime >= duration){
-                end();
-                finished = true;
-                running = false;
-            }
             double percent = (elapsedTime/duration);
+            // System.out.println(percent);
             int mapped = mapToUpDownRange(percent);
             if(mapped < 0){
                 mapped = 0;
@@ -68,10 +85,11 @@ public class Transition{
             if(mapped > 255){
                 mapped = 255;
             }
-            c = new Color(0,0,0,mapped);
+            c = new Color(255,0,0,mapped);
             
             lastTime = now;
         }
+        // System.out.println(done);
     }
 
     private static int mapToUpDownRange(double normalizedValue) {
@@ -91,6 +109,10 @@ public class Transition{
                 angle+= 10;
                 e-=50;
             }
+            // System.out.println(logo);
+            if(logo==null){
+                return;
+            }
             BufferedImage lo = Factory.rotateImage(logo, angle);
             int scale = 4;
             int nw = lo.getWidth()*scale;
@@ -99,8 +121,10 @@ public class Transition{
             g.setColor(c);
             g.fillRect(0, 0, Game.w.getWidth(), Game.w.getHeight());
             g.setColor(Color.white);
-            g.drawString("loading", 10,25);
-            g.drawImage(lo, Game.w.getWidth()/2 - nw/2, Game.w.getHeight()/2 - nh/2, nw,nh, null);
+            if(!canContinue2){
+                g.drawString("loading", 10,25);
+                g.drawImage(lo, Game.w.getWidth()/2 - nw/2, Game.w.getHeight()/2 - nh/2, nw,nh, null);
+            }
             l = n;
         }
         

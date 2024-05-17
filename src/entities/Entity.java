@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import entities.ai.AI;
 import entities.ai.CollectableAI;
+import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
 import entities.ai.PlayerAI;
 import gfx.Animation;
@@ -47,6 +48,9 @@ public class Entity {
             case "Collectable":
                 ai = new CollectableAI(this);
                 break;
+            case "door":
+                ai = new DoorAI(this);
+                break;
             default:
                 ai = new EmptyAI(this);
         }
@@ -77,7 +81,7 @@ public class Entity {
 
 
     public void calculateBounds(){
-        bounds = new Rectangle((int)x,(int)y,texture.getWidth(),texture.getHeight());
+        bounds = new Rectangle((int)x,(int)y,info.width,info.height);
     }
     public void updateBounds(){
         bounds.x = (int)x ;
@@ -96,9 +100,9 @@ public class Entity {
         double yOffset = World.camera.getYOffset();
         Point p = new Point((int)(x - xOffset + bounds.getWidth()/2),(int)((y - yOffset +bounds.getHeight()/2)));
         Factory.drawCenteredAt(g, texture, p);
-        //g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
+        // g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
         renderAdditional(g);
-        //drawBounds(g);
+        drawBounds(g);
         if(focused){
             if(highlight!=null){
                 drawHighLight(g);

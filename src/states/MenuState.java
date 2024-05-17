@@ -6,11 +6,14 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import gfx.AssetStorage;
+import gfx.Transition;
 import main.Game;
 import main.Launcher;
 import ui.ClickButton;
 import ui.Container;
 import ui.Text;
+import ui.UiHub;
+import world.World;
 
 public class MenuState extends State{
     private boolean alreadyInitialized = false;
@@ -22,10 +25,13 @@ public class MenuState extends State{
     @Override
     public void update() {
         if(running){
-            newGameButton.update();
-            loadGameButton.update();
-            exitButton.update();
-            settingsButton.update();
+            int x = Game.w.getWidth() /2 - container.bounds.width/2;
+            int y = Game.w.getHeight() /2- container.bounds.height/2;
+            container.setPosition(x, y);
+            
+            container.centerElements();
+            container.spaceOutVertically(35);
+            container.update();
         }else{
             State.transition.update();
         }
@@ -33,10 +39,10 @@ public class MenuState extends State{
 
     @Override
     public void render(Graphics g) {
+        container.render(g);
         g.setColor(Color.white);
         g.setFont(new Font("Serif",Font.BOLD,25));
         g.drawString("MENU", 25, 50);
-        container.render(g);
         if(transition !=null){
             transition.render(g);
         }
@@ -44,6 +50,8 @@ public class MenuState extends State{
 
     @Override
     public void init() {
+        UiHub.clear();
+        System.out.println("Menustate init");
         container = new Container(0, 0, Game.w.getWidth(),Game.w.getHeight());
         title = new Text("Game Title", 0, 50, 0, true);
 
@@ -51,14 +59,20 @@ public class MenuState extends State{
             @Override
             public void task(){
                 //Not implemented new game
-                State.setState(State.gameState);
+                try {
+                    World.load("lobby");
+                    State.setState(State.gameState,false);
+                    
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
             }
         };
         loadGameButton = new ClickButton(100, 320,new Text("Load Game",0,0,100,false)){
             @Override
             public void task(){
                 //Not implemented load game
-                State.setState(State.questionState);
+                //State.setState(State.questionState);
             }
         };
         exitButton = new ClickButton(100, 440, new Text("Exit",0,0,100,false)){
@@ -74,7 +88,9 @@ public class MenuState extends State{
         settingsButton = new ClickButton(60, bottomRow-gear.getHeight()/2, gear){
             @Override
             public void task(){
-                State.setState(State.settingsState);
+                State.setState(State.settingsState,true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
             }
         };
         container.setHeader(title);
@@ -88,6 +104,8 @@ public class MenuState extends State{
         if(!alreadyInitialized){
             alreadyInitialized = true;
         }
+        Transition.canContinue = true;
+        
     }
 
     @Override

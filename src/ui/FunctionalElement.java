@@ -8,7 +8,7 @@ public abstract class FunctionalElement extends UIElement{
     public boolean press;
     public FunctionalElement(int x, int y) {
         super(x, y);
-        UiHub.buttons.add(this);
+        UiHub.add(this);
     }
     public void update(){
         if(bounds.contains(Game.mm.mouseX,Game.mm.mouseY)){

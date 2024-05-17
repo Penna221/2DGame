@@ -23,6 +23,7 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+        System.out.println("sending click messsage");
         UiHub.sendClick();
     }
 

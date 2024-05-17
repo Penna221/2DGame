@@ -11,7 +11,7 @@ public class NullState extends State{
     public void render(Graphics g) {if(transition !=null){transition.render(g);}}
 
     @Override
-    public void init() {}
+    public void init() {System.out.println("Menustate init");}
 
     @Override
     public void updateOnceBetweenTransitions() {}

@@ -20,14 +20,18 @@ public class Container extends UIElement{
     public void centerElements(){
         for(UIElement e : elements){
             int w = e.bounds.width;
-            e.bounds.x = bounds.width/2-w/2;
+            
+            e.bounds.x = bounds.x  + bounds.width/2-w/2;
 
+        }
+        if(header !=null){
+            header.bounds.x = bounds.x + bounds.width/2 - header.bounds.width/2;
         }
     }
     public void spaceOutVertically(int buffer){
         int count = elements.size();
         int space = bounds.height;
-        int startY = 0;
+        int startY = y;
         if(header!=null){
             startY = header.bounds.y+header.bounds.height+buffer*2;
         }
@@ -81,6 +85,15 @@ public class Container extends UIElement{
         for(UIElement e : elements){
             e.render(g);
             
+        }
+    }
+    public void update(){
+        for(UIElement e : elements){
+            if(e instanceof FunctionalElement){
+                FunctionalElement ee = (FunctionalElement)e;
+                ee.update();
+            }
+                
         }
     }
     

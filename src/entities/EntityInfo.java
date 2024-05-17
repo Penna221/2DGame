@@ -14,8 +14,9 @@ public class EntityInfo {
     public int health;
     public HashMap<String,Animation> animations;
     public String ai;
-
-    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai){
+    public int width, height;
+    public String tunnel;
+    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel){
         this.name = name;
         this.id = id;
         this.type = type;
@@ -24,5 +25,8 @@ public class EntityInfo {
         this.health = health;
         this.animations = animations;
         this.ai = ai;
+        this.width = width;
+        this.height = height;
+        this.tunnel = tunnel;
     }
 }

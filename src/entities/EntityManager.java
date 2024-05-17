@@ -10,6 +10,7 @@ import gfx.Animations;
 import gfx.AssetStorage;
 import json.JSON;
 import json.KeyValuePair;
+import tiles.Tile;
 
 public class EntityManager {
     private ArrayList<Entity> entities;
@@ -28,10 +29,11 @@ public class EntityManager {
         entityInfos = new HashMap<Integer,EntityInfo>();
         JSON json2 = new JSON(new File("res\\json\\entities.json"));
         KeyValuePair kv2 = json2.parse("");
+        double scale = 1;
         for(KeyValuePair c : kv2.getObject()){
             String key = c.getKey();
             if(key.equals("scale")){
-                double scale = c.getFloat();
+                scale = c.getFloat();
                 AssetStorage.scaleOthers(scale);
                 continue;
             }
@@ -41,8 +43,19 @@ public class EntityManager {
             double speed = c.findChild("speed").getFloat();
             int health = c.findChild("health").getInteger();
             String type = c.findChild("type").getString();
-            String ai = c.findChild("ai").getString();
+            String tunnel = "";
+            if(type.equals("door")){
+                System.out.println("****************");
+                tunnel = c.findChild("tunnel").getString();
+                System.out.println(tunnel);
+            }
 
+            String ai = c.findChild("ai").getString();
+            System.out.println("SCALE IS " + scale);
+            int width = (int) (c.findChild("width").getInteger()*scale);
+            int height = (int) (c.findChild("height").getInteger()*scale);
+
+            
             HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
             KeyValuePair animations = c.findChild("animations");
             for(KeyValuePair ans: animations.getObject()){
@@ -53,7 +66,7 @@ public class EntityManager {
                 hashMap.put(a, Animations.animations.get(b));    
             }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai));
+            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel));
         }
 
 

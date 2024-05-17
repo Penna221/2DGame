@@ -49,6 +49,7 @@ public class Window {
     public void resize(int width, int height){
         this.width = width;
 		this.height = height;
+        d = new Dimension(width,height);
 		refresh();
     }
     public Canvas getCanvas(){return canvas;}

@@ -2,8 +2,8 @@
     "info": {
       "name":"demo",
       "tileSheet": "tilesheet",
-      "width": 64,
-      "height": 64,
+      "width": 16,
+      "height": 16,
       "tileSize": 16,
       "scale":4
     },
@@ -24,35 +24,35 @@
       },
       {
         "id": 2,
-        "name": "Dirt v1",
+        "name": "Dirt Wall",
         "x": 2,
         "y": 0,
-        "solid": false
+        "solid": true
       },
       {
         "id": 3,
-        "name": "Dirt v2",
+        "name": "Dirt Floor",
         "x": 3,
         "y": 0,
         "solid": false
       },
       {
         "id": 4,
-        "name": "Light Brick",
+        "name": "Light Brick Wall",
         "x": 0,
         "y": 1,
         "solid": true
       },
       {
         "id": 5,
-        "name": "Dark Brick",
+        "name": "Light Brick Wall right end",
         "x": 1,
         "y": 1,
         "solid": true
       },
       {
         "id": 6,
-        "name": "Red Brick",
+        "name": "Light Brick Wall left end",
         "x": 2,
         "y": 1,
         "solid": true
@@ -66,14 +66,14 @@
       },
       {
         "id": 8,
-        "name": "Water v1",
+        "name": "Light Floor Tile v1",
         "x": 0,
         "y": 2,
         "solid": false
       },
       {
         "id": 9,
-        "name": "Water v2",
+        "name": "Light Floor Tile v2",
         "x": 1,
         "y": 2,
         "solid": false
@@ -94,31 +94,157 @@
       },
       {
         "id": 12,
-        "name": "Floor Tile v1",
+        "name": "Light Brick Right Wall",
         "x": 0,
         "y": 3,
-        "solid": false
+        "solid": true
       },
       {
         "id": 13,
-        "name": "Floor Tile v2",
+        "name": "Light Brick Left Wall",
         "x": 1,
         "y": 3,
-        "solid": false
+        "solid": true
       },
       {
         "id": 14,
-        "name": "Snow",
+        "name": "Light Brick Right Corner",
         "x": 2,
         "y": 3,
-        "solid": false
+        "solid": true
       },
       {
         "id": 15,
-        "name": "Ice",
+        "name": "Light Brick Left Corner",
         "x": 3,
         "y": 3,
+        "solid": true
+      },
+      {
+        "id": 16,
+        "name": "Dungeon Wall",
+        "x": 4,
+        "y": 1,
+        "solid": true
+      },
+      {
+        "id": 17,
+        "name": "Dungeon Wall right end",
+        "x": 5,
+        "y": 1,
+        "solid": true
+      },
+      {
+        "id": 18,
+        "name": "Dungeon Wall left end",
+        "x": 6,
+        "y": 1,
+        "solid": true
+      },
+      {
+        "id": 19,
+        "name": "Dungeon Floor v1",
+        "x": 4,
+        "y": 2,
         "solid": false
+      },
+      {
+        "id": 20,
+        "name": "Dungeon Floor v2",
+        "x": 5,
+        "y": 2,
+        "solid": false
+      },
+      {
+        "id": 21,
+        "name": "Dungeon Right Wall",
+        "x": 6,
+        "y": 2,
+        "solid": true
+      },
+      {
+        "id": 22,
+        "name": "Dungeon Left Wall",
+        "x": 7,
+        "y": 2,
+        "solid": true
+      },
+      {
+        "id": 23,
+        "name": "Dungeon Left Corner Wall",
+        "x": 6,
+        "y": 3,
+        "solid": true
+      },
+      {
+        "id": 24,
+        "name": "Dungeon Right Corner Wall",
+        "x": 7,
+        "y": 3,
+        "solid": true
+      },
+      {
+        "id": 25,
+        "name": "Void",
+        "x": 7,
+        "y": 0,
+        "solid": false
+      },
+      {
+        "id": 26,
+        "name": "Grass Cliff",
+        "x": 1,
+        "y": 4,
+        "solid": true
+      },
+      {
+        "id": 27,
+        "name": "Grass Top Border",
+        "x": 2,
+        "y": 4,
+        "solid": true
+      },
+      {
+        "id": 28,
+        "name": "Grass Left Border",
+        "x": 3,
+        "y": 4,
+        "solid": true
+      },
+      {
+        "id": 29,
+        "name": "Grass Right Border",
+        "x": 4,
+        "y": 4,
+        "solid": true
+      },
+      {
+        "id": 30,
+        "name": "Grass Bottom Border",
+        "x": 5,
+        "y": 4,
+        "solid": true
+      },
+      {
+        "id": 31,
+        "name": "Dungeon Brick full",
+        "x": 4,
+        "y": 0,
+        "solid": true
+      },
+      {
+        "id": 32,
+        "name": "Dungeon Brick Right full",
+        "x": 5,
+        "y": 0,
+        "solid": true
+      },
+      {
+        "id": 33,
+        "name": "Dungeon Brick Left full",
+        "x": 6,
+        "y": 0,
+        "solid": true
       }
     ]
     

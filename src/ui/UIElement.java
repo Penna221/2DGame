@@ -19,6 +19,8 @@ public abstract class UIElement {
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
+        bounds.x = x;
+        bounds.y = y;
     }
     public abstract void render(Graphics g);
 }

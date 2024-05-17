@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 
 import gfx.Animations;
 import gfx.AssetStorage;
+import gfx.Transition;
 import io.KeyManager;
 import io.MouseManager;
 import questions.QuestionStorage;
@@ -94,9 +95,11 @@ public class Game extends Engine{
         
         status = "Everything loaded. Happy gaming :)";
         Thread.sleep(2000);
-        State.setState(State.menuState);
+        State.setState(State.menuState,true);
         loading = false;
-
+        Transition.canFinish= true;
+        Transition.canContinue2= true;
+        
     }
     @Override
     public void render() {
