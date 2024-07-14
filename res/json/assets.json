@@ -102,8 +102,8 @@
         
         "gear":"res\\gfx\\gui\\gear.png",
         
-        "player_idle_0":"res\\gfx\\entities\\player\\player_idle_0.png",
-        "player_idle_1":"res\\gfx\\entities\\player\\player_idle_1.png",
+        "player_idle_0":"res\\gfx\\entities\\newPlayer\\player_idle_0.png",
+        "player_idle_1":"res\\gfx\\entities\\newPlayer\\player_idle_1.png",
         "player_walk_south_0":"res\\gfx\\entities\\player\\player_walk_south_0.png",
         "player_walk_south_1":"res\\gfx\\entities\\player\\player_walk_south_1.png",
         "player_walk_south_2":"res\\gfx\\entities\\player\\player_walk_south_2.png",
@@ -122,23 +122,15 @@
         "player_walk_north_6":"res\\gfx\\entities\\player\\player_walk_north_6.png",
         "player_walk_north_7":"res\\gfx\\entities\\player\\player_walk_north_7.png",
 
-        "player_walk_west_0":"res\\gfx\\entities\\player\\player_walk_west_0.png",
-        "player_walk_west_1":"res\\gfx\\entities\\player\\player_walk_west_1.png",
-        "player_walk_west_2":"res\\gfx\\entities\\player\\player_walk_west_2.png",
-        "player_walk_west_3":"res\\gfx\\entities\\player\\player_walk_west_3.png",
-        "player_walk_west_4":"res\\gfx\\entities\\player\\player_walk_west_4.png",
-        "player_walk_west_5":"res\\gfx\\entities\\player\\player_walk_west_5.png",
-        "player_walk_west_6":"res\\gfx\\entities\\player\\player_walk_west_6.png",
-        "player_walk_west_7":"res\\gfx\\entities\\player\\player_walk_west_7.png",
-
-        "player_walk_east_0":"res\\gfx\\entities\\player\\player_walk_east_0.png",
-        "player_walk_east_1":"res\\gfx\\entities\\player\\player_walk_east_1.png",
-        "player_walk_east_2":"res\\gfx\\entities\\player\\player_walk_east_2.png",
-        "player_walk_east_3":"res\\gfx\\entities\\player\\player_walk_east_3.png",
-        "player_walk_east_4":"res\\gfx\\entities\\player\\player_walk_east_4.png",
-        "player_walk_east_5":"res\\gfx\\entities\\player\\player_walk_east_5.png",
-        "player_walk_east_6":"res\\gfx\\entities\\player\\player_walk_east_6.png",
-        "player_walk_east_7":"res\\gfx\\entities\\player\\player_walk_east_7.png",
+        "player_walk_west_0":"res\\gfx\\entities\\newPlayer\\player_walk_west_0.png",
+        "player_walk_west_1":"res\\gfx\\entities\\newPlayer\\player_walk_west_1.png",
+        "player_walk_west_2":"res\\gfx\\entities\\newPlayer\\player_walk_west_2.png",
+        "player_walk_west_3":"res\\gfx\\entities\\newPlayer\\player_walk_west_3.png",
+        
+        "player_walk_east_0":"res\\gfx\\entities\\newPlayer\\player_walk_east_0.png",
+        "player_walk_east_1":"res\\gfx\\entities\\newPlayer\\player_walk_east_1.png",
+        "player_walk_east_2":"res\\gfx\\entities\\newPlayer\\player_walk_east_2.png",
+        "player_walk_east_3":"res\\gfx\\entities\\newPlayer\\player_walk_east_3.png",
 
 
         "player_walk_south_west_0":"res\\gfx\\entities\\player\\player_walk_south_west_0.png",
@@ -192,7 +184,13 @@
         "gold_chest":"res\\gfx\\entities\\gold_chest.png",
 		"boss_door":"res\\gfx\\entities\\boss_door.png",
 		"ladder_hole":"res\\gfx\\entities\\ladder_hole.png",
-		"trader":"res\\gfx\\entities\\trader.png"
+		"trader":"res\\gfx\\entities\\trader.png",
+		"ladder":"res\\gfx\\entities\\ladder.png",
+		"skeleton":"res\\gfx\\entities\\skeleton.png",
+
+        "enemy_1_idle":"res\\gfx\\entities\\enemy1\\enemy_idle.png",
+        "enemy_1_hostile":"res\\gfx\\entities\\enemy1\\enemy_hostile.png"
+
     },
     "texts":{
         "txt1":{

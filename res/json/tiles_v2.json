@@ -5,7 +5,7 @@
       "width": 16,
       "height": 16,
       "tileSize": 16,
-      "scale":4
+      "scale":2
     },
     "tiles": [
       {
@@ -245,6 +245,20 @@
         "x": 6,
         "y": 0,
         "solid": true
+      },
+      {
+        "id": 34,
+        "name": "Stone wall",
+        "x": 0,
+        "y": 5,
+        "solid": true
+      },
+      {
+        "id": 35,
+        "name": "Stone Floor",
+        "x": 1,
+        "y": 5,
+        "solid": false
       }
     ]
     

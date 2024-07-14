@@ -33,7 +33,7 @@ public class KeyManager implements KeyListener{
                 down = true;
                 break;
             case KeyEvent.VK_F2:
-                World.map.generate(World.FOREST);
+                World.load("dungeon_lvl2");
                 break;
             case KeyEvent.VK_F3:
                 State.setState(State.menuState,true);

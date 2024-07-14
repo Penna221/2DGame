@@ -17,10 +17,12 @@ public class Camera {
     private void centerOnEntity(){
         xOffset = centeredEntity.x - Game.w.getWidth()/2 + centeredEntity.bounds.getWidth()/2;
         yOffset = centeredEntity.y - Game.w.getHeight()/2 + centeredEntity.bounds.getHeight()/2;
+        // System.out.println(xOffset + "  " + yOffset);
 
     }
     public void update(){
         if(centeredEntity!=null){
+            // System.out.println("Centering on entity");
             centerOnEntity();
         }
     }

@@ -78,12 +78,7 @@ public class Game extends Engine{
         w.getCanvas().addMouseMotionListener(mm);
         w.getCanvas().requestFocus();
         
-        //QUESTIONS
-        System.out.println("Loading Question Data");
-        status = "Loading Question Data";
-        QuestionStorage.load();
-
-
+        
         //UI
         System.out.println("Loading UI Data");
         status = "Loading UI Data";

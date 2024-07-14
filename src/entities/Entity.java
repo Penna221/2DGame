@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import entities.ai.AI;
 import entities.ai.CollectableAI;
 import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
+import entities.ai.Enemy1AI;
 import entities.ai.PlayerAI;
 import gfx.Animation;
 import gfx.Factory;
@@ -50,6 +52,9 @@ public class Entity {
                 break;
             case "door":
                 ai = new DoorAI(this);
+                break;
+            case "enemy_1":
+                ai = new Enemy1AI(this);
                 break;
             default:
                 ai = new EmptyAI(this);
@@ -102,7 +107,7 @@ public class Entity {
         Factory.drawCenteredAt(g, texture, p);
         // g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
         renderAdditional(g);
-        drawBounds(g);
+        // drawBounds(g);
         if(focused){
             if(highlight!=null){
                 drawHighLight(g);
@@ -307,6 +312,14 @@ public class Entity {
     }
     public void renderAdditional(Graphics g) {
         ai.render(g);
+    }
+    public Rectangle generateSurroundingBox(int size){
+        return new Rectangle((int)(bounds.x +bounds.width/2- size/2),(int) (bounds.y + bounds.height/2- size/2 ), size, size);
+        
+    }
+    public Ellipse2D.Double generateSurroundingCircle(int size){
+        return new Ellipse2D.Double((int)(bounds.x +bounds.width/2- size/2),(int) (bounds.y + bounds.height/2- size/2 ), size, size);
+        
     }
     public void update() {
         ai.update();

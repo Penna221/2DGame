@@ -18,7 +18,7 @@ public class World {
     //Can the map change in world? or are there multiple worlds? each with own map, with own player, with own entitites...
     //Different worlds. each with own data.
 
-    public static final int FOREST = 0;
+    public static final int LVL1 = 0, LVL2 = 1;
     public int type;
 
     public static Map map;
@@ -27,12 +27,7 @@ public class World {
     public static Camera camera;
     private static boolean ready = false, readyToUpdate = false;
     private static Transition transition;
-    public World(int type){
-        this.type = type;
-        entityManager = new EntityManager();
-        entityManager.loadEntityData();
-        generate();
-    }
+    
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
@@ -42,6 +37,8 @@ public class World {
     }
     
     public static void load(String worldName){
+        
+        entityManager.clearEntities();
         readyToUpdate = false;
         transition = new Transition(2000){
             @Override
@@ -51,14 +48,26 @@ public class World {
                     public void run(){
                         try {
                             ready = false;
-                            String mapName = worldName;
-                            String ent = mapName+"_entities";
-                            loadEntities(new File("res/maps/"+ent+".csv"));
-                            map.loadMap(new File("res/maps/"+mapName+".csv"));
+                            if(worldName.startsWith("dungeon")){
+                                if(worldName.endsWith("lvl1")){
+                                    generate(LVL1);
+                                }else if(worldName.endsWith("lvl2")){
+                                    generate(LVL2);
+                                }
+                            }
+                            
+                            
+                            else{
+                                String mapName = worldName;
+                                String ent = mapName+"_entities";
+                                loadEntities(new File("res/maps/"+ent+".csv"));
+                                map.loadMap(new File("res/maps/"+mapName+".csv"));
+
+                            }
                             ready = true;
                             readyToUpdate = true;
                             update();
-                            Thread.sleep(3000);
+                            // Thread.sleep(3000);
                             Transition.canContinue2 = true;
                             
                             Transition.canFinish = true;
@@ -78,7 +87,6 @@ public class World {
     }
     private static void loadEntities(File f){
         //Load Entities
-        entityManager.clearEntities();
         
         try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
             String line = "";
@@ -99,35 +107,39 @@ public class World {
             e.printStackTrace();
         }
     }
-    public void generate(){
-        camera = new Camera();
-        generateMap(type);
-        generateEntities(type);
+    private static void generate(int level){
+        entityManager.clearEntities();
+        generateMap(level);
+        generateEntities(level);
         //generateMushrooms(type);
     }
-    private void generateMap(int type){
+    private static void generateMap(int type){
         map = new Map(type,500,500);
     }
-    private void generateEntities(int type){
+    private static void generateEntities(int type){
         
-        
-        int mapCenterX = (map.map.length/2)*Tile.tileSize;
-        int mapCenterY = (map.map[0].length/2)*Tile.tileSize;
+        System.out.println("TileSize " + Tile.tileSize );
+        int mapWidth = map.map.length/2;
+        int mapHeight = map.map[0].length/2;
+        int mapCenterX = (int)(mapWidth * Tile.tileSize);
+        int mapCenterY = (int)(mapHeight*Tile.tileSize);
+        System.out.println("Map center " + mapCenterX + " " + mapCenterY);
         player = entityManager.generateWithID(0, mapCenterX, mapCenterY);
-        entityManager.generateWithID(1, mapCenterX, mapCenterY);
-        System.out.println(player);
+        // System.out.println(player);
         Camera.setEntityToCenter(player);
+        
+        map.populateWithEnemies(type);
 
     }
     private void generateMushrooms(int type){
         String biome;
         switch (type) {
-            case FOREST:
-                biome = "forest";
+            case LVL1:
+                biome = "dungeon_lvl1";
                 break;
         
             default:
-                biome = "forest";
+                biome = "dungeon_lvl1";
                 break;
         }
         // MushroomData.loadMushrooms();

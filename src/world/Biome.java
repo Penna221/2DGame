@@ -13,17 +13,19 @@ public class Biome {
     public Tile[] nonSolidTiles;
     public Tile[] solidTiles;
     public Tile[] borderTiles;
-    public int[] mushroomIds;
+    public int[] collectables;
+    public int[] entities;
     public static HashMap<String,Biome> biomes;
     //public Entity[] entitites;
     //public Mushroom[] mushrooms;
 
-    public Biome(String name, Tile[] nonSolidTiles,Tile[] solidTiles, Tile[] borderTiles, int[]mushroomIds){
+    public Biome(String name, Tile[] nonSolidTiles,Tile[] solidTiles, Tile[] borderTiles, int[]collectables,int[] entities){
         this.nonSolidTiles = nonSolidTiles;
         this.solidTiles = solidTiles;
         this.borderTiles = borderTiles;
         this.name = name;
-        this.mushroomIds = mushroomIds;
+        this.collectables = collectables;
+        this.entities = entities;
     }
     public static void loadBiomeData(){
         biomes = new HashMap<String,Biome>();
@@ -50,16 +52,25 @@ public class Biome {
             for(int i = 0; i < len3; i++){
                 b[i] = Tile.getTileByID(border[i].getInteger());
             }
-            
-            //Mushroom stuff
-            DataType[] mushrooms = bi.findChild("mushrooms").getArray();
-            int len4 = mushrooms.length;
-            int[] mids = new int[len4];
+            //Collectables  | like coins and stuff
+            DataType[] collectables = bi.findChild("collectables").getArray();
+            int len4 = collectables.length;
+            //cIds = Collectable IDs
+            int[] cIds = new int[len4];
             for(int i = 0; i < len4; i++){
-                mids[i] = mushrooms[i].getInteger();
+                cIds[i] = collectables[i].getInteger();
             }
 
-            biomes.put(name, new Biome(name,ns,s,b,mids));
+            DataType[] enti = bi.findChild("entities").getArray();
+            int len5 = enti.length;
+            //cIds = Collectable IDs
+            int[] entIds = new int[len5];
+            for(int i = 0; i < len5; i++){
+                entIds[i] = enti[i].getInteger();
+            }
+
+
+            biomes.put(name, new Biome(name,ns,s,b,cIds,entIds));
 
         }
     }

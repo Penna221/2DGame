@@ -1,5 +1,5 @@
 {
-    "scale":4.0,
+    "scale":2.0,
     "player":{
         "id":0,
         "type":"Creature",
@@ -19,8 +19,8 @@
             "walk_north_east":"player_walk_north_east"
         },
         "ai":"Player",
-        "width":16,
-        "height":16
+        "width":12,
+        "height":12
     },
     "fox":{
         "id":1,
@@ -58,9 +58,9 @@
         "speed":0.0,
         "health":2,
         "animations":{
-            "idle":"player_idle"
+            "idle":"rose_idle"
         },
-        "ai":"empty",
+        "ai":"Collectable",
         "width":16,
         "height":16
     },
@@ -161,11 +161,11 @@
         "ai":"door",
         "width":32,
         "height":32,
-        "tunnel":"dungeon"
+        "tunnel":"boss_arena"
     },
     "ladder hole":{
         "id":11,
-        "type":"Structure",
+        "type":"door",
         "name":"Ladder Hole",
         "texture":"ladder_hole",
         "speed":0.0,
@@ -173,9 +173,10 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"empty",
+        "ai":"door",
         "width":16,
-        "height":16
+        "height":16,
+        "tunnel":"dungeon_lvl1"
     },
     "trader":{
         "id":12,
@@ -190,5 +191,65 @@
         "ai":"empty",
         "width":32,
         "height":32
+    },
+    "lvl2_tunnel":{
+        "id":13,
+        "type":"door",
+        "name":"lvl2 Tunnel",
+        "texture":"ladder_hole",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"door",
+        "width":16,
+        "height":16,
+        "tunnel":"dungeon_lvl2"
+    },
+    "lobby_tunnel":{
+        "id":14,
+        "type":"door",
+        "name":"Lobby Tunnel",
+        "texture":"ladder",
+        "speed":0.0,
+        "health":2,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"door",
+        "width":16,
+        "height":16,
+        "tunnel":"lobby"
+    },
+    "skeleton":{
+        "id":15,
+        "type":"Creature",
+        "name":"Skeleton",
+        "texture":"skeleton",
+        "speed":1.0,
+        "health":20,
+        "animations":{
+            "idle":"player_idle"
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16
+    },
+    "enemy_1":{
+        "id":16,
+        "type":"Creature",
+        "name":"Enemy 1",
+        "texture":"enemy_1_idle",
+        "speed":1.0,
+        "health":20,
+        "animations":{
+            "hostile":"enemy_1_hostile",
+            "idle":"enemy_1_idle"
+        },
+        "ai":"enemy_1",
+        "width":16,
+        "height":16
     }
+    
 }

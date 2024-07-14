@@ -99,8 +99,9 @@ public class EntityManager {
         inView.clear();
         for(Entity e : entities){
             if(e.inView)
-                inView.add(e);
+            inView.add(e);
         }
+        // System.out.println(inView.size());
         
         for(Entity e : inView){
             e.update();

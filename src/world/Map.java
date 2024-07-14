@@ -1,5 +1,6 @@
 package world;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.File;
@@ -61,18 +62,20 @@ public class Map {
     }
     public void generate(int type){
         switch (type) {
-            case World.FOREST:
-                generateForest();        
+            case World.LVL1:
+                generateLVL1();        
                 break;
-        
+            case World.LVL2:
+                generateLVL2();
+                break;
             default:
-                generateForest();
+                generateLVL1();
                 break;
         }
 
     }
-    private void generateForest(){
-        Biome b = Biome.biomes.get("forest");
+    private void generateLVL1(){
+        Biome b = Biome.biomes.get("dungeon_lvl1");
         biomeName = b.name;
         Tile[] nonSolidTiles = b.nonSolidTiles;
         Tile[] solidTiles = b.solidTiles;
@@ -86,6 +89,25 @@ public class Map {
         step4(solidTiles,borderTiles);
         step5();
         lastStep(5);
+        generateSpawnArea();
+        generateBinaryMap();
+    }
+    private void generateLVL2(){
+        Biome b = Biome.biomes.get("dungeon_lvl2");
+        biomeName = b.name;
+        Tile[] nonSolidTiles = b.nonSolidTiles;
+        Tile[] solidTiles = b.solidTiles;
+        Tile[] borderTiles = b.borderTiles;
+        
+        map = new int[width][height];
+        
+        step1();
+        step2(5);
+        step3(nonSolidTiles);
+        step4(solidTiles,borderTiles);
+        step5();
+        lastStep(5);
+        generateSpawnArea();
         generateBinaryMap();
     }
     private void generateBinaryMap(){
@@ -227,10 +249,55 @@ public class Map {
         }
         return false;
     }
-
-    //Generate some patches of interesting stuff
+    private void generateSpawnArea(){
+        int centerX = map.length/2;
+        int centerY = map[0].length/2;
+        int radius = 5;
+        int startX = centerX - radius;
+        int startY = centerY - radius;
+        int endX = centerX + radius;
+        int endY = centerY + radius;
+        for(int y = startY; y < endY; y++){
+            for(int x = startX; x < endX; x++){
+                map[x][y] = 8;
+            }
+        }
+        for(int y = startY; y <= endX; y++){
+            map[startX][y] = 34;
+        }
+        for(int y = startY; y <= endY; y++){
+            map[endX][y] = 34;
+        }
+        for(int x = startX; x <= endX; x++){
+            map[x][startY] = 34;
+        }
+        for(int x = startX; x <= endX; x++){
+            map[x][endY] = 34;
+        }
+        //South
+        map[centerX][centerY+radius] = 8;
+        map[centerX+1][centerY+radius] = 8;
+        map[centerX-1][centerY+radius] = 8;
+        
+        //North
+        map[centerX][centerY-radius] = 8;
+        map[centerX+1][centerY-radius] = 8;
+        map[centerX-1][centerY-radius] = 8;
+        
+        //West
+        map[centerX-radius][centerY] = 8;
+        map[centerX-radius][centerY-1] = 8;
+        map[centerX-radius][centerY+1] = 8;
+        //East
+        map[centerX+radius][centerY] = 8;
+        map[centerX+radius][centerY-1] = 8;
+        map[centerX+radius][centerY+1] = 8;
+        World.entityManager.generateWithID(14, (centerX-4)*Tile.tileSize,( centerY-4)*Tile.tileSize);
+        
+    }
+    
     private void step5(){
-
+        
     }
     //Generate border
     private void lastStep(int id){
@@ -243,8 +310,43 @@ public class Map {
             }
         }
     }
-
-
+    public void populateWithEnemies(int type){
+        Biome biome = Biome.biomes.get("dungeon_lvl1");
+        switch (type) {
+            case World.LVL1:
+                biome = Biome.biomes.get("dungeon_lvl1");       
+                break;
+            case World.LVL2:
+                biome = Biome.biomes.get("dungeon_lvl2");       
+                break;
+            default:
+                biome = Biome.biomes.get("dungeon_lvl1");
+                break;
+        }
+        int[] entities = biome.entities;
+        int[] collectables = biome.collectables;
+        for(int y = 0; y < binaryMap[0].length; y++){
+            for(int x = 0; x < binaryMap.length; x++){
+                if(binaryMap[x][y]){
+                    if(!generateRandomEntity(entities, x*Tile.tileSize, y*Tile.tileSize)){
+                        generateRandomEntity(collectables, x*Tile.tileSize, y*Tile.tileSize);
+                    }
+                }
+            }
+        }
+    }
+    
+    public boolean generateRandomEntity(int[] entities, int x, int y){
+        Random r = new Random();
+        int d = r.nextInt(200);
+        //change to spawn enemy.
+        if(d ==1){
+            int d2 = r.nextInt(entities.length);
+            World.entityManager.generateWithID(entities[d2], x, y);
+            return true;
+        }
+        return false;
+    }
 
     //Can there be added some kind of rayCasting to set viewable area?
     public void updateVisible(Entity e){
@@ -279,7 +381,6 @@ public class Map {
         double yOffset = World.camera.getYOffset();
         for(int y = startY; y < endY; y++){
             for(int x = startX; x < endX; x++){
-                
                 g.drawImage(Tile.getTileByID(map[x][y]).texture, (int)((x*Tile.tileSize) - xOffset), (int)((y*Tile.tileSize) - yOffset),Tile.tileSize,Tile.tileSize, null);
             }
         }
