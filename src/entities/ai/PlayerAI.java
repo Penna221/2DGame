@@ -80,7 +80,7 @@ public class PlayerAI extends AI{
 
     @Override
     public void render(Graphics g) {
-        e.drawBounds(g);
+       // e.drawBounds(g);
         // Coordinates
         int currentTileX = (int)((e.bounds.x + e.bounds.width/2)/Tile.tileSize);
         int currentTileY = (int)((e.bounds.y + e.bounds.height/2)/Tile.tileSize);

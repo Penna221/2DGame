@@ -13,10 +13,10 @@
             "walk_east":"player_walk_east",
             "walk_north":"player_walk_north",
             "walk_south":"player_walk_south",
-            "walk_south_west":"player_walk_south_west",
-            "walk_south_east":"player_walk_south_east",
-            "walk_north_west":"player_walk_north_west",
-            "walk_north_east":"player_walk_north_east"
+            "walk_south_west":"player_walk_west",
+            "walk_south_east":"player_walk_east",
+            "walk_north_west":"player_walk_west",
+            "walk_north_east":"player_walk_east"
         },
         "ai":"Player",
         "width":12,
