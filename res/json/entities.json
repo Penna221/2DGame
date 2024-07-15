@@ -186,9 +186,9 @@
         "speed":0.0,
         "health":2,
         "animations":{
-            "idle":"player_idle"
+            "idle":"trader_idle"
         },
-        "ai":"empty",
+        "ai":"trader",
         "width":32,
         "height":32
     },

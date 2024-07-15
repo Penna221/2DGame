@@ -172,7 +172,11 @@
         "gold_chest":"res\\gfx\\entities\\gold_chest.png",
 		"boss_door":"res\\gfx\\entities\\boss_door.png",
 		"ladder_hole":"res\\gfx\\entities\\ladder_hole.png",
-		"trader":"res\\gfx\\entities\\trader.png",
+		"trader":"res\\gfx\\entities\\trader\\trader.png",
+		"trader_idle_0":"res\\gfx\\entities\\trader\\trader_idle_0.png",
+		"trader_idle_1":"res\\gfx\\entities\\trader\\trader_idle_1.png",
+		"trader_idle_2":"res\\gfx\\entities\\trader\\trader_idle_2.png",
+		"trader_blink":"res\\gfx\\entities\\trader\\trader_blink.png",
 		"ladder":"res\\gfx\\entities\\ladder.png",
 		"skeleton":"res\\gfx\\entities\\skeleton.png",
 

@@ -13,6 +13,7 @@ import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
 import entities.ai.Enemy1AI;
 import entities.ai.PlayerAI;
+import entities.ai.TraderAI;
 import gfx.Animation;
 import gfx.Factory;
 import main.Game;
@@ -55,6 +56,9 @@ public class Entity {
                 break;
             case "enemy_1":
                 ai = new Enemy1AI(this);
+                break;
+            case "trader":
+                ai = new TraderAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

@@ -50,5 +50,9 @@
     "enemy_1_idle":{
         "images":["enemy_1_idle"],
         "times":[400]
+    },
+    "trader_idle":{
+        "images":["trader_idle_0","trader_idle_1","trader","trader_idle_2","trader_idle_0","trader_idle_1","trader","trader_blink","trader","trader_idle_2"],
+        "times":[400,400,1000,600,400,400,1000,100,500,600]
     }
 }
