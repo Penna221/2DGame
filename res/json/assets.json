@@ -177,6 +177,9 @@
 		"trader_idle_1":"res\\gfx\\entities\\trader\\trader_idle_1.png",
 		"trader_idle_2":"res\\gfx\\entities\\trader\\trader_idle_2.png",
 		"trader_blink":"res\\gfx\\entities\\trader\\trader_blink.png",
+        "trader_table":"res\\gfx\\entities\\trader\\table.png",
+        "trader_stand_0":"res\\gfx\\entities\\trader\\trader_stand_0.png",
+        "trader_stand_1":"res\\gfx\\entities\\trader\\trader_stand_1.png",
 		"ladder":"res\\gfx\\entities\\ladder.png",
 		"skeleton":"res\\gfx\\entities\\skeleton.png",
 

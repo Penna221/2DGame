@@ -186,7 +186,8 @@
         "speed":0.0,
         "health":2,
         "animations":{
-            "idle":"trader_idle"
+            "idle":"trader_idle",
+            "trade":"trader_stand"
         },
         "ai":"trader",
         "width":32,
