@@ -11,9 +11,15 @@ import world.World;
 public class KeyManager implements KeyListener{
 
     public static boolean up, down, left, right;
+    public static boolean interactKey;
     @Override
     public void keyTyped(KeyEvent e) {
-        
+        System.out.println("You Pressed: " + e.getKeyChar());
+        char c = e.getKeyChar();
+        char c2 = Character.toLowerCase(c);
+        if(c2 == 'e'){
+
+        }
     }
 
     @Override
@@ -31,6 +37,9 @@ public class KeyManager implements KeyListener{
                 break;
             case KeyEvent.VK_S:
                 down = true;
+                break;
+            case KeyEvent.VK_E:
+                interactKey = true;
                 break;
             case KeyEvent.VK_F2:
                 World.load("dungeon_lvl2");
@@ -69,6 +78,9 @@ public class KeyManager implements KeyListener{
                 break;
             case KeyEvent.VK_S:
                 down = false;
+                break;
+            case KeyEvent.VK_E:
+                interactKey = false;
                 break;
             default:
                 break;

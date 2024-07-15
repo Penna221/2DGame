@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 
 import entities.Entity;
 import gfx.AssetStorage;
+import gfx.Transition;
+import io.KeyManager;
+import states.State;
 import world.World;
 
 public class TraderAI extends AI{
@@ -28,6 +31,9 @@ public class TraderAI extends AI{
 
         if(interactCircle.intersects(World.player.bounds)){
             talk = true;
+            if(KeyManager.interactKey){
+                openTradingMenu();
+            }
         }else{
             talk = false;
         }
@@ -36,6 +42,11 @@ public class TraderAI extends AI{
         e.currentAnimation.animate();
     }
 
+    private void openTradingMenu(){
+        State.setState(State.traderState, true);
+        Transition.canContinue2 = true;
+        Transition.canFinish = true;
+    }
     @Override
     public void render(Graphics g) {
         g.drawOval((int)(interactCircle.x - World.camera.getXOffset()),(int) (interactCircle.y - World.camera.getYOffset()), (int)interactCircle.width,(int)interactCircle.height);

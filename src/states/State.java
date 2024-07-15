@@ -2,13 +2,13 @@ package states;
 
 import java.awt.Graphics;
 
-import gfx.AssetStorage;
 import gfx.Transition;
 import ui.UiHub;
 
 public abstract class State {
     public static State currentState;
     public static State gameState, menuState,nullState,settingsState;
+    public static State traderState;
     protected static boolean running = true;
     public static Transition transition;
     public static void createStates(){
@@ -18,6 +18,7 @@ public abstract class State {
         gameState.init();
         menuState = new MenuState();
         menuState.init();
+        traderState = new TraderState();
         //NullState just because i want loading transition for game launching.
         nullState = new NullState();
         nullState.init();
@@ -56,6 +57,7 @@ public abstract class State {
             }
             @Override
             public void end(){
+                System.out.println("end");
                 State.running = true;
                 UiHub.finalStep();
             }
