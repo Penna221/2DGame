@@ -10,7 +10,7 @@ import gfx.AssetStorage;
 import main.Game;
 
 public class TraderState extends State {
-    private BufferedImage table, trader;
+    private BufferedImage table, trader, sell_board;
     private Animation an;
     @Override
     public void update() {
@@ -33,6 +33,7 @@ public class TraderState extends State {
         int tableY = Game.w.getHeight()/2 - table.getHeight()/2;
         g.drawImage(table,tableX,tableY,null);
         g.drawImage(trader,tableX-trader.getWidth(),tableY,null);
+        g.drawImage(sell_board,tableX+table.getWidth(),tableY,null);
         
         
         an.animate();
@@ -43,7 +44,7 @@ public class TraderState extends State {
     public void init() {
         System.out.println("TraderState init");
         an = EntityManager.entityInfos.get(12).animations.get("trade");
-        
+        sell_board = AssetStorage.images.get("sell_board");
         table = AssetStorage.images.get("trader_table");
     }
 

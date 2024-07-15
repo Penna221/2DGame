@@ -180,6 +180,7 @@
         "trader_table":"res\\gfx\\entities\\trader\\table.png",
         "trader_stand_0":"res\\gfx\\entities\\trader\\trader_stand_0.png",
         "trader_stand_1":"res\\gfx\\entities\\trader\\trader_stand_1.png",
+        "sell_board":"res\\gfx\\entities\\trader\\sell_board.png",
 		"ladder":"res\\gfx\\entities\\ladder.png",
 		"skeleton":"res\\gfx\\entities\\skeleton.png",
 
