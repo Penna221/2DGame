@@ -356,10 +356,10 @@ public class Map {
         int screenHeight = Game.w.getHeight();
         int wTiles = screenWidth/Tile.tileSize;
         int hTiles = screenHeight/Tile.tileSize;
-        startX = centerX - wTiles/2 - 1;
-        startY = centerY - hTiles/2 - 1;
-        endX = centerX + wTiles/2 +2;
-        endY = centerY + hTiles/2 +2;
+        startX = centerX - wTiles/2 - 7;
+        startY = centerY - hTiles/2 - 7;
+        endX = centerX + wTiles/2 +7;
+        endY = centerY + hTiles/2 +7;
     }
     public void render(Graphics g){
         

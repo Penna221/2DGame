@@ -2,14 +2,23 @@ package world;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
+import java.awt.geom.Line2D.Double;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import entities.Entity;
 import entities.EntityManager;
+import gfx.LineRectangleIntersection;
 import gfx.Transition;
 import tiles.Tile;
 
@@ -189,6 +198,108 @@ public class World {
             camera.render(g);
         }
         transition.render(g);
+    }
+    public static Polygon generatePolygon(LightSource e){
+        boolean[][] bm = map.binaryMap;
+        ArrayList<Point> points= new ArrayList<Point>();
+        for(int y = map.startY; y < map.endY; y++){
+            for(int x = map.startX; x < map.endX; x++){
+                if(!bm[x][y]){
+                    points.add(new Point((int)(x*Tile.tileSize - camera.getXOffset()),(int)(y*Tile.tileSize- camera.getYOffset())));
+                }else{
+                }
+                //Minimap
+                // g.fillRect(20+(x - map.startX)*3, 20+(y - map.startY)*3, 3, 3);
+
+            }
+        }
+        
+        int size = points.size();
+        Rectangle[] boxes = new Rectangle[size];
+        for(int i = 0; i < size; i++){
+            Rectangle box = new Rectangle((int)points.get(i).getX(),(int)points.get(i).getY(), Tile.tileSize, Tile.tileSize);
+            boxes[i] = box;
+        }
+        int pCenterX = (int)(e.x-camera.getXOffset());
+        int pCenterY = (int)(e.y-camera.getYOffset());
+        int radius = e.radius;
+        int numberOfLines = 50;
+        ArrayList<Point2D> polyPoints = new ArrayList<Point2D>();
+        Line2D.Double[] lines = new Line2D.Double[numberOfLines];
+        for (int i = 0; i < numberOfLines; i++) {
+            double angle = i * (2 * Math.PI / numberOfLines); // Calculate angle for each line
+            int endX = pCenterX + (int) (radius * Math.cos(angle));
+            int endY = pCenterY + (int) (radius * Math.sin(angle));
+            lines[i] = new Line2D.Double(pCenterX, pCenterY, endX, endY);
+        }
+        
+        for(int i = 0; i < lines.length; i++){
+            Line2D.Double line = lines[i];
+            ArrayList<Rectangle> boxesToCheck = new ArrayList<Rectangle>();
+            Point2D closestPoint = new Point((int)line.x2, (int)line.y2);
+            for(Rectangle box : boxes){
+                if(line.intersects(box)){
+                    boxesToCheck.add(box);
+                }
+            }
+            if(boxesToCheck.size()>0){
+                Rectangle closestBox = getClosestBox(boxesToCheck, line);
+                List<Point2D> intersectionPoints = LineRectangleIntersection.getIntersectionPoints((Double) line, closestBox);
+                closestPoint = getSmallestDistance(intersectionPoints,new Point((int)(line.x1),(int)line.y1));
+                
+            }
+            polyPoints.add(closestPoint);
+            
+        }
+        int[] xPoints = new int[polyPoints.size()];
+        int[] yPoints = new int[polyPoints.size()];
+        for(int i = 0; i < polyPoints.size(); i++){
+            
+            
+            xPoints[i] = (int)(polyPoints.get(i).getX());
+            yPoints[i] = (int)(polyPoints.get(i).getY());
+        }
+        Polygon poly = new Polygon(xPoints, yPoints, polyPoints.size());
+        return poly;
+    }
+    private static Rectangle getClosestBox(ArrayList<Rectangle> boxes, Line2D.Double line){
+        Rectangle closestBox = boxes.get(0);
+        double x = line.x1;
+        double y = line.y1;
+        double minDist = 1000000;
+        for(Rectangle box : boxes){
+            double centerX = box.getCenterX();
+            double centerY = box.getCenterY();
+            double distX = Math.abs(x-centerX);
+            double distY = Math.abs(y-centerY);
+            double dist = Math.sqrt(distX*distX + distY*distY);
+            if(dist < minDist){
+                minDist = dist;
+                closestBox= box;
+            }
+        }
+
+
+        
+        return closestBox;
+    }
+    private static Point2D getSmallestDistance(List<Point2D> intersectionPoints, Point p){
+        double x = p.getX();
+        double y = p.getY();
+        double minDist = 1000;
+        Point2D minPoint = intersectionPoints.get(0);
+        for(Point2D pp : intersectionPoints){
+            double x1 = pp.getX();
+            double y1 = pp.getY();
+            double xDist = Math.abs(x-x1);
+            double yDist = Math.abs(y-y1);
+            double dist = Math.sqrt(xDist*xDist + yDist*yDist);
+            if(dist < minDist){
+                minDist = dist;
+                minPoint = pp;
+            }
+        }
+        return minPoint;
     }
     public static boolean lineOfSightBetween(Entity a, Entity b){
         

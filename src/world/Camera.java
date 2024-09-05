@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
-import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Transparency;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
@@ -88,24 +88,13 @@ public class Camera {
 
         ArrayList<LightSource> lights = findLights();
         for(LightSource p : lights){
-            int x = p.x;
-            int y = p.y;
             Color c = p.color;
             double tra = p.transparency;
             Color newColor = new Color(c.getRed(),c.getGreen(),c.getBlue(),(int)(tra*255));
-            // g2d.setColor(newColor);
-            int originalRadius = p.radius;
-            // int largerRadius = (int)(originalRadius*1.3);
-            // g2d.fillOval(x - largerRadius, y - largerRadius, largerRadius * 2, largerRadius * 2);
-
-
             
-            
-            // Step 3: Clear transparency around the light source using simple circle clearing
-            
+            Polygon poly = World.generatePolygon(p);
             g2d.setColor(newColor); // Transparent color to clear shadow
-            g2d.fillOval(x - originalRadius, y - originalRadius, originalRadius * 2, originalRadius * 2);
-
+            g2d.fillPolygon(poly);
         }
         
         g2d.dispose();
@@ -116,8 +105,8 @@ public class Camera {
         //Check every entity that is on screen.
         for(Entity e : World.entityManager.inView){
             if(e.info.light_source){
-                int x = (int)(e.x + e.bounds.width/2- xOffset);
-                int y = (int)(e.y + e.bounds.height/2 - yOffset);
+                int x = (int)(e.x + e.bounds.width/2);
+                int y = (int)(e.y + e.bounds.height/2);
                 LightSource l = new LightSource(x, y, e.info.light_color,e.info.light_transparency, e.info.light_radius);
                 points.add(l);
             }

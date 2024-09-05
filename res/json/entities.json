@@ -22,7 +22,7 @@
         "width":12,
         "height":12,
         "light_source":true,
-        "light_radius":350,
+        "light_radius":600,
         "light_color":"#FFFFFF",
         "light_transparency":1.0
     },
@@ -58,9 +58,9 @@
         "width":16,
         "height":16,
         "light_source":true,
-        "light_radius":50,
+        "light_radius":100,
         "light_color":"#000000",
-        "light_transparency":0.4
+        "light_transparency":0.3
     },
     "rose":{
         "id":3,
@@ -96,7 +96,7 @@
         "light_source":true,
         "light_radius":100,
         "light_color":"#000000",
-        "light_transparency":1.0
+        "light_transparency":0.4
     },
     "stone":{
         "id":5,
@@ -184,9 +184,9 @@
         "width":32,
         "height":16,
         "light_source":true,
-        "light_radius":100,
+        "light_radius":200,
         "light_color":"#000000",
-        "light_transparency":1.0
+        "light_transparency":0.4
     },
     "boss door":{
         "id":10,
@@ -205,7 +205,7 @@
         "light_source":true,
         "light_radius":200,
         "light_color":"#000000",
-        "light_transparency":1.0
+        "light_transparency":0.6
     },
     "ladder hole":{
         "id":11,
@@ -222,9 +222,9 @@
         "height":16,
         "tunnel":"dungeon_lvl1",
         "light_source":true,
-        "light_radius":50,
+        "light_radius":200,
         "light_color":"#000000",
-        "light_transparency":1.0
+        "light_transparency":0.3
     },
     "trader":{
         "id":12,
@@ -241,7 +241,7 @@
         "width":32,
         "height":32,
         "light_source":true,
-        "light_radius":100,
+        "light_radius":200,
         "light_color":"#FF0000",
         "light_transparency":0.5
     },
@@ -260,9 +260,9 @@
         "height":16,
         "tunnel":"dungeon_lvl2",
         "light_source":true,
-        "light_radius":50,
+        "light_radius":200,
         "light_color":"#000000",
-        "light_transparency":1.0
+        "light_transparency":0.3
     },
     "lobby_tunnel":{
         "id":14,
@@ -279,9 +279,9 @@
         "height":16,
         "tunnel":"lobby",
         "light_source":true,
-        "light_radius":50,
+        "light_radius":200,
         "light_color":"#000000",
-        "light_transparency":1.0
+        "light_transparency":0.4
     },
     "skeleton":{
         "id":15,
