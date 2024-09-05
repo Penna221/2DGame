@@ -2,6 +2,7 @@ package world;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Line2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -185,7 +186,13 @@ public class World {
         }else{
             map.render(g);
             entityManager.render(g);
+            camera.render(g);
         }
         transition.render(g);
+    }
+    public static boolean lineOfSightBetween(Entity a, Entity b){
+        
+
+        return true;
     }
 }

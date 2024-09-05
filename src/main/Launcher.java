@@ -9,6 +9,8 @@ public class Launcher {
     public static Game g;
     public Launcher(int w, int h, String t){
         g = new Game(w,h,t);
+        // System.out.println("OpenGL Enabled: " + System.getProperty("sun.java2d.opengl"));
+        // System.exit(0);
         g.start();
     }
     public static void main(String[] args) {

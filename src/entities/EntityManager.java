@@ -1,4 +1,5 @@
 package entities;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +17,7 @@ public class EntityManager {
     private ArrayList<Entity> entities;
     private ArrayList<Entity> toRemove;
     private ArrayList<Entity> toAdd;
-    private ArrayList<Entity> inView;
+    public ArrayList<Entity> inView;
     public static HashMap<Integer,EntityInfo> entityInfos;
     public EntityManager() {
         entities = new ArrayList<Entity>();
@@ -44,20 +45,27 @@ public class EntityManager {
             int health = c.findChild("health").getInteger();
             String type = c.findChild("type").getString();
             String tunnel = "";
-            if(type.equals("door")){
+            
+
+            String ai = c.findChild("ai").getString();
+            if(ai.equals("door")){
                 System.out.println("****************");
                 tunnel = c.findChild("tunnel").getString();
                 System.out.println(tunnel);
             }
-
-            String ai = c.findChild("ai").getString();
             System.out.println("SCALE IS " + scale);
             int width = (int) (c.findChild("width").getInteger()*scale);
             int height = (int) (c.findChild("height").getInteger()*scale);
 
-            
+            boolean isLight = c.findChild("light_source").getBoolean();
+            int light_radius = c.findChild("light_radius").getInteger();
+            String color_string = c.findChild("light_color").getString();
+            Color light_color = Color.decode(color_string);
+            double light_transparency = c.findChild("light_transparency").getFloat();
+
             HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
             KeyValuePair animations = c.findChild("animations");
+            
             for(KeyValuePair ans: animations.getObject()){
                 String a = ans.getKey();
                 String b = ans.getString();
@@ -65,8 +73,9 @@ public class EntityManager {
                 // System.out.println("Animation val: " + b);
                 hashMap.put(a, Animations.animations.get(b));    
             }
+            
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel));
+            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency));
         }
 
 

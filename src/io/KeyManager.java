@@ -14,7 +14,6 @@ public class KeyManager implements KeyListener{
     public static boolean interactKey;
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("You Pressed: " + e.getKeyChar());
         char c = e.getKeyChar();
         char c2 = Character.toLowerCase(c);
         if(c2 == 'e'){

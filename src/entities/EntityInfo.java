@@ -1,5 +1,6 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
@@ -16,7 +17,12 @@ public class EntityInfo {
     public String ai;
     public int width, height;
     public String tunnel;
-    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel){
+
+    public boolean light_source;
+    public int light_radius;
+    public Color light_color;
+    public double light_transparency;
+    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel, boolean lightSource, int light_radius,Color light_color,double light_transparency){
         this.name = name;
         this.id = id;
         this.type = type;
@@ -28,5 +34,9 @@ public class EntityInfo {
         this.width = width;
         this.height = height;
         this.tunnel = tunnel;
+        this.light_source = lightSource;
+        this.light_radius = light_radius;
+        this.light_color = light_color;
+        this.light_transparency = light_transparency;
     }
 }

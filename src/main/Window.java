@@ -7,6 +7,8 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 
+import world.World;
+
 public class Window {
     private JFrame frame;
     private String title;
@@ -45,6 +47,9 @@ public class Window {
 		canvas.setPreferredSize(d);
 		canvas.setMinimumSize(d);
 		canvas.setMaximumSize(d);
+        if(World.camera!=null){
+            World.camera.init();
+        }
 	}
     public void resize(int width, int height){
         this.width = width;

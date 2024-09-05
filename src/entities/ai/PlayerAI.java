@@ -60,8 +60,10 @@ public class PlayerAI extends AI{
             if(ee == e){
                 continue;
             }
-            if(ee.bounds.intersects(viewRectangle)){
+            if(ee.bounds.intersects(viewRectangle)&&World.lineOfSightBetween(e, ee)){
+               
                 ee.inView = true;
+                
             }else{
                 ee.inView = false;
             }
@@ -77,7 +79,7 @@ public class PlayerAI extends AI{
 
         
     }
-
+    
     @Override
     public void render(Graphics g) {
        // e.drawBounds(g);
