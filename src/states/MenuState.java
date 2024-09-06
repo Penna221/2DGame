@@ -61,6 +61,8 @@ public class MenuState extends State{
                 //Not implemented new game
                 try {
                     World.load("lobby");
+                    //Why does this state change have transition as false?
+                    //ANSWER: Because World.load has its own transition.
                     State.setState(State.gameState,false);
                     
                 } catch (Exception e) {

@@ -8,16 +8,18 @@ import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.awt.geom.Line2D.Double;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import entities.Entity;
 import entities.EntityManager;
+import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
 import tiles.Tile;
@@ -199,14 +201,16 @@ public class World {
         }
         transition.render(g);
     }
-    public static Polygon generatePolygon(LightSource e){
+    public static LightMap generateLightMap(LightSource e){
+
+        //Go over all visible area. Map class has startX, startY, endX and endY.
         boolean[][] bm = map.binaryMap;
         ArrayList<Point> points= new ArrayList<Point>();
         for(int y = map.startY; y < map.endY; y++){
             for(int x = map.startX; x < map.endX; x++){
+                //False = Solid. Store coordinates of solid tile to points arraylist. Point(x,y);
                 if(!bm[x][y]){
                     points.add(new Point((int)(x*Tile.tileSize - camera.getXOffset()),(int)(y*Tile.tileSize- camera.getYOffset())));
-                }else{
                 }
                 //Minimap
                 // g.fillRect(20+(x - map.startX)*3, 20+(y - map.startY)*3, 3, 3);
@@ -214,16 +218,18 @@ public class World {
             }
         }
         
+        //Go over all points. Those are solid tiles. Create rectangles there so later on it can be checked if line intersects it.
         int size = points.size();
         Rectangle[] boxes = new Rectangle[size];
         for(int i = 0; i < size; i++){
             Rectangle box = new Rectangle((int)points.get(i).getX(),(int)points.get(i).getY(), Tile.tileSize, Tile.tileSize);
             boxes[i] = box;
         }
+        //Create Lines. Origin is player. Other end is in circular pattern.
         int pCenterX = (int)(e.x-camera.getXOffset());
         int pCenterY = (int)(e.y-camera.getYOffset());
         int radius = e.radius;
-        int numberOfLines = 50;
+        int numberOfLines = 400;
         ArrayList<Point2D> polyPoints = new ArrayList<Point2D>();
         Line2D.Double[] lines = new Line2D.Double[numberOfLines];
         for (int i = 0; i < numberOfLines; i++) {
@@ -232,7 +238,8 @@ public class World {
             int endY = pCenterY + (int) (radius * Math.sin(angle));
             lines[i] = new Line2D.Double(pCenterX, pCenterY, endX, endY);
         }
-        
+        ArrayList<Rectangle> finalBoxes = new ArrayList<Rectangle>();
+        //Go through all lines. Check if line intersects any boxes. If it does, add it to boxesToCheck arraylist.
         for(int i = 0; i < lines.length; i++){
             Line2D.Double line = lines[i];
             ArrayList<Rectangle> boxesToCheck = new ArrayList<Rectangle>();
@@ -242,10 +249,19 @@ public class World {
                     boxesToCheck.add(box);
                 }
             }
+            //After checking all the boxes. Find the closest box that was intersected with the line.
             if(boxesToCheck.size()>0){
                 Rectangle closestBox = getClosestBox(boxesToCheck, line);
+                finalBoxes.add(closestBox);
+                
+
                 List<Point2D> intersectionPoints = LineRectangleIntersection.getIntersectionPoints((Double) line, closestBox);
+                //If you check the closest point, it will not show the wall tile. It will be in the dark.
                 closestPoint = getSmallestDistance(intersectionPoints,new Point((int)(line.x1),(int)line.y1));
+                
+                //Can we get the boxes backside
+                // closestPoint = getBiggestDistance(intersectionPoints,new Point((int)(line.x1),(int)line.y1));
+                
                 
             }
             polyPoints.add(closestPoint);
@@ -260,7 +276,11 @@ public class World {
             yPoints[i] = (int)(polyPoints.get(i).getY());
         }
         Polygon poly = new Polygon(xPoints, yPoints, polyPoints.size());
-        return poly;
+        Set<Rectangle> uniqueRectanglesSet = new HashSet<>(finalBoxes);
+        ArrayList<Rectangle> uniqueRectangles = new ArrayList<>(uniqueRectanglesSet);
+        LightMap l = new LightMap(poly, uniqueRectangles);
+
+        return l;
     }
     private static Rectangle getClosestBox(ArrayList<Rectangle> boxes, Line2D.Double line){
         Rectangle closestBox = boxes.get(0);
@@ -273,6 +293,7 @@ public class World {
             double distX = Math.abs(x-centerX);
             double distY = Math.abs(y-centerY);
             double dist = Math.sqrt(distX*distX + distY*distY);
+            
             if(dist < minDist){
                 minDist = dist;
                 closestBox= box;
@@ -300,6 +321,24 @@ public class World {
             }
         }
         return minPoint;
+    }
+    private static Point2D getBiggestDistance(List<Point2D> intersectionPoints, Point p){
+        double x = p.getX();
+        double y = p.getY();
+        double maxDist = 0;
+        Point2D maxPoint = intersectionPoints.get(0);
+        for(Point2D pp : intersectionPoints){
+            double x1 = pp.getX();
+            double y1 = pp.getY();
+            double xDist = Math.abs(x-x1);
+            double yDist = Math.abs(y-y1);
+            double dist = Math.sqrt(xDist*xDist + yDist*yDist);
+            if(dist > maxDist){
+                maxDist = dist;
+                maxPoint = pp;
+            }
+        }
+        return maxPoint;
     }
     public static boolean lineOfSightBetween(Entity a, Entity b){
         

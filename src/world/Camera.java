@@ -7,11 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.Transparency;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
 
 import entities.Entity;
+import gfx.ExpandPolygon;
+import gfx.LightMap;
 import main.Game;
 public class Camera {
     private Color shadowColor;
@@ -92,9 +95,16 @@ public class Camera {
             double tra = p.transparency;
             Color newColor = new Color(c.getRed(),c.getGreen(),c.getBlue(),(int)(tra*255));
             
-            Polygon poly = World.generatePolygon(p);
+            LightMap lightMap = World.generateLightMap(p);
+            Polygon poly = lightMap.p;
             g2d.setColor(newColor); // Transparent color to clear shadow
             g2d.fillPolygon(poly);
+
+            ArrayList<Rectangle> boxes = lightMap.boxes;
+            for(Rectangle r : boxes){
+                g2d.fillRect(r.x,r.y,r.width,r.height);
+            }
+            
         }
         
         g2d.dispose();

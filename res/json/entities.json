@@ -1,5 +1,5 @@
 {
-    "scale":4.0,
+    "scale":6.0,
     "player":{
         "id":0,
         "type":"Creature",
@@ -22,7 +22,7 @@
         "width":12,
         "height":12,
         "light_source":true,
-        "light_radius":600,
+        "light_radius":300,
         "light_color":"#FFFFFF",
         "light_transparency":1.0
     },
