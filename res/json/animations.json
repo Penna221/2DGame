@@ -58,6 +58,9 @@
     "trader_stand":{
         "images":["trader_stand_0","trader_stand_1"],
         "times":[1000,1000,500,600]
+    },
+    "candle_idle":{
+        "images":["candle"],
+        "times":[1000]
     }
-
 }

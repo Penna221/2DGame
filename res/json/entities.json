@@ -319,6 +319,24 @@
         "light_radius":0,
         "light_color":"#000000",
         "light_transparency":1.0
+    },
+    "candle":{
+        "id":17,
+        "type":"Structure",
+        "name":"Candle",
+        "texture":"candle",
+        "speed":1.0,
+        "health":20,
+        "animations":{
+            "idle":"candle_idle"
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":true,
+        "light_radius":250,
+        "light_color":"#FFFF00",
+        "light_transparency":0.7
     }
     
 }

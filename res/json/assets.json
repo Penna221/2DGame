@@ -187,7 +187,8 @@
         "enemy_1_idle":"res\\gfx\\entities\\enemy1\\enemy_idle.png",
         "enemy_1_hostile":"res\\gfx\\entities\\enemy1\\enemy_hostile.png",
 
-        "interact_e":"res\\gfx\\gui\\interact_e.png"
+        "interact_e":"res\\gfx\\gui\\interact_e.png",
+        "candle":"res\\gfx\\entities\\candle.png"
 
     },
     "texts":{
