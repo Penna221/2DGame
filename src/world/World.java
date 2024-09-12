@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.awt.geom.Line2D.Double;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -22,6 +23,7 @@ import entities.EntityManager;
 import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
+import main.Game;
 import tiles.Tile;
 
 public class World {
@@ -39,12 +41,13 @@ public class World {
     public static Camera camera;
     private static boolean ready = false, readyToUpdate = false;
     private static Transition transition;
-    
+    public static ArrayList<BufferedImage> overlay;
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
         camera = new Camera();
         map = new Map();
+        overlay = new ArrayList<BufferedImage>();
         // load();
     }
     
@@ -198,6 +201,12 @@ public class World {
             map.render(g);
             entityManager.render(g);
             camera.render(g);
+            if(overlay!=null){
+                for(BufferedImage oi : overlay){
+                    g.drawImage(oi, 0,0,null);
+                }
+                overlay.clear();
+            }
         }
         transition.render(g);
     }

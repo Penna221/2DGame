@@ -2,9 +2,12 @@ package entities.player;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import entities.Entity;
+import gfx.Factory;
 import main.Game;
+import world.World;
 
 public class Inventory {
     
@@ -12,9 +15,14 @@ public class Inventory {
     private int y = Game.w.getHeight() - 40;
     private int spacing = 30;
     private int slotSize = 50;
+    private BufferedImage overlay;
+    private Graphics g;
     public Inventory(){
+        overlay = Factory.generateNewOverlayImage();
+        g = overlay.createGraphics();
         slots = new Slot[5];
         load();
+        draw();
     }
     public void load(){
         //Initialize
@@ -24,6 +32,7 @@ public class Inventory {
         //Load from saved data.
     }
     public boolean addItem(Entity c){
+        
         boolean added = false;
         for(int i = 0; i < slots.length; i++){
             Slot s = slots[i];
@@ -36,17 +45,24 @@ public class Inventory {
         if(!added){
             System.out.println("no available slots.");
         }
+        draw();
         return added;
     }
 
-
-    public void render(Graphics g){
+    public void draw(){
+        overlay = Factory.generateNewOverlayImage();
+        g = overlay.createGraphics();
         int startX = Game.w.getWidth()/2- (slots.length/2)*(spacing+slotSize);
         y = Game.w.getHeight() - 100;
         for(int i = 0; i < slots.length; i++){
             Slot s = slots[i];
             s.render(g, startX + i*(spacing+slotSize), y,slotSize,slotSize);
         }
+    }
+    public void render(){
+        
+        
+        World.overlay.add(overlay);
     }
     //Inner class
     public class Slot{
