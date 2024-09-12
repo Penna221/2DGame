@@ -3,12 +3,10 @@ package entities.ai;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import entities.Entity;
 import entities.player.Inventory;
-import gfx.Factory;
 import io.KeyManager;
 import main.Game;
 import tiles.Tile;
@@ -18,11 +16,11 @@ public class PlayerAI extends AI{
     public static Inventory inv;
     private Rectangle viewRectangle;
     public int distance;
-    private double angle;
     public PlayerAI(Entity entity) {
         super(entity);
-        
-        inv = new Inventory();
+        if(inv==null){
+            inv = new Inventory();
+        }
     }
 
     @Override
@@ -30,7 +28,6 @@ public class PlayerAI extends AI{
         
         e.calculateBounds();
         distance = 800;
-        angle = 0;
         viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
         
         e.currentAnimation = e.info.animations.get("idle");
@@ -41,7 +38,6 @@ public class PlayerAI extends AI{
     public void update() {
         e.ySpeed = 0;
         e.xSpeed = 0;
-        angle += 2;
         // System.out.println("player update");
         e.texture = e.currentAnimation.getFrame();
         //texture = Factory.rotateImage(texture, angle);
