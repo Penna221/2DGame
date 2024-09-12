@@ -5,7 +5,7 @@
         "type":"Creature",
         "name":"Player",
         "texture":"mushroomDude",
-        "speed":6.0,
+        "speed":4.2,
         "health":100,
         "animations":{
             "idle":"player_idle",
@@ -21,10 +21,10 @@
         "ai":"Player",
         "width":12,
         "height":12,
-        "light_source":true,
-        "light_radius":300,
-        "light_color":"#FFFFFF",
-        "light_transparency":1.0
+        "light_source":false,
+        "light_radius":270,
+        "light_color":"#120012",
+        "light_transparency":0.55
     },
     "fox":{
         "id":1,
@@ -240,9 +240,9 @@
         "ai":"trader",
         "width":32,
         "height":32,
-        "light_source":true,
+        "light_source":false,
         "light_radius":200,
-        "light_color":"#FF0000",
+        "light_color":"#FFFFFF",
         "light_transparency":0.5
     },
     "lvl2_tunnel":{
@@ -334,9 +334,9 @@
         "width":16,
         "height":16,
         "light_source":true,
-        "light_radius":250,
-        "light_color":"#FFFF00",
-        "light_transparency":0.7
+        "light_radius":350,
+        "light_color":"#AAAA00",
+        "light_transparency":0.8
     }
     
 }

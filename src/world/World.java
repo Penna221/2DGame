@@ -201,7 +201,7 @@ public class World {
         }
         transition.render(g);
     }
-    public static LightMap generateLightMap(LightSource e){
+    public static LightMap generateLightMap(LightSource e, Line2D.Double[] lines2){
 
         //Go over all visible area. Map class has startX, startY, endX and endY.
         boolean[][] bm = map.binaryMap;
@@ -226,17 +226,22 @@ public class World {
             boxes[i] = box;
         }
         //Create Lines. Origin is player. Other end is in circular pattern.
-        int pCenterX = (int)(e.x-camera.getXOffset());
-        int pCenterY = (int)(e.y-camera.getYOffset());
+        int eX = (int)(e.x-camera.getXOffset());
+        int eY = (int)(e.y-camera.getYOffset());
         int radius = e.radius;
-        int numberOfLines = 400;
+        int numberOfLines =150;
         ArrayList<Point2D> polyPoints = new ArrayList<Point2D>();
+        
         Line2D.Double[] lines = new Line2D.Double[numberOfLines];
-        for (int i = 0; i < numberOfLines; i++) {
-            double angle = i * (2 * Math.PI / numberOfLines); // Calculate angle for each line
-            int endX = pCenterX + (int) (radius * Math.cos(angle));
-            int endY = pCenterY + (int) (radius * Math.sin(angle));
-            lines[i] = new Line2D.Double(pCenterX, pCenterY, endX, endY);
+        if(lines2==null){
+            for (int i = 0; i < numberOfLines; i++) {
+                double angle = i * (2 * Math.PI / numberOfLines); // Calculate angle for each line
+                int endX = eX + (int) (radius * Math.cos(angle));
+                int endY = eY + (int) (radius * Math.sin(angle));
+                lines[i] = new Line2D.Double(eX, eY, endX, endY);
+            }
+        }else{
+            lines = lines2;
         }
         ArrayList<Rectangle> finalBoxes = new ArrayList<Rectangle>();
         //Go through all lines. Check if line intersects any boxes. If it does, add it to boxesToCheck arraylist.
