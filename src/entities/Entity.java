@@ -22,6 +22,7 @@ import world.World;
 
 public class Entity {
     public double x, y;
+    public double scale;
     public Rectangle bounds;
     public boolean focused;
     public int health;
@@ -38,6 +39,7 @@ public class Entity {
         this.x = x;
         this.y = y;
         this.info = info;
+        this.scale = EntityManager.scale;
         init();
     }
     public void setAI(){
@@ -68,6 +70,9 @@ public class Entity {
             currentAnimation = info.animations.get("idle");
             currentAnimation.restart();
         }
+    }
+    public void setScale(double d){
+        this.scale = d;
     }
     public void setTexture(BufferedImage img){
         this.texture = img;
@@ -108,7 +113,7 @@ public class Entity {
         double xOffset = World.camera.getXOffset();
         double yOffset = World.camera.getYOffset();
         Point p = new Point((int)(x - xOffset + bounds.getWidth()/2),(int)((y - yOffset +bounds.getHeight()/2)));
-        Factory.drawCenteredAt(g, texture, p);
+        Factory.drawCenteredAt(g, texture, p, scale);
         // g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
         renderAdditional(g);
         // drawBounds(g);
@@ -128,7 +133,7 @@ public class Entity {
         double xOffset = World.camera.getXOffset();
         double yOffset = World.camera.getYOffset();
         Point p = new Point((int)(x - xOffset + bounds.getWidth()/2),(int)((y - yOffset +bounds.getHeight()/2)));
-        Factory.drawCenteredAt(g, highlight, p);
+        Factory.drawCenteredAt(g, highlight, p,scale);
     }
 
 

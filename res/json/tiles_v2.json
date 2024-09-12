@@ -2,10 +2,7 @@
     "info": {
       "name":"demo",
       "tileSheet": "tilesheet",
-      "width": 16,
-      "height": 16,
-      "tileSize": 16,
-      "scale":6
+      "tileSize": 16
     },
     "tiles": [
       {

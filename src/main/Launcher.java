@@ -2,8 +2,10 @@ package main;
 
 import java.io.File;
 
+import entities.EntityManager;
 import json.JSON;
 import json.KeyValuePair;
+import tiles.Tile;
 
 public class Launcher {
     public static Game g;
@@ -24,6 +26,11 @@ public class Launcher {
             int width = kv.findChild("width").getInteger();
             int height = kv.findChild("height").getInteger();
             String title = kv.findChild("title").getString();
+            int overall_scale = kv.findChild("overall_scale").getInteger();
+            int tile_scale = kv.findChild("tile_scale").getInteger();
+            Tile.scale = tile_scale*overall_scale;
+            int entity_scale = kv.findChild("entity_scale").getInteger();
+            EntityManager.scale = entity_scale*overall_scale;
             System.out.println("Width:" + width);
             System.out.println("Height:" + height);
             System.out.println("Title:" + title);

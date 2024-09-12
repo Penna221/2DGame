@@ -18,6 +18,7 @@ public class EntityManager {
     private ArrayList<Entity> toRemove;
     private ArrayList<Entity> toAdd;
     public ArrayList<Entity> inView;
+    public static int scale = 1;
     public static HashMap<Integer,EntityInfo> entityInfos;
     public EntityManager() {
         entities = new ArrayList<Entity>();
@@ -30,14 +31,7 @@ public class EntityManager {
         entityInfos = new HashMap<Integer,EntityInfo>();
         JSON json2 = new JSON(new File("res\\json\\entities.json"));
         KeyValuePair kv2 = json2.parse("");
-        double scale = 1;
         for(KeyValuePair c : kv2.getObject()){
-            String key = c.getKey();
-            if(key.equals("scale")){
-                scale = c.getFloat();
-                AssetStorage.scaleOthers(scale);
-                continue;
-            }
             int id = c.findChild("id").getInteger();
             String name = c.findChild("name").getString();
             
@@ -73,7 +67,6 @@ public class EntityManager {
                 // System.out.println("Animation val: " + b);
                 hashMap.put(a, Animations.animations.get(b));    
             }
-            
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
             entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency));
         }

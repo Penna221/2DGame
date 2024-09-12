@@ -28,12 +28,12 @@ public class Factory {
         g2d.dispose();
         return rotated;
     }
-    public static void drawCenteredAt(Graphics g, BufferedImage img, Point p){
-        int w = img.getWidth();
-        int h = img.getHeight();
+    public static void drawCenteredAt(Graphics g, BufferedImage img, Point p, double scale){
+        int w = (int)(img.getWidth()*scale);
+        int h = (int)(img.getHeight()*scale);
         int drawX = (int)(p.getX()-(w/2));
         int drawY = (int)(p.getY()-(h/2));
-        g.drawImage(img,drawX,drawY,null);
+        g.drawImage(img,drawX,drawY,w,h,null);
     }
     public static BufferedImage highlightEdges(BufferedImage img){
         BufferedImage img2 = new BufferedImage(img.getWidth(),img.getHeight(),BufferedImage.TYPE_INT_ARGB);

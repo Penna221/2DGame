@@ -38,10 +38,6 @@ public class AssetStorage {
     public static void scaleOthers(double scale){
         images.forEach((key,value)->{
             images.put(key, scaleImage(value,scale));
-            // if(!key.contains("Tile")){
-            // }else{
-            //     images.put(key, value);
-            // }
         });
     }
     public static BufferedImage scaleImage(BufferedImage img, double scale){
