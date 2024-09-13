@@ -5,10 +5,13 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import javax.sound.sampled.Clip;
+
 import entities.Entity;
 import entities.player.Inventory;
 import io.KeyManager;
 import main.Game;
+import sound.SoundPlayer;
 import tiles.Tile;
 import world.World;
 
@@ -16,6 +19,8 @@ public class PlayerAI extends AI{
     public static Inventory inv;
     private Rectangle viewRectangle;
     public int distance;
+    private boolean moving = false;
+    private Clip walkClip;
     public PlayerAI(Entity entity) {
         super(entity);
         if(inv==null){
@@ -41,18 +46,36 @@ public class PlayerAI extends AI{
         // System.out.println("player update");
         e.texture = e.currentAnimation.getFrame();
         //texture = Factory.rotateImage(texture, angle);
+        moving = false;
         if(KeyManager.up){
             e.ySpeed = -e.speed;
+            moving = true;
         }
         if(KeyManager.down){
             e.ySpeed= e.speed;
+            moving = true;
         }
         if(KeyManager.left){
             e.xSpeed = -e.speed;
+            moving = true;
         }
         if(KeyManager.right){
             e.xSpeed = e.speed;
+            moving = true;
         }
+        if(moving){
+            if(walkClip==null){
+                walkClip = SoundPlayer.loopSound("walk");
+            }
+            
+        }else{
+            if(walkClip!=null){
+                walkClip.stop();
+                walkClip = null;
+            }
+        }
+
+
         ArrayList<Entity> entities = World.entityManager.getEntities();
         for(Entity ee : entities){
             if(ee == e){

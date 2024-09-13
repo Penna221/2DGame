@@ -195,5 +195,16 @@
         "txt1":{
             "file":""
         }
+    },
+    "sounds":{
+        "test":"res\\sound\\test.wav",
+        "test2":"res\\sound\\test2.wav",
+        "test3":"res\\sound\\test3.wav",
+        "allDone":"res\\sound\\allDone.wav",
+        "pick":"res\\sound\\pick.wav",
+        "pick2":"res\\sound\\pick2.wav",
+        "pickup":"res\\sound\\pickup.wav",
+        "walk":"res\\sound\\footsteps.wav"
     }
+    
 }

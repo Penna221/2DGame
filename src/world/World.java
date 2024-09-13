@@ -24,6 +24,7 @@ import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
 import main.Game;
+import sound.SoundPlayer;
 import tiles.Tile;
 
 public class World {
@@ -54,6 +55,7 @@ public class World {
     public static void load(String worldName){
         
         entityManager.clearEntities();
+        SoundPlayer.stopAllSounds();
         readyToUpdate = false;
         transition = new Transition(2000){
             @Override

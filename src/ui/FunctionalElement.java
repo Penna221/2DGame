@@ -2,6 +2,7 @@ package ui;
 import java.awt.Color;
 
 import main.Game;
+import sound.SoundPlayer;
 public abstract class FunctionalElement extends UIElement{
     public Color bg, brd;
     public boolean focused;
@@ -12,9 +13,12 @@ public abstract class FunctionalElement extends UIElement{
     }
     public void update(){
         if(bounds.contains(Game.mm.mouseX,Game.mm.mouseY)){
+            if(!focused){
+                focused = true;
+                SoundPlayer.playSound("pick");
+            }
             bg = UIFactory.highlightedButtonData.bgColor;
             brd = UIFactory.highlightedButtonData.borderColor;
-            focused = true;
         }else{
             bg = UIFactory.buttonData.bgColor;
             brd = UIFactory.buttonData.borderColor;
@@ -25,6 +29,7 @@ public abstract class FunctionalElement extends UIElement{
     public void click(){
         if(focused){
             task();
+            SoundPlayer.playSound("pick2");
         }
     }
     public void toggle(boolean b){

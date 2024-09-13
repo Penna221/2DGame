@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import entities.Entity;
 import entities.EntityManager;
 import entities.player.Inventory;
+import sound.SoundPlayer;
 import world.World;
 
 public class CollectableAI extends AI{
@@ -25,6 +26,7 @@ public class CollectableAI extends AI{
         if(e.bounds.intersects(World.player.bounds)){
             PlayerAI.inv.addItem(e);
             World.entityManager.removeEntity(e);
+            SoundPlayer.playSound("pickup");
         }
         e.currentAnimation.animate();
     }

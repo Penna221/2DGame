@@ -1,0 +1,10 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Code\\GITHUB_projects\\2DGame\\lib\\json.jar",
+        "c:\\Code\\GITHUB_projects\\2DGame\\lib\\engine.jar"
+    ],
+    "java.dependency.packagePresentation": "flat"
+}

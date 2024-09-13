@@ -3,6 +3,7 @@ import java.awt.Graphics;
 
 import gfx.Transition;
 import main.Game;
+import sound.SoundPlayer;
 import states.GameState;
 import states.State;
 
@@ -23,13 +24,14 @@ public class PauseMenu {
         returnButton = new ClickButton(0,250,new Text("Return to game",w/2,0,150,false)){
             @Override
             public void task(){
-                GameState.paused = false;
+                // GameState.paused = false;
+                SoundPlayer.playSound("test3");
             }
         };
         settingsButton = new ClickButton(0,250,new Text("Settings",w/2,0,150,false)){
             @Override
             public void task(){
-                GameState.paused = false;
+                SoundPlayer.playSound("test");
             }
         };
         exitButton = new ClickButton(0,250,new Text("Save and exit",w/2,0,150,false)){

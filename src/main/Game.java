@@ -1,5 +1,4 @@
 package main;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -12,6 +11,7 @@ import gfx.Transition;
 import io.KeyManager;
 import io.MouseManager;
 import questions.QuestionStorage;
+import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
 import ui.UIFactory;
@@ -55,8 +55,12 @@ public class Game extends Engine{
         status = "Loading Assets";
         AssetStorage.loadImages();
 
-        status = "Laoding animations";
+        status = "Loading animations";
         Animations.loadAnimations();
+        
+        
+        status = "Loading sounds";
+        AssetStorage.loadSounds();
 
         status = "Loading Texts";
         AssetStorage.loadTexts();        
@@ -89,6 +93,7 @@ public class Game extends Engine{
         State.createStates();
         
         status = "Everything loaded. Happy gaming :)";
+        SoundPlayer.playSound("allDone");
         Thread.sleep(2000);
         State.setState(State.menuState,true);
         loading = false;

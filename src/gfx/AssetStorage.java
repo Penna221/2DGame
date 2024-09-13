@@ -10,6 +10,7 @@ import json.KeyValuePair;
 
 public class AssetStorage {
     public static HashMap<String,BufferedImage> images = new HashMap<String,BufferedImage>();
+    public static HashMap<String,File> sounds = new HashMap<String,File>();
     public HashMap<String,String> texts;
     
     public static void loadImages(){
@@ -34,6 +35,22 @@ public class AssetStorage {
         KeyValuePair s = json.parse("JSON");
         KeyValuePair textObject = s.findChild("texts");
         //textObject.printAll(0);
+    }
+    public static void loadSounds(){
+        
+        System.out.println("Loading Sounds");
+        JSON json = new JSON(new File("res\\json\\assets.json"));
+        KeyValuePair s = json.parse("JSON");
+        KeyValuePair soundObject = s.findChild("sounds");
+        for(KeyValuePair i : soundObject.getObject()){
+            String name = i.getKey();
+            String path = i.getString();
+            File f = new File(path);
+            if(f.exists()){
+                System.out.println("Loaded sound: " + name);
+                sounds.put(name, f);
+            }
+        }
     }
     public static void scaleOthers(double scale){
         images.forEach((key,value)->{
