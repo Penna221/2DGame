@@ -89,7 +89,7 @@ public class Camera {
         g2d.fillRect(0, 0, screenWidth, screenHeight);
 
         ArrayList<LightSource> lights = findLights();
-        LightMap playerLight = generatePlayerLight(100,15,400);
+        LightMap playerLight = generatePlayerLight(40,15,400);
         ArrayList<LightSource> sortedLights = sortLights(lights);
         drawLight(g2d,playerLight,new Color(0,0,0,255),0.2f);
         for(LightSource p : sortedLights){

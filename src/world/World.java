@@ -238,7 +238,7 @@ public class World {
         int eX = (int)(e.x-camera.getXOffset());
         int eY = (int)(e.y-camera.getYOffset());
         int radius = e.radius;
-        int numberOfLines =150;
+        int numberOfLines =31;
         ArrayList<Point2D> polyPoints = new ArrayList<Point2D>();
         
         Line2D.Double[] lines = new Line2D.Double[numberOfLines];
