@@ -2,11 +2,13 @@ package states;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import entities.EntityManager;
 import gfx.Animation;
 import gfx.AssetStorage;
+import gfx.Factory;
 import main.Game;
 
 public class TraderState extends State {
@@ -29,11 +31,13 @@ public class TraderState extends State {
         g.fillRect(0, 0, Game.w.getWidth(), Game.w.getHeight());
         g.setColor(Color.red);
         g.drawString("TraderState", 25, 25);
-        int tableX = Game.w.getWidth()/2 - table.getWidth()/2;
-        int tableY = Game.w.getHeight()/2 - table.getHeight()/2;
-        g.drawImage(table,tableX,tableY,null);
-        g.drawImage(trader,tableX-trader.getWidth(),tableY,null);
-        g.drawImage(sell_board,tableX+table.getWidth(),tableY,null);
+        int tableX = Game.w.getWidth()/2 -table.getWidth();
+        int tableY = Game.w.getHeight()/2-table.getHeight();
+        g.drawImage(table,tableX,tableY,table.getWidth()*2,table.getHeight()*2,null);
+        // Factory.drawCenteredAt(g, table, new Point(tableX,tableY), 2);
+        
+        g.drawImage(trader,tableX-trader.getWidth()*2,tableY,trader.getWidth()*2,trader.getHeight()*2,null);
+        g.drawImage(sell_board,Game.w.getWidth()-sell_board.getWidth()-20,tableY,null);
         
         
         an.animate();
