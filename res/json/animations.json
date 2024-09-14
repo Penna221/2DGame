@@ -62,5 +62,9 @@
     "candle_idle":{
         "images":["candle"],
         "times":[1000]
+    },
+    "boss_idle":{
+        "images":["boss_idle_0","boss_idle_1"],
+        "times":[1000,1000]
     }
 }

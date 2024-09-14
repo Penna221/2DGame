@@ -336,6 +336,24 @@
         "light_radius":350,
         "light_color":"#AAAA00",
         "light_transparency":0.8
+    },
+    "boss":{
+        "id":18,
+        "type":"Creature",
+        "name":"Boss",
+        "texture":"boss",
+        "speed":1.0,
+        "health":200,
+        "animations":{
+            "idle":"boss_idle"
+        },
+        "ai":"boss",
+        "width":40,
+        "height":40,
+        "light_source":true,
+        "light_radius":350,
+        "light_color":"#AAAA00",
+        "light_transparency":0.8
     }
     
 }
