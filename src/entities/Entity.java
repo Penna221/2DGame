@@ -8,6 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 import entities.ai.AI;
+import entities.ai.BlacksmithAI;
 import entities.ai.BossAI;
 import entities.ai.CollectableAI;
 import entities.ai.DoorAI;
@@ -65,6 +66,9 @@ public class Entity {
                 break;
             case "boss":
                 ai = new BossAI(this);
+                break;
+            case "blacksmith":
+                ai = new BlacksmithAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

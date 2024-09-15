@@ -66,5 +66,9 @@
     "boss_idle":{
         "images":["boss_idle_0","boss_idle_1"],
         "times":[1000,1000]
+    },
+    "blacksmith_idle":{
+        "images":["blacksmith_idle_0","blacksmith_idle_1"],
+        "times":[1400,1400]
     }
 }
