@@ -79,7 +79,7 @@
         "light_color":"#000000",
         "light_transparency":1.0
     },
-    "sun flower":{
+    "sun_flower":{
         "id":4,
         "type":"",
         "name":"Sun Flower",
@@ -93,9 +93,9 @@
         "width":16,
         "height":32,
         "light_source":true,
-        "light_radius":100,
-        "light_color":"#000000",
-        "light_transparency":0.4
+        "light_radius":500,
+        "light_color":"#FFFF00",
+        "light_transparency":0.8
     },
     "stone":{
         "id":5,

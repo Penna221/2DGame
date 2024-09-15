@@ -2,13 +2,19 @@ package world;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
 import entities.Entity;
+import entities.EntityManager;
 import main.Game;
 import tiles.Tile;
 
@@ -19,14 +25,32 @@ public class Map {
     public int width, height;
     public String biomeName;
     public int startX, startY, endX, endY;
+    public static HashMap<String,Structure> structures = new HashMap<String,Structure>();
     public Map(int type, int width, int height){
         this.width = width;
         this.height = height;
         generate(type);
-        
 
     }
     public Map(){}
+    public static void loadStructures(){
+        File[] list = new File("res/maps/structures").listFiles();
+        ArrayList<File> files = new ArrayList<File>();
+        for(File f : list){
+            if(f.getName().endsWith("entities.csv")){
+                continue;
+            }else{
+                files.add(f);
+            }
+        }
+        for(File f : files){
+            String fileName = f.getName();
+            String name = fileName.substring(0,fileName.length()-4);
+            // System.out.println(name);
+            Structure s = new Structure(name);
+            structures.put(name, s);
+        }
+    }
     public void loadMap(File f){
         // mapLoaded = false;
         String entityFile ="";
@@ -72,7 +96,32 @@ public class Map {
                 generateLVL1();
                 break;
         }
-
+        
+        saveMapAsImage();
+    }
+    public void saveMapAsImage(){
+        System.out.println("Trying to save map");
+        BufferedImage i = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
+        for(int y = 0; y < binaryMap[0].length;y++){
+            for(int x = 0; x < binaryMap.length;x++){
+                
+                if(binaryMap[x][y]){
+                    i.setRGB(x, y, new Color(0,0,0,0).getRGB());
+                }else{
+                    i.setRGB(x, y, new Color(0,0,0,255).getRGB());
+                }
+                
+            }
+        }
+        try {
+            File f =new File("res/screenshots/map.png");
+            f.getParentFile().mkdirs();
+            System.out.println("saving " + f.getAbsolutePath());
+            ImageIO.write(i, "png",f);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     private void generateLVL1(){
         Biome b = Biome.biomes.get("dungeon_lvl1");
@@ -83,11 +132,11 @@ public class Map {
         
         map = new int[width][height];
         
-        step1();
-        step2(5);
-        step3(nonSolidTiles);
-        step4(solidTiles,borderTiles);
-        step5();
+        initMapToZero();
+        cellularAutomata(7);
+        setNonSolidTiles(nonSolidTiles);
+        setSolidTiles(solidTiles,borderTiles);
+        generateStructures(50);
         lastStep(5);
         generateSpawnArea();
         generateBinaryMap();
@@ -101,11 +150,11 @@ public class Map {
         
         map = new int[width][height];
         
-        step1();
-        step2(5);
-        step3(nonSolidTiles);
-        step4(solidTiles,borderTiles);
-        step5();
+        initMapToZero();
+        cellularAutomata(5);
+        setNonSolidTiles(nonSolidTiles);
+        setSolidTiles(solidTiles,borderTiles);
+        generateStructures(40);
         lastStep(5);
         generateSpawnArea();
         generateBinaryMap();
@@ -126,7 +175,7 @@ public class Map {
     }
 
     //init everything to 0
-    private void step1(){
+    private void initMapToZero(){
         for(int y = 0; y < map[0].length; y++){
             for(int x = 0; x < map.length; x++){
                 map[x][y] = 0;
@@ -134,14 +183,19 @@ public class Map {
         }
     }
     //Cellular Automata algorithm
-    private void step2(int iterations){
+    private void cellularAutomata(int iterations){
         Random random = new Random();
         int WIDTH = map.length;
         int HEIGHT = map[0].length;
         // Randomly set initial walkable tiles
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
-                map[i][j] = random.nextInt(2); // 0 or 1 (non-walkable or walkable)
+                if(random.nextInt(30)<15){
+                    map[i][j] = 1; // 0 or 1 (non-walkable or walkable)
+                }else{
+                    map[i][j] = 0;
+                }
+                
             }
         }
 
@@ -182,7 +236,7 @@ public class Map {
     }
 
     //change every 1 on map to -> something in nonSolidTiles
-    private void step3(Tile[] nonSolidTiles){
+    private void setNonSolidTiles(Tile[] nonSolidTiles){
         Random r = new Random();
         for(int y = 0; y < map[0].length; y++){
             for(int x = 0; x < map.length; x++){
@@ -195,7 +249,7 @@ public class Map {
         }
     }
     //change every 0 on map to -> something solid.
-    private void step4(Tile[] solidTiles, Tile[] borderTiles){
+    private void setSolidTiles(Tile[] solidTiles, Tile[] borderTiles){
         int w = map.length;
         int h = map[0].length;
         int[][] newMap = new int[w][h];
@@ -296,8 +350,17 @@ public class Map {
         
     }
     
-    private void step5(){
-        
+    private void generateStructures(int amount){
+        Random r = new Random();
+        for(int i = 0; i < amount; i++){
+            boolean b = false;
+            while(!b){
+                int rx = 25 + r.nextInt(map.length-50);
+                int ry = 25 + r.nextInt(map[0].length-50);
+                b = generateStructure("flower_room",rx, ry);
+
+            }
+        }
     }
     //Generate border
     private void lastStep(int id){
@@ -348,6 +411,25 @@ public class Map {
         return false;
     }
 
+    public boolean generateStructure(String name, int x, int y){
+        System.out.println("Generating structure "+ x + " " + y);
+        Structure s = structures.get(name);
+        int w = s.width;
+        int h = s.height;
+        int tiles[][] = s.tiles;
+        if(x+w > map.length || y+h >map[0].length){
+            return false;
+        }
+        for(int j = 0; j < h; j++){
+            for(int i = 0; i < w; i++){
+                map[x+i][y+j] = tiles[i][j];
+            }
+        }
+        for(StructureEntity e : s.entities){
+            World.entityManager.generateWithID(e.id, (e.x + x)*Tile.tileSize, (e.y+y)*Tile.tileSize);
+        }
+        return true;
+    }
     //Can there be added some kind of rayCasting to set viewable area?
     public void updateVisible(Entity e){
         int centerX = (int)(e.x/Tile.tileSize);

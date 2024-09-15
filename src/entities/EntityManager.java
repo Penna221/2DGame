@@ -75,7 +75,7 @@ public class EntityManager {
     }
     public Entity generateWithID(int id, int x, int y){
         EntityInfo e = entityInfos.get(id);
-        System.out.println("Added: " + e.name);
+        // System.out.println("Added: " + e.name);
         Entity c = new Entity(e,x,y);
         entities.add(c);
         return c;

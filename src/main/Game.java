@@ -17,6 +17,7 @@ import tiles.Tile;
 import ui.UIFactory;
 import utils.pennanen.Engine;
 import world.Biome;
+import world.Map;
 public class Game extends Engine{
 
     private int width, height;
@@ -66,7 +67,6 @@ public class Game extends Engine{
         AssetStorage.loadTexts();        
         System.out.println("Loading Tile Data");
         status = "Loading Tiles";
-        //Tile.loadTiles();
         Tile.loadTilesV2();
         System.out.println("Loading Biome Data");
         status = "Loading Biomes";
@@ -92,6 +92,11 @@ public class Game extends Engine{
         status = "Loading States";
         State.createStates();
         
+        status = "Loading Structures";
+        Map.loadStructures();
+
+
+
         status = "Everything loaded. Happy gaming :)";
         SoundPlayer.playSound("allDone");
         Thread.sleep(2000);
