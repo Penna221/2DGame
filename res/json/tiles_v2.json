@@ -80,7 +80,7 @@
         "name": "Light Brick wall (tilable)",
         "x": 2,
         "y": 2,
-        "solid": false
+        "solid": true
       },
       {
         "id": 11,
