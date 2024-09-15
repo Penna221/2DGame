@@ -8,7 +8,6 @@ public class BossAI extends AI{
 
     public BossAI(Entity entity) {
         super(entity);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
@@ -21,7 +20,6 @@ public class BossAI extends AI{
     @Override
     public void update() {
         e.texture = e.currentAnimation.getFrame();
-        System.out.println("atasad");
         e.updateBounds();
         e.currentAnimation.animate();
 
