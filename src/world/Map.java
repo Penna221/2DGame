@@ -2,6 +2,7 @@ package world;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,6 +27,7 @@ public class Map {
     public String biomeName;
     public int startX, startY, endX, endY;
     public static HashMap<String,Structure> structures = new HashMap<String,Structure>();
+    private ArrayList<Rectangle> structureBounds;
     public Map(int type, int width, int height){
         this.width = width;
         this.height = height;
@@ -85,6 +87,7 @@ public class Map {
         
     }
     public void generate(int type){
+        structureBounds = new ArrayList<Rectangle>();
         switch (type) {
             case World.LVL1:
                 generateLVL1();        
@@ -136,9 +139,15 @@ public class Map {
         cellularAutomata(7);
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
-        generateStructures(50);
-        lastStep(5);
         generateSpawnArea();
+
+        String[] structureList =  structures.keySet().toArray(new String[0]);
+        int size = structureList.length;
+        System.out.println("structure list size " + size);
+        for(int i = 0; i < size; i++){
+            generateStructures(structureList[i], 20);
+        }
+        lastStep(5);
         generateBinaryMap();
     }
     private void generateLVL2(){
@@ -154,9 +163,14 @@ public class Map {
         cellularAutomata(5);
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
-        generateStructures(40);
-        lastStep(5);
         generateSpawnArea();
+        String[] structureList =  structures.keySet().toArray(new String[0]);
+        int size = structureList.length;
+        System.out.println("structure list size " + size);
+        for(int i = 0; i < size; i++){
+            generateStructures(structureList[i], 10);
+        }
+        lastStep(5);
         generateBinaryMap();
     }
     private void generateBinaryMap(){
@@ -311,6 +325,8 @@ public class Map {
         int startY = centerY - radius;
         int endX = centerX + radius;
         int endY = centerY + radius;
+        Rectangle r = new Rectangle(centerX-radius,centerY-radius,radius*2,radius*2);
+        structureBounds.add(r);
         for(int y = startY; y < endY; y++){
             for(int x = startX; x < endX; x++){
                 map[x][y] = 8;
@@ -350,18 +366,7 @@ public class Map {
         
     }
     
-    private void generateStructures(int amount){
-        Random r = new Random();
-        for(int i = 0; i < amount; i++){
-            boolean b = false;
-            while(!b){
-                int rx = 25 + r.nextInt(map.length-50);
-                int ry = 25 + r.nextInt(map[0].length-50);
-                b = generateStructure("flower_room",rx, ry);
-
-            }
-        }
-    }
+    
     //Generate border
     private void lastStep(int id){
         for(int y = 0; y < map[0].length; y++){
@@ -411,20 +416,44 @@ public class Map {
         return false;
     }
 
+    private void generateStructures(String name, int amount){
+       System.out.println("Generating " +amount + " " + name + " structures.");
+        Random r = new Random();
+        for(int i = 0; i < amount; i++){
+            boolean b = false;
+            int rx = 0;
+            int ry = 0;
+            while(!b){
+                rx = 25 + r.nextInt(map.length-50);
+                ry = 25 + r.nextInt(map[0].length-50);
+                b = generateStructure(name,rx, ry);
+                
+            }
+            
+        }
+    }
     public boolean generateStructure(String name, int x, int y){
-        System.out.println("Generating structure "+ x + " " + y);
         Structure s = structures.get(name);
         int w = s.width;
         int h = s.height;
         int tiles[][] = s.tiles;
-        if(x+w > map.length || y+h >map[0].length){
+        if(x+w > map.length-2 || y+h >map[0].length-2){
             return false;
+        }
+        Rectangle r = new Rectangle(x,y,w,h);
+        for(Rectangle r2 : structureBounds){
+            if(r2.intersects(r)){
+                return false;
+            }
         }
         for(int j = 0; j < h; j++){
             for(int i = 0; i < w; i++){
                 map[x+i][y+j] = tiles[i][j];
             }
         }
+
+        // System.out.println("Generating structure " +name +" "+ x + " " + y);
+        structureBounds.add(r);
         for(StructureEntity e : s.entities){
             World.entityManager.generateWithID(e.id, (e.x + x)*Tile.tileSize, (e.y+y)*Tile.tileSize);
         }
