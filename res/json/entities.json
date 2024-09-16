@@ -333,9 +333,9 @@
         "width":16,
         "height":16,
         "light_source":true,
-        "light_radius":350,
+        "light_radius":550,
         "light_color":"#AAAA00",
-        "light_transparency":0.8
+        "light_transparency":0.78
     },
     "boss":{
         "id":18,
@@ -408,5 +408,23 @@
         "light_radius":150,
         "light_color":"#FF2000",
         "light_transparency":0.3
+    },
+    "cauldron":{
+        "id":22,
+        "type":"Structure",
+        "name":"Cauldron",
+        "texture":"cauldron",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":true,
+        "light_radius":170,
+        "light_color":"#FF20FF",
+        "light_transparency":0.35
     }
 }
