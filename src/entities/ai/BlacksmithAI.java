@@ -44,7 +44,7 @@ public class BlacksmithAI extends AI {
         e.currentAnimation.animate();
     }
     private void openTradingMenu(){
-        State.setState(State.traderState, true);
+        State.setState(State.blacksmithState, true);
         Transition.canContinue2 = true;
         Transition.canFinish = true;
     }
