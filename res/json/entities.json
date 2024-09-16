@@ -179,7 +179,7 @@
         "animations":{
             "idle":"player_idle"
         },
-        "ai":"empty",
+        "ai":"chest",
         "width":32,
         "height":16,
         "light_source":true,

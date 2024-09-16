@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import entities.ai.AI;
 import entities.ai.BlacksmithAI;
 import entities.ai.BossAI;
+import entities.ai.ChestAI;
 import entities.ai.CollectableAI;
 import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
@@ -69,6 +70,9 @@ public class Entity {
                 break;
             case "blacksmith":
                 ai = new BlacksmithAI(this);
+                break;
+            case "chest":
+                ai = new ChestAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

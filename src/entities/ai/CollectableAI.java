@@ -24,9 +24,11 @@ public class CollectableAI extends AI{
     public void update() {
         e.texture = e.currentAnimation.getFrame();
         if(e.bounds.intersects(World.player.bounds)){
-            PlayerAI.inv.addItem(e);
-            World.entityManager.removeEntity(e);
-            SoundPlayer.playSound("pickup");
+            boolean added = PlayerAI.inv.addItem(e);
+            if(added){
+                World.entityManager.removeEntity(e);
+                SoundPlayer.playSound("pickup");
+            }
         }
         e.currentAnimation.animate();
     }

@@ -3,6 +3,7 @@ package entities.player;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 import entities.Entity;
 import gfx.Factory;
@@ -20,9 +21,13 @@ public class Inventory {
     public Inventory(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
-        slots = new Slot[5];
+        slots = new Slot[10];
         load();
         draw();
+    }
+    public void addSlot(byte amount){
+        int newSize = slots.length+amount;
+        slots = Arrays.copyOf(slots, newSize);
     }
     public void load(){
         //Initialize
@@ -66,8 +71,9 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
+        private byte maxStack = 4;
         public Entity item;
-        public int amount;
+        public byte amount;
         public Slot(){}
         public boolean add(Entity i){
             if(item ==null){
@@ -76,10 +82,12 @@ public class Inventory {
                 return true;
             }else{
                 if(i.info.id==item.info.id){
+                    if(amount==maxStack){
+                        return false;
+                    }
                     amount++;
                     return true;
                 }else{
-                    System.out.println(i.info.id + " is not " + item.info.id);
                     return false;
                 }
             }
