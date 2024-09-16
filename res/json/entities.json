@@ -368,9 +368,45 @@
         "ai":"blacksmith",
         "width":16,
         "height":16,
-        "light_source":true,
+        "light_source":false,
         "light_radius":350,
         "light_color":"#AAAA00",
         "light_transparency":0.8
+    },
+    "anvil":{
+        "id":20,
+        "type":"Structure",
+        "name":"Anvil",
+        "texture":"anvil",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":350,
+        "light_color":"#AAAA00",
+        "light_transparency":0.8
+    },
+    "forge":{
+        "id":21,
+        "type":"Structure",
+        "name":"Forge",
+        "texture":"forge",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":32,
+        "height":32,
+        "light_source":true,
+        "light_radius":150,
+        "light_color":"#FF2000",
+        "light_transparency":0.3
     }
 }

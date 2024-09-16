@@ -18,6 +18,7 @@ import entities.Entity;
 import gfx.ExpandPolygon;
 import gfx.LightMap;
 import main.Game;
+import tiles.Tile;
 public class Camera {
     private Color shadowColor;
     private VolatileImage shadowMap;
@@ -195,6 +196,9 @@ public class Camera {
             if(e.info.light_source){
                 int x = (int)(e.x + e.bounds.width/2);
                 int y = (int)(e.y + e.bounds.height/2);
+                if(e.info.name.equals("Forge")){
+                    y+= Tile.tileSize;
+                }
                 LightSource l = new LightSource(x, y, e.info.light_color,e.info.light_transparency, e.info.light_radius);
                 points.add(l);
             }

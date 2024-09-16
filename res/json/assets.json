@@ -193,7 +193,9 @@
         "boss_idle_0":"res\\gfx\\entities\\boss\\boss_idle_0.png",
         "boss_idle_1":"res\\gfx\\entities\\boss\\boss_idle_1.png",
         "blacksmith_idle_0":"res\\gfx\\entities\\blacksmith\\blacksmith_idle_0.png",
-        "blacksmith_idle_1":"res\\gfx\\entities\\blacksmith\\blacksmith_idle_1.png"
+        "blacksmith_idle_1":"res\\gfx\\entities\\blacksmith\\blacksmith_idle_1.png",
+        "anvil":"res\\gfx\\entities\\blacksmith\\anvil.png",
+        "forge":"res\\gfx\\entities\\blacksmith\\forge.png"
 
     },
     "texts":{
