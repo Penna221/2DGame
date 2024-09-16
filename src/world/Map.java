@@ -141,12 +141,17 @@ public class Map {
         setSolidTiles(solidTiles,borderTiles);
         generateSpawnArea();
 
-        String[] structureList =  structures.keySet().toArray(new String[0]);
+        String[] structureList =  b.structures;
         int size = structureList.length;
         System.out.println("structure list size " + size);
         for(int i = 0; i < size; i++){
-            generateStructures(structureList[i], 20);
+            for(int j = 0; j < 4; j++){
+                generateStructureAtRandomSpot(structureList[i]);
+            }
         }
+        generateStructureAtRandomSpot("lvl2_tunnel");
+        generateStructureAtRandomSpot("trader_room_v1");
+        
         lastStep(5);
         generateBinaryMap();
     }
@@ -156,7 +161,6 @@ public class Map {
         Tile[] nonSolidTiles = b.nonSolidTiles;
         Tile[] solidTiles = b.solidTiles;
         Tile[] borderTiles = b.borderTiles;
-        
         map = new int[width][height];
         
         initMapToZero();
@@ -164,12 +168,20 @@ public class Map {
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
         generateSpawnArea();
-        String[] structureList =  structures.keySet().toArray(new String[0]);
+        String[] structureList =  b.structures;
         int size = structureList.length;
         System.out.println("structure list size " + size);
         for(int i = 0; i < size; i++){
-            generateStructures(structureList[i], 10);
+            for(int j = 0; j < 4; j++){
+                generateStructureAtRandomSpot(structureList[i]);
+            }
         }
+        for(int j = 0; j < 100; j++){
+            generateStructureAtRandomSpot("vertical_tunnel");
+        }
+        generateStructureAtRandomSpot("trader_room_v1");
+        generateStructureAtRandomSpot("boss_door");
+        
         lastStep(5);
         generateBinaryMap();
     }
@@ -376,24 +388,29 @@ public class Map {
         return false;
     }
 
-    private void generateStructures(String name, int amount){
-       System.out.println("Generating " +amount + " " + name + " structures.");
+    private void generateStructureAtRandomSpot(String name){
+        boolean b = false;
+        int rx = 0;
+        int ry = 0;
         Random r = new Random();
-        for(int i = 0; i < amount; i++){
-            boolean b = false;
-            int rx = 0;
-            int ry = 0;
-            while(!b){
-                rx = 25 + r.nextInt(map.length-50);
-                ry = 25 + r.nextInt(map[0].length-50);
-                b = generateStructure(name,rx, ry);
-                
+        int retrys = 4;
+        int counter = 0;
+        while(!b){
+            rx = 25 + r.nextInt(map.length-50);
+            ry = 25 + r.nextInt(map[0].length-50);
+            b = generateStructure(name,rx, ry);
+            counter++;
+            if(counter>=retrys){
+                System.out.println("Failed to generate Strucure: " + name);
+                break;
             }
-            
         }
     }
     public boolean generateStructure(String name, int x, int y){
         Structure s = structures.get(name);
+        if(s==null){
+            return false;
+        }
         int w = s.width;
         int h = s.height;
         int tiles[][] = s.tiles;
@@ -412,7 +429,6 @@ public class Map {
             }
         }
 
-        // System.out.println("Generating structure " +name +" "+ x + " " + y);
         structureBounds.add(r);
         for(StructureEntity e : s.entities){
             World.entityManager.generateWithID(e.id, (e.x + x)*Tile.tileSize, (e.y+y)*Tile.tileSize);

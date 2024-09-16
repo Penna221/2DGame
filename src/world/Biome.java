@@ -15,17 +15,19 @@ public class Biome {
     public Tile[] borderTiles;
     public int[] collectables;
     public int[] entities;
+    public String[] structures;
     public static HashMap<String,Biome> biomes;
     //public Entity[] entitites;
     //public Mushroom[] mushrooms;
 
-    public Biome(String name, Tile[] nonSolidTiles,Tile[] solidTiles, Tile[] borderTiles, int[]collectables,int[] entities){
+    public Biome(String name, Tile[] nonSolidTiles,Tile[] solidTiles, Tile[] borderTiles, int[]collectables,int[] entities, String[] structures){
         this.nonSolidTiles = nonSolidTiles;
         this.solidTiles = solidTiles;
         this.borderTiles = borderTiles;
         this.name = name;
         this.collectables = collectables;
         this.entities = entities;
+        this.structures = structures;
     }
     public static void loadBiomeData(){
         biomes = new HashMap<String,Biome>();
@@ -68,11 +70,16 @@ public class Biome {
             for(int i = 0; i < len5; i++){
                 entIds[i] = enti[i].getInteger();
             }
+            DataType[] struct = bi.findChild("structures").getArray();
+            int len6 = struct.length;
+            //cIds = Collectable IDs
+            String[] stus = new String[len6];
+            for(int i = 0; i < len6; i++){
+                stus[i] = struct[i].getString();
+            }
 
-
-            biomes.put(name, new Biome(name,ns,s,b,cIds,entIds));
+            biomes.put(name, new Biome(name,ns,s,b,cIds,entIds,stus));
 
         }
     }
-
 }

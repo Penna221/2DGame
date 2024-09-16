@@ -4,27 +4,31 @@
         "solidTiles":[2],
         "borderTiles":[6,7],
         "collectables":[2],
-        "entities":[3]
+        "entities":[3],
+        "structures":["dungeon_v1","vertical_tunnel","horizontal_tunnel"]
     },
     "dungeon_lvl1":{
         "nonSolidTiles":[3],
         "solidTiles":[2],
         "borderTiles":[3],
         "collectables":[2,3],
-        "entities":[16,13]
+        "entities":[17,16],
+        "structures":["empty_space_v1","vertical_tunnel","horizontal_tunnel"]
     },
     "dungeon_lvl2":{
         "nonSolidTiles":[35],
         "solidTiles":[34],
         "borderTiles":[35],
         "collectables":[2],
-        "entities":[15,9]
+        "entities":[15,9],
+        "structures":["dungeon_v1","vertical_tunnel","horizontal_tunnel"]
     },
     "other":{
         "nonSolidTiles":[1,2],
         "solidTiles":[0],
         "borderTiles":[0],
         "collectables":[2],
-        "entities":[0]
+        "entities":[0],
+        "structures":["dungeon_v1"]
     }
 }

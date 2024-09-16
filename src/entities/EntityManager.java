@@ -80,11 +80,22 @@ public class EntityManager {
         // System.out.println("Added: " + e.name);
         Entity c = new Entity(e,x,y);
         if(id==0){
+            if(checkForPlayers()){
+                return null;
+            }
             World.player = c;
             Camera.setEntityToCenter(c);
         }
         entities.add(c);
         return c;
+    }
+    private boolean checkForPlayers(){
+        for(Entity e: entities){
+            if(e.info.id==0){
+                
+            }
+        }
+        return false;
     }
     public void addEntity(Entity e){
         toAdd.add(e);
