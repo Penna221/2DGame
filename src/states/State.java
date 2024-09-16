@@ -8,7 +8,7 @@ import ui.UiHub;
 public abstract class State {
     public static State currentState;
     public static State gameState, menuState,nullState,settingsState;
-    public static State traderState;
+    public static State traderState, blacksmithState;
     protected static boolean running = true;
     public static Transition transition;
     public static void createStates(){
@@ -19,6 +19,7 @@ public abstract class State {
         menuState = new MenuState();
         menuState.init();
         traderState = new TraderState();
+        blacksmithState = new BlacksmithState();
         //NullState just because i want loading transition for game launching.
         nullState = new NullState();
         nullState.init();

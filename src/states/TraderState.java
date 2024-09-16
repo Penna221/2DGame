@@ -9,15 +9,19 @@ import entities.EntityManager;
 import gfx.Animation;
 import gfx.AssetStorage;
 import gfx.Factory;
+import gfx.Transition;
 import main.Game;
+import ui.ClickButton;
+import ui.Text;
 
 public class TraderState extends State {
     private BufferedImage table, trader, sell_board;
     private Animation an;
+    private ClickButton returnButton;
     @Override
     public void update() {
         if(running){
-            
+            returnButton.update();
         }else{
             State.transition.update();
         }
@@ -38,7 +42,7 @@ public class TraderState extends State {
         
         g.drawImage(trader,tableX-trader.getWidth()*2,tableY,trader.getWidth()*2,trader.getHeight()*2,null);
         g.drawImage(sell_board,Game.w.getWidth()-sell_board.getWidth()-20,tableY,null);
-        
+        returnButton.render(g);
         
         an.animate();
         if(transition !=null){transition.render(g);}
@@ -50,6 +54,17 @@ public class TraderState extends State {
         an = EntityManager.entityInfos.get(12).animations.get("trade");
         sell_board = AssetStorage.images.get("sell_board");
         table = AssetStorage.images.get("trader_table");
+
+
+        returnButton = new ClickButton(10,10,new Text("Return",0,0,100,false)){
+            @Override
+            public void task(){
+                State.setState(gameState, true);
+                
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        };
     }
 
     @Override
