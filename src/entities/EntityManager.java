@@ -12,6 +12,8 @@ import gfx.AssetStorage;
 import json.JSON;
 import json.KeyValuePair;
 import tiles.Tile;
+import world.Camera;
+import world.World;
 
 public class EntityManager {
     private ArrayList<Entity> entities;
@@ -77,6 +79,10 @@ public class EntityManager {
         EntityInfo e = entityInfos.get(id);
         // System.out.println("Added: " + e.name);
         Entity c = new Entity(e,x,y);
+        if(id==0){
+            World.player = c;
+            Camera.setEntityToCenter(c);
+        }
         entities.add(c);
         return c;
     }

@@ -320,50 +320,10 @@ public class Map {
     private void generateSpawnArea(){
         int centerX = map.length/2;
         int centerY = map[0].length/2;
-        int radius = 5;
-        int startX = centerX - radius;
-        int startY = centerY - radius;
-        int endX = centerX + radius;
-        int endY = centerY + radius;
-        Rectangle r = new Rectangle(centerX-radius,centerY-radius,radius*2,radius*2);
-        structureBounds.add(r);
-        for(int y = startY; y < endY; y++){
-            for(int x = startX; x < endX; x++){
-                map[x][y] = 8;
-            }
-        }
-        for(int y = startY; y <= endX; y++){
-            map[startX][y] = 34;
-        }
-        for(int y = startY; y <= endY; y++){
-            map[endX][y] = 34;
-        }
-        for(int x = startX; x <= endX; x++){
-            map[x][startY] = 34;
-        }
-        for(int x = startX; x <= endX; x++){
-            map[x][endY] = 34;
-        }
-        //South
-        map[centerX][centerY+radius] = 8;
-        map[centerX+1][centerY+radius] = 8;
-        map[centerX-1][centerY+radius] = 8;
-        
-        //North
-        map[centerX][centerY-radius] = 8;
-        map[centerX+1][centerY-radius] = 8;
-        map[centerX-1][centerY-radius] = 8;
-        
-        //West
-        map[centerX-radius][centerY] = 8;
-        map[centerX-radius][centerY-1] = 8;
-        map[centerX-radius][centerY+1] = 8;
-        //East
-        map[centerX+radius][centerY] = 8;
-        map[centerX+radius][centerY-1] = 8;
-        map[centerX+radius][centerY+1] = 8;
-        World.entityManager.generateWithID(14, (centerX-4)*Tile.tileSize,( centerY-4)*Tile.tileSize);
-        
+        Structure spawn = structures.get("spawn_area");
+        int w = spawn.width;
+        int h = spawn.height;
+        generateStructure("spawn_area", centerX-w/2, centerY-h/2);
     }
     
     

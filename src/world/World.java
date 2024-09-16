@@ -135,16 +135,6 @@ public class World {
     }
     private static void generateEntities(int type){
         
-        System.out.println("TileSize " + Tile.tileSize );
-        int mapWidth = map.map.length/2;
-        int mapHeight = map.map[0].length/2;
-        int mapCenterX = (int)(mapWidth * Tile.tileSize);
-        int mapCenterY = (int)(mapHeight*Tile.tileSize);
-        System.out.println("Map center " + mapCenterX + " " + mapCenterY);
-        player = entityManager.generateWithID(0, mapCenterX, mapCenterY);
-        // System.out.println(player);
-        Camera.setEntityToCenter(player);
-        
         map.populateWithEnemies(type);
 
     }
