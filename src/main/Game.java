@@ -10,6 +10,7 @@ import gfx.AssetStorage;
 import gfx.Transition;
 import io.KeyManager;
 import io.MouseManager;
+import loot.LootTables;
 import questions.QuestionStorage;
 import sound.SoundPlayer;
 import states.State;
@@ -94,7 +95,8 @@ public class Game extends Engine{
         
         status = "Loading Structures";
         Map.loadStructures();
-
+        status = "Loading Loot Tables";
+        LootTables.loadLootTables();
 
 
         status = "Everything loaded. Happy gaming :)";

@@ -6,8 +6,12 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import entities.Entity;
+import entities.EntityManager;
 import gfx.AssetStorage;
 import io.KeyManager;
+import loot.LootItem;
+import loot.LootTable;
+import loot.LootTables;
 import world.World;
 
 public class ChestAI extends AI{
@@ -35,13 +39,30 @@ public class ChestAI extends AI{
         }
     }
     private void openBox(){
-        if(e.info.name.equals("Gold Chest")){
-            System.out.println("Opening Gold box");
-            int i = generateRandomAmount(2, 10);
-            for(int j = 0; j<i; j++){
+        
+        String searchVar = "gold_chest";
+        switch (e.info.name) {
+            case "Gold Chest":
+                searchVar = "gold_chest";
+                break;
+            default:
+                break;
+        }
+        LootTable lt = LootTables.lootTables.get(searchVar);
+        for(int i = 0; i < lt.items.size(); i++){
+            LootItem item = lt.items.get(i);
+            int id = EntityManager.findIDWithName(item.name);
+            if(id==-1){
+                System.out.println("cannot find item with name: " + item.name);
+                continue;
+            }
+            int min = item.min;
+            int max = item.max;
+            int amount = generateRandomAmount(min, max);
+            for(int j = 0; j < amount; j++){
                 int randomXOffset = generateRandomAmount(-40, 40);
                 int randomYOffset = generateRandomAmount(-40, 40);
-                Entity e2 = World.entityManager.generateWithID(2, (int)e.x+randomXOffset, (int)e.y+randomYOffset);
+                Entity e2 = World.entityManager.generateWithID(id, (int)e.x+randomXOffset, (int)e.y+randomYOffset);
                 boolean success = PlayerAI.inv.addItem(e2);
                 if(success){
                     World.entityManager.removeEntity(e2);

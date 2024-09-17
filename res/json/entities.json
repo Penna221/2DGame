@@ -480,5 +480,23 @@
         "light_radius":500,
         "light_color":"#FFA000",
         "light_transparency":0.55
+    },
+    "health_potion":{
+        "id":26,
+        "type":"Item",
+        "name":"Health Potion",
+        "texture":"health_potion",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":500,
+        "light_color":"#FFA000",
+        "light_transparency":0.55
     }
 }

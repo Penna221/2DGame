@@ -1,0 +1,12 @@
+{
+    "gold_chest":{
+        "Coin":{
+            "min":3,
+            "max":10
+        },
+        "Health Potion":{
+            "min":1,
+            "max":2
+        }
+    }
+}

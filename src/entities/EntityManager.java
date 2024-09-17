@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import gfx.Animation;
 import gfx.Animations;
@@ -96,6 +97,16 @@ public class EntityManager {
             }
         }
         return false;
+    }
+    public static int findIDWithName(String name){
+        for (Map.Entry<Integer, EntityInfo> entry : entityInfos.entrySet()) {
+            EntityInfo entityInfo = entry.getValue();
+            if (entityInfo.name.equals(name)) {
+                return entityInfo.id;
+            }
+        }
+
+        return -1;
     }
     public void addEntity(Entity e){
         toAdd.add(e);

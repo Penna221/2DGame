@@ -200,7 +200,8 @@
         "candelabra":"res\\gfx\\entities\\potion_lady\\candelabra.png",
         "cat":"res\\gfx\\entities\\potion_lady\\cat.png",
         "witch_idle_0":"res\\gfx\\entities\\potion_lady\\witch_idle_0.png",
-        "witch_idle_1":"res\\gfx\\entities\\potion_lady\\witch_idle_1.png"
+        "witch_idle_1":"res\\gfx\\entities\\potion_lady\\witch_idle_1.png",
+        "health_potion":"res\\gfx\\entities\\health_potion.png"
 
     },
     "texts":{
