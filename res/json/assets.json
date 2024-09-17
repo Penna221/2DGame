@@ -196,7 +196,8 @@
         "blacksmith_idle_1":"res\\gfx\\entities\\blacksmith\\blacksmith_idle_1.png",
         "anvil":"res\\gfx\\entities\\blacksmith\\anvil.png",
         "forge":"res\\gfx\\entities\\blacksmith\\forge.png",
-        "cauldron":"res\\gfx\\entities\\potion_lady\\cauldron.png"
+        "cauldron":"res\\gfx\\entities\\potion_lady\\cauldron.png",
+        "candelabra":"res\\gfx\\entities\\potion_lady\\candelabra.png"
 
     },
     "texts":{

@@ -196,11 +196,14 @@ public class Camera {
             if(e.info.light_source){
                 int x = (int)(e.x + e.bounds.width/2);
                 int y = (int)(e.y + e.bounds.height/2);
-                if(e.info.name.equals("Forge")){
-                    y+= Tile.tileSize;
-                }
                 LightSource l = new LightSource(x, y, e.info.light_color,e.info.light_transparency, e.info.light_radius);
                 points.add(l);
+                String n = e.info.name;
+                if(n.equals("Forge")||n.equals("Candelabra")){
+                    y+= Tile.tileSize;
+                    LightSource l1 = new LightSource(x, y, e.info.light_color,e.info.light_transparency, e.info.light_radius);
+                    points.add(l1);
+                }
             }
         }
         return points;
