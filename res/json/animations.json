@@ -70,5 +70,9 @@
     "blacksmith_idle":{
         "images":["blacksmith_idle_0","blacksmith_idle_1"],
         "times":[1400,1400]
+    },
+    "witch_idle":{
+        "images":["witch_idle_0","witch_idle_1","witch_idle_0","witch_idle_1","witch_idle_0","witch_idle_1"],
+        "times":[2400,100,100,100,2400,100]
     }
 }

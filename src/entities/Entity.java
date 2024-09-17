@@ -17,6 +17,7 @@ import entities.ai.EmptyAI;
 import entities.ai.Enemy1AI;
 import entities.ai.PlayerAI;
 import entities.ai.TraderAI;
+import entities.ai.WitchAI;
 import gfx.Animation;
 import gfx.Factory;
 import main.Game;
@@ -73,6 +74,9 @@ public class Entity {
                 break;
             case "chest":
                 ai = new ChestAI(this);
+                break;
+            case "witch":
+                ai = new WitchAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

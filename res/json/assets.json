@@ -197,7 +197,10 @@
         "anvil":"res\\gfx\\entities\\blacksmith\\anvil.png",
         "forge":"res\\gfx\\entities\\blacksmith\\forge.png",
         "cauldron":"res\\gfx\\entities\\potion_lady\\cauldron.png",
-        "candelabra":"res\\gfx\\entities\\potion_lady\\candelabra.png"
+        "candelabra":"res\\gfx\\entities\\potion_lady\\candelabra.png",
+        "cat":"res\\gfx\\entities\\potion_lady\\cat.png",
+        "witch_idle_0":"res\\gfx\\entities\\potion_lady\\witch_idle_0.png",
+        "witch_idle_1":"res\\gfx\\entities\\potion_lady\\witch_idle_1.png"
 
     },
     "texts":{
