@@ -3,6 +3,7 @@ package states;
 import java.awt.Graphics;
 
 import gfx.Transition;
+import ui.PauseMenu;
 import ui.UiHub;
 
 public abstract class State {
@@ -29,7 +30,7 @@ public abstract class State {
         currentState = nullState;
     }
     public static void setState(State s, boolean trans){
-        
+        PauseMenu.setContainer(null);
         if(currentState !=nullState){
             //System.out.println("clearing buttons");
         }

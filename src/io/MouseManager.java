@@ -1,6 +1,7 @@
 package io;
 import java.awt.event.MouseMotionListener;
 
+import ui.PauseMenu;
 import ui.UiHub;
 
 import java.awt.event.MouseEvent;
@@ -24,21 +25,25 @@ public class MouseManager implements MouseListener, MouseMotionListener{
         mouseX = e.getX();
         mouseY = e.getY();
         System.out.println("sending click messsage");
-        UiHub.sendClick();
+        if(PauseMenu.currentContainer!=null){
+            PauseMenu.currentContainer.sendClick();
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        UiHub.sendToggle(true);
+        if(PauseMenu.currentContainer!=null){
+            PauseMenu.currentContainer.sendPress();
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        UiHub.sendToggle(false);
+        // UiHub.sendToggle(false);
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import gfx.Transition;
 import states.GameState;
 import states.State;
+import ui.PauseMenu;
 import world.World;
 
 public class KeyManager implements KeyListener{
@@ -54,8 +55,17 @@ public class KeyManager implements KeyListener{
                 Transition.canFinish = true;
                 break;
             case KeyEvent.VK_ESCAPE:
-                if(State.getState() == State.gameState)
-                    GameState.paused = !GameState.paused;
+                if(State.getState() == State.gameState){
+                    //If there is a container like talk dialog, close it. If there is a dialog, game is paused.
+                    //If there is NOT a container, you are playing and need to get paused.
+                    if(PauseMenu.currentContainer==null){
+                        PauseMenu.setContainer(PauseMenu.containers.get("basic"));
+                        GameState.paused = true;
+                    }else{
+                        PauseMenu.setContainer(null);
+                        GameState.paused = false;
+                    }
+                }
                 break;
             default:
                 break;

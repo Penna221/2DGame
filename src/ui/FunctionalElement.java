@@ -7,9 +7,9 @@ public abstract class FunctionalElement extends UIElement{
     public Color bg, brd;
     public boolean focused;
     public boolean press;
+    public Task task;
     public FunctionalElement(int x, int y) {
         super(x, y);
-        UiHub.add(this);
     }
     public void update(){
         if(bounds.contains(Game.mm.mouseX,Game.mm.mouseY)){
@@ -26,15 +26,27 @@ public abstract class FunctionalElement extends UIElement{
         }
         updateAdditional();
     }
+    public void setTask(Task t){
+        this.task = t;
+    }
     public void click(){
         if(focused){
-            task();
+            if(task!=null){
+                task.perform();
+            }
             SoundPlayer.playSound("pick2");
+        }
+    }
+    public void press(){
+        if(focused){
+            if(task!=null){
+                task.perform();
+            }
+            // SoundPlayer.playSound("pick2");
         }
     }
     public void toggle(boolean b){
         press = b;
     }
     public abstract void updateAdditional();
-    public abstract void task();
 }

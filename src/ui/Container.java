@@ -11,6 +11,24 @@ public class Container extends UIElement{
         elements = new ArrayList<UIElement>();
         data = UIFactory.containerData;
     }
+    public void sendClick(){
+        for(UIElement e : elements){
+            if(e instanceof FunctionalElement){
+                FunctionalElement ee = (FunctionalElement)e;
+                ee.click();
+            }
+                
+        }
+    }
+    public void sendPress(){
+        for(UIElement e : elements){
+            if(e instanceof FunctionalElement){
+                FunctionalElement ee = (FunctionalElement)e;
+                ee.press();
+            }
+                
+        }
+    }
     public void setHeader(UIElement el){
         this.header = el;
         int newX = bounds.x+bounds.width/2-header.bounds.width/2;

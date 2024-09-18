@@ -21,8 +21,6 @@ public class ClickButton extends FunctionalElement{
         
     }
 
-    @Override
-    public void task() {}
 
     @Override
     public void render(Graphics g) {

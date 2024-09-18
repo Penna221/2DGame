@@ -17,16 +17,8 @@ public class ToggleButton extends FunctionalElement{
     }
     @Override
     public void updateAdditional() {
-        if(focused){
-            if(press){
-                task();
-            }
-        }
+        
     }
-
-    @Override
-    public void task() {}
-
     
     @Override
     public void render(Graphics g) {

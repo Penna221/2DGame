@@ -15,6 +15,7 @@ import questions.QuestionStorage;
 import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
+import ui.PauseMenu;
 import ui.UIFactory;
 import utils.pennanen.Engine;
 import world.Biome;
@@ -138,6 +139,14 @@ public class Game extends Engine{
             UIFactory.loadUIData();
         } catch (Exception e) {
             status = "Error occured while loading UI Data";
+            goAway();
+        }
+        System.out.println("Loading Pause Menus");
+        status = "Loading Pause Menus";
+        try{
+            PauseMenu.loadPauseMenus();
+        }catch(Exception e){
+            status = "Error occured while loading Pause Menus";
             goAway();
         }
         

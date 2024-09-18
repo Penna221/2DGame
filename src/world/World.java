@@ -209,6 +209,9 @@ public class World {
         ArrayList<Point> points= new ArrayList<Point>();
         for(int y = map.startY; y < map.endY; y++){
             for(int x = map.startX; x < map.endX; x++){
+                if(x > bm.length || y > bm[0].length){
+                    break;
+                }
                 //False = Solid. Store coordinates of solid tile to points arraylist. Point(x,y);
                 if(!bm[x][y]){
                     points.add(new Point((int)(x*Tile.tileSize - camera.getXOffset()),(int)(y*Tile.tileSize- camera.getYOffset())));

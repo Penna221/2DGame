@@ -8,7 +8,9 @@ import entities.Entity;
 import gfx.AssetStorage;
 import gfx.Transition;
 import io.KeyManager;
+import states.GameState;
 import states.State;
+import ui.PauseMenu;
 import world.World;
 
 public class BlacksmithAI extends AI {
@@ -44,9 +46,8 @@ public class BlacksmithAI extends AI {
         e.currentAnimation.animate();
     }
     private void openTradingMenu(){
-        State.setState(State.blacksmithState, true);
-        Transition.canContinue2 = true;
-        Transition.canFinish = true;
+        PauseMenu.setContainer(PauseMenu.containers.get("enter_blacksmith"));
+        GameState.paused = true;
     }
     @Override
     public void render(Graphics g) {

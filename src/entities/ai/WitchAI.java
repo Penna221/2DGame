@@ -8,7 +8,9 @@ import entities.Entity;
 import gfx.AssetStorage;
 import gfx.Transition;
 import io.KeyManager;
+import states.GameState;
 import states.State;
+import ui.PauseMenu;
 import world.World;
 
 public class WitchAI extends AI{
@@ -47,9 +49,8 @@ public class WitchAI extends AI{
     }
 
     private void openTradingMenu(){
-        State.setState(State.witchState, true);
-        Transition.canContinue2 = true;
-        Transition.canFinish = true;
+        PauseMenu.setContainer(PauseMenu.containers.get("enter_witch"));
+        GameState.paused = true;
     }
     @Override
     public void render(Graphics g) {
