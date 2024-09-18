@@ -32,7 +32,7 @@ public class Tile {
         tiles[id] = this;
     }
     
-    public static void loadTilesV2(){
+    public static void loadTilesV2() throws Exception{
         File f = new File("res\\json\\tiles_v2.json");
         boolean ok = true;
         String path = f.getParent();

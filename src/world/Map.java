@@ -35,7 +35,7 @@ public class Map {
 
     }
     public Map(){}
-    public static void loadStructures(){
+    public static void loadStructures() throws Exception{
         File[] list = new File("res/maps/structures").listFiles();
         ArrayList<File> files = new ArrayList<File>();
         for(File f : list){

@@ -13,7 +13,7 @@ public class AssetStorage {
     public static HashMap<String,File> sounds = new HashMap<String,File>();
     public HashMap<String,String> texts;
     
-    public static void loadImages(){
+    public static void loadImages()throws Exception{
         JSON json = new JSON(new File("res\\json\\assets.json"));
         KeyValuePair s = json.parse("JSON");
         KeyValuePair imgObject = s.findChild("images");
@@ -21,22 +21,19 @@ public class AssetStorage {
             String name = i.getKey();
             String path = i.getString();
             
-            // System.out.println(name);
             BufferedImage img = ImageLoader.load(path);
             if(img!=null){
-                System.out.println("Correctly loaded: " + name + "  " + path);
                 images.put(name, img);
             }
         }
-        //imgObject.printAll(0);
     }
-    public static void loadTexts(){
+    public static void loadTexts() throws Exception{
         JSON json = new JSON(new File("res\\json\\assets.json"));
         KeyValuePair s = json.parse("JSON");
         KeyValuePair textObject = s.findChild("texts");
         //textObject.printAll(0);
     }
-    public static void loadSounds(){
+    public static void loadSounds() throws Exception{
         
         System.out.println("Loading Sounds");
         JSON json = new JSON(new File("res\\json\\assets.json"));

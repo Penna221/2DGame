@@ -2,16 +2,17 @@ package gfx;
 
 import java.io.File;
 import java.util.HashMap;
-import java.awt.image.BufferedImage;
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
 
 public class Animations {
     public static HashMap<String,Animation> animations;
-    public static void loadAnimations(){
+    public static void loadAnimations() throws Exception{
         animations = new HashMap<String,Animation>();
         System.out.println("# Loading animations");
+        
+
         JSON json = new JSON(new File("res\\json\\animations.json"));
         KeyValuePair s = json.parse("JSON");
         for(KeyValuePair animation : s.getObject()){

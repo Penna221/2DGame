@@ -52,56 +52,127 @@ public class Game extends Engine{
         };
         t.start();
     }
-    private void init2() throws Exception{
+    private void goAway(){
+        try {
+            System.err.println("Error occured. Exiting program.");
+            Thread.sleep(3000);
+            stop();
+            System.exit(1);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    private void init2(){
         System.out.println("Loading Assets");
         status = "Loading Assets";
-        AssetStorage.loadImages();
+        try {
+            AssetStorage.loadImages();
+        } catch (Exception e) {
+            status = "Error occured while loading Images";
+            goAway();
+        }
 
         status = "Loading animations";
-        Animations.loadAnimations();
-        
+        try {
+            Animations.loadAnimations();
+        } catch (Exception e) {
+            status = "Error occured while loading Animations";
+            goAway();
+        }
         
         status = "Loading sounds";
-        AssetStorage.loadSounds();
+        try {
+            AssetStorage.loadSounds();
+            
+        } catch (Exception e) {
+            status = "Error occured while loading sounds";
+            goAway();
+        }
 
         status = "Loading Texts";
-        AssetStorage.loadTexts();        
+        try {
+            AssetStorage.loadTexts();
+        } catch (Exception e) {
+            status = "Error occured while loading Texts";
+            goAway();
+        }        
+
         System.out.println("Loading Tile Data");
         status = "Loading Tiles";
-        Tile.loadTilesV2();
+        try {
+            Tile.loadTilesV2();
+        } catch (Exception e) {
+            status = "Error occured while loading Tiles";
+            goAway();
+        }
         System.out.println("Loading Biome Data");
         status = "Loading Biomes";
-        Biome.loadBiomeData();
+        try {
+            Biome.loadBiomeData();
+        } catch (Exception e) {
+            status = "Error occured while loading Biomes";
+            goAway();
+        }
         
         System.out.println("Creating input handling");
         status = "Loading Input";
-        //INPUT
-        KeyManager km = new KeyManager();
-        w.getCanvas().addKeyListener(km);
-        mm = new MouseManager();
-        w.getCanvas().addMouseListener(mm);
-        w.getCanvas().addMouseMotionListener(mm);
-        w.getCanvas().requestFocus();
-        
-        
+        try {
+            KeyManager km = new KeyManager();
+            w.getCanvas().addKeyListener(km);
+            mm = new MouseManager();
+            w.getCanvas().addMouseListener(mm);
+            w.getCanvas().addMouseMotionListener(mm);
+            w.getCanvas().requestFocus();
+            
+            
+        } catch (Exception e) {
+            
+            status = "Error occured while loading IO";
+            goAway();
+        }
         //UI
         System.out.println("Loading UI Data");
         status = "Loading UI Data";
-        UIFactory.loadUIData();
+        try {
+            UIFactory.loadUIData();
+        } catch (Exception e) {
+            status = "Error occured while loading UI Data";
+            goAway();
+        }
         
         System.out.println("Creating States");
         status = "Loading States";
-        State.createStates();
+        try {
+            State.createStates();
+        } catch (Exception e) {
+            status = "Error occured while loading States";
+            goAway();
+        }
         
         status = "Loading Structures";
-        Map.loadStructures();
+        try {
+            Map.loadStructures();
+        } catch (Exception e) {
+            status = "Error occured while loading Structures";
+            goAway();
+        }
         status = "Loading Loot Tables";
-        LootTables.loadLootTables();
+        try {
+            LootTables.loadLootTables();
+        } catch (Exception e) {
+            status = "Error occured while loading Loot Tables";
+            goAway();
+        }
 
 
         status = "Everything loaded. Happy gaming :)";
         SoundPlayer.playSound("allDone");
-        Thread.sleep(2000);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         State.setState(State.menuState,true);
         loading = false;
         Transition.canFinish= true;

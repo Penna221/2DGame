@@ -9,7 +9,7 @@ import json.KeyValuePair;
 
 public class LootTables {
     public static HashMap<String,LootTable> lootTables = new HashMap<String,LootTable>();
-    public static void loadLootTables(){
+    public static void loadLootTables() throws Exception{
         System.out.println("Loading Loot Tables");
         JSON json = new JSON(new File("res\\json\\loot.json"));
         KeyValuePair s = json.parse("JSON");

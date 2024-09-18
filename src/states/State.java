@@ -11,7 +11,7 @@ public abstract class State {
     public static State traderState, blacksmithState,witchState;
     protected static boolean running = true;
     public static Transition transition;
-    public static void createStates(){
+    public static void createStates() throws Exception{
         transition = new Transition(2500);
         transition.getRandomImage();
         gameState = new GameState();

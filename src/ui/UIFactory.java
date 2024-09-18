@@ -23,7 +23,7 @@ public class UIFactory {
     private static int spacing = 5;
     public static HashMap<String,BufferedImage> alphabetCharacters;
 
-    public static void loadUIData(){
+    public static void loadUIData()throws Exception{
         JSON json = new JSON(new File("res\\json\\ui.json"));
         KeyValuePair kv = json.parse("");
 

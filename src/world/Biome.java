@@ -29,7 +29,7 @@ public class Biome {
         this.entities = entities;
         this.structures = structures;
     }
-    public static void loadBiomeData(){
+    public static void loadBiomeData() throws Exception{
         biomes = new HashMap<String,Biome>();
         JSON json = new JSON(new File("res\\json\\biomes.json"));
         KeyValuePair kv = json.parse("json");
