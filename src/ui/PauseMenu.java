@@ -3,10 +3,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.EntityInfo;
+import entities.EntityManager;
 import gfx.AssetStorage;
 import gfx.Transition;
+import loot.Market;
 import main.Game;
-import main.Launcher;
 import states.GameState;
 import states.State;
 import world.World;
@@ -149,6 +151,7 @@ public class PauseMenu {
             }
         };
         Container c = createYesNoDialog("Open Blacksmith shop?", t1, t2);
+        c.fillBg = true;
         return c;
     }
     private static Container createWitchEntryDialog(){
@@ -204,6 +207,87 @@ public class PauseMenu {
         ClickButton returnButton = new ClickButton(0,0,new Text("Return", 0, 0, 0, false));
         returnButton.setTask(returnTask);
         c.addElement(returnButton);
+
+        Container list = generateScrollableList(Market.lists.get("blacksmith"));        
+        int listX = (int) (Game.w.getWidth()/2 - list.bounds.getWidth()/2);
+        int listY = (int) (Game.w.getHeight()/2 - list.bounds.getHeight()/2);
+        list.setPosition(listX,listY);
+        list.updateList();
+        c.addElement(list);
+        return c;
+    }
+    private static Container generateScrollableList(ArrayList<Market> list){
+        Container c = new Container(0, 0, 1000,400);
+        c.isList = true;
+        int currentY = 0;
+        for(Market itemToSell : list){
+            EntityInfo info = EntityManager.entityInfos.get(itemToSell.id);
+            String name = info.name;
+            int amount = itemToSell.amount;
+            
+            EntityInfo info2 = EntityManager.entityInfos.get(itemToSell.id2);
+            String name2 = info2.name;
+            int amount2 = itemToSell.amount2;
+            System.out.println(name2 + " " + amount2 + " -> " + name + " " + amount); 
+            Container listItem = generateListItem(info,amount,info2,amount2);
+            listItem.centerVertically();
+            currentY += listItem.bounds.getHeight();
+            c.addElement(listItem);
+        }
+        
+        Task t1 = new Task(){
+            public void perform(){
+                if(c.start>0){
+                    c.start--;
+                }
+                c.updateList();
+            }
+        };
+        Task t2 = new Task(){
+            public void perform(){
+                c.start++;
+                c.updateList();
+            }
+        };
+        ClickButton upButton = new ClickButton((int)(c.x+c.bounds.getWidth()), c.y, AssetStorage.images.get("arrow_up"));
+        ClickButton downButton = new ClickButton((int)(c.x+c.bounds.getWidth()), (int)(c.y + c.bounds.getHeight()), AssetStorage.images.get("arrow_down"));
+        upButton.setTask(t1);
+        downButton.setPosition(downButton.x, (int)(c.y + c.bounds.getHeight()-downButton.bounds.height));
+        downButton.setTask(t2);
+        c.addElement(upButton);
+        c.addElement(downButton);
+        c.updateList();
+        c.fillBg = true;
+        return c;
+    }
+    private static Container generateListItem(EntityInfo e1, int amount, EntityInfo e2, int amount2){
+        Container c = new Container(0,0,200,40);
+        Task t = new Task(){
+            public void perform(){
+                //Buy
+                System.out.println("Buy " + e1.name);
+            }
+        };
+        ClickButton buy = new ClickButton(0,0,new Text("Buy",0,0,0,false));
+        buy.setTask(t);
+        c.addElement(buy);
+
+        Text priceText = new Text(amount2+"x"+e2.name,0,0,100,false);
+        c.addElement(priceText);
+        Image icon1 = new Image(e2.texture,0,0);
+        c.addElement(icon1);
+        
+        Image arrow = new Image(AssetStorage.images.get("arrow_right"),0,0);
+        c.addElement(arrow);
+        
+        Text itemText = new Text(amount+"x"+e1.name,0,0,100,false);
+        c.addElement(itemText);
+        Image icon2 = new Image(e1.texture,0,0);
+        c.addElement(icon2);
+        
+        c.spaceHorizintally(10);
+        c.fillBg = true;
+        c.calculateBounds();
         return c;
     }
     private static Container createWitchContainer(){
@@ -218,6 +302,10 @@ public class PauseMenu {
         ClickButton returnButton = new ClickButton(0,0,new Text("Return", 0, 0, 0, false));
         returnButton.setTask(returnTask);
         c.addElement(returnButton);
+
+        
+
+
         return c;
     }
     private static Container createTraderContainer(){

@@ -11,6 +11,7 @@ import gfx.Transition;
 import io.KeyManager;
 import io.MouseManager;
 import loot.LootTables;
+import loot.Market;
 import questions.QuestionStorage;
 import sound.SoundPlayer;
 import states.State;
@@ -74,6 +75,7 @@ public class Game extends Engine{
             goAway();
         }
 
+
         status = "Loading animations";
         try {
             Animations.loadAnimations();
@@ -85,11 +87,11 @@ public class Game extends Engine{
         status = "Loading sounds";
         try {
             AssetStorage.loadSounds();
-            
         } catch (Exception e) {
             status = "Error occured while loading sounds";
             goAway();
         }
+
 
         status = "Loading Texts";
         try {
@@ -99,12 +101,23 @@ public class Game extends Engine{
             goAway();
         }        
 
+
         System.out.println("Loading Tile Data");
         status = "Loading Tiles";
         try {
             Tile.loadTilesV2();
         } catch (Exception e) {
             status = "Error occured while loading Tiles";
+            goAway();
+        }
+
+        
+        status = "Loading Market prices";
+        try{
+            Market.load();
+        }catch(Exception e){
+            e.printStackTrace();
+            status = "Error occured while loading Market Prices";
             goAway();
         }
         System.out.println("Loading Biome Data");
@@ -116,6 +129,7 @@ public class Game extends Engine{
             goAway();
         }
         
+
         System.out.println("Creating input handling");
         status = "Loading Input";
         try {
@@ -125,13 +139,11 @@ public class Game extends Engine{
             w.getCanvas().addMouseListener(mm);
             w.getCanvas().addMouseMotionListener(mm);
             w.getCanvas().requestFocus();
-            
-            
         } catch (Exception e) {
-            
             status = "Error occured while loading IO";
             goAway();
         }
+
         //UI
         System.out.println("Loading UI Data");
         status = "Loading UI Data";
@@ -141,15 +153,12 @@ public class Game extends Engine{
             status = "Error occured while loading UI Data";
             goAway();
         }
-        System.out.println("Loading Pause Menus");
-        status = "Loading Pause Menus";
-        try{
-            PauseMenu.loadPauseMenus();
-        }catch(Exception e){
-            status = "Error occured while loading Pause Menus";
-            goAway();
-        }
+
         
+
+        
+        
+
         System.out.println("Creating States");
         status = "Loading States";
         try {
@@ -159,6 +168,17 @@ public class Game extends Engine{
             goAway();
         }
         
+
+        System.out.println("Loading Pause Menus");
+        status = "Loading Pause Menus";
+        try{
+            PauseMenu.loadPauseMenus();
+        }catch(Exception e){
+            e.printStackTrace();
+            status = "Error occured while loading Pause Menus";
+            goAway();
+        }
+
         status = "Loading Structures";
         try {
             Map.loadStructures();
@@ -173,7 +193,7 @@ public class Game extends Engine{
             status = "Error occured while loading Loot Tables";
             goAway();
         }
-
+        
 
         status = "Everything loaded. Happy gaming :)";
         SoundPlayer.playSound("allDone");

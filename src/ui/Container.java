@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 public class Container extends UIElement{
     public ArrayList<UIElement> elements;
+    public ArrayList<UIElement> toShow;
     public UIElement header;
+    public boolean fillBg = false;
+    public int start=0, end;
+    public boolean isList = false;
     public Container(int x, int y, int width, int height) {
         super(x, y, width, height);
         elements = new ArrayList<UIElement>();
@@ -13,6 +17,9 @@ public class Container extends UIElement{
     }
     public void sendClick(){
         for(UIElement e : elements){
+            if(e instanceof Container){
+                ((Container)e).sendClick();
+            }
             if(e instanceof FunctionalElement){
                 FunctionalElement ee = (FunctionalElement)e;
                 ee.click();
@@ -61,6 +68,67 @@ public class Container extends UIElement{
         }
         
     }
+    public void centerVertically(){
+        for(UIElement e : elements){
+            e.setPosition(e.x, bounds.height/2 - e.bounds.height/2);
+        }
+    }
+    public void spaceHorizintally(int buffer){
+        int totalWidth = 0;
+        for(UIElement e : elements){
+            totalWidth += e.bounds.getWidth();
+        }
+        int c = (int)bounds.getWidth()/2;
+        int currentX = 0;
+        for(UIElement e : elements){
+            e.setPosition(currentX, 0);
+            currentX += e.bounds.getWidth();
+        }
+        
+    }
+    public void updateList(){
+        end = start+3;
+        int max = elements.size()-2;
+        if(end > max){
+            end = max;
+            start= end-3;
+        }
+        if(start < 0){
+            start = 0;
+
+        }
+        toShow = new ArrayList<UIElement>();
+        int lastY = 0;
+        System.out.println("Showing list from " + start + " to " +end);
+        for(int i = start; i < end; i++){
+            
+            UIElement e = elements.get(i);
+            e.setPosition(0, lastY);
+            e.updateBounds();
+            lastY += e.bounds.getHeight()+20;
+            toShow.add(e);
+        }
+
+        toShow.add(elements.get(elements.size()-1));
+        toShow.add(elements.get(elements.size()-2));
+        updateBounds();
+    }
+    public void calculateBounds(){
+        int currentMaxX = 0;
+        int currentMaxY = 0;
+        for(UIElement e : elements){
+            int xx = e.bounds.x + e.bounds.width;
+            int yy = e.bounds.y + e.bounds.height;
+            if(xx > currentMaxX){
+                currentMaxX = xx;
+            }
+            if(yy > currentMaxY){
+                currentMaxY = yy;
+            }
+        }
+        bounds.width = currentMaxX;
+        bounds.height = currentMaxY;
+    }
     public void makeGrid(int rows){
         int forRow = elements.size() / rows;
         
@@ -90,28 +158,59 @@ public class Container extends UIElement{
         }
     }
     public void addElement(UIElement e){
+        e.setOffset(x, y);
         elements.add(e);
     }
 
     @Override
     public void render(Graphics g) {
         //Draw container
-        g.setColor(data.bgColor);
-        g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+        if(fillBg){
+            g.setColor(data.bgColor);
+            g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+
+        }
         if(header!=null)header.render(g);
         //Draw elements
-        for(UIElement e : elements){
-            e.render(g);
-            
+
+        if(isList){
+            ArrayList<UIElement> copy = new ArrayList<UIElement>();
+            copy.addAll(toShow);
+            for(UIElement e :copy){
+                e.render(g);
+            }
+
+        }else{
+            for(UIElement e : elements){
+                e.render(g);
+            }
         }
     }
     public void update(){
-        for(UIElement e : elements){
-            if(e instanceof FunctionalElement){
-                FunctionalElement ee = (FunctionalElement)e;
-                ee.update();
+        if(isList){
+            ArrayList<UIElement> copy = new ArrayList<UIElement>();
+            copy.addAll(toShow);
+            
+            for(UIElement e : copy){
+                if(e instanceof FunctionalElement){
+                    FunctionalElement ee = (FunctionalElement)e;
+                    ee.update();
+                }else if(e instanceof Container){
+                    ((Container)e).update();
+                }
             }
+        }else{
+            for(UIElement e : elements){
                 
+                if(e instanceof FunctionalElement){
+                    FunctionalElement ee = (FunctionalElement)e;
+                    ee.update();
+                }else if(e instanceof Container){
+                    ((Container)e).update();
+                }
+                    
+            }
+            
         }
     }
     

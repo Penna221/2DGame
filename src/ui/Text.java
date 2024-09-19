@@ -28,8 +28,8 @@ public class Text extends UIElement{
     @Override
     public void render(Graphics g) {
         g.drawImage(textImage, bounds.x, bounds.y, null);
-        g.setColor(UIFactory.textData.borderColor);
-        g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
+        // g.setColor(UIFactory.textData.borderColor);
+        // g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
     }
     
 }
