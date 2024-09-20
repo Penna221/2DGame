@@ -34,6 +34,7 @@ public class BlacksmithState extends State {
 
     @Override
     public void init() {
+        PauseMenu.generateNewContainer("blacksmith");
         c = PauseMenu.containers.get("blacksmith");
         PauseMenu.setContainer(c);
     }

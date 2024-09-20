@@ -110,12 +110,90 @@ public class UIFactory {
     }
 
     
-    public static BufferedImage generateText(String text){
+    public static BufferedImage generateText(String text, int maxWidth){
+        int len = calculateWidth(text);
+        if(len > maxWidth){
+            String[] words = chopText(text,maxWidth);
+            String texta = "";
+            for(String a : words){
+                texta += a + " "; 
+            }
+            System.out.println("Splitted word: " + texta);
+            ArrayList<BufferedImage> rows = new ArrayList<BufferedImage>();
+                
+            int startIndex = 0;
+            int currentIndex = 0;
+            int totalWidth = 0;;
+            while(true){
+                if(currentIndex==words.length){
+                    if(currentIndex == startIndex){
+                        System.out.println("enough");
+                        break;
+                    }
+                    String word = "";
+                    for(int i = startIndex; i < currentIndex; i++){
+                        word += words[i] + " ";
+                    }
+                    word = word.substring(0,word.length()-1);
+                    System.out.println("Generate image fro: " + word);
+                    rows.add(generateImageFromText(word));
+                    break;
+                }
+                int l = calculateWidth(words[currentIndex]);
+                totalWidth += l;
+                if(totalWidth> maxWidth){
+                    //Tarpeeksi sanoja
+                    String word = "";
+                    System.out.println(startIndex + " " + currentIndex);
+                    for(int i = startIndex; i < currentIndex+1; i++){
+                        word += words[i] + " ";
+                    }
+                    word = word.substring(0,word.length()-1);
+                    // System.out.println("Generate image fro: " + word);
+
+                    rows.add(generateImageFromText(word));
+                    totalWidth = 0;
+                    currentIndex++;
+                    startIndex = currentIndex;
+                }
+            }
+            // for(String s : words){
+            //     rows.add(generateImageFromText(s));
+            // }
+            return combineMultipleRows(rows);
+            
+            
+        }else{
+            return generateImageFromText(text);
+
+        }
+    }
+    private static BufferedImage combineMultipleRows(ArrayList<BufferedImage> rows){
+        BufferedImage wholeImage;
+        int height = 0;
+        int maxWidth = 0;
+        for(BufferedImage row : rows){
+            height += row.getHeight();
+            int wi = row.getWidth();
+            if(wi > maxWidth){
+                maxWidth = wi;
+            }
+        }
+        wholeImage = new BufferedImage(maxWidth, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = wholeImage.createGraphics();
+        int currentY = 0;
+        for(BufferedImage b : rows){
+            g.drawImage(b, 0,currentY,null);
+            currentY += b.getHeight();
+        }
+        return wholeImage;
+    }
+    private static BufferedImage generateImageFromText(String text){
         int len = calculateWidth(text);
         BufferedImage img = new BufferedImage(len, alphabetHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.createGraphics();
         int currentX = 0;
-
+    
         char[] charArray = text.toCharArray();
         for(char c : charArray){
             if(c==' '){
@@ -126,9 +204,38 @@ public class UIFactory {
             g.drawImage(charImg, currentX, 0, null);
             currentX += charImg.getWidth() + spacing;
         }
-
-
         return img;
+
+    }
+    private static String[] chopText(String text, int maxWidth){
+        String[] words = text.split(" ");
+        if(words.length==1){
+            String[] splittedWord = splitWord(text,maxWidth);
+            return splittedWord;
+        }else{
+            return words;
+        }
+    }
+    private static String[] splitWord(String word, int maxWidth){
+        char[] chars = word.toCharArray();
+        int index = 1;
+        String word1 = "";
+        for(int i = 0; i < chars.length; i++){
+            word1+= chars[i];
+            int w = calculateWidth(word1);
+            if(w>maxWidth){
+                index = i+1;
+                break;
+            } 
+        }
+        //Take one more char away.
+        word1.substring(0,word1.length()-1);
+        word1+= "-";
+        String word2 = word.substring(index);
+        String[] words = new String[2];
+        words[0] = word1;
+        words[1] = word2;
+        return words;
     }
     public static BufferedImage generateBorder(BufferedImage img,int thick){
         int w = img.getWidth();
@@ -175,6 +282,7 @@ public class UIFactory {
 
     private static int calculateWidth(String text){
         
+        System.out.println("Calculating width for [" + text+"]");
         int width = 0;
         char[] charArray = text.toCharArray();
         for(char c : charArray){

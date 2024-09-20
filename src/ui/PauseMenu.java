@@ -32,7 +32,36 @@ public class PauseMenu {
         containers.put("enter_trader", createTraderEntryDialog());
         
     }
-
+    public static void generateNewContainer(String text){
+        switch (text) {
+            case "basic":
+                containers.put("basic", createBasicPauseMenu());
+            break;
+            case "main":
+                containers.put("main", createMenuStateContainer()); 
+            break;
+            case "blacksmith":
+                containers.put("blacksmith",createBlacksmithContainer());
+            break;
+            case "witch":
+                containers.put("witch",createWitchContainer());
+            break;
+            case "trader":
+                containers.put("trader",createTraderContainer());
+            break;
+            case "enter_witch":
+                containers.put("enter_witch", createWitchEntryDialog());
+            break;
+            case "enter_trader":
+                containers.put("enter_trader", createTraderEntryDialog());
+            break;
+            case "enter_blacksmith":
+                containers.put("enter_blacksmith", createBlacksmithEntryDialog());
+            break;
+            default:
+                break;
+        }
+    }
     private static Container createMenuStateContainer(){
         Container container = new Container(0, 0, Game.w.getWidth(),Game.w.getHeight());
         Text title = new Text("Game Title", 0, 50, 0, true);
@@ -42,11 +71,11 @@ public class PauseMenu {
                 State.setState(State.gameState,false);
             }
         };
-        ClickButton newGameButton = new ClickButton(100, 200, new Text("New Game",0,0,100,false));
+        ClickButton newGameButton = new ClickButton(100, 200, new Text("New Game",0,0,0,false));
         newGameButton.setTask(t);
-        ClickButton loadGameButton = new ClickButton(100, 320,new Text("Load Game",0,0,100,false));
+        ClickButton loadGameButton = new ClickButton(100, 320,new Text("Load Game",0,0,0,false));
         Task t2 = new Task(){public void perform(){System.exit(0);}};
-        ClickButton exitButton = new ClickButton(100, 440, new Text("Exit",0,0,100,false));
+        ClickButton exitButton = new ClickButton(100, 440, new Text("Exit",0,0,0,false));
         exitButton.setTask(t2);
         int bottomRow = Game.w.getHeight()-100;
         BufferedImage gear = AssetStorage.images.get("gear");
@@ -83,9 +112,9 @@ public class PauseMenu {
                 GameState.paused = false;
             }
         };
-        ClickButton returnButton = new ClickButton(0,250,new Text("Return to game",w/2,0,150,false));
+        ClickButton returnButton = new ClickButton(0,250,new Text("Return to game",w/2,0,0,false));
         returnButton.setTask(t1);
-        ClickButton settingsButton = new ClickButton(0,250,new Text("Settings",w/2,0,150,false));
+        ClickButton settingsButton = new ClickButton(0,250,new Text("Settings",w/2,0,0,false));
         
         
         Task t2 = new Task(){
@@ -96,7 +125,7 @@ public class PauseMenu {
                 Transition.canFinish = true;
             }
         };
-        ClickButton exitButton = new ClickButton(0,250,new Text("Save and exit",w/2,0,150,false));
+        ClickButton exitButton = new ClickButton(0,250,new Text("Save and exit",w/2,0,0,false));
         exitButton.setTask(t2);
         c.addElement(returnButton);
         c.addElement(settingsButton);
@@ -123,7 +152,7 @@ public class PauseMenu {
         int x = 0;
         int y = Game.w.getHeight()-h;
         Container c = new Container(x,y,w,h);
-        Text title = new Text(header, 20, y, 0, true);
+        Text title = new Text(header, 20, y, w, true);
         int lastY = title.y + title.bounds.height + 20;
         c.addElement(title);
         for(int i = 0; i < options.size(); i++){
@@ -136,7 +165,19 @@ public class PauseMenu {
 
         return c;
     }
-    
+    private static Container createEntryDialog(Task t1, String question, Image header){
+        Task t2 = new Task(){
+            public void perform(){
+                PauseMenu.setContainer(null);
+                GameState.paused = false;
+            }
+        };
+        Container c = createYesNoDialog(question, t1, t2);
+        c.fillBg = true;
+        c.setHeader(header);
+        return c;
+
+    }
     private static Container createBlacksmithEntryDialog(){
         Task t1 = new Task(){
             public void perform(){
@@ -145,14 +186,8 @@ public class PauseMenu {
                 Transition.canFinish = true;
             }
         };
-        Task t2 = new Task(){
-            public void perform(){
-                GameState.paused = false;
-            }
-        };
-        Container c = createYesNoDialog("Open Blacksmith shop?", t1, t2);
-        c.fillBg = true;
-        return c;
+        Image i = new Image(EntityManager.entityInfos.get(19).texture, 0, 0);
+        return createEntryDialog(t1,"Open Blacksmith shop?", i);
     }
     private static Container createWitchEntryDialog(){
         Task t1 = new Task(){
@@ -162,13 +197,8 @@ public class PauseMenu {
                 Transition.canFinish = true;
             }
         };
-        Task t2 = new Task(){
-            public void perform(){
-                GameState.paused = false;
-            }
-        };
-        Container c = createYesNoDialog("Open Witch shop?", t1, t2);
-        return c;
+        Image i = new Image(EntityManager.entityInfos.get(25).texture, 0, 0);
+        return createEntryDialog(t1,"Open Witch shop?", i);
     }
     private static Container createTraderEntryDialog(){
         Task t1 = new Task(){
@@ -178,22 +208,12 @@ public class PauseMenu {
                 Transition.canFinish = true;
             }
         };
-        Task t2 = new Task(){
-            public void perform(){
-                GameState.paused = false;
-            }
-        };
-        Container c = createYesNoDialog("Would you like to buy something?", t1, t2);
-        return c;
+        Image i = new Image(EntityManager.entityInfos.get(25).texture, 0, 0);
+        return createEntryDialog(t1,"Would you like to buy something?", i);
     }
     public static Container createTunnelEntryDialog(Task t){
-        Task t2 = new Task(){
-            public void perform(){
-                GameState.paused = false;
-            }
-        };
-        Container c = createYesNoDialog("Would you like to enter the tunnel?", t, t2);
-        return c;
+        Image i = new Image(EntityManager.entityInfos.get(11).texture, 0, 0);
+        return createEntryDialog(t,"Go through?", i);
     }
     private static Container createBlacksmithContainer(){
         Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
@@ -330,7 +350,7 @@ public class PauseMenu {
         Image arrow = new Image(AssetStorage.images.get("arrow_right"),0,0);
         c.addElement(arrow);
         
-        Text itemText = new Text(amount+"x"+e1.name,0,0,100,false);
+        Text itemText = new Text(amount+"x"+e1.name,0,0,40,false);
         c.addElement(itemText);
         Image icon2 = new Image(e1.texture,0,0);
         c.addElement(icon2);

@@ -46,6 +46,7 @@ public class BlacksmithAI extends AI {
         e.currentAnimation.animate();
     }
     private void openTradingMenu(){
+        PauseMenu.generateNewContainer("enter_blacksmith");
         PauseMenu.setContainer(PauseMenu.containers.get("enter_blacksmith"));
         GameState.paused = true;
     }
