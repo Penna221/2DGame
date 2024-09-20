@@ -28,7 +28,6 @@ public abstract class UIElement {
             for(UIElement e : c.elements){
                 int setX = bounds.x;
                 int setY = bounds.y;
-                System.out.println("Setting child element pos to "+ setX + "  " + setY);
                 e.setOffset(setX,setY);
             }
             

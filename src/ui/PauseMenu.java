@@ -208,19 +208,96 @@ public class PauseMenu {
         returnButton.setTask(returnTask);
         c.addElement(returnButton);
 
-        Container list = generateScrollableList(Market.lists.get("blacksmith"));        
+        Container list =  new Container(0, 0, 1000,400);
+        list.fillBg = true;
         int listX = (int) (Game.w.getWidth()/2 - list.bounds.getWidth()/2);
         int listY = (int) (Game.w.getHeight()/2 - list.bounds.getHeight()/2);
         list.setPosition(listX,listY);
-        list.updateList();
+        
+        ArrayList<Market> market = Market.lists.get("blacksmith");
+
+
+        int start = list.start;
+        start--;
+        if(start < 0){
+            start =0;
+        }
+        list.start = start;
+        int end = start +3;
+        if(end > market.size()){
+            end = market.size();
+        }
+
+
+
+
+
+        addToListWithRange(list,market,start,end);  
+        list.update();
+
+
         c.addElement(list);
+        c.updateBounds();
+        Task t1 = new Task(){
+            public void perform(){
+                if(list.changing){
+                    return;
+                }
+                int start = list.start;
+                start--;
+                if(start < 0){
+                    start =0;
+                }
+                list.start = start;
+                int end = start +3;
+                if(end > market.size()){
+                    end = market.size();
+                }
+                addToListWithRange(list,market, start,end);
+            }
+        };
+        Task t2 = new Task(){
+            public void perform(){
+                if(list.changing){
+                    return;
+                }
+                int start = list.start;
+                start++;
+                
+                int max = market.size()-3;
+                if(max<=1){
+                    max = market.size();
+                    start = 0;
+                }
+                if(start > max){
+                    start = max;
+                }
+                list.start = start;
+                int end = start +3;
+                if(end > market.size()){
+                    end = market.size();
+                }
+                addToListWithRange(list,market, start,end);
+            }
+        };
+        ClickButton upButton = new ClickButton((int)(list.x+list.bounds.getWidth()), list.y, AssetStorage.images.get("arrow_up"));
+        ClickButton downButton = new ClickButton((int)(list.x+list.bounds.getWidth()), (int)(list.y + list.bounds.getHeight()), AssetStorage.images.get("arrow_down"));
+        upButton.setTask(t1);
+        downButton.setPosition(downButton.x, (int)(list.y + list.bounds.getHeight()-downButton.bounds.height));
+        downButton.setTask(t2);
+        c.addElement(upButton);
+        c.addElement(downButton);
+
+        // list.updateList();
+        
         return c;
     }
-    private static Container generateScrollableList(ArrayList<Market> list){
-        Container c = new Container(0, 0, 1000,400);
-        c.isList = true;
-        int currentY = 0;
-        for(Market itemToSell : list){
+    private static void addToListWithRange(Container c, ArrayList<Market> list, int start, int end){
+
+        c.change = new ArrayList<UIElement>();
+
+        for(int i = start; i < end; i++){
+            Market itemToSell = list.get(i);
             EntityInfo info = EntityManager.entityInfos.get(itemToSell.id);
             String name = info.name;
             int amount = itemToSell.amount;
@@ -228,37 +305,12 @@ public class PauseMenu {
             EntityInfo info2 = EntityManager.entityInfos.get(itemToSell.id2);
             String name2 = info2.name;
             int amount2 = itemToSell.amount2;
-            System.out.println(name2 + " " + amount2 + " -> " + name + " " + amount); 
             Container listItem = generateListItem(info,amount,info2,amount2);
             listItem.centerVertically();
-            currentY += listItem.bounds.getHeight();
-            c.addElement(listItem);
+            c.addLate(listItem);
         }
+        c.swap();
         
-        Task t1 = new Task(){
-            public void perform(){
-                if(c.start>0){
-                    c.start--;
-                }
-                c.updateList();
-            }
-        };
-        Task t2 = new Task(){
-            public void perform(){
-                c.start++;
-                c.updateList();
-            }
-        };
-        ClickButton upButton = new ClickButton((int)(c.x+c.bounds.getWidth()), c.y, AssetStorage.images.get("arrow_up"));
-        ClickButton downButton = new ClickButton((int)(c.x+c.bounds.getWidth()), (int)(c.y + c.bounds.getHeight()), AssetStorage.images.get("arrow_down"));
-        upButton.setTask(t1);
-        downButton.setPosition(downButton.x, (int)(c.y + c.bounds.getHeight()-downButton.bounds.height));
-        downButton.setTask(t2);
-        c.addElement(upButton);
-        c.addElement(downButton);
-        c.updateList();
-        c.fillBg = true;
-        return c;
     }
     private static Container generateListItem(EntityInfo e1, int amount, EntityInfo e2, int amount2){
         Container c = new Container(0,0,200,40);
@@ -268,9 +320,7 @@ public class PauseMenu {
                 System.out.println("Buy " + e1.name);
             }
         };
-        ClickButton buy = new ClickButton(0,0,new Text("Buy",0,0,0,false));
-        buy.setTask(t);
-        c.addElement(buy);
+        
 
         Text priceText = new Text(amount2+"x"+e2.name,0,0,100,false);
         c.addElement(priceText);
@@ -284,6 +334,12 @@ public class PauseMenu {
         c.addElement(itemText);
         Image icon2 = new Image(e1.texture,0,0);
         c.addElement(icon2);
+
+
+        ClickButton buy = new ClickButton(0,0,new Text("Buy",0,0,0,false));
+        buy.setTask(t);
+        c.addElement(buy);
+
         
         c.spaceHorizintally(10);
         c.fillBg = true;

@@ -5,18 +5,25 @@ import java.util.ArrayList;
 
 public class Container extends UIElement{
     public ArrayList<UIElement> elements;
-    public ArrayList<UIElement> toShow;
+    public ArrayList<UIElement> change;
+    public boolean changing = false;
+
     public UIElement header;
     public boolean fillBg = false;
-    public int start=0, end;
+    public int start=0;
+    
     public boolean isList = false;
     public Container(int x, int y, int width, int height) {
         super(x, y, width, height);
         elements = new ArrayList<UIElement>();
+        change = new ArrayList<UIElement>();
         data = UIFactory.containerData;
     }
     public void sendClick(){
         for(UIElement e : elements){
+            if(changing){
+                break;
+            }
             if(e instanceof Container){
                 ((Container)e).sendClick();
             }
@@ -87,31 +94,12 @@ public class Container extends UIElement{
         
     }
     public void updateList(){
-        end = start+3;
-        int max = elements.size()-2;
-        if(end > max){
-            end = max;
-            start= end-3;
-        }
-        if(start < 0){
-            start = 0;
-
-        }
-        toShow = new ArrayList<UIElement>();
         int lastY = 0;
-        System.out.println("Showing list from " + start + " to " +end);
-        for(int i = start; i < end; i++){
-            
+        for(int i = 0; i < elements.size(); i++){
             UIElement e = elements.get(i);
             e.setPosition(0, lastY);
-            e.updateBounds();
             lastY += e.bounds.getHeight()+20;
-            toShow.add(e);
         }
-
-        toShow.add(elements.get(elements.size()-1));
-        toShow.add(elements.get(elements.size()-2));
-        updateBounds();
     }
     public void calculateBounds(){
         int currentMaxX = 0;
@@ -161,56 +149,49 @@ public class Container extends UIElement{
         e.setOffset(x, y);
         elements.add(e);
     }
-
+    public void addLate(UIElement e){
+        e.setOffset(x, y);
+        change.add(e);
+    }
     @Override
     public void render(Graphics g) {
         //Draw container
         if(fillBg){
             g.setColor(data.bgColor);
             g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
-
         }
         if(header!=null)header.render(g);
         //Draw elements
-
-        if(isList){
-            ArrayList<UIElement> copy = new ArrayList<UIElement>();
-            copy.addAll(toShow);
-            for(UIElement e :copy){
-                e.render(g);
-            }
-
-        }else{
+        if(!changing){
             for(UIElement e : elements){
+                if(changing){
+                    break;
+                }
                 e.render(g);
             }
         }
     }
+    public void swap(){
+        elements.clear();
+        elements.addAll(change);
+        updateList();
+        updateBounds();
+        changing = false;
+        change.clear();
+    }
     public void update(){
-        if(isList){
-            ArrayList<UIElement> copy = new ArrayList<UIElement>();
-            copy.addAll(toShow);
-            
-            for(UIElement e : copy){
-                if(e instanceof FunctionalElement){
-                    FunctionalElement ee = (FunctionalElement)e;
-                    ee.update();
-                }else if(e instanceof Container){
-                    ((Container)e).update();
-                }
+    
+        for(UIElement e : elements){
+            if(changing){
+                break;
             }
-        }else{
-            for(UIElement e : elements){
-                
-                if(e instanceof FunctionalElement){
-                    FunctionalElement ee = (FunctionalElement)e;
-                    ee.update();
-                }else if(e instanceof Container){
-                    ((Container)e).update();
-                }
-                    
-            }
-            
+            // System.out.println("update from elements forloop");
+            if(e instanceof FunctionalElement){
+                FunctionalElement ee = (FunctionalElement)e;
+                ee.update();
+            }else if(e instanceof Container){
+                ((Container)e).update();
+            }  
         }
     }
     

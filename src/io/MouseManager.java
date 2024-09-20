@@ -24,7 +24,7 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        System.out.println("sending click messsage");
+        
         if(PauseMenu.currentContainer!=null){
             PauseMenu.currentContainer.sendClick();
         }
@@ -34,9 +34,9 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        if(PauseMenu.currentContainer!=null){
-            PauseMenu.currentContainer.sendPress();
-        }
+        // if(PauseMenu.currentContainer!=null){
+        //     PauseMenu.currentContainer.sendPress();
+        // }
     }
 
     @Override
