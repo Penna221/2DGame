@@ -53,7 +53,6 @@ public class EntityManager {
             // System.out.println("SCALE IS " + scale);
             int width = (int) (c.findChild("width").getInteger()*scale);
             int height = (int) (c.findChild("height").getInteger()*scale);
-
             boolean isLight = c.findChild("light_source").getBoolean();
             int light_radius = c.findChild("light_radius").getInteger();
             String color_string = c.findChild("light_color").getString();
@@ -66,8 +65,6 @@ public class EntityManager {
             for(KeyValuePair ans: animations.getObject()){
                 String a = ans.getKey();
                 String b = ans.getString();
-                // System.out.println("Animation nameName: " + a);
-                // System.out.println("Animation val: " + b);
                 hashMap.put(a, Animations.animations.get(b));    
             }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());

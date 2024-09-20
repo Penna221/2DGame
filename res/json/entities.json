@@ -136,7 +136,7 @@
     "penquin":{
         "id":7,
         "type":"Creature",
-        "name":"Penguin",
+        "name":"Penguin Really long name for testing asdaasdasddasdasdasdasd",
         "texture":"penquin",
         "speed":0.0,
         "health":2,

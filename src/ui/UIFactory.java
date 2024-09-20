@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import gfx.AssetStorage;
 import json.JSON;
@@ -108,53 +110,59 @@ public class UIFactory {
         }
         return newImage;
     }
-
+    public static BufferedImage scaleToHeight(BufferedImage img, int height){
+        float oldHeight = img.getHeight();
+        float desiredHeight = height;
+        float factor = desiredHeight/oldHeight;
+        return AssetStorage.scaleImage(img,factor);
+    }
     
     public static BufferedImage generateText(String text, int maxWidth){
         int len = calculateWidth(text);
-        if(len > maxWidth){
+        if(len >= maxWidth){
             String[] words = chopText(text,maxWidth);
-            String texta = "";
-            for(String a : words){
-                texta += a + " "; 
+            Queue<String> remainingWords = new LinkedList<String>();
+
+            for (String s : words) {
+                remainingWords.offer(s);
             }
-            System.out.println("Splitted word: " + texta);
+
+
             ArrayList<BufferedImage> rows = new ArrayList<BufferedImage>();
-                
-            int startIndex = 0;
-            int currentIndex = 0;
             int totalWidth = 0;;
+            String wordsForRow = "";
+
+            
+            
             while(true){
-                if(currentIndex==words.length){
-                    if(currentIndex == startIndex){
-                        System.out.println("enough");
-                        break;
+                String currentWord = remainingWords.peek();
+                System.out.println("Current word: [" +currentWord+"]");
+                if(currentWord == null){
+                    System.out.println("enough");
+                    if(!wordsForRow.isEmpty()){
+                        wordsForRow = wordsForRow.substring(0,wordsForRow.length()-1);
+                        System.out.println("1Adding as row: [" + wordsForRow+"]");
+                        rows.add(generateImageFromText(wordsForRow));
                     }
-                    String word = "";
-                    for(int i = startIndex; i < currentIndex; i++){
-                        word += words[i] + " ";
-                    }
-                    word = word.substring(0,word.length()-1);
-                    System.out.println("Generate image fro: " + word);
-                    rows.add(generateImageFromText(word));
                     break;
                 }
-                int l = calculateWidth(words[currentIndex]);
-                totalWidth += l;
-                if(totalWidth> maxWidth){
-                    //Tarpeeksi sanoja
-                    String word = "";
-                    System.out.println(startIndex + " " + currentIndex);
-                    for(int i = startIndex; i < currentIndex+1; i++){
-                        word += words[i] + " ";
-                    }
-                    word = word.substring(0,word.length()-1);
-                    // System.out.println("Generate image fro: " + word);
 
-                    rows.add(generateImageFromText(word));
+                int l = calculateWidth(currentWord + " ");
+                totalWidth += l;
+                if(totalWidth<maxWidth){
+                    wordsForRow += remainingWords.poll() + " ";
+                    System.out.println("wordsForRow :[" + wordsForRow+ "]");
+                }else{
+                    wordsForRow = wordsForRow.trim();
+                    // String[] wws = wordsForRow.split(" ");
+                    // if(wws.length==1){
+                    //     chopText(wordsForRow, maxWidth);
+                    //     remainingWords.offer(currentWord)
+                    // }
+                    System.out.println("Too long. Adding as row: [" + wordsForRow+"]");
+                    rows.add(generateImageFromText(wordsForRow));
+                    wordsForRow = "";
                     totalWidth = 0;
-                    currentIndex++;
-                    startIndex = currentIndex;
                 }
             }
             // for(String s : words){
@@ -209,11 +217,29 @@ public class UIFactory {
     }
     private static String[] chopText(String text, int maxWidth){
         String[] words = text.split(" ");
+        ArrayList<String> wordsList = new ArrayList<String>();
         if(words.length==1){
             String[] splittedWord = splitWord(text,maxWidth);
             return splittedWord;
         }else{
-            return words;
+            for(String w : words){
+                int wi = calculateWidth(w);
+                if(wi>maxWidth){
+                    String[] splittedWord = splitWord(w, maxWidth);
+                    String s1 = splittedWord[0];
+                    String s2 = splittedWord[1];
+                    wordsList.add(s1);
+                    wordsList.add(s2);
+                    continue;
+                }else{
+                    wordsList.add(w);
+                }
+            }
+            String[] returnWords = new String[wordsList.size()];
+            for(int i = 0; i < returnWords.length; i++){
+                returnWords[i] = wordsList.get(i);
+            }
+            return returnWords;
         }
     }
     private static String[] splitWord(String word, int maxWidth){
@@ -224,17 +250,18 @@ public class UIFactory {
             word1+= chars[i];
             int w = calculateWidth(word1);
             if(w>maxWidth){
-                index = i+1;
+                index = i;
                 break;
             } 
         }
         //Take one more char away.
-        word1.substring(0,word1.length()-1);
+        word1 = word1.substring(0,word1.length()-2);
         word1+= "-";
-        String word2 = word.substring(index);
+        String word2 = word.substring(word1.length());
         String[] words = new String[2];
         words[0] = word1;
         words[1] = word2;
+        
         return words;
     }
     public static BufferedImage generateBorder(BufferedImage img,int thick){
@@ -281,8 +308,6 @@ public class UIFactory {
 
 
     private static int calculateWidth(String text){
-        
-        System.out.println("Calculating width for [" + text+"]");
         int width = 0;
         char[] charArray = text.toCharArray();
         for(char c : charArray){

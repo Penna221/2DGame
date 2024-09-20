@@ -2,20 +2,34 @@
     "blacksmith":[
         {
             "id":7,
+            "amount":134,
+            "price":{
+                "item":2,
+                "amount":2
+            }
+        },{
+            "id":8,
+            "amount":25,
+            "price":{
+                "item":2,
+                "amount":2
+            }
+        },{
+            "id":9,
             "amount":1,
             "price":{
                 "item":2,
                 "amount":2
             }
         },{
-            "id":7,
+            "id":10,
             "amount":1,
             "price":{
                 "item":2,
                 "amount":2
             }
         },{
-            "id":7,
+            "id":11,
             "amount":1,
             "price":{
                 "item":2,

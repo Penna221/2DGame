@@ -34,6 +34,9 @@ public class Launcher {
             System.out.println("Width:" + width);
             System.out.println("Height:" + height);
             System.out.println("Title:" + title);
+            System.out.println("Entity Scale: " + entity_scale);
+            System.out.println("Tile Scale: " + tile_scale);
+            System.out.println("Over All Scale: " + overall_scale);
             new Launcher(width,height,title);
             
         }

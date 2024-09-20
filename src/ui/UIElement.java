@@ -37,6 +37,15 @@ public abstract class UIElement {
     public void setOffset(int xx, int yy){
         this.offsetX = xx;
         this.offsetY = yy;
+        if(this instanceof Container){
+            Container c = (Container)this;
+            for(UIElement e : c.elements){
+                int setX = bounds.x;
+                int setY = bounds.y;
+                e.setOffset(setX,setY);
+            }
+            
+        }
     }
     public void updateBounds(){
         bounds.x = x + offsetX;

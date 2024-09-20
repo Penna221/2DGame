@@ -1,4 +1,6 @@
 package ui;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -270,6 +272,7 @@ public class PauseMenu {
                     end = market.size();
                 }
                 addToListWithRange(list,market, start,end);
+                c.updateBounds();
             }
         };
         Task t2 = new Task(){
@@ -294,6 +297,8 @@ public class PauseMenu {
                     end = market.size();
                 }
                 addToListWithRange(list,market, start,end);
+                c.updateBounds();
+
             }
         };
         ClickButton upButton = new ClickButton((int)(list.x+list.bounds.getWidth()), list.y, AssetStorage.images.get("arrow_up"));
@@ -321,55 +326,87 @@ public class PauseMenu {
             EntityInfo info2 = EntityManager.entityInfos.get(itemToSell.id2);
             String name2 = info2.name;
             int amount2 = itemToSell.amount2;
-            Container listItem = generateListItem(info,amount,info2,amount2);
+            Container listItem = generateListItem(c.bounds.width,info,amount,info2,amount2);
+            // listItem.setOffset(c.x,c.y);
             listItem.centerVertically();
             c.addLate(listItem);
         }
         c.swap();
-        
+        c.updateList();
     }
-    private static Container generateListItem(EntityInfo e1, int amount, EntityInfo e2, int amount2){
-        Container c = new Container(0,0,100,100);
+    private static Container generateListItem(int maxWidth,EntityInfo e1, int amount, EntityInfo e2, int amount2){
+        Container c = new Container(0,0,maxWidth,120);
         Task t = new Task(){
             public void perform(){
                 //Buy
                 System.out.println("Buy " + e1.name);
             }
         };
-        
-        Container leftSide = new Container(0,0,100,40);
+        int lockWidth = maxWidth/3*2;
+        Container leftSide = new Container(0,0,lockWidth,c.bounds.height);
+        leftSide.fillBg = true;
+        leftSide.overrideColor = Color.blue;
         //Create LeftSide
-        BufferedImage i = AssetStorage.scaleImage(e1.texture,2);
-        Image icon2 = new Image(i,0,0);
+        
+        //GENERATE IMAGE BOX
+        
+        BufferedImage icon = generateIconWithAmount(e1.texture, amount);
+        Image icon2 = new Image(icon,0,0);
+        
+
+
         leftSide.addElement(icon2);
-        
-        Text itemText = new Text(amount+"x"+e1.name,0,0,500,false);
+        int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon2.bounds.getWidth());
+        System.out.println("maxWidth "+maxWidth+" Max size " + maxSizeForText1);
+        Text itemText = new Text(e1.name,0,0,maxSizeForText1,false);
+        System.out.println("Actual wi for "+e1.name+" " +itemText.bounds.width);
+        // Text itemText2 = new Text(e1.name,0,0,500,false);
         leftSide.addElement(itemText);
-        
-        
-        leftSide.spaceHorizintally(10);
-        
-        //Right side
-        Container rightSide = new Container(0,0,100,40);
-
-        Text priceText = new Text(amount2+"x",0,0,100,false);
-        rightSide.addElement(priceText);
-        Image icon1 = new Image(e2.texture,0,0);
-        rightSide.addElement(icon1);
-        ClickButton buy = new ClickButton(0,0,new Text("Buy",0,0,0,false));
-        buy.setTask(t);
-        rightSide.addElement(buy);
-        
-
-        
+        leftSide.spaceHorizintally(20);
+        leftSide.calculateBounds();
+        leftSide.bounds.setSize(lockWidth,leftSide.bounds.height);
+        leftSide.centerVertically();
         c.addElement(leftSide);
+        //RIGHT SIDE
+        Container rightSide = new Container(0,0,(int)(c.bounds.getWidth()-leftSide.bounds.getWidth()),100);
+        rightSide.fillBg = true;
+        rightSide.overrideColor = Color.RED;
         c.addElement(rightSide);
         
-        leftSide.spaceHorizintally(10);
-        c.fillBg = true;
+
+
+        c.spaceHorizintally(10);
         c.calculateBounds();
+        
+        c.fillBg = true;
+        c.overrideColor = Color.GREEN;
         return c;
     }
+    private static BufferedImage generateIconWithAmount(BufferedImage texture, int amount){
+        BufferedImage img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.createGraphics();
+        
+        //Draw Image
+        g.setColor(Color.black);
+        g.fillRect(0, 0, img.getWidth(),img.getHeight());
+        BufferedImage scaledImage = UIFactory.scaleToHeight(texture,64);
+        int centerX = img.getWidth()/2 - scaledImage.getWidth()/2;
+        int centerY = img.getHeight()/2 - scaledImage.getHeight()/2;
+        g.drawImage(scaledImage, centerX,centerY,null);
+        
+
+        int percentage = 36;
+        //Draw Amount
+        BufferedImage i = UIFactory.generateText(""+amount,200);
+        BufferedImage i2 = UIFactory.scaleToHeight(i,img.getHeight()/100*percentage);
+        int x = img.getWidth() - i2.getWidth();
+        int y = img.getHeight()-i2.getHeight();
+        g.setColor(new Color(25,0,0,200));
+        g.fillRect(x, y, i2.getWidth(), i2.getHeight());
+        g.drawImage(i2, x, y, null);
+        return img;
+    }
+
     private static Container createWitchContainer(){
         Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
         Task returnTask = new Task(){

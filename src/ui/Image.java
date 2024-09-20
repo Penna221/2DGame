@@ -11,7 +11,7 @@ public class Image extends UIElement{
     public Image(BufferedImage i,int x, int y) {
         super(x, y);
 
-        this.image = AssetStorage.scaleImage(i, 2);
+        this.image = i;
         bounds = new Rectangle(x,y,image.getWidth(),image.getHeight());
     }
     public void updateImage(BufferedImage i){

@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class Container extends UIElement{
     public int start=0;
     
     public boolean isList = false;
+    public Color overrideColor;
     public Container(int x, int y, int width, int height) {
         super(x, y, width, height);
         elements = new ArrayList<UIElement>();
@@ -88,8 +90,8 @@ public class Container extends UIElement{
         int c = (int)bounds.getWidth()/2;
         int currentX = 0;
         for(UIElement e : elements){
-            e.setPosition(currentX, 0);
-            currentX += e.bounds.getWidth();
+            e.setPosition(currentX, e.y);
+            currentX += e.bounds.getWidth()+buffer;
         }
         
     }
@@ -158,8 +160,13 @@ public class Container extends UIElement{
         //Draw container
         if(fillBg){
             g.setColor(data.bgColor);
+            if(overrideColor!=null){
+                g.setColor(overrideColor);
+            }
             g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
         }
+        g.setColor(Color.WHITE);
+        g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
         if(header!=null)header.render(g);
         //Draw elements
         if(!changing){
