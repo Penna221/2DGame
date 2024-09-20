@@ -40,7 +40,7 @@ public class World {
     public static Entity player;
     public static EntityManager entityManager;
     public static Camera camera;
-    private static boolean ready = false, readyToUpdate = false;
+    public static boolean ready = false, readyToUpdate = false;
     private static Transition transition;
     public static ArrayList<BufferedImage> overlay;
     public World(){
@@ -53,7 +53,6 @@ public class World {
     }
     
     public static void load(String worldName){
-        
         entityManager.clearEntities();
         SoundPlayer.stopAllSounds();
         readyToUpdate = false;

@@ -3,6 +3,7 @@ package states;
 import java.awt.Graphics;
 
 import gfx.Transition;
+import sound.SoundPlayer;
 import ui.PauseMenu;
 
 public abstract class State {
@@ -17,15 +18,12 @@ public abstract class State {
         gameState = new GameState();
         gameState.init();
         menuState = new MenuState();
-        menuState.init();
         traderState = new TraderState();
         blacksmithState = new BlacksmithState();
         witchState = new WitchState();
-        //NullState just because i want loading transition for game launching.
+        settingsState = new SettingsState();
         nullState = new NullState();
         nullState.init();
-        settingsState = new SettingsState();
-        settingsState.init();
         currentState = nullState;
     }
     public static void setState(State s, boolean trans){
@@ -40,6 +38,7 @@ public abstract class State {
             
             return;
         }
+        
         running = false;
         transition = new Transition(2000){
             @Override
@@ -47,7 +46,6 @@ public abstract class State {
                 Thread t = new Thread(){
                     @Override
                     public void run(){
-                        
                         s.init();
                         currentState = s;
                         currentState.updateOnceBetweenTransitions();
@@ -58,6 +56,7 @@ public abstract class State {
             }
             @Override
             public void end(){
+                SoundPlayer.stopAllSounds();
                 System.out.println("end");
                 State.running = true;
             }

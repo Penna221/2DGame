@@ -9,7 +9,6 @@ import world.World;
 
 public class GameState extends State{
     public World world;
-    //private ToggleButton button2;
     public static boolean paused = false;
     private boolean alreadyInitialized = false;
     @Override
@@ -48,7 +47,6 @@ public class GameState extends State{
 
     @Override
     public void init() {
-        // UiHub.clear();
         System.out.println("Gamestate init");
         paused = false;
         if(!alreadyInitialized){
