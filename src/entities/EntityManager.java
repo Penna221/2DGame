@@ -50,7 +50,7 @@ public class EntityManager {
                 tunnel = c.findChild("tunnel").getString();
                 System.out.println(tunnel);
             }
-            System.out.println("SCALE IS " + scale);
+            // System.out.println("SCALE IS " + scale);
             int width = (int) (c.findChild("width").getInteger()*scale);
             int height = (int) (c.findChild("height").getInteger()*scale);
 
