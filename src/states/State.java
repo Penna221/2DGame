@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import gfx.Transition;
 import ui.PauseMenu;
-import ui.UiHub;
 
 public abstract class State {
     public static State currentState;
@@ -39,7 +38,6 @@ public abstract class State {
             currentState = s;
             currentState.updateOnceBetweenTransitions();
             
-            UiHub.finalStep();
             return;
         }
         running = false;
@@ -62,7 +60,6 @@ public abstract class State {
             public void end(){
                 System.out.println("end");
                 State.running = true;
-                UiHub.finalStep();
             }
         };
         transition.start();

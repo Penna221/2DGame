@@ -8,7 +8,6 @@ import gfx.Transition;
 import main.Game;
 import ui.Container;
 import ui.PauseMenu;
-import ui.UiHub;
 
 public class MenuState extends State{
     private boolean alreadyInitialized = false;
