@@ -22,14 +22,14 @@ public class PauseMenu {
     public static void loadPauseMenus() throws Exception{
         containers.put("basic", createBasicPauseMenu());
         containers.put("main", createMenuStateContainer());
-        containers.put("blacksmith",createBlacksmithContainer());
-        containers.put("witch",createWitchContainer());
-        containers.put("trader",createTraderContainer());
+        // containers.put("blacksmith",createBlacksmithContainer());
+        // containers.put("witch",createWitchContainer());
+        // containers.put("trader",createTraderContainer());
 
 
-        containers.put("enter_blacksmith", createBlacksmithEntryDialog());
-        containers.put("enter_witch", createWitchEntryDialog());
-        containers.put("enter_trader", createTraderEntryDialog());
+        // containers.put("enter_blacksmith", createBlacksmithEntryDialog());
+        // containers.put("enter_witch", createWitchEntryDialog());
+        // containers.put("enter_trader", createTraderEntryDialog());
         
     }
     public static void generateNewContainer(String text){
@@ -67,6 +67,7 @@ public class PauseMenu {
         Text title = new Text("Game Title", 0, 50, 0, true);
         Task t = new Task(){
             public void perform(){
+                World.ready = false;
                 World.load("lobby");
                 State.setState(State.gameState,false);
             }
@@ -247,11 +248,6 @@ public class PauseMenu {
         if(end > market.size()){
             end = market.size();
         }
-
-
-
-
-
         addToListWithRange(list,market,start,end);  
         list.update();
 
@@ -333,7 +329,7 @@ public class PauseMenu {
         
     }
     private static Container generateListItem(EntityInfo e1, int amount, EntityInfo e2, int amount2){
-        Container c = new Container(0,0,200,40);
+        Container c = new Container(0,0,100,100);
         Task t = new Task(){
             public void perform(){
                 //Buy
@@ -341,27 +337,35 @@ public class PauseMenu {
             }
         };
         
+        Container leftSide = new Container(0,0,100,40);
+        //Create LeftSide
+        BufferedImage i = AssetStorage.scaleImage(e1.texture,2);
+        Image icon2 = new Image(i,0,0);
+        leftSide.addElement(icon2);
+        
+        Text itemText = new Text(amount+"x"+e1.name,0,0,500,false);
+        leftSide.addElement(itemText);
+        
+        
+        leftSide.spaceHorizintally(10);
+        
+        //Right side
+        Container rightSide = new Container(0,0,100,40);
 
-        Text priceText = new Text(amount2+"x"+e2.name,0,0,100,false);
-        c.addElement(priceText);
+        Text priceText = new Text(amount2+"x",0,0,100,false);
+        rightSide.addElement(priceText);
         Image icon1 = new Image(e2.texture,0,0);
-        c.addElement(icon1);
-        
-        Image arrow = new Image(AssetStorage.images.get("arrow_right"),0,0);
-        c.addElement(arrow);
-        
-        Text itemText = new Text(amount+"x"+e1.name,0,0,40,false);
-        c.addElement(itemText);
-        Image icon2 = new Image(e1.texture,0,0);
-        c.addElement(icon2);
-
-
+        rightSide.addElement(icon1);
         ClickButton buy = new ClickButton(0,0,new Text("Buy",0,0,0,false));
         buy.setTask(t);
-        c.addElement(buy);
+        rightSide.addElement(buy);
+        
 
         
-        c.spaceHorizintally(10);
+        c.addElement(leftSide);
+        c.addElement(rightSide);
+        
+        leftSide.spaceHorizintally(10);
         c.fillBg = true;
         c.calculateBounds();
         return c;

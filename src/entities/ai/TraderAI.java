@@ -43,6 +43,7 @@ public class TraderAI extends AI{
     }
 
     private void openTradingMenu(){
+        PauseMenu.generateNewContainer("enter_witch");
         PauseMenu.setContainer(PauseMenu.containers.get("enter_trader"));
         GameState.paused = true;
     }
