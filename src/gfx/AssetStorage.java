@@ -49,14 +49,14 @@ public class AssetStorage {
             }
         }
     }
-    public static void scaleOthers(double scale){
+    public static void scaleOthers(float scale){
         images.forEach((key,value)->{
             images.put(key, scaleImage(value,scale));
         });
     }
-    public static BufferedImage scaleImage(BufferedImage img, double scale){
-        int w = img.getWidth();
-        int h = img.getHeight();
+    public static BufferedImage scaleImage(BufferedImage img, float scale){
+        float w = img.getWidth();
+        float h = img.getHeight();
         int nw = (int)(scale*w);
         int nh = (int)(scale*h);
         BufferedImage newImage = new BufferedImage(nw, nh, BufferedImage.TYPE_INT_ARGB);

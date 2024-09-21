@@ -10,13 +10,12 @@ import json.KeyValuePair;
 import json.ObjectValue;
 
 public class Market {
-    public int id, id2, amount, amount2;
+    public MarketItem sellItem;
+    public ArrayList<MarketItem> priceItems;
     public static HashMap<String,ArrayList<Market>> lists = new HashMap<String,ArrayList<Market>>();
-    public Market(int id, int amount, int id2, int amount2){
-        this.id = id;
-        this.amount = amount;
-        this.id2 = id2;
-        this.amount2 = amount2;
+    public Market(MarketItem sell, ArrayList<MarketItem> priceItems){
+        this.sellItem =sell;
+        this.priceItems = priceItems;
     }
     public static void load() throws Exception{
         JSON json = new JSON(new File("res\\json\\market.json"));
@@ -32,37 +31,30 @@ public class Market {
                 ObjectValue obj = (ObjectValue)d;
             
                 ArrayList<KeyValuePair> data =  obj.getObject();
-                
-                int id = -1;
-                int amount = -1;
-                int priceId = -1;
-                int priceAmount = -1;
-                for(KeyValuePair field : data){
-                    String key = field.getKey();
-                    switch (key) {
-                        case "id":
-                            id = field.getInteger();
-                            break;
-                        case "amount":
-                            amount = field.getInteger();
-                            break;
-                        case "price":
-                            priceId = field.findChild("item").getInteger();
-                            priceAmount = field.findChild("amount").getInteger();
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-                if(id!=-1 && amount!=-1 && priceId!=-1 && priceAmount!=-1){
-                    //All good.
-                    itemsToSell.add(new Market(id,amount,priceId,priceAmount));
-                }
-                
+                Market m = process(data);
+                itemsToSell.add(m);
             }
             lists.put(name,itemsToSell);
         }
 
     }
+    private static Market process(ArrayList<KeyValuePair> data){
+        int id = data.get(0).getInteger();
+        int amount = data.get(1).getInteger();
+        DataType[] array = data.get(2).getArray();
+        ArrayList<MarketItem> priceItems = new ArrayList<MarketItem>();
+        for(DataType d : array){
+            ObjectValue obj = (ObjectValue)d;
+            ArrayList<KeyValuePair> items = obj.getObject();
+            int id2 = items.get(0).getInteger();
+            int amount2 = items.get(1).getInteger();
+            MarketItem i = new MarketItem(id2, amount2);
+            priceItems.add(i);
+        }
+        MarketItem toSell = new MarketItem(id, amount);
+        Market m = new Market(toSell,priceItems);
+                
+        return m;
+    }
+    
 }

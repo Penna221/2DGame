@@ -114,15 +114,14 @@ public class UIFactory {
     public static BufferedImage scaleToHeight(BufferedImage texture, int height){
         float w = texture.getWidth();
         float h = texture.getHeight();
-        float factor = 0;
+        float factor = 1;
         if(w > h){
             factor = (float)height/w;
             
         }else{
-            
-            factor = (float)height/h;
+            factor = (float)height/(float)h;
         }
-        return AssetStorage.scaleImage(texture,factor);
+        return AssetStorage.scaleImage(texture,(float)factor);
     }
     
     public static BufferedImage generateText(String text, int maxWidth){
@@ -147,13 +146,10 @@ public class UIFactory {
                 String currentWord= "";
                 currentWord = remainingWords.peek();
                 
-                System.out.println("Current word to process: [" +currentWord+"]");
                 if(currentWord==null){
                     //Run out of words. Look if wordsForRow has something. if it does -> add it as lastrow. or if not -> Break from the loop.
-                    System.out.println("enough");
                     if(!wordsForRow.isEmpty()){
                         wordsForRow = wordsForRow.substring(0,wordsForRow.length()-1);
-                        System.out.println("1Adding as row: [" + wordsForRow+"]");
                         rows.add(generateImageFromText(wordsForRow));
                     }
                     break;
@@ -161,15 +157,12 @@ public class UIFactory {
                 //At this point there is something to be processed.
 
                 //calculate the width of the word.
-                System.out.println("Calculating width of ["+currentWord+"]");
                 int l = calculateWidth(currentWord + " ");
-                System.out.println("Result: " + l);
                 totalWidth += l;
                 //Add the length to totalWidth. If total is less than maxWidth: add the currentword to wordsForRow.
                 //Then just go to process next word. 
                 if(totalWidth<maxWidth){
                     wordsForRow += remainingWords.poll() + " ";
-                    System.out.println("wordsForRow is now: [" + wordsForRow + "]");
                     continue;
                 }
                 //BUT if it is more than or equal to maxWidth
@@ -178,15 +171,9 @@ public class UIFactory {
                 //Add the chopped parts back to the deque.
                 //Remove the toolong word from the remaining words.
                 else{
-                    System.out.println("TotalWidth is too damn long: " + wordsForRow);
                     if(wordsForRow.length()==0){
-                        System.out.println("WordsForRow is empty, currentWord is ["+currentWord + "]\nIt needs to be chopped into pieces.");
                         remainingWords.poll();
                         String[] ex = processTooLongWord(currentWord,maxWidth);
-                        System.out.println("Chopped Up Words: ");
-                        for(String s : ex){
-                            System.out.println(s);
-                        }
                         for(int i = ex.length-1; i>=0; i--){
                             remainingWords.addFirst(ex[i]);
                         }
@@ -194,16 +181,12 @@ public class UIFactory {
                         continue;
                     }else{
                         wordsForRow = wordsForRow.trim();
-                        System.out.println("Creating a row from: [" + wordsForRow+"]");
                         rows.add(generateImageFromText(wordsForRow));
                         wordsForRow = "";
                         totalWidth = 0;
                     }
                 }
             }
-            // for(String s : words){
-            //     rows.add(generateImageFromText(s));
-            // }
             return combineMultipleRows(rows);
             
             
@@ -306,9 +289,7 @@ public class UIFactory {
         }
         //Take one more char away.
         String w1 = word.substring(0,index-1) + "-";
-        System.out.println("w1: ["+w1+"]");
         String w2 = word.substring(index-1);
-        System.out.println("w2: ["+w2+"]");
         String[] words = new String[2];
         words[0] = w1;
         words[1] = w2;
@@ -356,7 +337,38 @@ public class UIFactory {
     }
 
 
+    public static BufferedImage generateIconWithAmount(BufferedImage texture, int amount, int width, int height){
+        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.createGraphics();
+        
+        //Draw Image
+        g.setColor(Color.black);
+        g.fillRect(0, 0, img.getWidth(),img.getHeight());
+        BufferedImage scaledImage = UIFactory.scaleToHeight(texture,img.getHeight());
+        
+        int centerX = img.getWidth()/2 - scaledImage.getWidth()/2;
+        int centerY = img.getHeight()/2 - scaledImage.getHeight()/2;
+        g.drawImage(scaledImage, centerX,centerY,null);
+        
 
+        //Draw frame
+        BufferedImage frame = AssetStorage.images.get("frame");
+        BufferedImage scaledFrame = UIFactory.scaleToHeight(frame, img.getWidth());
+        g.drawImage(scaledFrame, 0,0,null);
+
+        //Draw Amount
+        float percentage = 0.34f;
+        BufferedImage i = UIFactory.generateText(""+amount,200);
+        int h = img.getHeight();
+        int newHeight = (int)(h*percentage);
+        BufferedImage i2 = UIFactory.scaleToHeight(i,newHeight);
+        int x = img.getWidth() - i2.getWidth();
+        int y = img.getHeight()-i2.getHeight();
+        g.setColor(new Color(25,0,0,200));
+        g.fillRect(x, y, i2.getWidth(), i2.getHeight());
+        g.drawImage(i2, x, y, null);
+        return img;
+    }
 
     private static int calculateWidth(String text){
         int width = 0;

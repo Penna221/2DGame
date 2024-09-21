@@ -10,6 +10,7 @@ import entities.EntityManager;
 import gfx.AssetStorage;
 import gfx.Transition;
 import loot.Market;
+import loot.MarketItem;
 import main.Game;
 import states.GameState;
 import states.State;
@@ -318,15 +319,8 @@ public class PauseMenu {
         c.change = new ArrayList<UIElement>();
 
         for(int i = start; i < end; i++){
-            Market itemToSell = list.get(i);
-            EntityInfo info = EntityManager.entityInfos.get(itemToSell.id);
-            String name = info.name;
-            int amount = itemToSell.amount;
-            
-            EntityInfo info2 = EntityManager.entityInfos.get(itemToSell.id2);
-            String name2 = info2.name;
-            int amount2 = itemToSell.amount2;
-            Container listItem = generateListItem(c.bounds.width,info,amount,info2,amount2);
+            Market market = list.get(i);
+            Container listItem = generateListItem(c.bounds.width,market);
             // listItem.setOffset(c.x,c.y);
             listItem.centerVertically();
             c.addLate(listItem);
@@ -334,8 +328,13 @@ public class PauseMenu {
         c.swap();
         c.updateList();
     }
-    private static Container generateListItem(int maxWidth,EntityInfo e1, int amount, EntityInfo e2, int amount2){
+    private static Container generateListItem(int maxWidth,Market m){
         Container c = new Container(0,0,maxWidth,120);
+
+        EntityInfo e1 = EntityManager.entityInfos.get(m.sellItem.id);
+        int amount = m.sellItem.amount;
+        
+
         Task t = new Task(){
             public void perform(){
                 //Buy
@@ -350,16 +349,13 @@ public class PauseMenu {
         
         //GENERATE IMAGE BOX
         
-        BufferedImage icon = generateIconWithAmount(e1.texture, amount);
-        Image icon2 = new Image(icon,0,0);
+        Image icon = generateImageIcon(e1.texture,amount,150,150);
         
 
 
-        leftSide.addElement(icon2);
-        int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon2.bounds.getWidth());
-        System.out.println("maxWidth "+maxWidth+" Max size " + maxSizeForText1);
+        leftSide.addElement(icon);
+        int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon.bounds.getWidth());
         Text itemText = new Text(e1.name,0,0,maxSizeForText1,false);
-        System.out.println("Actual wi for "+e1.name+" " +itemText.bounds.width);
         // Text itemText2 = new Text(e1.name,0,0,500,false);
         leftSide.addElement(itemText);
         leftSide.spaceHorizintally(20);
@@ -371,6 +367,14 @@ public class PauseMenu {
         Container rightSide = new Container(0,0,(int)(c.bounds.getWidth()-leftSide.bounds.getWidth()),100);
         rightSide.fillBg = true;
         rightSide.overrideColor = Color.RED;
+        for(MarketItem mi : m.priceItems){
+            EntityInfo e2 = EntityManager.entityInfos.get(mi.id);
+            int amount2 = mi.amount;
+            Image icon1 = generateImageIcon(e2.texture,amount2,55,55);
+            rightSide.addElement(icon1);
+        }
+        rightSide.spaceHorizintally(10);
+        // rightSide.addElement(icon2);
         c.addElement(rightSide);
         
 
@@ -382,39 +386,12 @@ public class PauseMenu {
         c.overrideColor = Color.GREEN;
         return c;
     }
-    private static BufferedImage generateIconWithAmount(BufferedImage texture, int amount){
-        BufferedImage img = new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = img.createGraphics();
-        
-        //Draw Image
-        g.setColor(Color.black);
-        g.fillRect(0, 0, img.getWidth(),img.getHeight());
-        int w = texture.getWidth();
-        int h = texture.getHeight();
-        BufferedImage scaledImage = UIFactory.scaleToHeight(texture,img.getHeight());
-        
-        int centerX = img.getWidth()/2 - scaledImage.getWidth()/2;
-        int centerY = img.getHeight()/2 - scaledImage.getHeight()/2;
-        g.drawImage(scaledImage, centerX,centerY,null);
-        
+    
+    private static Image generateImageIcon(BufferedImage i, int amount, int w, int h){
+        BufferedImage iconA = UIFactory.generateIconWithAmount(i,amount,w,h);
+        return new Image(iconA, 0,0);
 
-        //Draw frame
-        BufferedImage frame = AssetStorage.images.get("frame");
-        BufferedImage scaledFrame = UIFactory.scaleToHeight(frame, img.getWidth());
-        g.drawImage(scaledFrame, 0,0,null);
-
-        //Draw Amount
-        int percentage = 36;
-        BufferedImage i = UIFactory.generateText(""+amount,200);
-        BufferedImage i2 = UIFactory.scaleToHeight(i,img.getHeight()/100*percentage);
-        int x = img.getWidth() - i2.getWidth();
-        int y = img.getHeight()-i2.getHeight();
-        g.setColor(new Color(25,0,0,200));
-        g.fillRect(x, y, i2.getWidth(), i2.getHeight());
-        g.drawImage(i2, x, y, null);
-        return img;
     }
-
     private static Container createWitchContainer(){
         Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
         Task returnTask = new Task(){
