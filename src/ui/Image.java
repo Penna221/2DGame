@@ -4,8 +4,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import gfx.AssetStorage;
-
 public class Image extends UIElement{
     public BufferedImage image;
     public Image(BufferedImage i,int x, int y) {
@@ -15,7 +13,7 @@ public class Image extends UIElement{
         bounds = new Rectangle(x,y,image.getWidth(),image.getHeight());
     }
     public void updateImage(BufferedImage i){
-        this.image = AssetStorage.scaleImage(i, 2);
+        // this.image = AssetStorage.scaleImage(i, 2);
         bounds = new Rectangle(x,y,image.getWidth(),image.getHeight());
     }
     @Override

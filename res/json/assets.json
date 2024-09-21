@@ -94,6 +94,7 @@
         "more":"res\\gfx\\alphabet\\more.png",
 
         "border":"res\\gfx\\border\\border.png",
+        "frame":"res\\gfx\\border\\frame.png",
 
         "arrow_left":"res\\gfx\\gui\\arrow_left.png",
         "arrow_right":"res\\gfx\\gui\\arrow_right.png",

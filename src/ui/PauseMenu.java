@@ -383,20 +383,28 @@ public class PauseMenu {
         return c;
     }
     private static BufferedImage generateIconWithAmount(BufferedImage texture, int amount){
-        BufferedImage img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage img = new BufferedImage(150, 150, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.createGraphics();
         
         //Draw Image
         g.setColor(Color.black);
         g.fillRect(0, 0, img.getWidth(),img.getHeight());
-        BufferedImage scaledImage = UIFactory.scaleToHeight(texture,64);
+        int w = texture.getWidth();
+        int h = texture.getHeight();
+        BufferedImage scaledImage = UIFactory.scaleToHeight(texture,img.getHeight());
+        
         int centerX = img.getWidth()/2 - scaledImage.getWidth()/2;
         int centerY = img.getHeight()/2 - scaledImage.getHeight()/2;
         g.drawImage(scaledImage, centerX,centerY,null);
         
 
-        int percentage = 36;
+        //Draw frame
+        BufferedImage frame = AssetStorage.images.get("frame");
+        BufferedImage scaledFrame = UIFactory.scaleToHeight(frame, img.getWidth());
+        g.drawImage(scaledFrame, 0,0,null);
+
         //Draw Amount
+        int percentage = 36;
         BufferedImage i = UIFactory.generateText(""+amount,200);
         BufferedImage i2 = UIFactory.scaleToHeight(i,img.getHeight()/100*percentage);
         int x = img.getWidth() - i2.getWidth();

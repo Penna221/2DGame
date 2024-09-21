@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -110,34 +111,45 @@ public class UIFactory {
         }
         return newImage;
     }
-    public static BufferedImage scaleToHeight(BufferedImage img, int height){
-        float oldHeight = img.getHeight();
-        float desiredHeight = height;
-        float factor = desiredHeight/oldHeight;
-        return AssetStorage.scaleImage(img,factor);
+    public static BufferedImage scaleToHeight(BufferedImage texture, int height){
+        float w = texture.getWidth();
+        float h = texture.getHeight();
+        float factor = 0;
+        if(w > h){
+            factor = (float)height/w;
+            
+        }else{
+            
+            factor = (float)height/h;
+        }
+        return AssetStorage.scaleImage(texture,factor);
     }
     
     public static BufferedImage generateText(String text, int maxWidth){
         int len = calculateWidth(text);
         if(len >= maxWidth){
             String[] words = chopText(text,maxWidth);
-            Queue<String> remainingWords = new LinkedList<String>();
+            Deque<String> remainingWords = new LinkedList<String>();
 
-            for (String s : words) {
-                remainingWords.offer(s);
+            for (String aa : words) {
+                remainingWords.offer(aa);
             }
 
 
             ArrayList<BufferedImage> rows = new ArrayList<BufferedImage>();
-            int totalWidth = 0;;
+            int totalWidth = 0;
             String wordsForRow = "";
-
+            
             
             
             while(true){
-                String currentWord = remainingWords.peek();
-                System.out.println("Current word: [" +currentWord+"]");
-                if(currentWord == null){
+                //Take one word to process.
+                String currentWord= "";
+                currentWord = remainingWords.peek();
+                
+                System.out.println("Current word to process: [" +currentWord+"]");
+                if(currentWord==null){
+                    //Run out of words. Look if wordsForRow has something. if it does -> add it as lastrow. or if not -> Break from the loop.
                     System.out.println("enough");
                     if(!wordsForRow.isEmpty()){
                         wordsForRow = wordsForRow.substring(0,wordsForRow.length()-1);
@@ -146,23 +158,47 @@ public class UIFactory {
                     }
                     break;
                 }
+                //At this point there is something to be processed.
 
+                //calculate the width of the word.
+                System.out.println("Calculating width of ["+currentWord+"]");
                 int l = calculateWidth(currentWord + " ");
+                System.out.println("Result: " + l);
                 totalWidth += l;
+                //Add the length to totalWidth. If total is less than maxWidth: add the currentword to wordsForRow.
+                //Then just go to process next word. 
                 if(totalWidth<maxWidth){
                     wordsForRow += remainingWords.poll() + " ";
-                    System.out.println("wordsForRow :[" + wordsForRow+ "]");
-                }else{
-                    wordsForRow = wordsForRow.trim();
-                    // String[] wws = wordsForRow.split(" ");
-                    // if(wws.length==1){
-                    //     chopText(wordsForRow, maxWidth);
-                    //     remainingWords.offer(currentWord)
-                    // }
-                    System.out.println("Too long. Adding as row: [" + wordsForRow+"]");
-                    rows.add(generateImageFromText(wordsForRow));
-                    wordsForRow = "";
-                    totalWidth = 0;
+                    System.out.println("wordsForRow is now: [" + wordsForRow + "]");
+                    continue;
+                }
+                //BUT if it is more than or equal to maxWidth
+                //-> process the wordsForRow. if it is has something in it, add it to rows arraylist.
+                // if wordsForRow is empty, currently processed word is toolong, it needs to be chopped into pieces.
+                //Add the chopped parts back to the deque.
+                //Remove the toolong word from the remaining words.
+                else{
+                    System.out.println("TotalWidth is too damn long: " + wordsForRow);
+                    if(wordsForRow.length()==0){
+                        System.out.println("WordsForRow is empty, currentWord is ["+currentWord + "]\nIt needs to be chopped into pieces.");
+                        remainingWords.poll();
+                        String[] ex = processTooLongWord(currentWord,maxWidth);
+                        System.out.println("Chopped Up Words: ");
+                        for(String s : ex){
+                            System.out.println(s);
+                        }
+                        for(int i = ex.length-1; i>=0; i--){
+                            remainingWords.addFirst(ex[i]);
+                        }
+                        totalWidth = 0;
+                        continue;
+                    }else{
+                        wordsForRow = wordsForRow.trim();
+                        System.out.println("Creating a row from: [" + wordsForRow+"]");
+                        rows.add(generateImageFromText(wordsForRow));
+                        wordsForRow = "";
+                        totalWidth = 0;
+                    }
                 }
             }
             // for(String s : words){
@@ -175,6 +211,28 @@ public class UIFactory {
             return generateImageFromText(text);
 
         }
+    }
+    private static String[] processTooLongWord(String word, int maxWidth){
+
+
+        ArrayList<String> pieces = new ArrayList<String>();
+        String remaining = word;
+        while(true){
+            String[] words = splitWord(remaining, maxWidth);
+            pieces.add(words[0]);
+            remaining = words[1];
+            int len = calculateWidth(words[1]);
+            if(len<maxWidth){
+                pieces.add(words[1]);
+                break;
+            }
+        }
+        String[] array = new String[pieces.size()];
+        for(int i = 0; i < array.length; i++){
+            array[i] = pieces.get(i);
+        }
+
+        return array;
     }
     private static BufferedImage combineMultipleRows(ArrayList<BufferedImage> rows){
         BufferedImage wholeImage;
@@ -217,50 +275,43 @@ public class UIFactory {
     }
     private static String[] chopText(String text, int maxWidth){
         String[] words = text.split(" ");
-        ArrayList<String> wordsList = new ArrayList<String>();
         if(words.length==1){
             String[] splittedWord = splitWord(text,maxWidth);
             return splittedWord;
         }else{
-            for(String w : words){
-                int wi = calculateWidth(w);
-                if(wi>maxWidth){
-                    String[] splittedWord = splitWord(w, maxWidth);
-                    String s1 = splittedWord[0];
-                    String s2 = splittedWord[1];
-                    wordsList.add(s1);
-                    wordsList.add(s2);
-                    continue;
-                }else{
-                    wordsList.add(w);
-                }
-            }
-            String[] returnWords = new String[wordsList.size()];
-            for(int i = 0; i < returnWords.length; i++){
-                returnWords[i] = wordsList.get(i);
-            }
-            return returnWords;
+            
+            return words;
         }
     }
     private static String[] splitWord(String word, int maxWidth){
         char[] chars = word.toCharArray();
-        int index = 1;
+        int index = -1;
         String word1 = "";
+        int lettersTotakeOff = 1;
         for(int i = 0; i < chars.length; i++){
             word1+= chars[i];
             int w = calculateWidth(word1);
             if(w>maxWidth){
-                index = i;
+                index = i-lettersTotakeOff;
                 break;
             } 
         }
+        if(index<lettersTotakeOff){
+            //Cound fit. but still too damn long.
+            //Lets just take 1 letter away...
+            String[] words = new String[2];
+            words[0] = word.substring(0, word.length()-2)+"-";
+            words[1] = word.substring(word.length()-2, word.length());
+            return words;
+        }
         //Take one more char away.
-        word1 = word1.substring(0,word1.length()-2);
-        word1+= "-";
-        String word2 = word.substring(word1.length());
+        String w1 = word.substring(0,index-1) + "-";
+        System.out.println("w1: ["+w1+"]");
+        String w2 = word.substring(index-1);
+        System.out.println("w2: ["+w2+"]");
         String[] words = new String[2];
-        words[0] = word1;
-        words[1] = word2;
+        words[0] = w1;
+        words[1] = w2;
         
         return words;
     }
