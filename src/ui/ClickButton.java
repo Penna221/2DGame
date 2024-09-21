@@ -17,11 +17,16 @@ public class ClickButton extends FunctionalElement{
     }
     @Override
     public void updateAdditional() {
-        
-        
     }
 
-
+    public void scaleWithFactor(float factor){
+        float oldHeight = bounds.height;
+        int newHeight = (int)(oldHeight*factor);
+        BufferedImage i2 = UIFactory.scaleToHeight(texture,newHeight);
+        texture = i2;
+        bounds.setSize(texture.getWidth(),texture.getHeight());
+        updateBounds();
+    }
     @Override
     public void render(Graphics g) {
         g.setColor(bg);

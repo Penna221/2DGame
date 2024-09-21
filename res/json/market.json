@@ -1,10 +1,50 @@
 {
     "blacksmith":[
         {
+            "id":5,
+            "amount":134,
+            "price":[
+                {
+                    "item":2,
+                    "amount":5
+                },
+                {
+                    "item":3,
+                    "amount":1
+                }
+            ]
+        },{
             "id":7,
             "amount":134,
             "price":[
                 {
+                    "item":2,
+                    "amount":5
+                },
+                {
+                    "item":3,
+                    "amount":1
+                }
+            ]
+        },{
+            "id":8,
+            "amount":134,
+            "price":[
+                {
+                    "item":2,
+                    "amount":5
+                },
+                {
+                    "item":3,
+                    "amount":1
+                },{
+                    "item":2,
+                    "amount":5
+                },
+                {
+                    "item":3,
+                    "amount":1
+                },{
                     "item":2,
                     "amount":5
                 },

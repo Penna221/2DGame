@@ -11,6 +11,7 @@ public class Container extends UIElement{
 
     public UIElement header;
     public boolean fillBg = false;
+    public boolean drawBounds = false;
     public int start=0;
     
     public boolean isList = false;
@@ -54,25 +55,22 @@ public class Container extends UIElement{
     public void centerElements(){
         for(UIElement e : elements){
             int w = e.bounds.width;
+            int newX = bounds.width/2-w/2;
+            e.setPosition(newX, e.y);
             
-            e.bounds.x = bounds.x  + bounds.width/2-w/2;
-
         }
         if(header !=null){
             header.bounds.x = bounds.x + bounds.width/2 - header.bounds.width/2;
         }
     }
     public void spaceOutVertically(int buffer){
-        int count = elements.size();
-        int space = bounds.height;
         int startY = y;
         if(header!=null){
             startY = header.bounds.y+header.bounds.height+buffer*2;
         }
         for(UIElement e : elements){
             int h = e.bounds.height;
-            e.bounds.y = startY;
-            
+            e.setPosition(e.x, startY);
             startY += buffer + h;
         }
         
@@ -81,6 +79,43 @@ public class Container extends UIElement{
         for(UIElement e : elements){
             e.setPosition(e.x, bounds.height/2 - e.bounds.height/2);
         }
+    }
+    public void wrap(){
+        int maxX = 0;
+        int maxY = 0;
+
+        for(UIElement e : elements){
+            int ex = e.x + e.bounds.width;
+            int ey = e.y + e.bounds.height;
+            if(ex>maxX){
+                maxX = ex;
+            }
+            if(ey > maxY){
+                maxY = ey;
+            }
+        }
+        
+        bounds.setSize(maxX, maxY);
+    }
+    public void centerAndSpaceHorizontally(int buffer){
+        int center = bounds.width/2;
+        int els = elements.size();
+        int availableSpace = bounds.width;
+
+        int elementsCombinedWidth = 0;
+        for(UIElement e : elements){
+            int w = e.bounds.width;
+            elementsCombinedWidth+= w;
+        }
+        int neededBufferSpace = (elements.size()-1)*buffer;
+        int totalWidth = elementsCombinedWidth + neededBufferSpace;
+        int startX = center - totalWidth/2;
+
+        for(UIElement e : elements){
+            e.setPosition(startX, e.y);
+            startX += e.bounds.getWidth()+buffer;
+        }
+
     }
     public void spaceHorizintally(int buffer){
         int totalWidth = 0;
@@ -165,8 +200,11 @@ public class Container extends UIElement{
             }
             g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
         }
-        g.setColor(Color.WHITE);
-        g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+        if(drawBounds){
+            g.setColor(Color.WHITE);
+            g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+
+        }
         if(header!=null)header.render(g);
         //Draw elements
         if(!changing){

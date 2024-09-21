@@ -357,7 +357,7 @@ public class UIFactory {
         g.drawImage(scaledFrame, 0,0,null);
 
         //Draw Amount
-        float percentage = 0.34f;
+        float percentage = 0.45f;
         BufferedImage i = UIFactory.generateText(""+amount,200);
         int h = img.getHeight();
         int newHeight = (int)(h*percentage);

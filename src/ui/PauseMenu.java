@@ -232,7 +232,7 @@ public class PauseMenu {
         returnButton.setTask(returnTask);
         c.addElement(returnButton);
 
-        Container list =  new Container(0, 0, 1000,400);
+        Container list =  new Container(0, 0, 600,700);
         list.fillBg = true;
         int listX = (int) (Game.w.getWidth()/2 - list.bounds.getWidth()/2);
         int listY = (int) (Game.w.getHeight()/2 - list.bounds.getHeight()/2);
@@ -247,7 +247,7 @@ public class PauseMenu {
             start =0;
         }
         list.start = start;
-        int end = start +3;
+        int end = start +2;
         if(end > market.size()){
             end = market.size();
         }
@@ -268,11 +268,12 @@ public class PauseMenu {
                     start =0;
                 }
                 list.start = start;
-                int end = start +3;
+                int end = start +2;
                 if(end > market.size()){
                     end = market.size();
                 }
                 addToListWithRange(list,market, start,end);
+                list.updateList();
                 c.updateBounds();
             }
         };
@@ -284,20 +285,21 @@ public class PauseMenu {
                 int start = list.start;
                 start++;
                 
-                int max = market.size()-3;
+                int max = market.size();
                 if(max<=1){
                     max = market.size();
                     start = 0;
                 }
-                if(start > max){
-                    start = max;
+                if(start > max-1){
+                    start = max-1;
                 }
                 list.start = start;
-                int end = start +3;
+                int end = start +2;
                 if(end > market.size()){
                     end = market.size();
                 }
                 addToListWithRange(list,market, start,end);
+                list.updateList();
                 c.updateBounds();
 
             }
@@ -317,16 +319,19 @@ public class PauseMenu {
     private static void addToListWithRange(Container c, ArrayList<Market> list, int start, int end){
 
         c.change = new ArrayList<UIElement>();
-
         for(int i = start; i < end; i++){
             Market market = list.get(i);
             Container listItem = generateListItem(c.bounds.width,market);
+            listItem.drawBounds = true;
             // listItem.setOffset(c.x,c.y);
             listItem.centerVertically();
+            // listItem.fillBg = true;
+            // listItem.overrideColor = Color.magenta;
             c.addLate(listItem);
         }
         c.swap();
         c.updateList();
+        
     }
     private static Container generateListItem(int maxWidth,Market m){
         Container c = new Container(0,0,maxWidth,120);
@@ -343,8 +348,6 @@ public class PauseMenu {
         };
         int lockWidth = maxWidth/3*2;
         Container leftSide = new Container(0,0,lockWidth,c.bounds.height);
-        leftSide.fillBg = true;
-        leftSide.overrideColor = Color.blue;
         //Create LeftSide
         
         //GENERATE IMAGE BOX
@@ -356,34 +359,55 @@ public class PauseMenu {
         leftSide.addElement(icon);
         int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon.bounds.getWidth());
         Text itemText = new Text(e1.name,0,0,maxSizeForText1,false);
-        // Text itemText2 = new Text(e1.name,0,0,500,false);
         leftSide.addElement(itemText);
         leftSide.spaceHorizintally(20);
         leftSide.calculateBounds();
         leftSide.bounds.setSize(lockWidth,leftSide.bounds.height);
         leftSide.centerVertically();
         c.addElement(leftSide);
+
+
+
+
+
         //RIGHT SIDE
-        Container rightSide = new Container(0,0,(int)(c.bounds.getWidth()-leftSide.bounds.getWidth()),100);
-        rightSide.fillBg = true;
-        rightSide.overrideColor = Color.RED;
+        Container rightSide = new Container(0,0,(int)(c.bounds.getWidth()-leftSide.bounds.getWidth()),(int)(leftSide.bounds.getHeight()));
+        // rightSide.fillBg = true;
+        // rightSide.overrideColor = Color.red;
+
+        Container uphalf = new Container(0,0,(int)(rightSide.bounds.getWidth()),(int)(rightSide.bounds.getHeight()/2));
+        // uphalf.fillBg = true;
+        // uphalf.overrideColor=Color.white;
         for(MarketItem mi : m.priceItems){
             EntityInfo e2 = EntityManager.entityInfos.get(mi.id);
             int amount2 = mi.amount;
             Image icon1 = generateImageIcon(e2.texture,amount2,55,55);
-            rightSide.addElement(icon1);
+            uphalf.addElement(icon1);
         }
-        rightSide.spaceHorizintally(10);
-        // rightSide.addElement(icon2);
+        uphalf.centerVertically();
+        uphalf.centerAndSpaceHorizontally(10);
+        rightSide.addElement(uphalf);
+        
+        Container downHalf= new Container(0,0,(int)(rightSide.bounds.getWidth()),(int)(rightSide.bounds.getHeight()/2));
+        
+        ClickButton buyButton = new ClickButton(0,0,new Text("Buy",0,0,(int)downHalf.bounds.getWidth(),false));
+        buyButton.setTask(t);
+        buyButton.scaleWithFactor(0.7f);
+        downHalf.addElement(buyButton);
+        downHalf.wrap();
+        downHalf.centerElements();
+        rightSide.addElement(downHalf);
+        rightSide.updateBounds();
+        rightSide.spaceOutVertically(0);
+        rightSide.centerElements();
+        rightSide.calculateBounds();
         c.addElement(rightSide);
-        
+        // rightSide.setPosition(0, 0);
 
 
-        c.spaceHorizintally(10);
+        c.spaceHorizintally(0);
         c.calculateBounds();
-        
-        c.fillBg = true;
-        c.overrideColor = Color.GREEN;
+
         return c;
     }
     
