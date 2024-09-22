@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +24,6 @@ import entities.EntityManager;
 import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
-import main.Game;
 import sound.SoundPlayer;
 import tiles.Tile;
 
@@ -42,13 +42,12 @@ public class World {
     public static Camera camera;
     public static boolean ready = false, readyToUpdate = false;
     private static Transition transition;
-    public static ArrayList<BufferedImage> overlay;
+    public static HashMap<String,BufferedImage> overlays = new HashMap<String,BufferedImage>();
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
         camera = new Camera();
         map = new Map();
-        overlay = new ArrayList<BufferedImage>();
         // load();
     }
     
@@ -192,11 +191,12 @@ public class World {
             map.render(g);
             entityManager.render(g);
             camera.render(g);
-            if(overlay!=null){
-                for(BufferedImage oi : overlay){
+            
+            if(overlays.size()!=0){
+                for(BufferedImage oi : overlays.values()){
                     g.drawImage(oi, 0,0,null);
                 }
-                overlay.clear();
+                // overlay.clear();
             }
         }
         transition.render(g);
@@ -232,7 +232,7 @@ public class World {
         int eX = (int)(e.x-camera.getXOffset());
         int eY = (int)(e.y-camera.getYOffset());
         int radius = e.radius;
-        int numberOfLines =31;
+        int numberOfLines =51;
         ArrayList<Point2D> polyPoints = new ArrayList<Point2D>();
         
         Line2D.Double[] lines = new Line2D.Double[numberOfLines];

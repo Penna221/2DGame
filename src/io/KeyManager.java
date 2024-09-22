@@ -3,6 +3,7 @@ package io;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import entities.ai.PlayerAI;
 import gfx.Transition;
 import states.GameState;
 import states.State;
@@ -54,6 +55,10 @@ public class KeyManager implements KeyListener{
                 Transition.canContinue2 = true;
                 Transition.canFinish = true;
                 break;
+            case KeyEvent.VK_F5:
+                PlayerAI.hud.update();
+                break;
+            
             case KeyEvent.VK_ESCAPE:
                 if(State.getState() == State.gameState){
                     //If there is a container like talk dialog, close it. If there is a dialog, game is paused.

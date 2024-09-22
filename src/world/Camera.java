@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import entities.Entity;
-import gfx.ExpandPolygon;
 import gfx.LightMap;
 import main.Game;
 import tiles.Tile;
+import tools.Timer;
+import ui.Task;
 public class Camera {
     private Color shadowColor;
     private VolatileImage shadowMap;
@@ -29,10 +30,15 @@ public class Camera {
     private Graphics2D g2;
     private double xOffset, yOffset;
     private static Entity centeredEntity;
+    private Timer lightUpdate;
     public Camera(){
         xOffset = 0;
         yOffset = 0;
         init();
+        Task t = new Task(){
+            public void perform(){fillShadowMap();}
+        };
+        lightUpdate = new Timer(32,t);
     }
     public void init(){
 
@@ -63,6 +69,7 @@ public class Camera {
             // System.out.println("Centering on entity");
             centerOnEntity();
         }
+        lightUpdate.update();
     }
     public double getXOffset(){return xOffset;}
     public double getYOffset(){return yOffset;}
@@ -72,7 +79,6 @@ public class Camera {
         
         // g2.setColor(new Color(0));
         // g2.fillRect(0,0,shadowMap.getWidth(),shadowMap.getHeight());
-        fillShadowMap();
         
         g.drawImage(shadowMap, 0, 0,null);
     }

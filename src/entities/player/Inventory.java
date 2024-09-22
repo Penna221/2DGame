@@ -8,7 +8,6 @@ import java.util.Arrays;
 import entities.Entity;
 import gfx.Factory;
 import main.Game;
-import world.World;
 
 public class Inventory {
     
@@ -21,7 +20,7 @@ public class Inventory {
     public Inventory(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
-        slots = new Slot[10];
+        slots = new Slot[5];
         load();
         draw();
     }
@@ -50,11 +49,10 @@ public class Inventory {
         if(!added){
             System.out.println("no available slots.");
         }
-        draw();
         return added;
     }
-
-    public void draw(){
+    
+    public BufferedImage draw(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
         int startX = Game.w.getWidth()/2- (slots.length/2)*(spacing+slotSize);
@@ -63,11 +61,7 @@ public class Inventory {
             Slot s = slots[i];
             s.render(g, startX + i*(spacing+slotSize), y,slotSize,slotSize);
         }
-    }
-    public void render(){
-        
-        
-        World.overlay.add(overlay);
+        return overlay;
     }
     //Inner class
     public class Slot{

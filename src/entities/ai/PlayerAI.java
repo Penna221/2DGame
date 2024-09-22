@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import javax.sound.sampled.Clip;
 
 import entities.Entity;
+import entities.player.HUD;
 import entities.player.Inventory;
 import io.KeyManager;
-import main.Game;
 import sound.SoundPlayer;
 import tiles.Tile;
+import tools.Timer;
+import ui.Task;
 import world.World;
 
 public class PlayerAI extends AI{
@@ -21,8 +23,20 @@ public class PlayerAI extends AI{
     public int distance;
     private boolean moving = false;
     private Clip walkClip;
+    public static HUD hud;
+    public Timer hudUpdateTimer;
     public PlayerAI(Entity entity) {
         super(entity);
+        if(hud==null){
+            hud = new HUD();
+        }
+        Task t = new Task(){
+            public void perform(){
+                hud.update();    
+            }
+        };
+        hudUpdateTimer = new Timer(200, t);
+
         if(inv==null){
             inv = new Inventory();
         }
@@ -97,8 +111,7 @@ public class PlayerAI extends AI{
         e.move();
         e.updateBounds();
         e.currentAnimation.animate();
-
-        
+        hudUpdateTimer.update();
     }
     
     @Override
@@ -107,19 +120,13 @@ public class PlayerAI extends AI{
        // e.drawBounds(g);
         // Coordinates
         int currentTileX = (int)((e.bounds.x + e.bounds.width/2)/Tile.tileSize);
-        int currentTileY = (int)((e.bounds.y + e.bounds.height/2)/Tile.tileSize);
-        int xTileWithOffset = currentTileX - World.map.map.length/2;
-        int yTileWithOffset = currentTileY - World.map.map[0].length/2;
-        g.setColor(Color.white);
-        g.drawString("coordinates: " + xTileWithOffset +","+ yTileWithOffset, 25,Game.w.getHeight()-75);
-        
+        int currentTileY = (int)((e.bounds.y + e.bounds.height/2)/Tile.tileSize); 
         //Draw highlight on tile player is on
         g.setColor(new Color(255,255,255,40));
         g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);
         //g.drawRect((int)(viewRectangle.x - xOffset), (int)(viewRectangle.y-yOffset), viewRectangle.width,viewRectangle.height);
-        inv.render();
         // g.drawImage(e.currentAnimation.getFrame(),10,10,null);
-        
+        hud.render(g);
     }
     
 }
