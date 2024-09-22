@@ -5,7 +5,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Random;
 
 import entities.Entity;
 import entities.ai.PlayerAI;
@@ -102,10 +101,6 @@ public class HUD {
         for(int j = 0; j < hearts; j++){
             gg.drawImage(heart_full, xOffset + (j*(w+space)), yOffset, null);
         }
-        
-        gg.setColor(Color.pink);
-        gg.fillRect(0, 0, 100, 100);
-        
         
         toDraw.add(i);
 
