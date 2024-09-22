@@ -49,7 +49,7 @@ public class Container extends UIElement{
     public void setHeader(UIElement el){
         this.header = el;
         int newX = bounds.x+bounds.width/2-header.bounds.width/2;
-        int newY = bounds.y+header.bounds.height/3;
+        int newY = bounds.y+header.bounds.height/4;
         header.bounds.setLocation(newX, newY);
     }
     public void centerElements(){

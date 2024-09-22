@@ -220,7 +220,11 @@ public class PauseMenu {
         return createEntryDialog(t,"Go through?", i);
     }
     private static Container createBlacksmithContainer(){
+        return createShopContainer(Market.lists.get("blacksmith"), new Text("BlackSmith", 0, 0, 0, true));
+    }
+    private static Container createShopContainer(ArrayList<Market> market, UIElement header){
         Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
+        c.setHeader(header);
         Task returnTask = new Task(){
             public void perform(){
                 State.setState(State.gameState, true);
@@ -232,14 +236,12 @@ public class PauseMenu {
         returnButton.setTask(returnTask);
         c.addElement(returnButton);
 
-        Container list =  new Container(0, 0, 600,700);
+        Container list =  new Container(0, 0, 700,600);
         list.fillBg = true;
         int listX = (int) (Game.w.getWidth()/2 - list.bounds.getWidth()/2);
-        int listY = (int) (Game.w.getHeight()/2 - list.bounds.getHeight()/2);
+        int listY = (int) (c.header.bounds.y+ c.header.bounds.getHeight());
         list.setPosition(listX,listY);
         
-        ArrayList<Market> market = Market.lists.get("blacksmith");
-
 
         int start = list.start;
         start--;
@@ -247,14 +249,14 @@ public class PauseMenu {
             start =0;
         }
         list.start = start;
-        int end = start +2;
+        int end = start +3;
         if(end > market.size()){
             end = market.size();
         }
         addToListWithRange(list,market,start,end);  
         list.update();
-
-
+   
+   
         c.addElement(list);
         c.updateBounds();
         Task t1 = new Task(){
@@ -268,7 +270,7 @@ public class PauseMenu {
                     start =0;
                 }
                 list.start = start;
-                int end = start +2;
+                int end = start +3;
                 if(end > market.size()){
                     end = market.size();
                 }
@@ -294,14 +296,14 @@ public class PauseMenu {
                     start = max-1;
                 }
                 list.start = start;
-                int end = start +2;
+                int end = start +3;
                 if(end > market.size()){
                     end = market.size();
                 }
                 addToListWithRange(list,market, start,end);
                 list.updateList();
                 c.updateBounds();
-
+   
             }
         };
         ClickButton upButton = new ClickButton((int)(list.x+list.bounds.getWidth()), list.y, AssetStorage.images.get("arrow_up"));
@@ -417,36 +419,11 @@ public class PauseMenu {
 
     }
     private static Container createWitchContainer(){
-        Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
-        Task returnTask = new Task(){
-            public void perform(){
-                State.setState(State.gameState, true);
-                Transition.canContinue2 = true;
-                Transition.canFinish = true;
-            }
-        };
-        ClickButton returnButton = new ClickButton(0,0,new Text("Return", 0, 0, 0, false));
-        returnButton.setTask(returnTask);
-        c.addElement(returnButton);
-
-        
-
-
-        return c;
+        return createShopContainer(Market.lists.get("witch"), new Text("Witch", 0, 0, 0, true));
     }
     private static Container createTraderContainer(){
-        Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
-        Task returnTask = new Task(){
-            public void perform(){
-                State.setState(State.gameState, true);
-                Transition.canContinue2 = true;
-                Transition.canFinish = true;
-            }
-        };
-        ClickButton returnButton = new ClickButton(0,0,new Text("Return", 0, 0, 0, false));
-        returnButton.setTask(returnTask);
-        c.addElement(returnButton);
-        return c;
+        return createShopContainer(Market.lists.get("trader"), new Text("Cave Trader", 0, 0, 0, true));
+        
     }
     public static void setContainer(Container cc){
         currentContainer = cc;

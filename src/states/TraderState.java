@@ -25,6 +25,7 @@ public class TraderState extends State {
     public void update() {
         if(running){
             c.update();
+            an.animate();
         }else{
             State.transition.update();
         }
@@ -34,37 +35,19 @@ public class TraderState extends State {
     @Override
     public void render(Graphics g) {
         trader = an.getFrame();
+        trader = AssetStorage.scaleImage(trader, 2);
         c.render(g);
         g.setColor(Color.red);
         g.drawString("TraderState", 25, 25);
-        int tableX = Game.w.getWidth()/2 -table.getWidth();
-        int tableY = Game.w.getHeight()/2-table.getHeight();
-        g.drawImage(table,tableX,tableY,table.getWidth()*2,table.getHeight()*2,null);
-        // Factory.drawCenteredAt(g, table, new Point(tableX,tableY), 2);
-        
-        g.drawImage(trader,tableX-trader.getWidth()*2,tableY,trader.getWidth()*2,trader.getHeight()*2,null);
-        g.drawImage(sell_board,Game.w.getWidth()-sell_board.getWidth()-20,tableY,null);
-        
-        
-        an.animate();
+        g.drawImage(trader, 100, 100, null);
         if(transition !=null){transition.render(g);}
     }
 
     @Override
     public void init() {
-        System.out.println("TraderState init");
         an = EntityManager.entityInfos.get(12).animations.get("trade");
-        sell_board = AssetStorage.images.get("sell_board");
-        table = AssetStorage.images.get("trader_table");
-        Task t1 = new Task(){
-            public void perform(){
-                State.setState(gameState, true);
-                
-                Transition.canContinue2 = true;
-                Transition.canFinish = true;
-            }
-        };
-        c = PauseMenu.containers.get("witch");
+        PauseMenu.generateNewContainer("trader");
+        c = PauseMenu.containers.get("trader");
         PauseMenu.setContainer(c);
     }
 

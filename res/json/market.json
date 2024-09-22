@@ -1,59 +1,73 @@
 {
     "blacksmith":[
         {
-            "id":5,
-            "amount":134,
+            "id":28,
+            "amount":1,
             "price":[
                 {
                     "item":2,
-                    "amount":5
-                },
-                {
-                    "item":3,
-                    "amount":1
+                    "amount":10
                 }
             ]
-        },{
-            "id":7,
-            "amount":134,
+        },
+        {
+            "id":27,
+            "amount":1,
             "price":[
                 {
                     "item":2,
-                    "amount":5
-                },
-                {
-                    "item":3,
-                    "amount":1
-                }
-            ]
-        },{
-            "id":8,
-            "amount":134,
-            "price":[
-                {
-                    "item":2,
-                    "amount":5
-                },
-                {
-                    "item":3,
-                    "amount":1
-                },{
-                    "item":2,
-                    "amount":5
-                },
-                {
-                    "item":3,
-                    "amount":1
-                },{
-                    "item":2,
-                    "amount":5
-                },
-                {
-                    "item":3,
-                    "amount":1
+                    "amount":25
                 }
             ]
         }
 
+    ],
+    "witch":[
+        {
+            "id":26,
+            "amount":1,
+            "price":[
+                {
+                    "item":2,
+                    "amount":5
+                },
+                {
+                    "item":3,
+                    "amount":2
+                }
+            ]
+        },
+        {
+            "id":29,
+            "amount":1,
+            "price":[
+                {
+                    "item":2,
+                    "amount":40
+                }
+            ]
+        }
+    ],
+    "trader":[
+        {
+            "id":30,
+            "amount":1,
+            "price":[
+                {
+                    "item":2,
+                    "amount":2
+                }
+            ]
+        },
+        {
+            "id":30,
+            "amount":10,
+            "price":[
+                {
+                    "item":2,
+                    "amount":15
+                }
+            ]
+        }
     ]
 }

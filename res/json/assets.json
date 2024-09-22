@@ -160,10 +160,10 @@
         "player_walk_north_east_7":"res\\gfx\\entities\\player\\player_walk_north_east_7.png",
         
         "fox":"res\\gfx\\entities\\fox\\fox.png",
-        "coin_1":"res\\gfx\\entities\\coin_1.png",
-        "coin_2":"res\\gfx\\entities\\coin_2.png",
-        "coin_3":"res\\gfx\\entities\\coin_3.png",
-        "rose":"res\\gfx\\entities\\rose.png",
+        "coin_1":"res\\gfx\\entities\\items\\coin_1.png",
+        "coin_2":"res\\gfx\\entities\\items\\coin_2.png",
+        "coin_3":"res\\gfx\\entities\\items\\coin_3.png",
+        "rose":"res\\gfx\\entities\\items\\rose.png",
         "penquin":"res\\gfx\\entities\\penguin.png",
         "sunflower":"res\\gfx\\entities\\sunflower.png",
         "stone":"res\\gfx\\entities\\stone.png",
@@ -202,7 +202,11 @@
         "cat":"res\\gfx\\entities\\potion_lady\\cat.png",
         "witch_idle_0":"res\\gfx\\entities\\potion_lady\\witch_idle_0.png",
         "witch_idle_1":"res\\gfx\\entities\\potion_lady\\witch_idle_1.png",
-        "health_potion":"res\\gfx\\entities\\health_potion.png"
+        "health_potion":"res\\gfx\\entities\\items\\health_potion.png",
+        "iron_sword":"res\\gfx\\entities\\items\\iron_sword.png",
+        "iron_dagger":"res\\gfx\\entities\\items\\iron_dagger.png",
+        "mystery_potion":"res\\gfx\\entities\\items\\mystery_potion.png",
+        "bomb":"res\\gfx\\entities\\items\\bomb.png"
 
     },
     "texts":{

@@ -136,7 +136,7 @@
     "penquin":{
         "id":7,
         "type":"Creature",
-        "name":"Penguin Really long name for testing 012345678901234567890123456789",
+        "name":"Penguin",
         "texture":"penquin",
         "speed":0.0,
         "health":2,
@@ -495,6 +495,78 @@
         "width":16,
         "height":16,
         "light_source":false,
+        "light_radius":500,
+        "light_color":"#FFA000",
+        "light_transparency":0.55
+    },
+    "iron_sword":{
+        "id":27,
+        "type":"Item",
+        "name":"Iron Sword",
+        "texture":"iron_sword",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":32,
+        "height":32,
+        "light_source":false,
+        "light_radius":500,
+        "light_color":"#FFA000",
+        "light_transparency":0.55
+    },
+    "iron_dagger":{
+        "id":28,
+        "type":"Item",
+        "name":"Iron Dagger",
+        "texture":"iron_dagger",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":32,
+        "height":32,
+        "light_source":false,
+        "light_radius":500,
+        "light_color":"#FFA000",
+        "light_transparency":0.55
+    },
+    "mystery_potion":{
+        "id":29,
+        "type":"Item",
+        "name":"Mystery Potion",
+        "texture":"mystery_potion",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":32,
+        "height":32,
+        "light_source":false,
+        "light_radius":500,
+        "light_color":"#FFA000",
+        "light_transparency":0.55
+    },
+    "bomb":{
+        "id":30,
+        "type":"Item",
+        "name":"Bomb",
+        "texture":"bomb",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":32,
+        "height":32,
+        "light_source":true,
         "light_radius":500,
         "light_color":"#FFA000",
         "light_transparency":0.55

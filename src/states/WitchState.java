@@ -30,6 +30,7 @@ public class WitchState extends State{
 
     @Override
     public void init() {
+        PauseMenu.generateNewContainer("witch");
         c = PauseMenu.containers.get("witch");
         PauseMenu.setContainer(c);
     }
