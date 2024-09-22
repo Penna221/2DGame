@@ -211,6 +211,9 @@ public class World {
                 if(x > bm.length || y > bm[0].length){
                     break;
                 }
+                if(x<0 || y < 0){
+                    break;
+                }
                 //False = Solid. Store coordinates of solid tile to points arraylist. Point(x,y);
                 if(!bm[x][y]){
                     points.add(new Point((int)(x*Tile.tileSize - camera.getXOffset()),(int)(y*Tile.tileSize- camera.getYOffset())));
@@ -261,7 +264,10 @@ public class World {
             if(boxesToCheck.size()>0){
                 Rectangle closestBox = getClosestBox(boxesToCheck, line);
                 finalBoxes.add(closestBox);
-
+                ArrayList<Rectangle> neighbors = getBoxNeighbors(closestBox);
+                if(neighbors!=null){
+                    finalBoxes.addAll(neighbors);
+                }
                 List<Point2D> intersectionPoints = LineRectangleIntersection.getIntersectionPoints((Double) line, closestBox);
                 //If you check the closest point, it will not show the wall tile. It will be in the dark.
                 closestPoint = getSmallestDistance(intersectionPoints,new Point((int)(line.x1),(int)line.y1));
@@ -288,6 +294,53 @@ public class World {
         LightMap l = new LightMap(poly, uniqueRectangles);
 
         return l;
+    }
+    private static ArrayList<Rectangle> getBoxNeighbors(Rectangle r){
+        boolean b = checkIfOutOfBounds(r);
+        if(b){
+            return null;
+        }
+        ArrayList<Rectangle> rs = new ArrayList<Rectangle>();
+        int x = (int)r.getX();
+        int y = (int)r.getY();
+        int w = (int)r.getWidth();
+        int h = (int)r.getHeight();
+        Rectangle left = new Rectangle(x+w,y,w,h);
+        Rectangle right = new Rectangle(x-w,y,w,h);
+        Rectangle up = new Rectangle(x,y-h,w,h);
+        Rectangle down = new Rectangle(x,y+h,w,h);
+        if(!map.binaryMap[(int)(left.getCenterX())/Tile.tileSize][(int)(left.getCenterY())/Tile.tileSize]){
+            rs.add(left);
+        }
+        if(!map.binaryMap[(int)(right.getCenterX())/Tile.tileSize][(int)(right.getCenterY())/Tile.tileSize]){
+            rs.add(right);
+        }
+        if(!map.binaryMap[(int)(up.getCenterX())/Tile.tileSize][(int)up.getCenterY()/Tile.tileSize]){
+            rs.add(up);
+        }
+        if(!map.binaryMap[(int)(down.getCenterX())/Tile.tileSize][(int)down.getCenterY()/Tile.tileSize]){
+            rs.add(down);
+        }
+        return rs;
+    }
+    private static boolean checkIfOutOfBounds(Rectangle r){
+        int x = (int)r.getCenterX()/Tile.tileSize;
+        int y = (int)r.getCenterY()/Tile.tileSize;
+        int w = map.binaryMap.length-1;
+        int h = map.binaryMap[0].length-1;
+        if(x-1 <0){
+            return true;
+        }
+        if(x+1 > w){
+            return true;
+        }
+        if(y-1 <0){
+            return true;
+        }
+        if(y+1 > h){
+            return true;
+        }
+        return false;
     }
     private static Rectangle getClosestBox(ArrayList<Rectangle> boxes, Line2D.Double line){
         Rectangle closestBox = boxes.get(0);
