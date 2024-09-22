@@ -208,7 +208,7 @@ public class World {
         ArrayList<Point> points= new ArrayList<Point>();
         for(int y = map.startY; y < map.endY; y++){
             for(int x = map.startX; x < map.endX; x++){
-                if(x > bm.length || y > bm[0].length){
+                if(x > bm.length-1 || y > bm[0].length-1){
                     break;
                 }
                 if(x<0 || y < 0){
