@@ -206,7 +206,12 @@
         "iron_sword":"res\\gfx\\entities\\items\\iron_sword.png",
         "iron_dagger":"res\\gfx\\entities\\items\\iron_dagger.png",
         "mystery_potion":"res\\gfx\\entities\\items\\mystery_potion.png",
-        "bomb":"res\\gfx\\entities\\items\\bomb.png"
+        "bomb":"res\\gfx\\entities\\items\\bomb.png",
+        "heart_full":"res\\gfx\\entities\\icons\\heart_full.png",
+        "heart_full_white":"res\\gfx\\entities\\icons\\heart_full_white.png",
+        "heart_half":"res\\gfx\\entities\\icons\\heart_half.png",
+        "heart_half_white":"res\\gfx\\entities\\icons\\heart_half_white.png",
+        "heart_empty":"res\\gfx\\entities\\icons\\heart_empty.png"
 
     },
     "texts":{
