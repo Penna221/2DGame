@@ -489,7 +489,7 @@
         "speed":1.0,
         "health":100,
         "animations":{
-            "idle":""
+            "idle":"health_potion_idle"
         },
         "ai":"Collectable",
         "width":16,
@@ -510,8 +510,8 @@
             "idle":""
         },
         "ai":"Collectable",
-        "width":32,
-        "height":32,
+        "width":16,
+        "height":16,
         "light_source":false,
         "light_radius":500,
         "light_color":"#FFA000",
@@ -528,8 +528,8 @@
             "idle":""
         },
         "ai":"Collectable",
-        "width":32,
-        "height":32,
+        "width":16,
+        "height":16,
         "light_source":false,
         "light_radius":500,
         "light_color":"#FFA000",
@@ -546,8 +546,8 @@
             "idle":""
         },
         "ai":"Collectable",
-        "width":32,
-        "height":32,
+        "width":16,
+        "height":16,
         "light_source":false,
         "light_radius":500,
         "light_color":"#FFA000",
@@ -564,8 +564,8 @@
             "idle":""
         },
         "ai":"Collectable",
-        "width":32,
-        "height":32,
+        "width":16,
+        "height":16,
         "light_source":true,
         "light_radius":500,
         "light_color":"#FFA000",

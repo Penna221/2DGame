@@ -74,5 +74,9 @@
     "witch_idle":{
         "images":["witch_idle_0","witch_idle_1","witch_idle_0","witch_idle_1","witch_idle_0","witch_idle_1"],
         "times":[2400,100,100,100,2400,100]
+    },
+    "health_potion_idle":{
+        "images":["health_potion"],
+        "times":[1000]
     }
 }
