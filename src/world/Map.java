@@ -137,7 +137,8 @@ public class Map {
         map = new int[width][height];
         
         initMapToZero();
-        cellularAutomata(7);
+        generateWalls(5);
+        cellularAutomata(48,6);
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
         generateSpawnArea();
@@ -146,14 +147,13 @@ public class Map {
         int size = structureList.length;
         System.out.println("structure list size " + size);
         for(int i = 0; i < size; i++){
-            for(int j = 0; j < 4; j++){
+            for(int j = 0; j < 1; j++){
                 generateStructureAtRandomSpot(structureList[i]);
             }
         }
         generateStructureAtRandomSpot("lvl2_tunnel");
         generateStructureAtRandomSpot("trader_room_v1");
-        
-        lastStep(5);
+        generateWalls(5);
         generateBinaryMap();
     }
     private void generateLVL2(){
@@ -165,7 +165,8 @@ public class Map {
         map = new int[width][height];
         
         initMapToZero();
-        cellularAutomata(5);
+        generateWalls(5);
+        cellularAutomata(20,5);
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
         generateSpawnArea();
@@ -183,7 +184,7 @@ public class Map {
         generateStructureAtRandomSpot("trader_room_v1");
         generateStructureAtRandomSpot("boss_door");
         
-        lastStep(5);
+        generateWalls(5);
         generateBinaryMap();
     }
     private void generateBinaryMap(){
@@ -210,14 +211,14 @@ public class Map {
         }
     }
     //Cellular Automata algorithm
-    private void cellularAutomata(int iterations){
+    private void cellularAutomata(int percentage, int iterations){
         Random random = new Random();
         int WIDTH = map.length;
         int HEIGHT = map[0].length;
         // Randomly set initial walkable tiles
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
-                if(random.nextInt(30)<15){
+                if(random.nextInt(100)>percentage){
                     map[i][j] = 1; // 0 or 1 (non-walkable or walkable)
                 }else{
                     map[i][j] = 0;
@@ -341,10 +342,10 @@ public class Map {
     
     
     //Generate border
-    private void lastStep(int id){
+    private void generateWalls(int id){
         for(int y = 0; y < map[0].length; y++){
             for(int x = 0; x < map.length; x++){
-                if(x <2||x > map.length-3 || y < 2|| y > map[0].length-3){
+                if(x <=2||x >= map.length-3 || y <= 2|| y >= map[0].length-3){
                     map[x][y] = id;
                 }
 

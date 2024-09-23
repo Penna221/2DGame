@@ -129,7 +129,7 @@ public class World {
         //generateMushrooms(type);
     }
     private static void generateMap(int type){
-        map = new Map(type,500,500);
+        map = new Map(type,200,200);
     }
     private static void generateEntities(int type){
         

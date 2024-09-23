@@ -90,7 +90,7 @@ public class EntityManager {
             World.player = c;
             Camera.setEntityToCenter(c);
         }
-        entities.add(c);
+        toAdd.add(c);
         return c;
     }
     private boolean checkForPlayers(){

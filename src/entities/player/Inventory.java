@@ -65,7 +65,7 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
-        private byte maxStack = 4;
+        private byte maxStack = 99;
         public Entity item;
         public byte amount;
         public Slot(){}
