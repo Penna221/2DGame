@@ -39,40 +39,51 @@ public class PauseMenu {
         switch (text) {
             case "basic":
                 containers.put("basic", createBasicPauseMenu());
-            break;
+                break;
             case "main":
                 containers.put("main", createMenuStateContainer()); 
-            break;
+                break;
             case "blacksmith":
                 containers.put("blacksmith",createBlacksmithContainer());
-            break;
+                break;
             case "witch":
                 containers.put("witch",createWitchContainer());
-            break;
+                break;
             case "trader":
                 containers.put("trader",createTraderContainer());
-            break;
+                break;
             case "enter_witch":
                 containers.put("enter_witch", createWitchEntryDialog());
-            break;
+                break;
             case "enter_trader":
                 containers.put("enter_trader", createTraderEntryDialog());
-            break;
+                break;
             case "enter_blacksmith":
                 containers.put("enter_blacksmith", createBlacksmithEntryDialog());
-            break;
+                break;
+            case "enter_guide":
+                containers.put("enter_guide", createGuideDialog());
+                break;
             default:
                 break;
         }
     }
+    private static Container createGuideDialog() {
+        Task t1 = new Task(){
+            public void perform(){
+                
+            }
+        };
+        Image i = new Image(EntityManager.entityInfos.get(19).texture, 0, 0);
+        return createEntryDialog(t1,"Hello.", i);
+    }
+
     private static Container createMenuStateContainer(){
         Container container = new Container(0, 0, Game.w.getWidth(),Game.w.getHeight());
         Text title = new Text("Game Title", 0, 50, 0, true);
         Task t = new Task(){
             public void perform(){
-                World.ready = false;
-                World.load("lobby");
-                State.setState(State.gameState,false);
+                GameState.newGame();
             }
         };
         ClickButton newGameButton = new ClickButton(100, 200, new Text("New Game",0,0,0,false));
@@ -420,6 +431,7 @@ public class PauseMenu {
     }
     private static Container createWitchContainer(){
         return createShopContainer(Market.lists.get("witch"), new Text("Witch", 0, 0, 0, true));
+        
     }
     private static Container createTraderContainer(){
         return createShopContainer(Market.lists.get("trader"), new Text("Cave Trader", 0, 0, 0, true));

@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import entities.ai.AI;
 import entities.ai.BlacksmithAI;
@@ -15,12 +16,15 @@ import entities.ai.CollectableAI;
 import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
 import entities.ai.Enemy1AI;
+import entities.ai.GuideAI;
 import entities.ai.PlayerAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
 import gfx.Animation;
 import gfx.Factory;
+import gfx.Transition;
 import main.Game;
+import states.State;
 import tiles.Tile;
 import world.World;
 
@@ -39,6 +43,7 @@ public class Entity {
     
     public double xSpeed, ySpeed;
     public double speed;
+    public ArrayList<Integer> receivedHits = new ArrayList<Integer>();
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -78,6 +83,9 @@ public class Entity {
             case "witch":
                 ai = new WitchAI(this);
                 break;
+            case "guide":
+                ai = new GuideAI(this);
+                break;
             default:
                 ai = new EmptyAI(this);
         }
@@ -86,6 +94,30 @@ public class Entity {
             currentAnimation = info.animations.get("idle");
             currentAnimation.restart();
         }
+    }
+    public void checkIfHit(){
+        ArrayList<Integer> copy = new ArrayList<Integer>();
+        copy.addAll(receivedHits);
+        if(copy.size()>0){
+            for(int i : copy){
+                System.out.println("Getting hit with " + i);
+                health -= i;
+            }
+        }
+        if(health<=0){
+            die();
+        }
+        receivedHits.clear();
+    }
+    public void die(){
+        if(name.equals("Player")&&info.id==0){
+            State.setState(State.menuState, true);
+            Transition.canContinue2 = true;
+            Transition.canFinish = true;
+        }
+    }
+    public void harm(int amount){
+        receivedHits.add(amount);
     }
     public void setScale(double d){
         this.scale = d;
@@ -332,6 +364,7 @@ public class Entity {
         texture = info.texture;
         speed = info.speed;
         health =info.health;
+        name = info.name;
         calculateBounds();
         ai.lateInit();
     }

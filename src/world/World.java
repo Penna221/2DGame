@@ -25,6 +25,7 @@ import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
 import sound.SoundPlayer;
+import states.State;
 import tiles.Tile;
 
 public class World {
@@ -48,9 +49,10 @@ public class World {
         entityManager.loadEntityData();
         camera = new Camera();
         map = new Map();
+        ready = false;
         // load();
     }
-    
+
     public static void load(String worldName){
         entityManager.clearEntities();
         SoundPlayer.stopAllSounds();

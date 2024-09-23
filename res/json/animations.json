@@ -78,5 +78,9 @@
     "health_potion_idle":{
         "images":["health_potion"],
         "times":[1000]
+    },
+    "guide_idle":{
+        "images":["guide"],
+        "times":[1000]
     }
 }

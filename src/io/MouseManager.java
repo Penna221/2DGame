@@ -1,8 +1,14 @@
 package io;
 import java.awt.event.MouseMotionListener;
 
+import entities.AttackBox;
+import entities.EntityManager;
+import states.GameState;
+import states.State;
 import ui.PauseMenu;
+import world.World;
 
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 public class MouseManager implements MouseListener, MouseMotionListener{
@@ -23,7 +29,14 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     public void mouseClicked(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
-        
+        if(State.getState()==State.gameState){
+            if(!GameState.paused){
+                Rectangle r = new Rectangle(World.player.bounds);
+                AttackBox b = new AttackBox(null, 1,r);
+                EntityManager.addAttackBox(b);
+
+            }
+        }
         if(PauseMenu.currentContainer!=null){
             PauseMenu.currentContainer.sendClick();
         }

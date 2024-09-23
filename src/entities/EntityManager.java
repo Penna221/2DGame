@@ -1,6 +1,7 @@
 package entities;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import world.Camera;
 import world.World;
 
 public class EntityManager {
+    private static ArrayList<AttackBox> attackBoxes;
+    private static ArrayList<AttackBox> newAttackBoxes;
     private ArrayList<Entity> entities;
     private ArrayList<Entity> toRemove;
     private ArrayList<Entity> toAdd;
@@ -34,7 +37,8 @@ public class EntityManager {
         toAdd = new ArrayList<Entity>();
         inView = new ArrayList<Entity>();
         toView = new ArrayList<Entity>();
-        
+        attackBoxes = new ArrayList<AttackBox>();
+        newAttackBoxes = new ArrayList<AttackBox>();
     }
     public void loadEntityData(){
         entityInfos = new HashMap<Integer,EntityInfo>();
@@ -122,6 +126,10 @@ public class EntityManager {
             toRemove.add(e);
         }
     }
+
+    public static void addAttackBox(AttackBox a){
+        newAttackBoxes.add(a);
+    }
     public void render(Graphics g){
         
         if(newList!=null){
@@ -152,7 +160,20 @@ public class EntityManager {
         entities.addAll(toAdd);
         toRemove.clear();
         toAdd.clear();
-
+        attackBoxes.addAll(newAttackBoxes);
+        newAttackBoxes.clear();
+        for(AttackBox a : attackBoxes){
+            for(Entity e : entities){
+                if(e.equals(a.source)){
+                    continue;
+                }
+                if(a.bounds.intersects(e.bounds)){
+                    System.out.println("Dealing ["+a.amount+"] damage to " + e.name);
+                    e.harm(a.amount);
+                }
+            }
+        }
+        attackBoxes.clear();
         
     }
     public ArrayList<Entity> getEntities(){return entities;}

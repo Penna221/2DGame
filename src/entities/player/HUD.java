@@ -98,10 +98,17 @@ public class HUD {
         int yOffset = i.getHeight()-130;
         int w = heart_full.getWidth();
         int space = 20;
+        int lastX = xOffset+(0*(w+space));
         for(int j = 0; j < hearts; j++){
-            gg.drawImage(heart_full, xOffset + (j*(w+space)), yOffset, null);
+            lastX = xOffset+(j*(w+space));
+            gg.drawImage(heart_full, lastX, yOffset, null);
         }
-        
+        if(half!=0){
+            if(hearts!=0){
+                lastX += w+space;
+            }
+            gg.drawImage(heart_half, lastX, yOffset, null);
+        }
         toDraw.add(i);
 
     }

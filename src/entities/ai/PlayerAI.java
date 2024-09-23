@@ -55,6 +55,7 @@ public class PlayerAI extends AI{
 
     @Override
     public void update() {
+        e.checkIfHit();
         e.ySpeed = 0;
         e.xSpeed = 0;
         // System.out.println("player update");
@@ -111,6 +112,7 @@ public class PlayerAI extends AI{
         e.updateBounds();
         e.currentAnimation.animate();
         hudUpdateTimer.update();
+        
     }
     
     @Override

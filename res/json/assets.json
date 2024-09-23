@@ -211,7 +211,9 @@
         "heart_full_white":"res\\gfx\\entities\\icons\\heart_full_white.png",
         "heart_half":"res\\gfx\\entities\\icons\\heart_half.png",
         "heart_half_white":"res\\gfx\\entities\\icons\\heart_half_white.png",
-        "heart_empty":"res\\gfx\\entities\\icons\\heart_empty.png"
+        "heart_empty":"res\\gfx\\entities\\icons\\heart_empty.png",
+        
+        "guide":"res\\gfx\\entities\\guide\\guide.png"
 
     },
     "texts":{
