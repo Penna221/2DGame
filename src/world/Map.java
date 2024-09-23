@@ -28,6 +28,7 @@ public class Map {
     public int startX, startY, endX, endY;
     public static HashMap<String,Structure> structures = new HashMap<String,Structure>();
     private ArrayList<Rectangle> structureBounds;
+    private boolean updating = false;
     public Map(int type, int width, int height){
         this.width = width;
         this.height = height;
@@ -437,37 +438,78 @@ public class Map {
     }
     //Can there be added some kind of rayCasting to set viewable area?
     public void updateVisible(Entity e){
+        updating = true;
         int centerX = (int)(e.x/Tile.tileSize);
         int centerY = (int)(e.y/Tile.tileSize);
+        // System.out.println("Updatevisible: " + centerX + " " + centerY);
         int screenWidth = Game.w.getWidth();
         int screenHeight = Game.w.getHeight();
         int wTiles = screenWidth/Tile.tileSize;
         int hTiles = screenHeight/Tile.tileSize;
-        startX = centerX - wTiles/2 - 7;
-        startY = centerY - hTiles/2 - 7;
-        endX = centerX + wTiles/2 +7;
-        endY = centerY + hTiles/2 +7;
+        int buffer = 6;
+        // System.out.println("UpdateVisible");
+        // System.out.println("startX " +startX);
+        // System.out.println("startY " +startY);
+        startX = (centerX - wTiles/2)-buffer;
+        startY = (centerY - hTiles/2)-buffer;
+
+        if(startX <= 0){
+            startX = 0;
+        }
+        if(startY <= 0){
+            startY = 0;
+        }
+        endX = startX + wTiles + buffer*2;
+        endY = startY + hTiles+ buffer*2;
+        if(endX > map.length){
+            endX = map.length;
+        }
+        if(endY > map[0].length){
+            endY = map[0].length;
+        }
+        // System.out.println("endX " +endX);
+        // System.out.println("endY " +endY);
+        updating = false;
     }
     public void render(Graphics g){
         
-
+        if(startX>map.length-1){
+            startX = 0;
+        }
+        if(startY>map[0].length-1){
+            startY = 0;
+        }
         //avoid outOfBounds exception
         if(startX < 0){
             startX = 0;
         }
-        if(endX > map.length){
+        if(endX >= map.length){
             endX = map.length;
         }
         if(startY < 0){
             startY = 0;
         }
-        if(endY > map[0].length){
+        if(endY >= map[0].length){
             endY = map[0].length;
         }
         double xOffset = World.camera.getXOffset();
         double yOffset = World.camera.getYOffset();
         for(int y = startY; y < endY; y++){
             for(int x = startX; x < endX; x++){
+                if(updating){
+                    break;
+                }
+                if(!World.ready){
+                    break;
+                }
+                if(x > map.length){
+                    break;
+                }
+                if(y > map[0].length){
+                    break;
+                }
+                // System.out.println("In Forloop: " + x + " " + y + "  StartX and Y " + startX + " " + startY);
+                
                 g.drawImage(Tile.getTileByID(map[x][y]).texture, (int)((x*Tile.tileSize) - xOffset), (int)((y*Tile.tileSize) - yOffset),Tile.tileSize,Tile.tileSize, null);
             }
         }

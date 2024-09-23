@@ -46,7 +46,7 @@ public class PlayerAI extends AI{
     public void lateInit() {
         
         e.calculateBounds();
-        distance = 800;
+        distance = 1200;
         viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
         
         e.currentAnimation = e.info.animations.get("idle");
@@ -103,7 +103,6 @@ public class PlayerAI extends AI{
                 ee.inView = false;
             }
         }
-        e.inView = true;
         
         viewRectangle.x = (int)(e.x- distance);
         viewRectangle.y = (int)(e.y - distance);

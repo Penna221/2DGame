@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import gfx.Animation;
@@ -12,7 +13,6 @@ import gfx.Animations;
 import gfx.AssetStorage;
 import json.JSON;
 import json.KeyValuePair;
-import tiles.Tile;
 import world.Camera;
 import world.World;
 
@@ -23,11 +23,17 @@ public class EntityManager {
     public ArrayList<Entity> inView;
     public static int scale = 1;
     public static HashMap<Integer,EntityInfo> entityInfos;
+
+
+    private ArrayList<Entity> toView;
+    private ArrayList<Entity> newList;
+
     public EntityManager() {
         entities = new ArrayList<Entity>();
         toRemove = new ArrayList<Entity>();
         toAdd = new ArrayList<Entity>();
         inView = new ArrayList<Entity>();
+        toView = new ArrayList<Entity>();
         
     }
     public void loadEntityData(){
@@ -117,22 +123,31 @@ public class EntityManager {
         }
     }
     public void render(Graphics g){
-        for(Entity e : inView){
-            if(e.inView)
-                e.render(g);
+        
+        if(newList!=null){
+            toView.clear();
+            toView.addAll(newList);
         }
+        Iterator<Entity> iterator = toView.iterator();
+        while(iterator.hasNext()){
+            Entity e = iterator.next();
+            e.render(g);
+        }
+        
     }
     public void update(){
-        inView.clear();
+        newList = new ArrayList<Entity>();
+        newList.add(World.player);
         for(Entity e : entities){
-            if(e.inView)
-            inView.add(e);
+            if(e.inView){
+                if(e.equals(World.player)){
+                    continue;
+                }
+                newList.add(e);
+                e.update();
+            }
         }
-        // System.out.println(inView.size());
-        
-        for(Entity e : inView){
-            e.update();
-        }
+        World.player.update();
         entities.removeAll(toRemove);
         entities.addAll(toAdd);
         toRemove.clear();

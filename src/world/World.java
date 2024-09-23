@@ -264,10 +264,10 @@ public class World {
             if(boxesToCheck.size()>0){
                 Rectangle closestBox = getClosestBox(boxesToCheck, line);
                 finalBoxes.add(closestBox);
-                ArrayList<Rectangle> neighbors = getBoxNeighbors(closestBox);
-                if(neighbors!=null){
-                    finalBoxes.addAll(neighbors);
-                }
+                // ArrayList<Rectangle> neighbors = getBoxNeighbors(closestBox);
+                // if(neighbors!=null){
+                //     finalBoxes.addAll(neighbors);
+                // }
                 List<Point2D> intersectionPoints = LineRectangleIntersection.getIntersectionPoints((Double) line, closestBox);
                 //If you check the closest point, it will not show the wall tile. It will be in the dark.
                 closestPoint = getSmallestDistance(intersectionPoints,new Point((int)(line.x1),(int)line.y1));

@@ -198,7 +198,10 @@ public class Camera {
 
         ArrayList<LightSource> points = new ArrayList<LightSource>();
         //Check every entity that is on screen.
-        for(Entity e : World.entityManager.inView){
+        for(Entity e : World.entityManager.getEntities()){
+            if(!e.inView){
+                continue;
+            }
             if(e.info.light_source){
                 int x = (int)(e.x + e.bounds.width/2);
                 int y = (int)(e.y + e.bounds.height/2);
@@ -206,7 +209,7 @@ public class Camera {
                 points.add(l);
                 String n = e.info.name;
                 if(n.equals("Forge")||n.equals("Candelabra")){
-                    y+= Tile.tileSize;
+                    y+= Tile.tileSize/2;
                     LightSource l1 = new LightSource(x, y, e.info.light_color,e.info.light_transparency, e.info.light_radius);
                     points.add(l1);
                 }
