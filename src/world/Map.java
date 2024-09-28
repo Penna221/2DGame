@@ -370,6 +370,7 @@ public class Map {
         for(int y = 0; y < binaryMap[0].length; y++){
             for(int x = 0; x < binaryMap.length; x++){
                 if(binaryMap[x][y]){
+                    //IF cannot spawn entity, try to spawn collectable.
                     if(!generateRandomEntity(entities, x*Tile.tileSize, y*Tile.tileSize)){
                         generateRandomEntity(collectables, x*Tile.tileSize, y*Tile.tileSize);
                     }

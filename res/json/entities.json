@@ -231,7 +231,7 @@
         "name":"Trader",
         "texture":"trader",
         "speed":0.0,
-        "health":2,
+        "health":20,
         "animations":{
             "idle":"trader_idle",
             "trade":"trader_stand"
@@ -250,7 +250,7 @@
         "name":"lvl2 Tunnel",
         "texture":"ladder_hole",
         "speed":0.0,
-        "health":2,
+        "health":20,
         "animations":{
             "idle":"player_idle"
         },
@@ -269,7 +269,7 @@
         "name":"Lobby Tunnel",
         "texture":"ladder",
         "speed":0.0,
-        "health":2,
+        "health":20,
         "animations":{
             "idle":"player_idle"
         },
@@ -288,7 +288,7 @@
         "name":"Skeleton",
         "texture":"skeleton",
         "speed":1.0,
-        "health":20,
+        "health":5,
         "animations":{
             "idle":"player_idle"
         },
@@ -585,6 +585,42 @@
         "width":16,
         "height":16,
         "light_source":true,
+        "light_radius":500,
+        "light_color":"#FFA000",
+        "light_transparency":0.55
+    },
+    "rocks_0":{
+        "id":32,
+        "type":"Decoration",
+        "name":"Rocks",
+        "texture":"rocks_0",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":500,
+        "light_color":"#FFA000",
+        "light_transparency":0.55
+    },
+    "rocks_1":{
+        "id":33,
+        "type":"Decoration",
+        "name":"Rocks",
+        "texture":"rocks_1",
+        "speed":1.0,
+        "health":100,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":false,
         "light_radius":500,
         "light_color":"#FFA000",
         "light_transparency":0.55

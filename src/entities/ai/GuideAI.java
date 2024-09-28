@@ -28,7 +28,7 @@ public class GuideAI extends AI{
     @Override
     public void update() {
         e.texture = e.currentAnimation.getFrame();
-
+        
 
     if(interactCircle.intersects(World.player.bounds)){
         talk = true;

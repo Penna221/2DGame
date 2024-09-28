@@ -213,7 +213,9 @@
         "heart_half_white":"res\\gfx\\entities\\icons\\heart_half_white.png",
         "heart_empty":"res\\gfx\\entities\\icons\\heart_empty.png",
         
-        "guide":"res\\gfx\\entities\\guide\\guide.png"
+        "guide":"res\\gfx\\entities\\guide\\guide.png",
+        "rocks_0":"res\\gfx\\entities\\extra\\rocks_0.png",
+        "rocks_1":"res\\gfx\\entities\\extra\\rocks_1.png"
 
     },
     "texts":{

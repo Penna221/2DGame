@@ -32,7 +32,7 @@ public class MouseManager implements MouseListener, MouseMotionListener{
         if(State.getState()==State.gameState){
             if(!GameState.paused){
                 Rectangle r = new Rectangle(World.player.bounds);
-                AttackBox b = new AttackBox(null, 1,r);
+                AttackBox b = new AttackBox(World.player, 3,r);
                 EntityManager.addAttackBox(b);
 
             }

@@ -370,6 +370,23 @@ public class Entity {
     }
     public void renderAdditional(Graphics g) {
         ai.render(g);
+        if(health != info.health){
+            showHealth(g);
+        }
+    }
+    public void showHealth(Graphics g){
+        int maxWidth = 100;
+        float percentage = (float)health / (float)info.health;
+        float w = maxWidth * percentage;
+        double xOffset = World.camera.getXOffset();
+        double yOffset = World.camera.getYOffset();
+        int drawX = (int)(bounds.getCenterX()-50 - xOffset);
+        int drawY = (int)(bounds.y-20 - yOffset);
+        g.setColor(Color.black);
+        g.fillRect(drawX, drawY, maxWidth,20);
+        g.setColor(Color.red);
+        g.fillRect(drawX, drawY, (int)w,20);
+
     }
     public Rectangle generateSurroundingBox(int size){
         return new Rectangle((int)(bounds.x +bounds.width/2- size/2),(int) (bounds.y + bounds.height/2- size/2 ), size, size);
@@ -380,6 +397,9 @@ public class Entity {
         
     }
     public void update() {
+        if(info.ai!="empty"){
+            checkIfHit();
+        }
         ai.update();
     }
 }
