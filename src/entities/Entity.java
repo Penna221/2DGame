@@ -17,7 +17,9 @@ import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
 import entities.ai.Enemy1AI;
 import entities.ai.GuideAI;
+import entities.ai.MoleAI;
 import entities.ai.PlayerAI;
+import entities.ai.SkeletonAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
 import gfx.Animation;
@@ -86,6 +88,12 @@ public class Entity {
             case "guide":
                 ai = new GuideAI(this);
                 break;
+            case "skeleton":
+                ai = new SkeletonAI(this);
+                break;
+            case "mole":
+                ai = new MoleAI(this);
+                break;
             default:
                 ai = new EmptyAI(this);
         }
@@ -132,6 +140,9 @@ public class Entity {
     }
 
     public void setAnimation(Animation a){
+        if(a == null){
+            return;
+        }
         if(a.equals(currentAnimation)){
             //no change.
             return;
