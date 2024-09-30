@@ -95,7 +95,7 @@ public class PlayerAI extends AI{
             if(ee == e){
                 continue;
             }
-            if(ee.bounds.intersects(viewRectangle)&&World.lineOfSightBetween(e, ee)){
+            if(ee.bounds.intersects(viewRectangle)){
                
                 ee.inView = true;
                 

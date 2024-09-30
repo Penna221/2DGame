@@ -44,15 +44,8 @@ public class Enemy1AI extends AI {
         e.currentAnimation.animate();
     }
     private void aimAtPlayer(){
-        double px = World.player.x;
-        double py = World.player.y;
-        //CenterX and centerY
-        double cx = e.x+e.bounds.width/2;
-        double cy = e.y+e.bounds.height/2;
-        double angle = Math.atan2(py - cy, px - cx);
-        rot = (int)Math.toDegrees(angle);
-        System.out.println(rot);
-
+        
+        rot = (int)World.getAngleBetween(World.player, e);
     }
     @Override
     public void render(Graphics g) {
