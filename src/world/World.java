@@ -203,9 +203,7 @@ public class World {
         }
         transition.render(g);
     }
-    public static LightMap generateLightMap(LightSource e, Line2D.Double[] lines2){
-
-        //Go over all visible area. Map class has startX, startY, endX and endY.
+    private static Rectangle[] getVisibleSolidTilesAsRectangles(){
         boolean[][] bm = map.binaryMap;
         ArrayList<Point> points= new ArrayList<Point>();
         for(int y = map.startY; y < map.endY; y++){
@@ -225,14 +223,23 @@ public class World {
 
             }
         }
-        
-        //Go over all points. Those are solid tiles. Create rectangles there so later on it can be checked if line intersects it.
+
         int size = points.size();
         Rectangle[] boxes = new Rectangle[size];
         for(int i = 0; i < size; i++){
             Rectangle box = new Rectangle((int)points.get(i).getX(),(int)points.get(i).getY(), Tile.tileSize, Tile.tileSize);
             boxes[i] = box;
         }
+
+        return boxes;
+    }
+    public static LightMap generateLightMap(LightSource e, Line2D.Double[] lines2){
+
+        //Go over all visible area. Map class has startX, startY, endX and endY.
+        Rectangle[] boxes = getVisibleSolidTilesAsRectangles();
+        
+        //Go over all points. Those are solid tiles. Create rectangles there so later on it can be checked if line intersects it.
+        
         //Create Lines. Origin is player. Other end is in circular pattern.
         int eX = (int)(e.x-camera.getXOffset());
         int eY = (int)(e.y-camera.getYOffset());
@@ -403,8 +410,22 @@ public class World {
         return maxPoint;
     }
     public static boolean lineOfSightBetween(Entity a, Entity b){
-        
-
+        Rectangle[] boxes = getVisibleSolidTilesAsRectangles();
+        Point2D p1 = new Point((int)(a.bounds.getCenterX()-camera.getXOffset()),(int)(a.bounds.getCenterY()-camera.getYOffset()));
+        Point2D p2 = new Point((int)(b.bounds.getCenterX()-camera.getXOffset()),(int)(b.bounds.getCenterY()-camera.getYOffset()));
+        Line2D.Double line = new Line2D.Double(p1,p2);
+        for(Rectangle box : boxes){
+            if(line.intersects(box)){
+                return false;
+            }
+        }
         return true;
+    }
+    public static float getAngleBetween(Entity a, Entity b){
+        Point2D p1 = new Point((int)a.bounds.getCenterX(),(int)a.bounds.getCenterY());
+        Point2D p2 = new Point((int)b.bounds.getCenterX(),(int)b.bounds.getCenterY());
+        float angle = (float) Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
+        float rot = (float)Math.toDegrees(angle);
+        return rot;
     }
 }
