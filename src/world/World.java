@@ -21,6 +21,7 @@ import java.util.Set;
 
 import entities.Entity;
 import entities.EntityManager;
+import entities.ai.ProjectileAI;
 import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
@@ -424,8 +425,19 @@ public class World {
     public static float getAngleBetween(Entity a, Entity b){
         Point2D p1 = new Point((int)a.bounds.getCenterX(),(int)a.bounds.getCenterY());
         Point2D p2 = new Point((int)b.bounds.getCenterX(),(int)b.bounds.getCenterY());
+        return getAngleBetweenPoints(p1, p2);
+    }
+    public static float getAngleBetweenPoints(Point2D p1, Point2D p2){
+        
         float angle = (float) Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
         float rot = (float)Math.toDegrees(angle);
+        System.out.println(rot);
         return rot;
+    }
+    public static void generateProjectile(int id, float heading, Point2D origin, Entity source){
+        Entity e = entityManager.generateWithID(id, (int)origin.getX(), (int)origin.getY());
+        double speed = e.info.speed;
+        e.giveMomentum(heading,(int) speed);
+        e.setSource(source);
     }
 }

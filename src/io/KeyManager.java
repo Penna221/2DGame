@@ -72,6 +72,21 @@ public class KeyManager implements KeyListener{
                     }
                 }
                 break;
+            case KeyEvent.VK_1:
+                PlayerAI.inv.select(0);
+                break;
+            case KeyEvent.VK_2:
+                PlayerAI.inv.select(1);
+                break;
+            case KeyEvent.VK_3:
+                PlayerAI.inv.select(2);
+                break;
+            case KeyEvent.VK_4:
+                PlayerAI.inv.select(3);
+                break;
+            case KeyEvent.VK_5:
+                PlayerAI.inv.select(4);
+                break;
             default:
                 break;
         }

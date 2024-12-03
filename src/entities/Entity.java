@@ -19,6 +19,7 @@ import entities.ai.Enemy1AI;
 import entities.ai.GuideAI;
 import entities.ai.MoleAI;
 import entities.ai.PlayerAI;
+import entities.ai.ProjectileAI;
 import entities.ai.SkeletonAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
@@ -42,9 +43,10 @@ public class Entity {
     public EntityInfo info;
     public AI ai;
     public Animation currentAnimation;
-    
+    public int rotation;
     public double xSpeed, ySpeed;
     public double speed;
+    public Entity source;
     public ArrayList<Integer> receivedHits = new ArrayList<Integer>();
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
@@ -94,6 +96,9 @@ public class Entity {
             case "mole":
                 ai = new MoleAI(this);
                 break;
+            case "projectile":
+                ai = new ProjectileAI(this);
+                break;
             default:
                 ai = new EmptyAI(this);
         }
@@ -102,6 +107,13 @@ public class Entity {
             currentAnimation = info.animations.get("idle");
             currentAnimation.restart();
         }
+    }
+    public void giveMomentum(float angle, int amount){
+        double rads = Math.toRadians(angle);
+        double xAmount = Math.cos(rads)*amount;
+        double yAmount = Math.sin(rads)*amount;
+        xSpeed += xAmount;
+        ySpeed += yAmount;
     }
     public void checkIfHit(){
         ArrayList<Integer> copy = new ArrayList<Integer>();
@@ -122,7 +134,10 @@ public class Entity {
             State.setState(State.menuState, true);
             Transition.canContinue2 = true;
             Transition.canFinish = true;
+        }else{
+            World.entityManager.removeEntity(this);
         }
+
     }
     public void harm(int amount){
         receivedHits.add(amount);
@@ -151,7 +166,9 @@ public class Entity {
         currentAnimation.restart();
     }
 
-
+    public void setSource(Entity s){
+        this.source = s;
+    }
 
     public void calculateBounds(){
         bounds = new Rectangle((int)x,(int)y,info.width,info.height);
@@ -196,7 +213,12 @@ public class Entity {
     }
 
 
-
+    public void moveProjectile(){
+        
+        if(!moveX() ||!moveY()){
+            World.entityManager.removeEntity(this);
+        }
+    }
     public void move(){
         
         //Can you move?
@@ -252,40 +274,35 @@ public class Entity {
         }
         
     }
-    private void moveX(){
+    public void slowdown(double factor){
+        xSpeed *= factor;
+        ySpeed *= factor;
+        if(Math.abs(xSpeed) < 0.4){
+            xSpeed = 0;
+        }
+        if(Math.abs(ySpeed) < 0.4){
+            ySpeed = 0;
+        }
+    }
+    private boolean moveX(){
         boolean canMove = true;
         
-        if(xSpeed <0){
-            //System.out.println("Moving left");
-            canMove = checkTilesX();
-            
-        }else if(xSpeed >0){
-            //System.out.println("Moving right");
-            canMove = checkTilesX();
-        }
-        
+        canMove = checkTilesX();
         
         if(canMove){
             x += xSpeed;
         }
+        return canMove;
         
     }
-    private void moveY(){
+    private boolean moveY(){
         boolean canMove = true;
-        if(ySpeed <0){
-            //System.out.println("Moving up");
-            canMove = checkTilesY();
-            
-        }else if(ySpeed >0){
-            //System.out.println("Moving down");
-            canMove = checkTilesY();
-        }
-
+        canMove = checkTilesY();
 
         if(canMove){
             y+= ySpeed;
         }
-
+        return canMove;
     }
     private boolean checkTilesX(){
         int currentTileX = (int)(bounds.x/Tile.tileSize);

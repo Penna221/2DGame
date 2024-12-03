@@ -38,7 +38,7 @@ public class HUD {
             drawHealth();
         }
         if(showInventory){
-            BufferedImage i = PlayerAI.inv.draw();
+            BufferedImage i = PlayerAI.inv.drawHotBar();
             toDraw.add(i);
         }
         for(BufferedImage i : toDraw){

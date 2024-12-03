@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 import entities.Entity;
+import gfx.AssetStorage;
 import gfx.Factory;
 import main.Game;
 
@@ -17,12 +18,12 @@ public class Inventory {
     private int slotSize = 50;
     private BufferedImage overlay;
     private Graphics g;
+    private int selectedIndex = 0;
     public Inventory(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
-        slots = new Slot[5];
+        slots = new Slot[20];
         load();
-        draw();
     }
     public void addSlot(byte amount){
         int newSize = slots.length+amount;
@@ -34,6 +35,9 @@ public class Inventory {
             slots[i] = new Slot();
         }
         //Load from saved data.
+    }
+    public void select(int i){
+        selectedIndex = i;
     }
     public boolean addItem(Entity c){
         
@@ -52,15 +56,18 @@ public class Inventory {
         return added;
     }
     
-    public BufferedImage draw(){
+    public BufferedImage drawHotBar(){
+        int toShow = 5;
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
-        int startX = Game.w.getWidth()/2- (slots.length/2)*(spacing+slotSize);
+        int startX = Game.w.getWidth()/2- (toShow/2)*(spacing+slotSize);
         y = Game.w.getHeight() - 100;
-        for(int i = 0; i < slots.length; i++){
+        for(int i = 0; i < toShow; i++){
             Slot s = slots[i];
             s.render(g, startX + i*(spacing+slotSize), y,slotSize,slotSize);
         }
+
+        g.drawImage(AssetStorage.images.get("frame"), startX + selectedIndex*(spacing+slotSize),y,slotSize+1,slotSize+1,null);
         return overlay;
     }
     //Inner class

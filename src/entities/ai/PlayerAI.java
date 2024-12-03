@@ -55,8 +55,7 @@ public class PlayerAI extends AI{
 
     @Override
     public void update() {
-        e.ySpeed = 0;
-        e.xSpeed = 0;
+        e.slowdown(0.8);
         // System.out.println("player update");
         e.texture = e.currentAnimation.getFrame();
         //texture = Factory.rotateImage(texture, angle);

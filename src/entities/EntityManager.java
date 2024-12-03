@@ -164,15 +164,19 @@ public class EntityManager {
         newAttackBoxes.clear();
         for(AttackBox a : attackBoxes){
             for(Entity e : entities){
-                if(e.equals(a.source)){
+                if(e.equals(a.source) || e.equals(a.ignoreEntity)){
                     continue;
                 }
                 if(a.bounds.intersects(e.bounds)){
                     System.out.println("Dealing ["+a.amount+"] damage to " + e.name);
                     e.harm(a.amount);
+                    if(a.source.info.type.equals("Projectile")){
+                        removeEntity(a.source);
+                    }
                 }
             }
         }
+        entities.removeAll(toRemove);
         attackBoxes.clear();
         
     }

@@ -217,7 +217,9 @@
         "rocks_0":"res\\gfx\\entities\\extra\\rocks_0.png",
         "rocks_1":"res\\gfx\\entities\\extra\\rocks_1.png",
         "mole_0":"res\\gfx\\entities\\hole_monster\\hole.png",
-        "mole_1":"res\\gfx\\entities\\hole_monster\\mole.png"
+        "mole_1":"res\\gfx\\entities\\hole_monster\\mole.png",
+        "projectile_rock":"res\\gfx\\entities\\projectiles\\rock.png",
+        "projectile_rock_small":"res\\gfx\\entities\\projectiles\\rock_2.png"
 
     },
     "texts":{

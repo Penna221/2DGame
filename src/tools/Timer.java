@@ -22,4 +22,8 @@ public class Timer {
         }
         lastTime = currentTime;
     }
+    public void backToStart(){
+        lastTime = System.currentTimeMillis();
+        elapsedTime = 0;
+    }
 }
