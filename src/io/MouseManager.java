@@ -41,7 +41,7 @@ public class MouseManager implements MouseListener, MouseMotionListener{
                 System.out.println(p1);
                 System.out.println(p2);
                 float rotation = World.getAngleBetweenPoints(p2,p1);
-                World.generateProjectile(35, rotation, p1,World.player);
+                World.generateProjectile(3, rotation, p1,World.player);
                 
                 // EntityManager.addAttackBox(b);
 

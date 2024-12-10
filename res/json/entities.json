@@ -643,40 +643,22 @@
         "light_color":"#FFA000",
         "light_transparency":0.11
     },
-    "small_rock":{
+    "projectile":{
         "id":35,
         "type":"Projectile",
-        "name":"Small Rock",
-        "texture":"projectile_rock_small",
-        "speed":12.0,
-        "health":100,
+        "name":"Projectile",
+        "texture":"",
+        "speed":0.0,
+        "health":1,
         "animations":{
             "idle":"mole_idle"
         },
         "ai":"projectile",
-        "width":6,
-        "height":6,
-        "light_source":true,
-        "light_radius":500,
+        "width":4,
+        "height":4,
+        "light_source":false,
+        "light_radius":200,
         "light_color":"#FFA000",
-        "light_transparency":0.85
-    },
-    "big_rock":{
-        "id":36,
-        "type":"Projectile",
-        "name":"Big Rock",
-        "texture":"projectile_rock",
-        "speed":5.0,
-        "health":100,
-        "animations":{
-            "idle":"mole_idle"
-        },
-        "ai":"projectile",
-        "width":10,
-        "height":10,
-        "light_source":true,
-        "light_radius":500,
-        "light_color":"#FFA000",
-        "light_transparency":0.85
+        "light_transparency":0.11
     }
 }

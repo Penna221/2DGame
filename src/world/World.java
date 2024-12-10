@@ -21,12 +21,13 @@ import java.util.Set;
 
 import entities.Entity;
 import entities.EntityManager;
-import entities.ai.ProjectileAI;
+import entities.projectiles.Projectile;
+import entities.projectiles.Projectiles;
+import gfx.Factory;
 import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
 import sound.SoundPlayer;
-import states.State;
 import tiles.Tile;
 
 public class World {
@@ -435,8 +436,13 @@ public class World {
         return rot;
     }
     public static void generateProjectile(int id, float heading, Point2D origin, Entity source){
-        Entity e = entityManager.generateWithID(id, (int)origin.getX(), (int)origin.getY());
-        double speed = e.info.speed;
+        Projectile info = Projectiles.projectiles.get(id);
+        if(info==null){
+            System.out.println("Projectile not found with id: ("+id+")" );
+            return;
+        }
+        Entity e = entityManager.generateProjectile(info, (int)origin.getX(), (int)origin.getY(),(int)heading);
+        double speed = info.speed;
         e.giveMomentum(heading,(int) speed);
         e.setSource(source);
     }

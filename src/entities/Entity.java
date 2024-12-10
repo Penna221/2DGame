@@ -23,6 +23,7 @@ import entities.ai.ProjectileAI;
 import entities.ai.SkeletonAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
+import entities.projectiles.Projectile;
 import gfx.Animation;
 import gfx.Factory;
 import gfx.Transition;
@@ -48,6 +49,7 @@ public class Entity {
     public double speed;
     public Entity source;
     public ArrayList<Integer> receivedHits = new ArrayList<Integer>();
+    public Projectile projectileInfo;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;

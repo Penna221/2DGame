@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import entities.projectiles.Projectiles;
 import gfx.Animations;
 import gfx.AssetStorage;
 import gfx.Transition;
@@ -111,7 +112,17 @@ public class Game extends Engine{
             goAway();
         }
 
-        
+        System.out.println("Loading Projectile Data");
+        status = "Loading Projectiles";
+        try {
+            Projectiles.load();
+        } catch (Exception e) {
+            status = "Error occured while loading Projectiles";
+            goAway();
+        }
+
+
+
         status = "Loading Market prices";
         try{
             Market.load();

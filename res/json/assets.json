@@ -219,7 +219,10 @@
         "mole_0":"res\\gfx\\entities\\hole_monster\\hole.png",
         "mole_1":"res\\gfx\\entities\\hole_monster\\mole.png",
         "projectile_rock":"res\\gfx\\entities\\projectiles\\rock.png",
-        "projectile_rock_small":"res\\gfx\\entities\\projectiles\\rock_2.png"
+        "projectile_rock_small":"res\\gfx\\entities\\projectiles\\rock_2.png",
+        "arrow_0":"res\\gfx\\entities\\projectiles\\arrows\\arrow_0.png",
+        "arrow_1":"res\\gfx\\entities\\projectiles\\arrows\\arrow_1.png",
+        "magic_ball_0":"res\\gfx\\entities\\projectiles\\magic\\magic_ball_0.png"
 
     },
     "texts":{

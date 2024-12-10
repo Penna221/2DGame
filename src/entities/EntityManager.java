@@ -1,7 +1,6 @@
 package entities;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import entities.projectiles.Projectile;
 import gfx.Animation;
 import gfx.Animations;
 import gfx.AssetStorage;
@@ -94,6 +94,15 @@ public class EntityManager {
             World.player = c;
             Camera.setEntityToCenter(c);
         }
+        toAdd.add(c);
+        return c;
+    }
+    public Entity generateProjectile(Projectile info, int x, int y, int rotation){
+        EntityInfo i = entityInfos.get(35);
+        Entity c = new Entity(i,x,y);
+        c.projectileInfo = info;
+        c.rotation = rotation;
+        c.ai.lateInit();
         toAdd.add(c);
         return c;
     }

@@ -1,0 +1,40 @@
+{
+    "rock_0":{
+        "id":0,
+        "name":"Small Rock",
+        "damage":1,
+        "speed":1.0,
+        "max_distance":10,
+        "type":"Rock",
+        "buff":"none",
+        "texture":"projectile_rock_small"
+    },"arrow_0":{
+        "id":1,
+        "name":"Normal Arrow",
+        "damage":3,
+        "speed":2.0,
+        "max_distance":20,
+        "type":"Arrow",
+        "buff":"none",
+        "texture":"arrow_0"
+    },"arrow_1":{
+        "id":2,
+        "name":"Fire Arrow",
+        "damage":3,
+        "speed":2.0,
+        "max_distance":20,
+        "type":"Arrow",
+        "buff":"Fire",
+        "texture":"arrow_1"
+    },
+    "magic_0":{
+        "id":3,
+        "name":"Magic Bolt",
+        "damage":5,
+        "speed":2.0,
+        "max_distance":30,
+        "type":"Magic",
+        "buff":"none",
+        "texture":"magic_ball_0"
+    }
+}
