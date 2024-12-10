@@ -22,7 +22,7 @@ public class MoleAI extends AI{
         Task attackTask = new Task(){
             public void perform(){throwRock();}
         };
-        attackTimer = new Timer(1000,attackTask);
+        attackTimer = new Timer(1600,attackTask);
     }
 
     @Override

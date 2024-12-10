@@ -176,6 +176,11 @@ public class EntityManager {
                 if(e.equals(a.source) || e.equals(a.ignoreEntity)){
                     continue;
                 }
+                if(a.source.projectileInfo!=null&&e.projectileInfo!=null){
+                    if(a.source.projectileInfo.id==e.projectileInfo.id){
+                        continue;
+                    }
+                }
                 if(a.bounds.intersects(e.bounds)){
                     System.out.println("Dealing ["+a.amount+"] damage to " + e.name);
                     e.harm(a.amount);

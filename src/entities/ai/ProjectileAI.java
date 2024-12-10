@@ -53,7 +53,7 @@ public class ProjectileAI extends AI{
 
     @Override
     public void render(Graphics g) {
-        e.drawBounds(g);
+        // e.drawBounds(g);
     }
     
 }

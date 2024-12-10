@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
+import java.util.Random;
 
 import entities.AttackBox;
 import entities.Entity;
@@ -41,7 +42,10 @@ public class MouseManager implements MouseListener, MouseMotionListener{
                 System.out.println(p1);
                 System.out.println(p2);
                 float rotation = World.getAngleBetweenPoints(p2,p1);
-                World.generateProjectile(3, rotation, p1,World.player);
+
+                Random r = new Random();
+                int random = r.nextInt(4);
+                World.generateProjectile(random, rotation, p1,World.player);
                 
                 // EntityManager.addAttackBox(b);
 
