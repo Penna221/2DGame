@@ -11,6 +11,7 @@ import entities.AttackBox;
 import entities.Entity;
 import entities.ai.ProjectileAI;
 import states.GameState;
+import states.InventoryState;
 import states.State;
 import ui.PauseMenu;
 import world.World;
@@ -20,6 +21,9 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     public void mouseDragged(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+        if(State.currentState==State.inventoryState){
+            
+        }
     }
 
     @Override
@@ -59,7 +63,11 @@ public class MouseManager implements MouseListener, MouseMotionListener{
     @Override
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
-        mouseY = e.getY();
+        mouseY = e.getY(); 
+        if(State.currentState==State.inventoryState){
+            InventoryState.pickSlot();
+        }
+        
         // if(PauseMenu.currentContainer!=null){
         //     PauseMenu.currentContainer.sendPress();
         // }
@@ -70,6 +78,9 @@ public class MouseManager implements MouseListener, MouseMotionListener{
         mouseX = e.getX();
         mouseY = e.getY();
         // UiHub.sendToggle(false);
+        if(State.currentState==State.inventoryState){
+            InventoryState.releaseSlot();
+        }
     }
 
     @Override

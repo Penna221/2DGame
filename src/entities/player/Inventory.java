@@ -12,7 +12,8 @@ import main.Game;
 
 public class Inventory {
     
-    public Slot[] slots;
+    public Slot[] inventorySlots;
+    public Slot[] hotbarSlots;
     private int y = Game.w.getHeight() - 40;
     private int spacing = 30;
     private int slotSize = 50;
@@ -22,17 +23,21 @@ public class Inventory {
     public Inventory(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
-        slots = new Slot[20];
+        inventorySlots = new Slot[20];
+        hotbarSlots = new Slot[5];
         load();
     }
     public void addSlot(byte amount){
-        int newSize = slots.length+amount;
-        slots = Arrays.copyOf(slots, newSize);
+        int newSize = inventorySlots.length+amount;
+        inventorySlots = Arrays.copyOf(inventorySlots, newSize);
     }
     public void load(){
         //Initialize
-        for(int i = 0; i < slots.length; i++){
-            slots[i] = new Slot();
+        for(int i = 0; i < inventorySlots.length; i++){
+            inventorySlots[i] = new Slot();
+        }
+        for(int i = 0; i < hotbarSlots.length; i++){
+            hotbarSlots[i] = new Slot();
         }
         //Load from saved data.
     }
@@ -42,8 +47,8 @@ public class Inventory {
     public boolean addItem(Entity c){
         
         boolean added = false;
-        for(int i = 0; i < slots.length; i++){
-            Slot s = slots[i];
+        for(int i = 0; i < inventorySlots.length; i++){
+            Slot s = inventorySlots[i];
             if(s.add(c)){
                 added = true;
                 System.out.println("Added item with id("+c.info.id+") to slot " + i);
@@ -57,13 +62,13 @@ public class Inventory {
     }
     
     public BufferedImage drawHotBar(){
-        int toShow = 5;
+        int toShow = hotbarSlots.length;
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
         int startX = Game.w.getWidth()/2- (toShow/2)*(spacing+slotSize);
         y = Game.w.getHeight() - 100;
         for(int i = 0; i < toShow; i++){
-            Slot s = slots[i];
+            Slot s = hotbarSlots[i];
             s.render(g, startX + i*(spacing+slotSize), y,slotSize,slotSize);
         }
 
@@ -72,10 +77,11 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
-        private byte maxStack = 99;
+        private byte maxStack = 5;
         public Entity item;
         public byte amount;
         public Slot(){}
+        public boolean highlight = false;
         public boolean add(Entity i){
             if(item ==null){
                 this.item = i;
@@ -112,6 +118,10 @@ public class Inventory {
                 g.drawImage(item.texture, x + width/2 -item.texture.getWidth()/2, y + height/2  - item.texture.getHeight()/2, null);
                 g.setColor(Color.red);
                 g.drawString(""+amount, x+width/2, y);
+            }
+            if(highlight){
+                g.setColor(Color.white);
+                g.drawRect(x-1, y-1, width+2, height+2);
             }
         }
     }

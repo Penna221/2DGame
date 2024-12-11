@@ -39,8 +39,16 @@ public class KeyManager implements KeyListener{
             case KeyEvent.VK_S:
                 down = true;
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_F:
                 interactKey = true;
+                break;
+            case KeyEvent.VK_E:
+                if(State.currentState== State.gameState){
+                    GameState.paused = true;
+                    State.setState(State.inventoryState,true);
+                    Transition.canContinue2 = true;
+                    Transition.canFinish = true;
+                }
                 break;
             case KeyEvent.VK_F2:
                 World.load("dungeon_lvl2");
@@ -70,7 +78,13 @@ public class KeyManager implements KeyListener{
                         PauseMenu.setContainer(null);
                         GameState.paused = false;
                     }
+                }else if(State.getState()==State.inventoryState){
+                    State.setState(State.gameState, true);
+                    Transition.canContinue2 = true;
+                    Transition.canFinish = true;
+                    GameState.paused = false;
                 }
+
                 break;
             case KeyEvent.VK_1:
                 PlayerAI.inv.select(0);
@@ -108,7 +122,7 @@ public class KeyManager implements KeyListener{
             case KeyEvent.VK_S:
                 down = false;
                 break;
-            case KeyEvent.VK_E:
+            case KeyEvent.VK_F:
                 interactKey = false;
                 break;
             default:
