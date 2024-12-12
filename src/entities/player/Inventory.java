@@ -44,15 +44,53 @@ public class Inventory {
     public void select(int i){
         selectedIndex = i;
     }
+    public int getSlotWithItemFromHotbarSlots(int id){
+        for(int i = 0; i < hotbarSlots.length; i++){
+            Slot s = hotbarSlots[i];
+            if(s.item==null){
+                continue;
+            }
+            if(s.item.info.id== id){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public int getSlotWithItemFromInventorySlots(int id){
+        for(int i = 0; i < inventorySlots.length; i++){
+            Slot s = inventorySlots[i];
+            if(s.item==null){
+                continue;
+            }
+            if(s.item.info.id== id){
+                return i;
+            }
+        }
+        return -1;
+    }
     public boolean addItem(Entity c){
         
         boolean added = false;
-        for(int i = 0; i < inventorySlots.length; i++){
-            Slot s = inventorySlots[i];
-            if(s.add(c)){
+
+        int slotA = getSlotWithItemFromInventorySlots(c.info.id);
+        if(slotA !=-1){
+            inventorySlots[slotA].add(c);
+            added = true;
+        }else{
+            int slotB = getSlotWithItemFromHotbarSlots(c.info.id);
+            if(slotB!=-1){
+                hotbarSlots[slotB].add(c);
                 added = true;
-                System.out.println("Added item with id("+c.info.id+") to slot " + i);
-                break;
+            }
+        }
+        if(!added){
+            for(int i = 0; i < inventorySlots.length; i++){
+                Slot s = inventorySlots[i];
+                if(s.add(c)){
+                    added = true;
+                    System.out.println("Added item with id("+c.info.id+") to slot " + i);
+                    break;
+                }
             }
         }
         if(!added){
@@ -60,7 +98,72 @@ public class Inventory {
         }
         return added;
     }
-    
+    public boolean checkIfEnoughItemsWithID(int id, int amount){
+        int totalAmount = 0;
+        for(Slot s : inventorySlots){
+            if(s.item==null){
+                continue;
+            }
+            if(s.item.info.id!=id){
+                continue;
+            }
+            totalAmount += s.amount;
+            if(totalAmount>=amount){
+                return true;
+            }
+        }
+        for(Slot s : hotbarSlots){
+            if(s.item==null){
+                continue;
+            }
+            if(s.item.info.id!=id){
+                continue;
+            }
+            totalAmount += s.amount;
+            if(totalAmount>=amount){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void pay(int id, int amount){
+        for(Slot s : inventorySlots){
+            System.out.println("nextSlot");
+            if(s.item==null){
+                continue;
+            }
+            if(s.item.info.id!=id){
+                continue;
+            }
+            if(s.amount>=amount){
+                s.reduce((byte)amount);
+                amount = 0;
+                return;
+            }else{
+                amount -= s.amount;
+                s.clear();
+                continue;
+            }
+        }
+        for(Slot s : hotbarSlots){
+            if(s.item==null){
+                continue;
+            }
+            if(s.item.info.id!=id){
+                continue;
+            }
+            if(s.amount>=amount){
+                s.reduce((byte)amount);
+                amount = 0;
+                return;
+            }else{
+                amount -= s.amount;
+                s.clear();
+                continue;
+            }
+            
+        }
+    }
     public BufferedImage drawHotBar(){
         int toShow = hotbarSlots.length;
         overlay = Factory.generateNewOverlayImage();
@@ -77,7 +180,7 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
-        private byte maxStack = 5;
+        private byte maxStack = 99;
         public Entity item;
         public byte amount;
         public Slot(){}
@@ -99,13 +202,14 @@ public class Inventory {
                 }
             }
         }
-        public void reduce(int amount){
+        public void reduce(byte amount){
             this.amount -= amount;
             if(amount <= 0){
                 clear();
             }
         }
         public void clear(){
+            System.out.println("clearing");
             item = null;
             amount = 0;
         }

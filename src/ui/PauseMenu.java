@@ -1,12 +1,12 @@
 package ui;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.Entity;
 import entities.EntityInfo;
 import entities.EntityManager;
+import entities.ai.PlayerAI;
 import gfx.AssetStorage;
 import gfx.Transition;
 import loot.Market;
@@ -14,7 +14,6 @@ import loot.MarketItem;
 import main.Game;
 import states.GameState;
 import states.State;
-import world.World;
 
 public class PauseMenu {
     
@@ -356,7 +355,39 @@ public class PauseMenu {
         Task t = new Task(){
             public void perform(){
                 //Buy
-                System.out.println("Buy " + e1.name);
+                ArrayList<MarketItem> need = m.priceItems;
+                
+                System.out.println("You are trying to buy "+amount + " x " + e1.name);
+                System.out.println("You need :");
+                boolean allGood = true;
+                for(MarketItem needItem : need){
+                    EntityInfo needInfo = EntityManager.entityInfos.get(needItem.id);
+                    int needAmount = needItem.amount;
+                    System.out.println("  "+needAmount+" x "+ needInfo.name);
+                    boolean haveEnough = PlayerAI.inv.checkIfEnoughItemsWithID(needInfo.id,needAmount);
+                    if(!haveEnough){
+                        System.out.println("Not enough.");
+                        allGood = false;
+                        break;
+                    }else{
+                        System.out.println("You have enough "+ needInfo.name);
+                    }
+                }
+                if(allGood){
+                    System.out.println("All Good");
+                    for(MarketItem needItem : need){
+                        PlayerAI.inv.pay(needItem.id, needItem.amount);
+                    }
+                    Entity e = new Entity(EntityManager.entityInfos.get(m.sellItem.id),0,0);
+                    for(int i = 0; i < m.sellItem.amount; i++){
+                        PlayerAI.inv.addItem(e);
+                    }
+                    //give m.sellItem
+                }else{
+                    System.out.println("You don't have everything needed to purchase this item.");
+                }
+                
+                
             }
         };
         int lockWidth = maxWidth/3*2;
