@@ -115,7 +115,7 @@ public class Inventory {
             g.setColor(Color.red);
             g.drawRect(x, y,width,height);
             if(item!=null){
-                g.drawImage(item.texture, x + width/2 -item.texture.getWidth()/2, y + height/2  - item.texture.getHeight()/2, null);
+                g.drawImage(item.texture, x , y,width,height, null);
                 g.setColor(Color.red);
                 g.drawString(""+amount, x+width/2, y);
             }

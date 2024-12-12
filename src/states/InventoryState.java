@@ -123,7 +123,7 @@ public class InventoryState extends State{
         if(slotSelected){
             if(slotRectangles[selectedSlotID].slot.item!=null){
                 Entity item = slotRectangles[selectedSlotID].slot.item;
-                g.drawImage(item.texture, mouseX - item.texture.getWidth(), mouseY - item.texture.getHeight(), null);
+                g.drawImage(item.texture, mouseX - (int)(slotSize*0.5), mouseY - (int)(slotSize*0.5),(int)(slotSize*0.8),(int)(slotSize*0.8), null);
             }
         }
         if(transition !=null){
