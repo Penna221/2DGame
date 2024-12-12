@@ -44,45 +44,78 @@ public class Inventory {
     public void select(int i){
         selectedIndex = i;
     }
-    public int getSlotWithItemFromHotbarSlots(int id){
+    public int getSlotWithItemFromHotbarSlots(Entity e){
         for(int i = 0; i < hotbarSlots.length; i++){
             Slot s = hotbarSlots[i];
             if(s.item==null){
                 continue;
             }
-            if(s.item.info.id== id){
+            boolean sameId = checkIfSameSubID(e, s.item);
+            if(sameId){
                 return i;
             }
         }
         return -1;
     }
-    public int getSlotWithItemFromInventorySlots(int id){
+    public int getSlotWithItemFromInventorySlots(Entity e){
         for(int i = 0; i < inventorySlots.length; i++){
             Slot s = inventorySlots[i];
             if(s.item==null){
                 continue;
             }
-            if(s.item.info.id== id){
-                return i;
+            if(s.item.subID!=-1){
+                boolean sameId = checkIfSameSubID(e, s.item);
+                if(sameId){
+                    return i;
+                }
+            }else{
+                if(e.subID!=-1){
+                    continue;
+                }
+                if(s.item.info.id == e.info.id){
+                    return i;
+                }
             }
+
         }
         return -1;
+    }
+    public static boolean checkIfSameSubID(Entity e1, Entity e2){
+        if(e1.swordInfo!=null){
+            if(e2.swordInfo!=null){
+                if(e1.swordInfo.id == e2.swordInfo.id){
+                    return true;
+                }
+            }else{
+                return false;
+            }
+        }else if(e1.projectileInfo!=null){
+            if(e2.projectileInfo!=null){
+                if(e1.projectileInfo.id == e2.projectileInfo.id){
+                    return true;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+        return false;
     }
     public boolean addItem(Entity c){
         
         boolean added = false;
 
-        int slotA = getSlotWithItemFromInventorySlots(c.info.id);
+        int slotA = getSlotWithItemFromInventorySlots(c);
         if(slotA !=-1){
-            inventorySlots[slotA].add(c);
-            added = true;
+            added = inventorySlots[slotA].add(c);
         }else{
-            int slotB = getSlotWithItemFromHotbarSlots(c.info.id);
+            int slotB = getSlotWithItemFromHotbarSlots(c);
             if(slotB!=-1){
-                hotbarSlots[slotB].add(c);
-                added = true;
+                added = hotbarSlots[slotB].add(c);
             }
         }
+        System.out.println("Added: " + added);
         if(!added){
             for(int i = 0; i < inventorySlots.length; i++){
                 Slot s = inventorySlots[i];
@@ -180,27 +213,43 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
-        private byte maxStack = 99;
+        private byte maxStack = 25;
         public Entity item;
         public byte amount;
         public Slot(){}
         public boolean highlight = false;
         public boolean add(Entity i){
+            //IF item == null -> Slot does not have item.
             if(item ==null){
                 this.item = i;
                 amount++;
                 return true;
             }else{
-                if(i.info.id==item.info.id){
-                    if(amount==maxStack){
-                        return false;
-                    }
-                    amount++;
-                    return true;
-                }else{
+                if(amount==maxStack){
                     return false;
                 }
+                //Slot has item. 
+                boolean b = false;
+                if(item.swordInfo!=null || item.projectileInfo!=null){
+                    //Item has subID
+                    b = checkIfSameSubID(item, i);
+                    if(b){
+                        amount++;
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+                if(i.swordInfo!=null || i.projectileInfo!=null){
+                    return false;
+                }
+                //Not subID
+                if(item.info.id == i.info.id){
+                    amount++;
+                    return true;
+                }
             }
+            return false;
         }
         public void reduce(byte amount){
             this.amount -= amount;

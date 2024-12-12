@@ -114,7 +114,7 @@ public class World {
                 int id = Integer.parseInt(tokens[0]);
                 int x = Integer.parseInt(tokens[1])*Tile.tileSize;
                 int y = Integer.parseInt(tokens[2])*Tile.tileSize;
-                Entity e = entityManager.generateWithID(id, x, y);
+                Entity e = entityManager.generateWithID(id,-1, x, y);
                 if(id==0){
                     player = e;
                     Camera.setEntityToCenter(e);

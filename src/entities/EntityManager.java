@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 import entities.projectiles.Projectile;
+import entities.projectiles.Projectiles;
+import entities.swords.Sword;
+import entities.swords.Swords;
 import gfx.Animation;
 import gfx.Animations;
 import gfx.AssetStorage;
@@ -83,7 +86,7 @@ public class EntityManager {
 
 
     }
-    public Entity generateWithID(int id, int x, int y){
+    public Entity generateWithID(int id,int subID, int x, int y){
         EntityInfo e = entityInfos.get(id);
         // System.out.println("Added: " + e.name);
         Entity c = new Entity(e,x,y);
@@ -94,6 +97,18 @@ public class EntityManager {
             World.player = c;
             Camera.setEntityToCenter(c);
         }
+        switch (id) {
+            case 27:
+                c.swordInfo = Swords.swords.get(subID);
+                break;
+            
+            case 35:
+                c.projectileInfo = Projectiles.projectiles.get(subID);
+                break;
+            default:
+                break;
+        }
+        c.loadBasicInfo();
         toAdd.add(c);
         return c;
     }
@@ -104,6 +119,12 @@ public class EntityManager {
         c.rotation = rotation;
         c.ai.lateInit();
         toAdd.add(c);
+        return c;
+    }
+    public Entity generateSword(Sword info){
+        EntityInfo i = entityInfos.get(27);
+        Entity c = new Entity(i,0,0);
+        c.swordInfo = info;
         return c;
     }
     private boolean checkForPlayers(){

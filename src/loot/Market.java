@@ -39,19 +39,37 @@ public class Market {
 
     }
     private static Market process(ArrayList<KeyValuePair> data){
-        int id = data.get(0).getInteger();
+        DataType[] ids = data.get(0).getArray();
+
+        int id = ids[0].getInteger();
+        int subId = -1;
+        int subId2 = -1;
+        if(ids.length>1){
+            //Has sub id.
+            subId = ids[1].getInteger();
+        }
         int amount = data.get(1).getInteger();
         DataType[] array = data.get(2).getArray();
         ArrayList<MarketItem> priceItems = new ArrayList<MarketItem>();
         for(DataType d : array){
             ObjectValue obj = (ObjectValue)d;
             ArrayList<KeyValuePair> items = obj.getObject();
-            int id2 = items.get(0).getInteger();
+            DataType[] ids2 = items.get(0).getArray();
+            int id2 = ids2[0].getInteger();
+            subId2 = -1;
+            if(ids2.length>1){
+                //Has sub Id
+                subId2 = ids2[1].getInteger();
+            }
+
+            
+
             int amount2 = items.get(1).getInteger();
-            MarketItem i = new MarketItem(id2, amount2);
+            MarketItem i = new MarketItem(id2, subId2,amount2);
             priceItems.add(i);
         }
-        MarketItem toSell = new MarketItem(id, amount);
+
+        MarketItem toSell = new MarketItem(id, subId,amount);
         Market m = new Market(toSell,priceItems);
                 
         return m;

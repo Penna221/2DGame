@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import entities.projectiles.Projectiles;
+import entities.swords.Swords;
 import gfx.Animations;
 import gfx.AssetStorage;
 import gfx.Transition;
@@ -121,6 +122,14 @@ public class Game extends Engine{
             goAway();
         }
 
+        System.out.println("Loading Sword Data");
+        status = "Loading Swords";
+        try {
+            Swords.load();
+        } catch (Exception e) {
+            status = "Error occured while loading Swords";
+            goAway();
+        }
 
 
         status = "Loading Market prices";

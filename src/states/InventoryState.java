@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import entities.Entity;
+import entities.EntityManager;
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
@@ -57,7 +58,7 @@ public class InventoryState extends State{
             }
     }
     public static void releaseSlot(){
-        if(!slotSelected)
+        if(!slotSelected||selectedSlotID==-1)
             return;
 
         int mouseX = Game.mm.mouseX;
@@ -68,46 +69,66 @@ public class InventoryState extends State{
                 continue;
             }
             Rectangle r = s.rect;
+            System.out.println("selectedSlot: " + selectedSlotID);
             Slot selected = slotRectangles[selectedSlotID].slot;
-            int originalAmount = selected.amount;
             if(r.contains(mouseX,mouseY)){
-                if(s.slot.item==null||s.slot.item.info.id == selected.item.info.id){
-                    for(int i = 0; i < selected.amount;i++){
-                        if(s.slot.add(selected.item)){
-                            originalAmount--;
-                        }else{
-                            slotRectangles[selectedSlotID].slot.clear();
-                            for(int j = 0; j < originalAmount;j++){
-                                slotRectangles[selectedSlotID].slot.add(s.slot.item);
-                            }
-                            slotSelected = false;
-                            selectedSlotID = -1;
-                            return;
-                        }
-                    }
-                    slotRectangles[selectedSlotID].slot.clear();
-                }else{
-                    //Swap
-                    int tempID = s.slot.item.info.id;
-                    int amount = s.slot.amount;
-                    s.slot.clear();
-                    for(int i = 0; i < selected.amount; i++){
-                        s.slot.add(selected.item);
-                    }
-                    selected.clear();
-                    Entity e = World.entityManager.generateWithID(tempID, 0,0);
+                //IF Slot has no item, put it there.
+                //IF SLOT HAS SAME item, combine.
+                if(s.slot.item==null){
+                    int remainder = putItemsInSlot(s.slot,selected.item,selected.amount);
                     
-                    for(int i = 0; i < amount; i++){
-                        selected.add(e);
+                    slotRectangles[selectedSlotID].slot.clear();
+                    slotSelected = false;
+                    selectedSlotID = -1;
+                    break;
+                }else{
+                    int remainder = putItemsInSlot(s.slot,selected.item,selected.amount);
+                    //IF same amount, probably different items.
+                    if(remainder == selected.amount){
+                        int tempID = s.slot.item.info.id;
+                        int tempSubID = s.slot.item.subID;
+                        int amount = s.slot.amount;
+                        s.slot.clear();
+                        for(int i = 0; i < selected.amount; i++){
+                            s.slot.add(selected.item);
+                        }
+                        selected.clear();
+                        Entity e = World.entityManager.generateWithID(tempID, tempSubID,0,0);
+                        for(int i = 0; i < amount; i++){
+                            selected.add(e);
+                        }
+                        World.entityManager.removeEntity(e);
+                        break;
+
+                    }else{
+                        //Copy selected
+                        int copyID = selected.item.info.id;
+                        int copyID2 = selected.item.subID;
+                        Entity e = World.entityManager.generateWithID(copyID, copyID2,0,0);
+                        selected.clear();
+                        putItemsInSlot(slotRectangles[selectedSlotID].slot, e,remainder);
+                        slotSelected = false;
+                        selectedSlotID = -1;
+                        break;
                     }
-                    World.entityManager.removeEntity(e);
                 }
             }
         }
         slotSelected = false;
         selectedSlotID = -1;
     }
-
+    private static int putItemsInSlot(Slot s, Entity e, int amount){
+        int originalAmount = amount;
+        for(int i = 0; i < amount;i++){
+            //So long as you can put items in slot, keep doing it. return the number of remaining items.
+            if(s.add(e)){
+                originalAmount--;
+            }else{
+                break;
+            }
+        }
+        return originalAmount;
+    }
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);

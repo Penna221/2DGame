@@ -24,7 +24,9 @@ import entities.ai.SkeletonAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
 import entities.projectiles.Projectile;
+import entities.swords.Sword;
 import gfx.Animation;
+import gfx.AssetStorage;
 import gfx.Factory;
 import gfx.Transition;
 import main.Game;
@@ -50,6 +52,8 @@ public class Entity {
     public Entity source;
     public ArrayList<Integer> receivedHits = new ArrayList<Integer>();
     public Projectile projectileInfo;
+    public Sword swordInfo;
+    public int subID = -1;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -397,6 +401,18 @@ public class Entity {
         name = info.name;
         calculateBounds();
         ai.lateInit();
+    }
+    public void loadBasicInfo(){
+        
+        if(swordInfo!=null){
+            name = swordInfo.name;
+            texture = AssetStorage.images.get(swordInfo.texture);
+            subID = swordInfo.id;
+        }else if(projectileInfo!=null){
+            name = projectileInfo.name;
+            texture = AssetStorage.images.get(projectileInfo.texture);
+            subID = projectileInfo.id;
+        }
     }
     public void renderAdditional(Graphics g) {
         ai.render(g);

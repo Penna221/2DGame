@@ -499,29 +499,11 @@
         "light_color":"#FFA000",
         "light_transparency":0.55
     },
-    "iron_sword":{
+    "sword":{
         "id":27,
         "type":"Item",
-        "name":"Iron Sword",
+        "name":"Sword",
         "texture":"iron_sword",
-        "speed":1.0,
-        "health":100,
-        "animations":{
-            "idle":""
-        },
-        "ai":"Collectable",
-        "width":16,
-        "height":16,
-        "light_source":false,
-        "light_radius":500,
-        "light_color":"#FFA000",
-        "light_transparency":0.55
-    },
-    "iron_dagger":{
-        "id":28,
-        "type":"Item",
-        "name":"Iron Dagger",
-        "texture":"iron_dagger",
         "speed":1.0,
         "health":100,
         "animations":{

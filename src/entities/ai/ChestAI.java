@@ -62,7 +62,7 @@ public class ChestAI extends AI{
             for(int j = 0; j < amount; j++){
                 int randomXOffset = generateRandomAmount(-40, 40);
                 int randomYOffset = generateRandomAmount(-40, 40);
-                Entity e2 = World.entityManager.generateWithID(id, (int)e.x+randomXOffset, (int)e.y+randomYOffset);
+                Entity e2 = World.entityManager.generateWithID(id,-1, (int)e.x+randomXOffset, (int)e.y+randomYOffset);
                 boolean success = PlayerAI.inv.addItem(e2);
                 if(success){
                     World.entityManager.removeEntity(e2);

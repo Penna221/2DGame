@@ -7,6 +7,8 @@ import entities.Entity;
 import entities.EntityInfo;
 import entities.EntityManager;
 import entities.ai.PlayerAI;
+import entities.projectiles.Projectiles;
+import entities.swords.Swords;
 import gfx.AssetStorage;
 import gfx.Transition;
 import loot.Market;
@@ -347,8 +349,41 @@ public class PauseMenu {
     }
     private static Container generateListItem(int maxWidth,Market m){
         Container c = new Container(0,0,maxWidth,120);
-
-        EntityInfo e1 = EntityManager.entityInfos.get(m.sellItem.id);
+        int sellItemID1 = m.sellItem.id;
+        int sellItemID2 = m.sellItem.id2;
+        final Entity ent;
+        final String name;
+        BufferedImage texture = null;
+        if(sellItemID2!=-1){
+            //Item has sub id
+            //First ID is category. It is taken fron entities.json id. id 27 = sword, id 35 = projectiles.
+            switch (sellItemID1) {
+                case 27:
+                    //Sword
+                    ent = new Entity(EntityManager.entityInfos.get(27),0,0);
+                    ent.swordInfo = Swords.swords.get(sellItemID2);
+                    break;
+                case 35:
+                    //Projectile
+                    ent = new Entity(EntityManager.entityInfos.get(35),0,0);
+                    ent.projectileInfo = Projectiles.projectiles.get(sellItemID2);
+                    
+                    break;
+                default:
+                    ent = new Entity(EntityManager.entityInfos.get(1),0,0);
+                    break;
+            }
+            
+            ent.loadBasicInfo();
+            name = ent.name;
+            texture = ent.texture;
+        }else{
+            EntityInfo e1 = EntityManager.entityInfos.get(sellItemID1);
+            ent = new Entity(e1,0,0);
+            ent.loadBasicInfo();
+            name = ent.name;
+            texture = ent.texture;
+        }
         int amount = m.sellItem.amount;
         
 
@@ -357,7 +392,7 @@ public class PauseMenu {
                 //Buy
                 ArrayList<MarketItem> need = m.priceItems;
                 
-                System.out.println("You are trying to buy "+amount + " x " + e1.name);
+                System.out.println("You are trying to buy "+amount + " x " + name);
                 System.out.println("You need :");
                 boolean allGood = true;
                 for(MarketItem needItem : need){
@@ -373,16 +408,17 @@ public class PauseMenu {
                         System.out.println("You have enough "+ needInfo.name);
                     }
                 }
+                //Sell Item transaction
                 if(allGood){
                     System.out.println("All Good");
                     for(MarketItem needItem : need){
                         PlayerAI.inv.pay(needItem.id, needItem.amount);
                     }
-                    Entity e = new Entity(EntityManager.entityInfos.get(m.sellItem.id),0,0);
                     for(int i = 0; i < m.sellItem.amount; i++){
-                        PlayerAI.inv.addItem(e);
+                        if(ent!=null){
+                            PlayerAI.inv.addItem(ent);
+                        }
                     }
-                    //give m.sellItem
                 }else{
                     System.out.println("You don't have everything needed to purchase this item.");
                 }
@@ -395,14 +431,13 @@ public class PauseMenu {
         //Create LeftSide
         
         //GENERATE IMAGE BOX
-        
-        Image icon = generateImageIcon(e1.texture,amount,150,150);
+        Image icon = generateImageIcon(texture,amount,150,150);
         
 
 
         leftSide.addElement(icon);
         int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon.bounds.getWidth());
-        Text itemText = new Text(e1.name,0,0,maxSizeForText1,false);
+        Text itemText = new Text(name,0,0,maxSizeForText1,false);
         leftSide.addElement(itemText);
         leftSide.spaceHorizintally(20);
         leftSide.calculateBounds();
