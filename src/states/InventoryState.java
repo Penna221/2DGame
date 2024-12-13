@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import entities.Entity;
-import entities.EntityManager;
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;

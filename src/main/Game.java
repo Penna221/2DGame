@@ -5,7 +5,10 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import entities.bows.Bows;
+import entities.potions.Potions;
 import entities.projectiles.Projectiles;
+import entities.staves.Staves;
 import entities.swords.Swords;
 import gfx.Animations;
 import gfx.AssetStorage;
@@ -14,7 +17,6 @@ import io.KeyManager;
 import io.MouseManager;
 import loot.LootTables;
 import loot.Market;
-import questions.QuestionStorage;
 import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
@@ -131,6 +133,30 @@ public class Game extends Engine{
             goAway();
         }
 
+        System.out.println("Loading Staff Data");
+        status = "Loading Staves";
+        try {
+            Staves.load();
+        } catch (Exception e) {
+            status = "Error occured while loading Staves";
+            goAway();
+        }
+        System.out.println("Loading Bow Data");
+        status = "Loading Bows";
+        try {
+            Bows.load();
+        } catch (Exception e) {
+            status = "Error occured while loading Bows";
+            goAway();
+        }
+        System.out.println("Loading Potion Data");
+        status = "Loading Potions";
+        try {
+            Potions.load();
+        } catch (Exception e) {
+            status = "Error occured while loading Potions";
+            goAway();
+        }
 
         status = "Loading Market prices";
         try{

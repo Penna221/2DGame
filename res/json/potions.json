@@ -1,0 +1,14 @@
+{
+    "potion_0":{
+        "id":0,
+        "name":"Health Potion",
+        "texture":"health_potion",
+        "effect":"heal"
+    },
+    "potion_1":{
+        "id":1,
+        "name":"Mystery Potion",
+        "texture":"mystery_potion",
+        "effect":"random"
+    }
+}

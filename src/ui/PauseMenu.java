@@ -7,7 +7,10 @@ import entities.Entity;
 import entities.EntityInfo;
 import entities.EntityManager;
 import entities.ai.PlayerAI;
+import entities.bows.Bows;
+import entities.potions.Potions;
 import entities.projectiles.Projectiles;
+import entities.staves.Staves;
 import entities.swords.Swords;
 import gfx.AssetStorage;
 import gfx.Transition;
@@ -358,6 +361,11 @@ public class PauseMenu {
             //Item has sub id
             //First ID is category. It is taken fron entities.json id. id 27 = sword, id 35 = projectiles.
             switch (sellItemID1) {
+                case 26:
+                    //Sword
+                    ent = new Entity(EntityManager.entityInfos.get(26),0,0);
+                    ent.potionInfo =Potions.potions.get(sellItemID2);
+                    break;
                 case 27:
                     //Sword
                     ent = new Entity(EntityManager.entityInfos.get(27),0,0);
@@ -367,10 +375,19 @@ public class PauseMenu {
                     //Projectile
                     ent = new Entity(EntityManager.entityInfos.get(35),0,0);
                     ent.projectileInfo = Projectiles.projectiles.get(sellItemID2);
-                    
+                    break;
+                case 36:
+                    //Staff
+                    ent = new Entity(EntityManager.entityInfos.get(36),0,0);
+                    ent.staffInfo = Staves.staves.get(sellItemID2);
+                    break;
+                case 37:
+                    //Staff
+                    ent = new Entity(EntityManager.entityInfos.get(37),0,0);
+                    ent.bowInfo = Bows.bows.get(sellItemID2);
                     break;
                 default:
-                    ent = new Entity(EntityManager.entityInfos.get(1),0,0);
+                    ent = new Entity(EntityManager.entityInfos.get(2),0,0);
                     break;
             }
             

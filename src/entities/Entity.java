@@ -23,7 +23,10 @@ import entities.ai.ProjectileAI;
 import entities.ai.SkeletonAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
+import entities.bows.Bow;
+import entities.potions.Potion;
 import entities.projectiles.Projectile;
+import entities.staves.Staff;
 import entities.swords.Sword;
 import gfx.Animation;
 import gfx.AssetStorage;
@@ -53,6 +56,9 @@ public class Entity {
     public ArrayList<Integer> receivedHits = new ArrayList<Integer>();
     public Projectile projectileInfo;
     public Sword swordInfo;
+    public Staff staffInfo;
+    public Bow bowInfo;
+    public Potion potionInfo;
     public int subID = -1;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
@@ -412,6 +418,19 @@ public class Entity {
             name = projectileInfo.name;
             texture = AssetStorage.images.get(projectileInfo.texture);
             subID = projectileInfo.id;
+        }else if(staffInfo!=null){
+            name = staffInfo.name;
+            texture = AssetStorage.images.get(staffInfo.texture);
+            System.out.println("texture: " + texture);
+            subID = staffInfo.id;
+        }else if(bowInfo!=null){
+            name = bowInfo.name;
+            texture = AssetStorage.images.get(bowInfo.texture);
+            subID = bowInfo.id;
+        }else if(potionInfo!=null){
+            name = potionInfo.name;
+            texture = AssetStorage.images.get(potionInfo.texture);
+            subID = potionInfo.id;
         }
     }
     public void renderAdditional(Graphics g) {

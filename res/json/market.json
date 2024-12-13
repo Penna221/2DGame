@@ -39,12 +39,21 @@
                     "amount":5
                 }
             ]
+        },
+        {
+            "id":[37,0],
+            "amount":1,
+            "price":[
+                {
+                    "item":[2],
+                    "amount":5
+                }
+            ]
         }
-
     ],
     "witch":[
         {
-            "id":[26],
+            "id":[26,0],
             "amount":1,
             "price":[
                 {
@@ -58,12 +67,22 @@
             ]
         },
         {
-            "id":[29],
+            "id":[26,1],
             "amount":1,
             "price":[
                 {
                     "item":[2],
                     "amount":40
+                }
+            ]
+        },
+        {
+            "id":[36,0],
+            "amount":1,
+            "price":[
+                {
+                    "item":[2],
+                    "amount":1
                 }
             ]
         }

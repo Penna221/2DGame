@@ -8,8 +8,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import entities.bows.Bow;
+import entities.potions.Potion;
+import entities.potions.Potions;
 import entities.projectiles.Projectile;
 import entities.projectiles.Projectiles;
+import entities.staves.Staff;
+import entities.staves.Staves;
 import entities.swords.Sword;
 import entities.swords.Swords;
 import gfx.Animation;
@@ -98,12 +103,17 @@ public class EntityManager {
             Camera.setEntityToCenter(c);
         }
         switch (id) {
+            case 26:
+                c.potionInfo = Potions.potions.get(subID);
+                break;
             case 27:
                 c.swordInfo = Swords.swords.get(subID);
                 break;
-            
             case 35:
                 c.projectileInfo = Projectiles.projectiles.get(subID);
+                break;
+            case 36:
+                c.staffInfo = Staves.staves.get(subID);
                 break;
             default:
                 break;
@@ -126,6 +136,25 @@ public class EntityManager {
         Entity c = new Entity(i,0,0);
         c.swordInfo = info;
         return c;
+    }
+    public Entity generateStaff(Staff info){
+        EntityInfo i = entityInfos.get(36);
+        Entity c = new Entity(i,0,0);
+        c.staffInfo = info;
+        return c;
+    }
+    public Entity generateBow(Bow info){
+        EntityInfo i = entityInfos.get(37);
+        Entity c = new Entity(i,0,0);
+        c.bowInfo = info;
+        return c;
+    }
+    public Entity generatePotion(Potion info){
+        EntityInfo i = entityInfos.get(26);
+        Entity c = new Entity(i,0,0);
+        c.potionInfo = info;
+        return c;
+
     }
     private boolean checkForPlayers(){
         for(Entity e: entities){
