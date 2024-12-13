@@ -1,4 +1,5 @@
 package ui;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -448,7 +449,7 @@ public class PauseMenu {
         //Create LeftSide
         
         //GENERATE IMAGE BOX
-        Image icon = generateImageIcon(texture,amount,150,150);
+        Image icon = generateImageIcon(texture,amount,150,150,true,Color.black);
         
 
 
@@ -477,7 +478,7 @@ public class PauseMenu {
         for(MarketItem mi : m.priceItems){
             EntityInfo e2 = EntityManager.entityInfos.get(mi.id);
             int amount2 = mi.amount;
-            Image icon1 = generateImageIcon(e2.texture,amount2,55,55);
+            Image icon1 = generateImageIcon(e2.texture,amount2,55,55,true,Color.black);
             uphalf.addElement(icon1);
         }
         uphalf.centerVertically();
@@ -507,8 +508,8 @@ public class PauseMenu {
         return c;
     }
     
-    private static Image generateImageIcon(BufferedImage i, int amount, int w, int h){
-        BufferedImage iconA = UIFactory.generateIconWithAmount(i,amount,w,h);
+    private static Image generateImageIcon(BufferedImage i, int amount, int w, int h, boolean borderFrame,Color bg){
+        BufferedImage iconA = UIFactory.generateIconWithAmount(i,amount,w,h,borderFrame, bg);
         return new Image(iconA, 0,0);
 
     }

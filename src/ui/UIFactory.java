@@ -337,24 +337,26 @@ public class UIFactory {
     }
 
 
-    public static BufferedImage generateIconWithAmount(BufferedImage texture, int amount, int width, int height){
+    public static BufferedImage generateIconWithAmount(BufferedImage texture, int amount, int width, int height,boolean borderFrame, Color bg){
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.createGraphics();
         
         //Draw Image
-        g.setColor(Color.black);
+        g.setColor(bg);
         g.fillRect(0, 0, img.getWidth(),img.getHeight());
-        BufferedImage scaledImage = UIFactory.scaleToHeight(texture,img.getHeight());
+        BufferedImage scaledImage = UIFactory.scaleToHeight(texture,(int)(img.getHeight()*0.8));
         
         int centerX = img.getWidth()/2 - scaledImage.getWidth()/2;
         int centerY = img.getHeight()/2 - scaledImage.getHeight()/2;
         g.drawImage(scaledImage, centerX,centerY,null);
         
 
+        if(borderFrame){
+            BufferedImage frame = AssetStorage.images.get("frame");
+            BufferedImage scaledFrame = UIFactory.scaleToHeight(frame, img.getWidth());
+            g.drawImage(scaledFrame, 0,0,null);
+        }
         //Draw frame
-        BufferedImage frame = AssetStorage.images.get("frame");
-        BufferedImage scaledFrame = UIFactory.scaleToHeight(frame, img.getWidth());
-        g.drawImage(scaledFrame, 0,0,null);
 
         //Draw Amount
         float percentage = 0.45f;

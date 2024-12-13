@@ -136,14 +136,13 @@ public class InventoryState extends State{
         
         for(SlotRectangle s : slotRectangles){
             Slot sl = s.slot;
-            sl.render(g,s.rect.x, s.rect.y, s.rect.width, s.rect.height);
+            sl.render(g,s.rect.x, s.rect.y);
         }
         int mouseX = Game.mm.mouseX;
         int mouseY = Game.mm.mouseY;
         if(slotSelected){
             if(slotRectangles[selectedSlotID].slot.item!=null){
-                Entity item = slotRectangles[selectedSlotID].slot.item;
-                g.drawImage(item.texture, mouseX - (int)(slotSize*0.5), mouseY - (int)(slotSize*0.5),(int)(slotSize*0.8),(int)(slotSize*0.8), null);
+                g.drawImage(slotRectangles[selectedSlotID].slot.texture, mouseX - (int)(slotSize*0.5), mouseY - (int)(slotSize*0.5),(int)(slotSize*0.8),(int)(slotSize*0.8), null);
             }
         }
         if(transition !=null){

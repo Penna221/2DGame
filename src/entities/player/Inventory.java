@@ -9,6 +9,7 @@ import entities.Entity;
 import gfx.AssetStorage;
 import gfx.Factory;
 import main.Game;
+import ui.UIFactory;
 
 public class Inventory {
     
@@ -34,10 +35,10 @@ public class Inventory {
     public void load(){
         //Initialize
         for(int i = 0; i < inventorySlots.length; i++){
-            inventorySlots[i] = new Slot();
+            inventorySlots[i] = new Slot(slotSize,slotSize);
         }
         for(int i = 0; i < hotbarSlots.length; i++){
-            hotbarSlots[i] = new Slot();
+            hotbarSlots[i] = new Slot(slotSize,slotSize);
         }
         //Load from saved data.
     }
@@ -205,7 +206,7 @@ public class Inventory {
         y = Game.w.getHeight() - 100;
         for(int i = 0; i < toShow; i++){
             Slot s = hotbarSlots[i];
-            s.render(g, startX + i*(spacing+slotSize), y,slotSize,slotSize);
+            s.render(g, startX + i*(spacing+slotSize), y);
         }
 
         g.drawImage(AssetStorage.images.get("frame"), startX + selectedIndex*(spacing+slotSize),y,slotSize+1,slotSize+1,null);
@@ -216,16 +217,21 @@ public class Inventory {
         private byte maxStack = 25;
         public Entity item;
         public byte amount;
-        public Slot(){}
+        public int width,height;
+        public Slot(int width, int height){this.width=width;this.height=height;}
         public boolean highlight = false;
+        public BufferedImage texture;
+
         public boolean add(Entity i){
             //IF item == null -> Slot does not have item.
             if(item ==null){
                 this.item = i;
                 amount++;
+                generateImage();
                 return true;
             }else{
                 if(amount==maxStack){
+                    generateImage();
                     return false;
                 }
                 //Slot has item. 
@@ -235,21 +241,31 @@ public class Inventory {
                     b = checkIfSameSubID(item, i);
                     if(b){
                         amount++;
+                        generateImage();
                         return true;
                     }else{
+                        generateImage();
                         return false;
                     }
                 }
                 if(i.swordInfo!=null || i.projectileInfo!=null){
+                    generateImage();
                     return false;
                 }
                 //Not subID
                 if(item.info.id == i.info.id){
                     amount++;
+                    generateImage();
                     return true;
                 }
             }
+            generateImage();
             return false;
+        }
+        public void generateImage(){
+            if(item!=null){
+                texture = UIFactory.generateIconWithAmount(item.texture,amount,width,height,false,new Color(0,0,0,0));
+            }
         }
         public void reduce(byte amount){
             this.amount -= amount;
@@ -262,15 +278,16 @@ public class Inventory {
             item = null;
             amount = 0;
         }
-        public void render(Graphics g, int x, int y, int width, int height){
+        public void render(Graphics g, int x, int y){
             g.setColor(new Color(0,0,0,180));
             g.fillRect(x, y, width, height);
             g.setColor(Color.red);
             g.drawRect(x, y,width,height);
             if(item!=null){
-                g.drawImage(item.texture, x , y,width,height, null);
-                g.setColor(Color.red);
-                g.drawString(""+amount, x+width/2, y);
+                g.drawImage(texture, x, y, null);
+                // g.drawImage(item.texture, x +3, y+3,width-6,height-6, null);
+                // g.setColor(Color.red);
+                // g.drawString(""+amount, x+width/2, y);
             }
             if(highlight){
                 g.setColor(Color.white);

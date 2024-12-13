@@ -421,7 +421,6 @@ public class Entity {
         }else if(staffInfo!=null){
             name = staffInfo.name;
             texture = AssetStorage.images.get(staffInfo.texture);
-            System.out.println("texture: " + texture);
             subID = staffInfo.id;
         }else if(bowInfo!=null){
             name = bowInfo.name;
