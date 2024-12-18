@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -8,6 +9,7 @@ public class Text extends UIElement{
     private String text;
     private int maxWidth;
     private boolean border;
+    public boolean fillBg = false;
     public Text(String text, int x, int y, int maxWidth, boolean border) {
         super(x, y);
         this.border = border;
@@ -32,6 +34,11 @@ public class Text extends UIElement{
     }
     @Override
     public void render(Graphics g) {
+        if(fillBg){
+            g.setColor(UIFactory.textData.bgColor);
+            // g.setColor(Color.black);
+            g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
+        }
         g.drawImage(textImage, bounds.x, bounds.y, null);
         // g.setColor(UIFactory.textData.borderColor);
         // g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);

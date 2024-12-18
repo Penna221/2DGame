@@ -224,7 +224,10 @@
         "arrow_1":"res\\gfx\\entities\\projectiles\\arrows\\arrow_1.png",
         "magic_ball_0":"res\\gfx\\entities\\projectiles\\magic\\magic_ball_0.png",
         "magic_wand":"res\\gfx\\entities\\items\\magic_wand.png",
-        "bow":"res\\gfx\\entities\\items\\bow.png"
+        "bow":"res\\gfx\\entities\\items\\bow.png",
+
+        "portrait_test":"res\\gfx\\entities\\portraits\\p_test.png",
+        "portrait_witch":"res\\gfx\\entities\\portraits\\p_witch.png"
     },
     "texts":{
         "txt1":{

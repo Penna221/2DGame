@@ -57,7 +57,7 @@ public class Container extends UIElement{
             int w = e.bounds.width;
             int newX = bounds.width/2-w/2;
             e.setPosition(newX, e.y);
-            
+            System.out.println(e.y);
         }
         if(header !=null){
             header.bounds.x = bounds.x + bounds.width/2 - header.bounds.width/2;
@@ -130,6 +130,7 @@ public class Container extends UIElement{
         }
         
     }
+    //Use only for Market stuff
     public void updateList(){
         int lastY = 0;
         for(int i = 0; i < elements.size(); i++){

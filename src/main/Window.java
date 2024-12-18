@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -28,10 +29,11 @@ public class Window {
         
         canvas = new Canvas();
         canvas.setPreferredSize(d);
-        canvas.setMinimumSize(d);
-        canvas.setMaximumSize(d);
+        // canvas.setMinimumSize(d);
+        // canvas.setMaximumSize(d);
         frame.add(canvas);
         frame.pack();
+        resize(width, height);
         frame.addComponentListener(new ComponentAdapter() 
 		{  
 		        public void componentResized(ComponentEvent evt) {
@@ -42,11 +44,14 @@ public class Window {
         frame.setVisible(true);
     }
     public void refresh() {
+        Insets insets = frame.getInsets();
+System.out.println("Insets - Top: " + insets.top + ", Left: " + insets.left +
+                   ", Bottom: " + insets.bottom + ", Right: " + insets.right);
 		frame.setTitle(title);
-		d = new Dimension(width,height);
+		d = new Dimension(width-insets.left-insets.right,height-insets.top-insets.bottom);
 		canvas.setPreferredSize(d);
-		canvas.setMinimumSize(d);
-		canvas.setMaximumSize(d);
+		// canvas.setMinimumSize(d);
+		// canvas.setMaximumSize(d);
         if(World.camera!=null){
             World.camera.init();
         }

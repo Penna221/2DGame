@@ -41,6 +41,34 @@ public class PauseMenu {
         
     }
     public static void generateNewContainer(String text){
+        Task t1 = new Task(){
+            public void perform(){
+                State.setState(State.blacksmithState, true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        };
+        Task t2 = new Task(){
+            public void perform(){
+                State.setState(State.witchState, true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        };
+        Task t3 = new Task(){
+            public void perform(){
+                State.setState(State.traderState, true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        };
+        Task t4 = new Task(){
+            public void perform(){
+                State.setState(State.traderState, true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        };
         switch (text) {
             case "basic":
                 containers.put("basic", createBasicPauseMenu());
@@ -58,30 +86,24 @@ public class PauseMenu {
                 containers.put("trader",createTraderContainer());
                 break;
             case "enter_witch":
-                containers.put("enter_witch", createWitchEntryDialog());
+                containers.put("enter_witch", createNPCEntryDialog(t2,"Witch","Hi There","portrait_witch"));
                 break;
             case "enter_trader":
-                containers.put("enter_trader", createTraderEntryDialog());
+            containers.put("enter_trader", createNPCEntryDialog(t3,"Trader","Hi There","portrait_test"));
+                
                 break;
             case "enter_blacksmith":
-                containers.put("enter_blacksmith", createBlacksmithEntryDialog());
+                
+                containers.put("enter_blacksmith", createNPCEntryDialog(t1,"BlackSmith","Hi There","portrait_test"));
                 break;
             case "enter_guide":
-                containers.put("enter_guide", createGuideDialog());
+                containers.put("enter_guide", createNPCEntryDialog(t4,"Guide","Hi There","portrait_test"));
                 break;
             default:
                 break;
         }
     }
-    private static Container createGuideDialog() {
-        Task t1 = new Task(){
-            public void perform(){
-                
-            }
-        };
-        Image i = new Image(EntityManager.entityInfos.get(19).texture, 0, 0);
-        return createEntryDialog(t1,"Hello.", i);
-    }
+    
 
     private static Container createMenuStateContainer(){
         Container container = new Container(0, 0, Game.w.getWidth(),Game.w.getHeight());
@@ -162,78 +184,84 @@ public class PauseMenu {
         b2.setTask(t2);
         options.add(b1);
         options.add(b2);
-
         Container c = createBasicDialog(question, options);
         return c;
     }
-    private static Container createBasicDialog(String header,ArrayList<ClickButton> options){
-        int w = Game.w.getWidth();
-        int h = 500;
-        int x = 0;
-        int y = Game.w.getHeight()-h;
+    private static Container createBasicDialog(String question,ArrayList<ClickButton> options){
+        
+        int buffer = 100;
+        int w = (Game.w.getWidth()/4*3)-buffer;
+        int h = Game.w.getHeight()/3;
+        int x = Game.w.getWidth()/2-w/2;
+        int y = Game.w.getHeight()-h-50;
         Container c = new Container(x,y,w,h);
-        Text title = new Text(header, 20, y, w, true);
-        int lastY = title.y + title.bounds.height + 20;
-        c.addElement(title);
+        
+        int leftSideWidth = w/2;
+        //CREATE LEFT AND RIGHT SIDE.
+        //LEFT HAS QUESTION, RIGHT HAS ANSWER OPTIONS.
+        Container leftSide = new Container(0,0,leftSideWidth, h-20);
+        Text title = new Text(question, 0, 0, leftSideWidth, false);
+        leftSide.addElement(title);
+        //Center in container
+        leftSide.centerAndSpaceHorizontally(10);
+        c.addElement(leftSide);
+        c.setPosition(x, y);
+        leftSide.setPosition(0, 0);
+        
+        Container rightSide = new Container(leftSideWidth,0,w-leftSideWidth,h);
         for(int i = 0; i < options.size(); i++){
             ClickButton ca = options.get(i);
-            ca.setPosition(60, lastY);
-            lastY += ca.bounds.height + 10;
-            c.addElement(ca);
-            
+            rightSide.addElement(ca);            
         }
-
+        rightSide.spaceOutVertically(10);
+        rightSide.centerElements();
+        c.addElement(rightSide);
+        rightSide.setPosition(leftSideWidth, 0);
+        rightSide.wrap();
+        c.centerAndSpaceHorizontally(10);
+        c.centerVertically();
         return c;
     }
-    private static Container createEntryDialog(Task t1, String question, Image header){
+    private static Container createEntryDialog(Task t1, String question){
         Task t2 = new Task(){
             public void perform(){
                 PauseMenu.setContainer(null);
                 GameState.paused = false;
             }
         };
+
         Container c = createYesNoDialog(question, t1, t2);
         c.fillBg = true;
-        c.setHeader(header);
+        // c.addElement(portrait);
         return c;
 
     }
-    private static Container createBlacksmithEntryDialog(){
-        Task t1 = new Task(){
-            public void perform(){
-                State.setState(State.blacksmithState, true);
-                Transition.canContinue2 = true;
-                Transition.canFinish = true;
-            }
-        };
-        Image i = new Image(EntityManager.entityInfos.get(19).texture, 0, 0);
-        return createEntryDialog(t1,"Open Blacksmith shop?", i);
+    private static Container createNPCEntryDialog(Task t1, String name, String question,String p_name){
+
+        Container entryDialog = new Container(0, 0, Game.w.getWidth(), Game.w.getHeight());
+        
+        // Image i = new Image(EntityManager.entityInfos.get(19).texture, 0, 0);
+        Container downSide = createEntryDialog(t1,question);
+        Text nameText = new Text(name, 0, 0, downSide.bounds.width/2, false);
+        nameText.fillBg = true;
+        BufferedImage portrait = AssetStorage.images.get(p_name);
+        Image i = new Image(portrait, 0,0);
+        Container upSide = new Container(0, 0, downSide.bounds.width, i.image.getHeight());
+        i.setPosition(upSide.bounds.width-i.bounds.width, upSide.bounds.height-i.bounds.height);
+        nameText.setPosition(0,upSide.bounds.height-nameText.bounds.height);
+        upSide.addElement(nameText);
+        upSide.addElement(i);
+
+        entryDialog.addElement(upSide);
+        entryDialog.addElement(downSide);
+        upSide.setPosition(downSide.bounds.x, downSide.bounds.y-upSide.bounds.height);
+        return entryDialog;
     }
-    private static Container createWitchEntryDialog(){
-        Task t1 = new Task(){
-            public void perform(){
-                State.setState(State.witchState, true);
-                Transition.canContinue2 = true;
-                Transition.canFinish = true;
-            }
-        };
-        Image i = new Image(EntityManager.entityInfos.get(25).texture, 0, 0);
-        return createEntryDialog(t1,"Open Witch shop?", i);
-    }
-    private static Container createTraderEntryDialog(){
-        Task t1 = new Task(){
-            public void perform(){
-                State.setState(State.traderState, true);
-                Transition.canContinue2 = true;
-                Transition.canFinish = true;
-            }
-        };
-        Image i = new Image(EntityManager.entityInfos.get(25).texture, 0, 0);
-        return createEntryDialog(t1,"Would you like to buy something?", i);
-    }
+    
+    
     public static Container createTunnelEntryDialog(Task t){
         Image i = new Image(EntityManager.entityInfos.get(11).texture, 0, 0);
-        return createEntryDialog(t,"Go through?", i);
+        return createEntryDialog(t,"Go through?");
     }
     private static Container createBlacksmithContainer(){
         return createShopContainer(Market.lists.get("blacksmith"), new Text("BlackSmith", 0, 0, 0, true));
