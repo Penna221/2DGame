@@ -489,7 +489,7 @@
         "speed":1.0,
         "health":100,
         "animations":{
-            "idle":"health_potion_idle"
+            "idle":""
         },
         "ai":"Collectable",
         "width":16,
@@ -615,7 +615,7 @@
         "speed":0.0,
         "health":1,
         "animations":{
-            "idle":"mole_idle"
+            "idle":""
         },
         "ai":"projectile",
         "width":4,
@@ -633,7 +633,7 @@
         "speed":0.0,
         "health":1,
         "animations":{
-            "idle":"mole_idle"
+            "idle":""
         },
         "ai":"Collectable",
         "width":4,
@@ -651,7 +651,7 @@
         "speed":0.0,
         "health":1,
         "animations":{
-            "idle":"mole_idle"
+            "idle":""
         },
         "ai":"Collectable",
         "width":4,

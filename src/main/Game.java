@@ -184,6 +184,7 @@ public class Game extends Engine{
             mm = new MouseManager();
             w.getCanvas().addMouseListener(mm);
             w.getCanvas().addMouseMotionListener(mm);
+            w.getCanvas().addMouseWheelListener(mm);
             w.getCanvas().requestFocus();
         } catch (Exception e) {
             status = "Error occured while loading IO";

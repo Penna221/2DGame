@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.Entity;
 import json.JSON;
 import json.KeyValuePair;
 
@@ -25,6 +26,20 @@ public class Potions {
             String effect = pots.findChild("effect").getString();
             Potion p = new Potion(id,name,texture,effect);
             potions.put(id, p);
+        }
+    }
+    public static void consume(Potion p, Entity target){
+        switch (p.effect) {
+            case "heal10":
+                target.heal(10);
+                break;
+            case "random":
+            //TODO
+                target.harm(1);
+                break;
+            
+            default:
+                break;
         }
     }
 }

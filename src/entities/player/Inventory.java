@@ -32,6 +32,9 @@ public class Inventory {
         int newSize = inventorySlots.length+amount;
         inventorySlots = Arrays.copyOf(inventorySlots, newSize);
     }
+    public Slot getSelectedSlot(){
+        return hotbarSlots[selectedIndex];
+    }
     public void load(){
         //Initialize
         for(int i = 0; i < inventorySlots.length; i++){
@@ -44,6 +47,15 @@ public class Inventory {
     }
     public void select(int i){
         selectedIndex = i;
+    }
+    public void scroll(int i){
+        selectedIndex += i;
+        if(selectedIndex > hotbarSlots.length-1){
+            selectedIndex = 0;
+        }
+        if(selectedIndex<0){
+            selectedIndex = hotbarSlots.length-1;
+        }
     }
     public int getSlotWithItemFromHotbarSlots(Entity e){
         for(int i = 0; i < hotbarSlots.length; i++){
@@ -98,8 +110,29 @@ public class Inventory {
             }else{
                 return false;
             }
+        }else if(e1.staffInfo!=null){
+            if(e2.staffInfo!=null){
+                if(e1.staffInfo.id == e2.staffInfo.id){
+                    return true;
+                }
+            }else{
+                return false;
+            }
+        }else if(e1.potionInfo!=null){
+            if(e2.potionInfo!=null){
+                if(e1.potionInfo.id == e2.potionInfo.id){
+                    return true;
+                }
+            }else{
+                return false;
+            }
         }else{
-            return false;
+            //DOES NOT HAVE SUB ID
+            if(e1.info.id==e2.info.id){
+                return true;
+            }else{
+                return false;
+            }
         }
         return false;
     }
@@ -107,23 +140,36 @@ public class Inventory {
         
         boolean added = false;
 
-        int slotA = getSlotWithItemFromInventorySlots(c);
+        
+        int slotA = getSlotWithItemFromHotbarSlots(c);
         if(slotA !=-1){
-            added = inventorySlots[slotA].add(c);
+            
+            added = hotbarSlots[slotA].add(c);
         }else{
-            int slotB = getSlotWithItemFromHotbarSlots(c);
+            int slotB = getSlotWithItemFromInventorySlots(c);
+            
             if(slotB!=-1){
-                added = hotbarSlots[slotB].add(c);
+                added = inventorySlots[slotB].add(c);
+                
             }
         }
-        System.out.println("Added: " + added);
         if(!added){
-            for(int i = 0; i < inventorySlots.length; i++){
-                Slot s = inventorySlots[i];
+            for(int i = 0; i < hotbarSlots.length; i++){
+                Slot s = hotbarSlots[i];
                 if(s.add(c)){
                     added = true;
                     System.out.println("Added item with id("+c.info.id+") to slot " + i);
                     break;
+                }
+            }
+            if(!added){
+                for(int i = 0; i < inventorySlots.length; i++){
+                    Slot s = inventorySlots[i];
+                    if(s.add(c)){
+                        added = true;
+                        System.out.println("Added item with id("+c.info.id+") to slot " + i);
+                        break;
+                    }
                 }
             }
         }
@@ -214,7 +260,7 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
-        private byte maxStack = 25;
+        private byte maxStack = 99;
         public Entity item;
         public byte amount;
         public int width,height;
@@ -236,7 +282,7 @@ public class Inventory {
                 }
                 //Slot has item. 
                 boolean b = false;
-                if(item.swordInfo!=null || item.projectileInfo!=null){
+                if(item.swordInfo!=null || item.projectileInfo!=null || item.staffInfo!=null || item.potionInfo!=null){
                     //Item has subID
                     b = checkIfSameSubID(item, i);
                     if(b){
@@ -248,7 +294,7 @@ public class Inventory {
                         return false;
                     }
                 }
-                if(i.swordInfo!=null || i.projectileInfo!=null){
+                if(i.swordInfo!=null || i.projectileInfo!=null|| i.staffInfo!=null || i.potionInfo!=null){
                     generateImage();
                     return false;
                 }

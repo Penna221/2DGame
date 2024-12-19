@@ -37,9 +37,11 @@ public class CollectableAI extends AI{
     @Override
     public void update() {
         // System.out.println(e.info.name);
-        e.texture = e.currentAnimation.getFrame();
+        if(e.currentAnimation!=null){
+            e.texture = e.currentAnimation.getFrame();
+            e.currentAnimation.animate();
+        }
         timer.update();
-        e.currentAnimation.animate();
     }
 
     @Override

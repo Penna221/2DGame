@@ -30,6 +30,26 @@ public class Factory {
         g2d.dispose();
         return rotated;
     }
+    public static BufferedImage flipImage(BufferedImage img){
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+        // Create a new BufferedImage with the same dimensions
+        BufferedImage flippedImage = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);
+
+        // Get Graphics2D object
+        Graphics2D g2d = flippedImage.createGraphics();
+
+        // Apply a horizontal flip transformation
+        AffineTransform transform = AffineTransform.getScaleInstance(1,-1); // Flip Vertically
+        transform.translate(0, -height); // Translate the flipped image back into view
+
+        // Draw the transformed image
+        g2d.drawImage(img, transform, null);
+        g2d.dispose(); // Clean up
+
+        return flippedImage;
+    }
     public static BufferedImage generateNewOverlayImage(){
         return new BufferedImage(Game.w.getWidth(),Game.w.getHeight(),BufferedImage.TYPE_INT_ARGB);
     }

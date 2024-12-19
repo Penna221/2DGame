@@ -135,24 +135,28 @@ public class EntityManager {
         EntityInfo i = entityInfos.get(27);
         Entity c = new Entity(i,0,0);
         c.swordInfo = info;
+        c.loadBasicInfo();
         return c;
     }
     public Entity generateStaff(Staff info){
         EntityInfo i = entityInfos.get(36);
         Entity c = new Entity(i,0,0);
         c.staffInfo = info;
+        c.loadBasicInfo();
         return c;
     }
     public Entity generateBow(Bow info){
         EntityInfo i = entityInfos.get(37);
         Entity c = new Entity(i,0,0);
         c.bowInfo = info;
+        c.loadBasicInfo();
         return c;
     }
     public Entity generatePotion(Potion info){
         EntityInfo i = entityInfos.get(26);
         Entity c = new Entity(i,0,0);
         c.potionInfo = info;
+        c.loadBasicInfo();
         return c;
 
     }

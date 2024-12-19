@@ -391,7 +391,7 @@ public class PauseMenu {
             //First ID is category. It is taken fron entities.json id. id 27 = sword, id 35 = projectiles.
             switch (sellItemID1) {
                 case 26:
-                    //Sword
+                    //Potion
                     ent = new Entity(EntityManager.entityInfos.get(26),0,0);
                     ent.potionInfo =Potions.potions.get(sellItemID2);
                     break;

@@ -27,6 +27,7 @@ import gfx.Factory;
 import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
+import main.Game;
 import sound.SoundPlayer;
 import tiles.Tile;
 
@@ -432,7 +433,6 @@ public class World {
         
         float angle = (float) Math.atan2(p1.getY() - p2.getY(), p1.getX() - p2.getX());
         float rot = (float)Math.toDegrees(angle);
-        System.out.println(rot);
         return rot;
     }
     public static void generateProjectile(int id, float heading, Point2D origin, Entity source){
@@ -445,5 +445,14 @@ public class World {
         double speed = info.speed;
         e.giveMomentum(heading,(int) speed);
         e.setSource(source);
+    }
+    public static float getPlayerRotationToCursor(){
+        int x1 = (int)(player.bounds.getCenterX() - World.camera.getXOffset());
+        int y1 = (int)(player.bounds.getCenterY() - World.camera.getYOffset());
+        Point2D p1 = new Point(x1,y1);
+        int x2 = (int)(Game.mm.mouseX);
+        int y2 = (int)(Game.mm.mouseY);
+        Point2D p2 = new Point(x2,y2);
+        return getAngleBetweenPoints(p2, p1);
     }
 }

@@ -154,6 +154,9 @@ public class Entity {
     public void harm(int amount){
         receivedHits.add(amount);
     }
+    public void heal(int amount){
+        health += amount;
+    }
     public void setScale(double d){
         this.scale = d;
     }

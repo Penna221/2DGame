@@ -3,7 +3,7 @@
         "id":0,
         "name":"Health Potion",
         "texture":"health_potion",
-        "effect":"heal"
+        "effect":"heal10"
     },
     "potion_1":{
         "id":1,
