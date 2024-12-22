@@ -3,7 +3,9 @@ package entities.ai;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -34,113 +36,124 @@ public class PlayerAI extends AI{
     private Clip walkClip;
     public static HUD hud;
     public Timer hudUpdateTimer;
-    public PlayerAI(Entity entity) {
-        super(entity);
-        if(hud==null){
-            hud = new HUD();
-        }
-        Task t = new Task(){
-            public void perform(){
-                hud.update();    
+        public PlayerAI(Entity entity) {
+            super(entity);
+            if(hud==null){
+                hud = new HUD();
             }
-        };
-        hudUpdateTimer = new Timer(50, t);
-
-        if(inv==null){
-            inv = new Inventory();
-        }
-        inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
-        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
-        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
-        inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
-        inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
-    }
-
-    @Override
-    public void lateInit() {
-        
-        e.calculateBounds();
-        distance = 1200;
-        viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
-        
-        e.currentAnimation = e.info.animations.get("idle");
-        e.currentAnimation.restart();
-    }
-
-    @Override
-    public void update() {
-        e.slowdown(0.8);
-        // System.out.println("player update");
-        e.texture = e.currentAnimation.getFrame();
-        //texture = Factory.rotateImage(texture, angle);
-        moving = false;
-        if(KeyManager.up){
-            e.ySpeed = -e.speed;
-            moving = true;
-        }
-        if(KeyManager.down){
-            e.ySpeed= e.speed;
-            moving = true;
-        }
-        if(KeyManager.left){
-            e.xSpeed = -e.speed;
-            moving = true;
-        }
-        if(KeyManager.right){
-            e.xSpeed = e.speed;
-            moving = true;
-        }
-        if(moving){
-            if(walkClip==null){
-                walkClip = SoundPlayer.loopSound("walk");
+            Task t = new Task(){
+                public void perform(){
+                    hud.update();    
+                }
+            };
+            hudUpdateTimer = new Timer(50, t);
+    
+            if(inv==null){
+                inv = new Inventory();
             }
+            inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
+            inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
+            inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
+        }
+    
+        @Override
+        public void lateInit() {
             
-        }else{
-            if(walkClip!=null){
-                walkClip.stop();
-                walkClip = null;
-            }
+            e.calculateBounds();
+            distance = 1200;
+            viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
+            
+            double scaleFactor = 20.0;
+            // double translateX = World.player.x - World.camera.getXOffset(); 
+            // double translateY = World.player.y - World.camera.getYOffset(); 
+            // System.out.println("translateX: " + translateX + "  TranstalteY : " + translateY); 
+            // double rotationAngle = Math.toRadians(0); 
+            // AffineTransform transform = new AffineTransform();
+            // transform.scale(scaleFactor, scaleFactor);
+            // // transform.rotate(rotationAngle);
+            // transform.translate(translateX, translateY);
+            // transformedPolygon = Factory.transformPolygon(Swords.poke, transform);
+            e.currentAnimation = e.info.animations.get("idle");
+            e.currentAnimation.restart();
         }
-
-
-        ArrayList<Entity> entities = World.entityManager.getEntities();
-        for(Entity ee : entities){
-            if(ee == e){
-                continue;
+    
+        @Override
+        public void update() {
+            e.slowdown(0.8);
+            // System.out.println("player update");
+            e.texture = e.currentAnimation.getFrame();
+            //texture = Factory.rotateImage(texture, angle);
+            moving = false;
+            if(KeyManager.up){
+                e.ySpeed = -e.speed;
+                moving = true;
             }
-            if(ee.bounds.intersects(viewRectangle)){
-               
-                ee.inView = true;
+            if(KeyManager.down){
+                e.ySpeed= e.speed;
+                moving = true;
+            }
+            if(KeyManager.left){
+                e.xSpeed = -e.speed;
+                moving = true;
+            }
+            if(KeyManager.right){
+                e.xSpeed = e.speed;
+                moving = true;
+            }
+            if(moving){
+                if(walkClip==null){
+                    walkClip = SoundPlayer.loopSound("walk");
+                }
                 
             }else{
-                ee.inView = false;
+                if(walkClip!=null){
+                    walkClip.stop();
+                    walkClip = null;
+                }
             }
+    
+    
+            ArrayList<Entity> entities = World.entityManager.getEntities();
+            for(Entity ee : entities){
+                if(ee == e){
+                    continue;
+                }
+                if(ee.bounds.intersects(viewRectangle)){
+                   
+                    ee.inView = true;
+                    
+                }else{
+                    ee.inView = false;
+                }
+            }
+            
+            viewRectangle.x = (int)(e.x- distance);
+            viewRectangle.y = (int)(e.y - distance);
+            
+            e.move();
+            e.updateBounds();
+            e.currentAnimation.animate();
+            hudUpdateTimer.update();
+            
         }
-        
-        viewRectangle.x = (int)(e.x- distance);
-        viewRectangle.y = (int)(e.y - distance);
-        
-        e.move();
-        e.updateBounds();
-        e.currentAnimation.animate();
-        hudUpdateTimer.update();
-        
-    }
-    public static void doActionWithSelectedItem(){
-        Slot selectedSlot = inv.getSelectedSlot();
-        int x1 = (int)(World.player.bounds.getCenterX());
-        int y1 = (int)(World.player.bounds.getCenterY());
-        Point2D origin = new Point(x1,y1);
-        float rotation = World.getPlayerRotationToCursor();
-        switch (selectedSlot.item.info.id) {
-            case 26:
-                //POTION
-                //Consume potion
-                Potions.consume(selectedSlot.item.potionInfo, World.player);
-                break;
-            case 27:
-                //SWORD
-                //SWING SWORD
+        public static void doActionWithSelectedItem(){
+            Slot selectedSlot = inv.getSelectedSlot();
+            int x1 = (int)(World.player.bounds.getCenterX());
+            int y1 = (int)(World.player.bounds.getCenterY());
+            Point2D origin = new Point(x1,y1);
+            float rotation = World.getPlayerRotationToCursor();
+            switch (selectedSlot.item.info.id) {
+                case 26:
+                    //POTION
+                    //Consume potion
+                    Potions.consume(selectedSlot.item.potionInfo, World.player);
+                    break;
+                case 27:
+                    //SWORD
+                    //SWING SWORD
+                    Swords.createSwordAttack(World.player, null, Swords.swing, World.getPlayerRotationToCursor(),1,origin);
                 break;
             case 35:
                 //PROJECTILE
@@ -171,6 +184,7 @@ public class PlayerAI extends AI{
         int currentTileY = (int)((e.bounds.y + e.bounds.height/2)/Tile.tileSize); 
         g.setColor(new Color(255,255,255,40));
         g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);
+        g.setColor(Color.red);
         
         drawWeapon(g);
         hud.render(g);

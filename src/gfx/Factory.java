@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
@@ -85,5 +86,24 @@ public class Factory {
             }
         }
         return img2;
+    }
+    public static Polygon scalePolygon(Polygon polygon, double scaleFactor) {
+        Polygon scaledPolygon = new Polygon();
+        for (int i = 0; i < polygon.npoints; i++) {
+            int scaledX = (int) (polygon.xpoints[i] * scaleFactor);
+            int scaledY = (int) (polygon.ypoints[i] * scaleFactor);
+            scaledPolygon.addPoint(scaledX, scaledY);
+        }
+        return scaledPolygon;
+    }
+    public static Polygon transformPolygon(Polygon polygon, AffineTransform transform) {
+        Polygon transformedPolygon = new Polygon();
+        for (int i = 0; i < polygon.npoints; i++) {
+            double[] src = {polygon.xpoints[i], polygon.ypoints[i]};
+            double[] dst = new double[2];
+            transform.transform(src, 0, dst, 0, 1); // Transform each point
+            transformedPolygon.addPoint((int) dst[0], (int) dst[1]);
+        }
+        return transformedPolygon;
     }
 }

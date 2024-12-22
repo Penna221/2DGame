@@ -28,18 +28,19 @@ public class GuideAI extends AI{
     @Override
     public void update() {
         e.texture = e.currentAnimation.getFrame();
-        
-
-    if(interactCircle.intersects(World.player.bounds)){
-        talk = true;
-        if(KeyManager.interactKey){
-            openTradingMenu();
+        e.slowdown(0.8);
+        interactCircle.x = (int)(e.bounds.x +e.bounds.width/2- 75);
+        interactCircle.y = (int) (e.bounds.y + e.bounds.height/2-75);
+        if(interactCircle.intersects(World.player.bounds)){
+            talk = true;
+            if(KeyManager.interactKey){
+                openTradingMenu();
+            }
+        }else{
+            talk = false;
         }
-    }else{
-        talk = false;
-    }
 
-
+        e.move();
         e.updateBounds();
         e.currentAnimation.animate();
     }

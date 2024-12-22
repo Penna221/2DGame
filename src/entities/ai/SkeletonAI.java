@@ -32,7 +32,7 @@ public class SkeletonAI extends AI{
     private void tryToAttack(){
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
-                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null));
+                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player)));
             }
         }
     }
@@ -52,6 +52,7 @@ public class SkeletonAI extends AI{
     }
     @Override
     public void update() {
+        e.slowdown(0.8);
         moveTimer.update();
         attackTimer.update();
         e.move();

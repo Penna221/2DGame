@@ -7,6 +7,7 @@ import entities.Entity;
 import entities.EntityManager;
 import gfx.AssetStorage;
 import gfx.Factory;
+import world.World;
 
 public class ProjectileAI extends AI{
     private AttackBox attackBox;
@@ -46,7 +47,7 @@ public class ProjectileAI extends AI{
     public void update() {
         e.moveProjectile();
         e.updateBounds();
-        attackBox = new AttackBox(e, damage, e.bounds,e.source);
+        attackBox = new AttackBox(e, damage, e.bounds,e.source,e.rotation);
         EntityManager.addAttackBox(attackBox);
         
     }

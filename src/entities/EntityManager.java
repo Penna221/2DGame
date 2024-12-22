@@ -235,9 +235,13 @@ public class EntityManager {
                         continue;
                     }
                 }
+                if(!e.info.type.equals("Creature")){
+                    continue;
+                }
                 if(a.bounds.intersects(e.bounds)){
-                    System.out.println("Dealing ["+a.amount+"] damage to " + e.name);
-                    e.harm(a.amount);
+                    System.out.println("Dealing ["+a.damage+"] damage to " + e.name);
+                    e.harm(a.damage);
+                    e.giveMomentum(a.direction, 10);
                     if(a.source.info.type.equals("Projectile")){
                         removeEntity(a.source);
                     }

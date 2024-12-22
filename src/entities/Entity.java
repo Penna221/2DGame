@@ -466,7 +466,9 @@ public class Entity {
     public void update() {
         if(info.ai!="empty"){
             checkIfHit();
+            
         }
+        
         ai.update();
     }
 }

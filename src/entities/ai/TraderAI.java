@@ -28,7 +28,7 @@ public class TraderAI extends AI{
     @Override
     public void update() {
         e.texture = e.currentAnimation.getFrame();
-
+        
         if(interactCircle.intersects(World.player.bounds)){
             talk = true;
             if(KeyManager.interactKey){
@@ -37,7 +37,6 @@ public class TraderAI extends AI{
         }else{
             talk = false;
         }
-
 
         e.currentAnimation.animate();
     }

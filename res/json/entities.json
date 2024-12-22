@@ -63,7 +63,7 @@
     },
     "rose":{
         "id":3,
-        "type":"",
+        "type":"Item",
         "name":"Rose",
         "texture":"rose",
         "speed":0.0,

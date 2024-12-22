@@ -1,16 +1,30 @@
 package entities.swords;
 
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.AttackBox;
+import entities.Entity;
+import entities.EntityManager;
+import gfx.Factory;
 import json.JSON;
 import json.KeyValuePair;
+import world.World;
 
 public class Swords {
     public static HashMap<Integer, Sword> swords = new HashMap<Integer,Sword>();
+    public static Polygon poke = new Polygon();
+    public static Polygon swing = new Polygon();
+
     public static void load() throws Exception{
-         File f = new File("res\\json\\swords.json");
+        File f = new File("res\\json\\swords.json");
         String path = f.getParent();
         System.out.println(path);
         JSON json = new JSON(f);
@@ -28,5 +42,42 @@ public class Swords {
             Sword s = new Sword(id,name,damage,speed,reach,buff,texture);
             swords.put(id, s);
         }
+
+        //LOAD ATTACK SHAPES
+        File p = new File("res\\csv\\poke.csv");
+        BufferedReader reader = new BufferedReader(new FileReader(p));
+        String line;
+        while((line = reader.readLine())!=null){
+            String[] coords = line.split(",");
+            int x = Integer.parseInt(coords[0]);
+            int y = Integer.parseInt(coords[1]);
+            poke.addPoint(x, y);
+        }
+        System.out.println("loaded "+ poke.npoints +" points for poke");
+        reader.close();
+        File p2 = new File("res\\csv\\swing.csv");
+        reader = new BufferedReader(new FileReader(p2));
+        line = "";
+        while((line = reader.readLine())!=null){
+            String[] coords = line.split(",");
+            int x = Integer.parseInt(coords[0]);
+            int y = Integer.parseInt(coords[1]);
+            swing.addPoint(x, y);
+        }
+        reader.close();
+    }
+    public static void createSwordAttack(Entity source, Entity ignore, Polygon s, float direction, int damage, Point2D origin){
+        double scaleFactor = 30.0;
+        double translateX = origin.getX(); 
+        double translateY = origin.getY();
+        double rotationAngle = Math.toRadians(direction-90); 
+        AffineTransform transform = new AffineTransform();
+        // transform.translate(100, 0);
+        transform.translate(translateX, translateY);
+        transform.scale(scaleFactor, scaleFactor);
+        transform.rotate(rotationAngle);
+        Polygon transformedPolygon = Factory.transformPolygon(s, transform);
+        AttackBox a = new AttackBox(source, damage, transformedPolygon, ignore, direction);
+        EntityManager.addAttackBox(a);
     }
 }
