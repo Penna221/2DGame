@@ -28,6 +28,7 @@ import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
 import main.Game;
+import particles.ParticleManager;
 import sound.SoundPlayer;
 import tiles.Tile;
 
@@ -43,6 +44,7 @@ public class World {
     public static Map map;
     public static Entity player;
     public static EntityManager entityManager;
+    public static ParticleManager particleManager;
     public static Camera camera;
     public static boolean ready = false, readyToUpdate = false;
     private static Transition transition;
@@ -50,6 +52,7 @@ public class World {
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
+        particleManager = new ParticleManager();
         camera = new Camera();
         map = new Map();
         ready = false;
@@ -184,6 +187,7 @@ public class World {
             camera.update();
             map.updateVisible(player);
             entityManager.update();
+            particleManager.update();
         }else{
         }
         transition.update();
@@ -195,6 +199,7 @@ public class World {
         }else{
             map.render(g);
             entityManager.render(g);
+            particleManager.render(g);
             camera.render(g);
             
             if(overlays.size()!=0){

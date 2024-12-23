@@ -660,5 +660,23 @@
         "light_radius":200,
         "light_color":"#FFA000",
         "light_transparency":0.11
+    },
+    "particle":{
+        "id":38,
+        "type":"Particle",
+        "name":"Particle",
+        "texture":"",
+        "speed":0.0,
+        "health":1,
+        "animations":{
+            "idle":""
+        },
+        "ai":"particle",
+        "width":32,
+        "height":32,
+        "light_source":true,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
     }
 }

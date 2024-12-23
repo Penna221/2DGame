@@ -16,6 +16,7 @@ import entities.EntityManager;
 import gfx.Factory;
 import json.JSON;
 import json.KeyValuePair;
+import particles.Particle;
 import world.World;
 
 public class Swords {
@@ -79,5 +80,8 @@ public class Swords {
         Polygon transformedPolygon = Factory.transformPolygon(s, transform);
         AttackBox a = new AttackBox(source, damage, transformedPolygon, ignore, direction);
         EntityManager.addAttackBox(a);
+        Particle p = new Particle("swing_attack",600,direction);
+        p.setPosition((int)origin.getX(),(int)origin.getY());
+        World.particleManager.addParticle(p);
     }
 }

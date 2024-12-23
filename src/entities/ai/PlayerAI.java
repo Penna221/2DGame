@@ -3,9 +3,7 @@ package entities.ai;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -22,6 +20,7 @@ import entities.staves.Staves;
 import entities.swords.Swords;
 import gfx.Factory;
 import io.KeyManager;
+import particles.Particle;
 import sound.SoundPlayer;
 import tiles.Tile;
 import tools.Timer;
@@ -113,7 +112,8 @@ public class PlayerAI extends AI{
                     walkClip = null;
                 }
             }
-    
+            
+            
     
             ArrayList<Entity> entities = World.entityManager.getEntities();
             for(Entity ee : entities){

@@ -88,6 +88,9 @@ public class Game extends Engine{
             goAway();
         }
         
+        
+
+
         status = "Loading sounds";
         try {
             AssetStorage.loadSounds();

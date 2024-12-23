@@ -2,14 +2,6 @@ package tiles;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-
-import org.w3c.dom.events.MouseEvent;
 
 import gfx.AssetStorage;
 import json.DataType;
