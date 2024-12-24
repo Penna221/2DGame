@@ -30,6 +30,7 @@ public class Camera {
     private Graphics2D g2;
     private double xOffset, yOffset;
     private static Entity centeredEntity;
+    public static boolean light = false;
     private Timer lightUpdate;
     public Camera(){
         xOffset = 0;
@@ -79,8 +80,10 @@ public class Camera {
         
         // g2.setColor(new Color(0));
         // g2.fillRect(0,0,shadowMap.getWidth(),shadowMap.getHeight());
-        
-        g.drawImage(shadowMap, 0, 0,null);
+        if(light){
+            g.drawImage(shadowMap, 0, 0,null);
+
+        }
     }
     private void fillShadowMap() {
         // Check if VolatileImage is valid

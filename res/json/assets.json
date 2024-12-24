@@ -229,9 +229,7 @@
         "portrait_test":"res\\gfx\\entities\\portraits\\p_test.png",
         "portrait_witch":"res\\gfx\\entities\\portraits\\p_witch.png",
         "swing_1":"res\\gfx\\animations\\attack\\swing_1.png",
-        "swing_2":"res\\gfx\\animations\\attack\\swing_2.png",
-        "swing_3":"res\\gfx\\animations\\attack\\swing_3.png",
-
+        
         "fire_1":"res\\gfx\\animations\\fire\\fire_1.png",
         "fire_2":"res\\gfx\\animations\\fire\\fire_2.png",
         "fire_3":"res\\gfx\\animations\\fire\\fire_3.png",

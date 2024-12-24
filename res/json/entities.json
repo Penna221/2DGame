@@ -595,7 +595,7 @@
         "name":"Hole Monster",
         "texture":"mole_0",
         "speed":1.0,
-        "health":100,
+        "health":25,
         "animations":{
             "idle":"mole_idle"
         },

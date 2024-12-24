@@ -200,6 +200,7 @@ public class World {
             map.render(g);
             entityManager.render(g);
             particleManager.render(g);
+            //CAMERA HAS SHADOW / LIGHT MAP
             camera.render(g);
             
             if(overlays.size()!=0){

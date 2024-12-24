@@ -88,8 +88,8 @@
         "times":[1000]
     },
     "swing_attack":{
-        "images":["swing_1","swing_2","swing_3"],
-        "times":[200,200,200]
+        "images":["swing_1"],
+        "times":[300]
     },
     "fire":{
         "images":["fire_1","fire_2","fire_3","fire_4","fire_5","fire_6","fire_7"],

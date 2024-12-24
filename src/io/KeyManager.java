@@ -8,6 +8,7 @@ import gfx.Transition;
 import states.GameState;
 import states.State;
 import ui.PauseMenu;
+import world.Camera;
 import world.World;
 
 public class KeyManager implements KeyListener{
@@ -64,7 +65,7 @@ public class KeyManager implements KeyListener{
                 Transition.canFinish = true;
                 break;
             case KeyEvent.VK_F5:
-                PlayerAI.hud.update();
+                Camera.light = !Camera.light;
                 break;
             
             case KeyEvent.VK_ESCAPE:

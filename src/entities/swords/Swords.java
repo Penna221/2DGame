@@ -80,8 +80,15 @@ public class Swords {
         Polygon transformedPolygon = Factory.transformPolygon(s, transform);
         AttackBox a = new AttackBox(source, damage, transformedPolygon, ignore, direction);
         EntityManager.addAttackBox(a);
-        Particle p = new Particle("swing_attack",600,direction);
-        p.setPosition((int)origin.getX(),(int)origin.getY());
+
+        double rads = Math.toRadians(direction);
+        double unitX = Math.cos(rads);
+        double unitY = Math.sin(rads);
+        int xOffset = (int)(unitX * 80);
+        int yOffset = (int)(unitY * 80);
+
+        Particle p = new Particle("swing_attack",300,direction);
+        p.setPosition((int)origin.getX()+xOffset,(int)origin.getY()+yOffset);
         World.particleManager.addParticle(p);
     }
 }

@@ -34,126 +34,121 @@ public class PlayerAI extends AI{
     private boolean moving = false;
     private Clip walkClip;
     public static HUD hud;
+    private static int buffer = 60;
     public Timer hudUpdateTimer;
-        public PlayerAI(Entity entity) {
-            super(entity);
-            if(hud==null){
-                hud = new HUD();
-            }
-            Task t = new Task(){
-                public void perform(){
-                    hud.update();    
-                }
-            };
-            hudUpdateTimer = new Timer(50, t);
-    
-            if(inv==null){
-                inv = new Inventory();
-            }
-            inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
-            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
-            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
-            inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
-            inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
+    public PlayerAI(Entity entity) {
+        super(entity);
+        if(hud==null){
+            hud = new HUD();
         }
-    
-        @Override
-        public void lateInit() {
-            
-            e.calculateBounds();
-            distance = 1200;
-            viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
-            
-            double scaleFactor = 20.0;
-            // double translateX = World.player.x - World.camera.getXOffset(); 
-            // double translateY = World.player.y - World.camera.getYOffset(); 
-            // System.out.println("translateX: " + translateX + "  TranstalteY : " + translateY); 
-            // double rotationAngle = Math.toRadians(0); 
-            // AffineTransform transform = new AffineTransform();
-            // transform.scale(scaleFactor, scaleFactor);
-            // // transform.rotate(rotationAngle);
-            // transform.translate(translateX, translateY);
-            // transformedPolygon = Factory.transformPolygon(Swords.poke, transform);
-            e.currentAnimation = e.info.animations.get("idle");
-            e.currentAnimation.restart();
+        Task t = new Task(){
+            public void perform(){
+                hud.update();    
+            }
+        };
+        hudUpdateTimer = new Timer(50, t);
+
+        if(inv==null){
+            inv = new Inventory();
         }
-    
-        @Override
-        public void update() {
-            e.slowdown(0.8);
-            // System.out.println("player update");
-            e.texture = e.currentAnimation.getFrame();
-            //texture = Factory.rotateImage(texture, angle);
-            moving = false;
-            if(KeyManager.up){
-                e.ySpeed = -e.speed;
-                moving = true;
+        inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
+        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
+        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
+        inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
+        inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
+    }
+
+    @Override
+    public void lateInit() {
+        
+        e.calculateBounds();
+        distance = 1200;
+        viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
+        
+        double scaleFactor = 20.0;
+        e.currentAnimation = e.info.animations.get("idle");
+        e.currentAnimation.restart();
+    }
+
+    @Override
+    public void update() {
+        e.slowdown(0.8);
+        // System.out.println("player update");
+        e.texture = e.currentAnimation.getFrame();
+        //texture = Factory.rotateImage(texture, angle);
+        moving = false;
+        if(KeyManager.up){
+            e.ySpeed = -e.speed;
+            moving = true;
+        }
+        if(KeyManager.down){
+            e.ySpeed= e.speed;
+            moving = true;
+        }
+        if(KeyManager.left){
+            e.xSpeed = -e.speed;
+            moving = true;
+        }
+        if(KeyManager.right){
+            e.xSpeed = e.speed;
+            moving = true;
+        }
+        if(moving){
+            if(walkClip==null){
+                walkClip = SoundPlayer.loopSound("walk");
             }
-            if(KeyManager.down){
-                e.ySpeed= e.speed;
-                moving = true;
+            
+        }else{
+            if(walkClip!=null){
+                walkClip.stop();
+                walkClip = null;
             }
-            if(KeyManager.left){
-                e.xSpeed = -e.speed;
-                moving = true;
+        }
+        
+        
+
+        ArrayList<Entity> entities = World.entityManager.getEntities();
+        for(Entity ee : entities){
+            if(ee == e){
+                continue;
             }
-            if(KeyManager.right){
-                e.xSpeed = e.speed;
-                moving = true;
-            }
-            if(moving){
-                if(walkClip==null){
-                    walkClip = SoundPlayer.loopSound("walk");
-                }
+            if(ee.bounds.intersects(viewRectangle)){
+                
+                ee.inView = true;
                 
             }else{
-                if(walkClip!=null){
-                    walkClip.stop();
-                    walkClip = null;
-                }
+                ee.inView = false;
             }
-            
-            
-    
-            ArrayList<Entity> entities = World.entityManager.getEntities();
-            for(Entity ee : entities){
-                if(ee == e){
-                    continue;
-                }
-                if(ee.bounds.intersects(viewRectangle)){
-                   
-                    ee.inView = true;
-                    
-                }else{
-                    ee.inView = false;
-                }
-            }
-            
-            viewRectangle.x = (int)(e.x- distance);
-            viewRectangle.y = (int)(e.y - distance);
-            
-            e.move();
-            e.updateBounds();
-            e.currentAnimation.animate();
-            hudUpdateTimer.update();
-            
         }
-        public static void doActionWithSelectedItem(){
-            Slot selectedSlot = inv.getSelectedSlot();
-            int x1 = (int)(World.player.bounds.getCenterX());
-            int y1 = (int)(World.player.bounds.getCenterY());
-            Point2D origin = new Point(x1,y1);
-            float rotation = World.getPlayerRotationToCursor();
-            switch (selectedSlot.item.info.id) {
-                case 26:
-                    //POTION
-                    //Consume potion
-                    Potions.consume(selectedSlot.item.potionInfo, World.player);
-                    break;
-                case 27:
-                    //SWORD
-                    //SWING SWORD
-                    Swords.createSwordAttack(World.player, null, Swords.swing, World.getPlayerRotationToCursor(),1,origin);
+        
+        viewRectangle.x = (int)(e.x- distance);
+        viewRectangle.y = (int)(e.y - distance);
+        
+        e.move();
+        e.updateBounds();
+        e.currentAnimation.animate();
+        hudUpdateTimer.update();
+        
+    }
+    public static void doActionWithSelectedItem(){
+        Slot selectedSlot = inv.getSelectedSlot();
+        int x1 = (int)(World.player.bounds.getCenterX());
+        int y1 = (int)(World.player.bounds.getCenterY());
+        Point2D origin = new Point(x1,y1);
+        float rotation = World.getPlayerRotationToCursor();
+        switch (selectedSlot.item.info.id) {
+            case 26:
+                //POTION
+                //Consume potion
+                Potions.consume(selectedSlot.item.potionInfo, World.player);
+                break;
+            case 27:
+                //SWORD
+                //SWING SWORD
+                buffer *=-1;
+                int swordDamage = Swords.swords.get(selectedSlot.item.subID).damage;
+                int dam =  swordDamage;
+                Swords.createSwordAttack(World.player, null, Swords.swing, World.getPlayerRotationToCursor(),dam,origin);
                 break;
             case 35:
                 //PROJECTILE
@@ -174,6 +169,7 @@ public class PlayerAI extends AI{
                 break;
         }
     }
+
     @Override
     public void render(Graphics g) {
         
@@ -199,6 +195,9 @@ public class PlayerAI extends AI{
         }
         
         rotation = World.getPlayerRotationToCursor()-180;
+        if(selectedSlot.item.info.id==27){
+            rotation+=buffer;
+        }
         double rads = Math.toRadians(rotation);
         double unitX = Math.cos(rads);
         double unitY = Math.sin(rads);
