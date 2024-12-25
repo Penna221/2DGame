@@ -8,34 +8,42 @@ public abstract class FunctionalElement extends UIElement{
     public boolean focused;
     public boolean press;
     public Task task;
+    public boolean disabled = false;
     public FunctionalElement(int x, int y) {
         super(x, y);
     }
     public void update(){
-        if(bounds.contains(Game.mm.mouseX,Game.mm.mouseY)){
-            if(!focused){
-                focused = true;
-                SoundPlayer.playSound("pick");
+        if(!disabled){
+            if(bounds.contains(Game.mm.mouseX,Game.mm.mouseY)){
+                if(!focused){
+                    focused = true;
+                    SoundPlayer.playSound("pick");
+                }
+                bg = UIFactory.highlightedButtonData.bgColor;
+                brd = UIFactory.highlightedButtonData.borderColor;
+            }else{
+                bg = UIFactory.buttonData.bgColor;
+                brd = UIFactory.buttonData.borderColor;
+                focused = false;
             }
-            bg = UIFactory.highlightedButtonData.bgColor;
-            brd = UIFactory.highlightedButtonData.borderColor;
+            updateAdditional();
         }else{
-            bg = UIFactory.buttonData.bgColor;
-            brd = UIFactory.buttonData.borderColor;
-            focused = false;
+            bg = Color.red;
+            brd = Color.red;
         }
-        updateAdditional();
     }
     public void setTask(Task t){
         this.task = t;
     }
-    public void click(){
+    public boolean click(){
         if(focused){
             if(task!=null){
                 task.perform();
+                return true;
             }
             SoundPlayer.playSound("pick2");
         }
+        return false;
     }
     public void press(){
         if(focused){

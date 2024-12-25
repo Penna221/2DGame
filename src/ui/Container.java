@@ -13,6 +13,7 @@ public class Container extends UIElement{
     public boolean fillBg = false;
     public boolean drawBounds = false;
     public int start=0;
+    public int latestEnd = 0;
     
     public boolean isList = false;
     public Color overrideColor;
@@ -22,20 +23,24 @@ public class Container extends UIElement{
         change = new ArrayList<UIElement>();
         data = UIFactory.containerData;
     }
-    public void sendClick(){
+    public boolean sendClick(){
+        boolean did = false;
         for(UIElement e : elements){
             if(changing){
                 break;
             }
             if(e instanceof Container){
-                ((Container)e).sendClick();
+                did = ((Container)e).sendClick();
             }
             if(e instanceof FunctionalElement){
                 FunctionalElement ee = (FunctionalElement)e;
-                ee.click();
+                did = ee.click();
             }
-                
+            if(did){
+                break;
+            }
         }
+        return did;
     }
     public void sendPress(){
         for(UIElement e : elements){

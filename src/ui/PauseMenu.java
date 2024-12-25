@@ -260,7 +260,7 @@ public class PauseMenu {
     
     
     public static Container createTunnelEntryDialog(Task t){
-        Image i = new Image(EntityManager.entityInfos.get(11).texture, 0, 0);
+        // Image i = new Image(EntityManager.entityInfos.get(11).texture, 0, 0);
         return createEntryDialog(t,"Go through?");
     }
     private static Container createBlacksmithContainer(){
@@ -297,6 +297,7 @@ public class PauseMenu {
         if(end > market.size()){
             end = market.size();
         }
+        list.latestEnd = end;
         addToListWithRange(list,market,start,end);  
         list.update();
    
@@ -318,6 +319,7 @@ public class PauseMenu {
                 if(end > market.size()){
                     end = market.size();
                 }
+                list.latestEnd = end;
                 addToListWithRange(list,market, start,end);
                 list.updateList();
                 c.updateBounds();
@@ -344,6 +346,7 @@ public class PauseMenu {
                 if(end > market.size()){
                     end = market.size();
                 }
+                list.latestEnd = end;
                 addToListWithRange(list,market, start,end);
                 list.updateList();
                 c.updateBounds();
@@ -367,7 +370,7 @@ public class PauseMenu {
         c.change = new ArrayList<UIElement>();
         for(int i = start; i < end; i++){
             Market market = list.get(i);
-            Container listItem = generateListItem(c.bounds.width,market);
+            Container listItem = generateListItem(c.bounds.width,market,c, list);
             listItem.drawBounds = true;
             // listItem.setOffset(c.x,c.y);
             listItem.centerVertically();
@@ -377,9 +380,9 @@ public class PauseMenu {
         }
         c.swap();
         c.updateList();
-        
+        PlayerAI.inv.updateInventory();
     }
-    private static Container generateListItem(int maxWidth,Market m){
+    private static Container generateListItem(int maxWidth,Market m, Container list, ArrayList<Market> parent){
         Container c = new Container(0,0,maxWidth,120);
         int sellItemID1 = m.sellItem.id;
         int sellItemID2 = m.sellItem.id2;
@@ -445,7 +448,7 @@ public class PauseMenu {
                     EntityInfo needInfo = EntityManager.entityInfos.get(needItem.id);
                     int needAmount = needItem.amount;
                     System.out.println("  "+needAmount+" x "+ needInfo.name);
-                    boolean haveEnough = PlayerAI.inv.checkIfEnoughItemsWithID(needInfo.id,needAmount);
+                    boolean haveEnough = PlayerAI.inv.checkIfEnoughItemsWithID(needItem.id,needItem.id2,needAmount);
                     if(!haveEnough){
                         System.out.println("Not enough.");
                         allGood = false;
@@ -465,6 +468,9 @@ public class PauseMenu {
                             PlayerAI.inv.addItem(ent);
                         }
                     }
+                    addToListWithRange(list, parent, list.start, list.latestEnd);
+                    list.updateList();
+                    //Update list so backgrounds can be true colors
                 }else{
                     System.out.println("You don't have everything needed to purchase this item.");
                 }
@@ -503,11 +509,19 @@ public class PauseMenu {
         Container uphalf = new Container(0,0,(int)(rightSide.bounds.getWidth()),(int)(rightSide.bounds.getHeight()/2));
         // uphalf.fillBg = true;
         // uphalf.overrideColor=Color.white;
+        boolean enough = true;
         for(MarketItem mi : m.priceItems){
             EntityInfo e2 = EntityManager.entityInfos.get(mi.id);
             int amount2 = mi.amount;
-            Image icon1 = generateImageIcon(e2.texture,amount2,55,55,true,Color.black);
+            Color bgColor = Color.green;
+            if(!PlayerAI.inv.checkIfEnoughItemsWithID(mi.id, mi.id2, amount2)){
+                bgColor = Color.red;
+                enough = false;
+            }
+            Image icon1 = generateImageIcon(e2.texture,amount2,55,55,true,bgColor);
+            
             uphalf.addElement(icon1);
+
         }
         uphalf.centerVertically();
         uphalf.centerAndSpaceHorizontally(10);
@@ -516,7 +530,14 @@ public class PauseMenu {
         Container downHalf= new Container(0,0,(int)(rightSide.bounds.getWidth()),(int)(rightSide.bounds.getHeight()/2));
         
         ClickButton buyButton = new ClickButton(0,0,new Text("Buy",0,0,(int)downHalf.bounds.getWidth(),false));
-        buyButton.setTask(t);
+        if(enough){
+            buyButton.disabled = false;
+            buyButton.setTask(t);
+        }else{
+            buyButton.disabled = true;
+            // buyButton.setTask(t);
+        }
+        
         buyButton.scaleWithFactor(0.7f);
         downHalf.addElement(buyButton);
         downHalf.wrap();

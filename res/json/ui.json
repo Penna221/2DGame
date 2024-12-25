@@ -1,6 +1,6 @@
 {
     "container":{
-        "bgColor":"ff250025",
+        "bgColor":"FF462473",
         "fgColor":"00000000",
         "borderColor":"f9a875",
         "borderThickness":1
@@ -18,13 +18,13 @@
         "borderThickness":0
     },
     "button":{
-        "bgColor":"FFeb6b6f",
+        "bgColor":"FF0088ff",
         "fgColor":"00000000",
         "borderColor":"FFfff6d3",
         "borderThickness":1
     },
     "button_highlighted":{
-        "bgColor":"FF523C3C",
+        "bgColor":"FF80c3ff",
         "fgColor":"FFD19292",
         "borderColor":"FFD19292",
         "borderThickness":1

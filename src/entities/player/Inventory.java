@@ -35,6 +35,14 @@ public class Inventory {
     public Slot getSelectedSlot(){
         return hotbarSlots[selectedIndex];
     }
+    public void updateInventory(){
+        for(Slot s : inventorySlots){
+            s.updateSlot();
+        }
+        for(Slot s : hotbarSlots){
+            s.updateSlot();
+        }
+    }
     public void load(){
         //Initialize
         for(int i = 0; i < inventorySlots.length; i++){
@@ -178,30 +186,70 @@ public class Inventory {
         }
         return added;
     }
-    public boolean checkIfEnoughItemsWithID(int id, int amount){
-        int totalAmount = 0;
-        for(Slot s : inventorySlots){
-            if(s.item==null){
-                continue;
+    public boolean checkIfEnoughItemsWithID(int id, int id2, int amount){
+        if(id2==-1){
+            
+            int totalAmount = 0;
+            for(Slot s : inventorySlots){
+                if(s.item==null){
+                    continue;
+                }
+                
+                if(s.item.info.id!=id){
+                    continue;
+                }
+                totalAmount += s.amount;
+                if(totalAmount>=amount){
+                    return true;
+                }
             }
-            if(s.item.info.id!=id){
-                continue;
+            for(Slot s : hotbarSlots){
+                if(s.item==null){
+                    continue;
+                }
+                if(s.item.info.id!=id){
+                    continue;
+                }
+                totalAmount += s.amount;
+                if(totalAmount>=amount){
+                    return true;
+                }
             }
-            totalAmount += s.amount;
-            if(totalAmount>=amount){
-                return true;
+        }else{
+            int totalAmount = 0;
+            for(Slot s : inventorySlots){
+                if(s.item==null){
+                    continue;
+                }
+                if(s.item.subID!=-1){
+                    continue;
+                }
+                if(s.item.info.id!=id){
+                    continue;
+                }
+                if(s.item.subID==id2){
+                    totalAmount += s.amount;
+                }
+                if(totalAmount>=amount){
+                    return true;
+                }
             }
-        }
-        for(Slot s : hotbarSlots){
-            if(s.item==null){
-                continue;
-            }
-            if(s.item.info.id!=id){
-                continue;
-            }
-            totalAmount += s.amount;
-            if(totalAmount>=amount){
-                return true;
+            for(Slot s : hotbarSlots){
+                if(s.item==null){
+                    continue;
+                }
+                if(s.item.subID!=-1){
+                    continue;
+                }
+                if(s.item.info.id!=id){
+                    continue;
+                }
+                if(s.item.subID==id2){
+                    totalAmount += s.amount;
+                }
+                if(totalAmount>=amount){
+                    return true;
+                }
             }
         }
         return false;
@@ -267,7 +315,13 @@ public class Inventory {
         public Slot(int width, int height){this.width=width;this.height=height;}
         public boolean highlight = false;
         public BufferedImage texture;
-
+        public void updateSlot(){
+            if(amount<=0){
+                clear();
+            }else{
+                generateImage();
+            }
+        }
         public boolean add(Entity i){
             //IF item == null -> Slot does not have item.
             if(item ==null){
