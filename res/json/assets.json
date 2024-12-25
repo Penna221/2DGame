@@ -251,7 +251,21 @@
         "pick":"res\\sound\\pick.wav",
         "pick2":"res\\sound\\pick2.wav",
         "pickup":"res\\sound\\pickup.wav",
-        "walk":"res\\sound\\footsteps.wav"
+        "walk":"res\\sound\\footsteps.wav",
+        "hit_1":"res\\sound\\hit1.wav",
+        "hit_2":"res\\sound\\hit2.wav",
+        "hit_3":"res\\sound\\hit3.wav",
+        "sword_swing_1":"res\\sound\\sword_swing1.wav",
+        "sword_swing_2":"res\\sound\\sword_swing2.wav",
+        "sword_swing_3":"res\\sound\\sword_swing3.wav",
+        "potion":"res\\sound\\potion.wav",
+        "projectile_1":"res\\sound\\projectile1.wav",
+        "projectile_2":"res\\sound\\projectile2.wav",
+        "projectile_3":"res\\sound\\projectile3.wav",
+        "throw":"res\\sound\\throw.wav",
+        "magic_1":"res\\sound\\magic1.wav",
+        "magic_2":"res\\sound\\magic2.wav",
+        "magic_3":"res\\sound\\magic3.wav"
     }
     
 }

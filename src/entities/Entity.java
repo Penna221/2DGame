@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import entities.ai.AI;
 import entities.ai.BlacksmithAI;
@@ -33,6 +34,7 @@ import gfx.AssetStorage;
 import gfx.Factory;
 import gfx.Transition;
 import main.Game;
+import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
 import world.World;
@@ -135,6 +137,9 @@ public class Entity {
                 System.out.println("Getting hit with " + i);
                 health -= i;
             }
+            Random r = new Random();
+            int r1 = 1+ r.nextInt(3);
+            SoundPlayer.playSound("hit_"+r1);
         }
         if(health<=0){
             die();

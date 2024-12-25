@@ -7,6 +7,7 @@ import java.util.HashMap;
 import entities.Entity;
 import json.JSON;
 import json.KeyValuePair;
+import sound.SoundPlayer;
 
 
 public class Potions {
@@ -41,5 +42,6 @@ public class Potions {
             default:
                 break;
         }
+        SoundPlayer.playSound("potion");
     }
 }

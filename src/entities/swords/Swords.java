@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import entities.AttackBox;
 import entities.Entity;
@@ -17,6 +18,7 @@ import gfx.Factory;
 import json.JSON;
 import json.KeyValuePair;
 import particles.Particle;
+import sound.SoundPlayer;
 import world.World;
 
 public class Swords {
@@ -90,5 +92,8 @@ public class Swords {
         Particle p = new Particle("swing_attack",300,direction);
         p.setPosition((int)origin.getX()+xOffset,(int)origin.getY()+yOffset);
         World.particleManager.addParticle(p);
+        Random r = new Random();
+        int r1 = 1+ r.nextInt(3);
+        SoundPlayer.playSound("sword_swing_"+r1);
     }
 }

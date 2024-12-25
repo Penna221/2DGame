@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
@@ -136,6 +137,7 @@ public class PlayerAI extends AI{
         int y1 = (int)(World.player.bounds.getCenterY());
         Point2D origin = new Point(x1,y1);
         float rotation = World.getPlayerRotationToCursor();
+        Random r = new Random();
         switch (selectedSlot.item.info.id) {
             case 26:
                 //POTION
@@ -149,21 +151,28 @@ public class PlayerAI extends AI{
                 int swordDamage = Swords.swords.get(selectedSlot.item.subID).damage;
                 int dam =  swordDamage;
                 Swords.createSwordAttack(World.player, null, Swords.swing, World.getPlayerRotationToCursor(),dam,origin);
+                
                 break;
             case 35:
                 //PROJECTILE
                 //THROW PROJECTILE. IF ARROW
                 World.generateProjectile(0, rotation, origin,World.player);
+                SoundPlayer.playSound("throw");
                 break;
             case 36:
                 //STAFF
                 World.generateProjectile(3, rotation, origin,World.player);
+                
+                int r1 = 1+ r.nextInt(3);
+                SoundPlayer.playSound("magic_"+r1);
                 //CAST SPELL
                 break;
             case 37:
                 //BOW
                 //Point bow at that direction.
                 World.generateProjectile(1, World.getPlayerRotationToCursor(), origin,World.player);
+                int r2 = 1+ r.nextInt(3);
+                SoundPlayer.playSound("projectile_"+r2);
                 break;
             default:
                 break;
