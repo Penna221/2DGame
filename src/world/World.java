@@ -418,6 +418,16 @@ public class World {
         }
         return maxPoint;
     }
+    public static double getDistanceBetweenEntities(Entity a, Entity b){
+        double x1 = a.x;
+        double y1 = a.y;
+        double x2 = b.x;
+        double y2 = b.y;
+        double xDist = Math.abs(x1-x2);
+        double yDist = Math.abs(y1-y2);
+        double dist = Math.sqrt(xDist*xDist + yDist*yDist);
+        return dist;
+    }
     public static boolean lineOfSightBetween(Entity a, Entity b){
         Rectangle[] boxes = getVisibleSolidTilesAsRectangles();
         Point2D p1 = new Point((int)(a.bounds.getCenterX()-camera.getXOffset()),(int)(a.bounds.getCenterY()-camera.getYOffset()));
@@ -441,16 +451,17 @@ public class World {
         float rot = (float)Math.toDegrees(angle);
         return rot;
     }
-    public static void generateProjectile(int id, float heading, Point2D origin, Entity source){
+    public static Entity generateProjectile(int id, float heading, Point2D origin, Entity source){
         Projectile info = Projectiles.projectiles.get(id);
         if(info==null){
             System.out.println("Projectile not found with id: ("+id+")" );
-            return;
+            return null;
         }
         Entity e = entityManager.generateProjectile(info, (int)origin.getX(), (int)origin.getY(),(int)heading);
-        double speed = info.speed;
-        e.giveMomentum(heading,(int) speed);
+        float speed = info.speed;
+        e.giveMomentum(heading, speed);
         e.setSource(source);
+        return e;
     }
     public static float getPlayerRotationToCursor(){
         int x1 = (int)(player.bounds.getCenterX() - World.camera.getXOffset());
@@ -460,5 +471,15 @@ public class World {
         int y2 = (int)(Game.mm.mouseY);
         Point2D p2 = new Point(x2,y2);
         return getAngleBetweenPoints(p2, p1);
+    }
+    public static ArrayList<Entity> getEntitiesInArea(Polygon area){
+        ArrayList<Entity> entities = new ArrayList<Entity>();
+        for(Entity e : entityManager.newList){
+            if(area.intersects(e.bounds)){
+                entities.add(e);
+            }
+        }
+        System.out.println(entities.size());
+        return entities;
     }
 }

@@ -85,6 +85,16 @@
                     "amount":1
                 }
             ]
+        },
+        {
+            "id":[39],
+            "amount":1,
+            "price":[
+                {
+                    "item":[2],
+                    "amount":1
+                }
+            ]
         }
     ],
     "trader":[

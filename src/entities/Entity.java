@@ -69,6 +69,10 @@ public class Entity {
         this.scale = EntityManager.scale;
         init();
     }
+    public void stop(){
+        xSpeed = 0;
+        ySpeed = 0;
+    }
     public void setAI(){
         switch(info.ai){
             case "Player":
@@ -122,7 +126,7 @@ public class Entity {
             currentAnimation.restart();
         }
     }
-    public void giveMomentum(float angle, int amount){
+    public void giveMomentum(float angle, float amount){
         double rads = Math.toRadians(angle);
         double xAmount = Math.cos(rads)*amount;
         double yAmount = Math.sin(rads)*amount;

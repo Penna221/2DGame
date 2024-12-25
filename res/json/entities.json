@@ -287,8 +287,8 @@
         "type":"Creature",
         "name":"Skeleton",
         "texture":"skeleton",
-        "speed":1.0,
-        "health":5,
+        "speed":10.0,
+        "health":25,
         "animations":{
             "idle":"player_idle"
         },
@@ -679,11 +679,29 @@
         "light_color":"#FFA000",
         "light_transparency":0.11
     },
-    "spells":{
+    "spell_1":{
         "id":39,
         "type":"Spell",
         "name":"Spell",
-        "texture":"",
+        "texture":"spell_tome_1",
+        "speed":0.0,
+        "health":1,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":32,
+        "height":32,
+        "light_source":true,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
+    },
+    "spell_2":{
+        "id":40,
+        "type":"Spell",
+        "name":"Spell",
+        "texture":"spell_tome_2",
         "speed":0.0,
         "health":1,
         "animations":{

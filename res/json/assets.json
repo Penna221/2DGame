@@ -224,6 +224,7 @@
         "arrow_1":"res\\gfx\\entities\\projectiles\\arrows\\arrow_1.png",
         "arrow_placeholder":"res\\gfx\\entities\\projectiles\\arrows\\arrow_placeholder.png",
         "magic_ball_0":"res\\gfx\\entities\\projectiles\\magic\\magic_ball_0.png",
+        "homing_missile":"res\\gfx\\entities\\projectiles\\magic\\homing_missile.png",
         "spell_placeholder":"res\\gfx\\entities\\projectiles\\magic\\spell_placeholder.png",
         "magic_wand":"res\\gfx\\entities\\items\\magic_wand.png",
         "bow":"res\\gfx\\entities\\items\\bow.png",
@@ -238,7 +239,9 @@
         "fire_4":"res\\gfx\\animations\\fire\\fire_4.png",
         "fire_5":"res\\gfx\\animations\\fire\\fire_5.png",
         "fire_6":"res\\gfx\\animations\\fire\\fire_6.png",
-        "fire_7":"res\\gfx\\animations\\fire\\fire_7.png"
+        "fire_7":"res\\gfx\\animations\\fire\\fire_7.png",
+        "spell_tome_1":"res\\gfx\\entities\\spell_tome_1.png",
+        "spell_tome_2":"res\\gfx\\entities\\spell_tome_2.png"
     },
     "texts":{
         "txt1":{

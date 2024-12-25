@@ -25,6 +25,7 @@ public class Swords {
     public static HashMap<Integer, Sword> swords = new HashMap<Integer,Sword>();
     public static Polygon poke = new Polygon();
     public static Polygon swing = new Polygon();
+    public static Polygon cone = new Polygon();
 
     public static void load() throws Exception{
         File f = new File("res\\json\\swords.json");
@@ -66,6 +67,17 @@ public class Swords {
             int x = Integer.parseInt(coords[0]);
             int y = Integer.parseInt(coords[1]);
             swing.addPoint(x, y);
+        }
+        reader.close();
+        reader.close();
+        File p3 = new File("res\\csv\\cone.csv");
+        reader = new BufferedReader(new FileReader(p3));
+        line = "";
+        while((line = reader.readLine())!=null){
+            String[] coords = line.split(",");
+            int x = Integer.parseInt(coords[0]);
+            int y = Integer.parseInt(coords[1]);
+            cone.addPoint(x, y);
         }
         reader.close();
     }

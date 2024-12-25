@@ -21,7 +21,6 @@ import entities.staves.Staves;
 import entities.swords.Swords;
 import gfx.Factory;
 import io.KeyManager;
-import particles.Particle;
 import sound.SoundPlayer;
 import tiles.Tile;
 import tools.Timer;
@@ -133,6 +132,9 @@ public class PlayerAI extends AI{
     }
     public static void doActionWithSelectedItem(){
         Slot selectedSlot = inv.getSelectedSlot();
+        if(selectedSlot.item==null){
+            return;
+        }
         int x1 = (int)(World.player.bounds.getCenterX());
         int y1 = (int)(World.player.bounds.getCenterY());
         Point2D origin = new Point(x1,y1);
@@ -143,6 +145,7 @@ public class PlayerAI extends AI{
                 //POTION
                 //Consume potion
                 Potions.consume(selectedSlot.item.potionInfo, World.player);
+                selectedSlot.reduce((byte)1);
                 break;
             case 27:
                 //SWORD
@@ -156,23 +159,34 @@ public class PlayerAI extends AI{
             case 35:
                 //PROJECTILE
                 //THROW PROJECTILE. IF ARROW
+                
                 World.generateProjectile(0, rotation, origin,World.player);
                 SoundPlayer.playSound("throw");
+                selectedSlot.reduce((byte)1);
                 break;
             case 36:
                 //STAFF
-                World.generateProjectile(3, rotation, origin,World.player);
+                if(inv.spellSlot.item!=null&&inv.spellSlot.item.info.type.equals("Spell")){
+                    Entity spell = World.generateProjectile(4, rotation, origin,World.player);
+                    spell.staffInfo = selectedSlot.item.staffInfo;
+                    int r1 = 1+ r.nextInt(3);
+                    SoundPlayer.playSound("magic_"+r1);
+                }
                 
-                int r1 = 1+ r.nextInt(3);
-                SoundPlayer.playSound("magic_"+r1);
                 //CAST SPELL
                 break;
             case 37:
                 //BOW
                 //Point bow at that direction.
-                World.generateProjectile(1, World.getPlayerRotationToCursor(), origin,World.player);
-                int r2 = 1+ r.nextInt(3);
-                SoundPlayer.playSound("projectile_"+r2);
+                if(inv.arrowSlot.item!=null){
+                    if(inv.arrowSlot.item.info.id==35&&inv.arrowSlot.item.projectileInfo.type.equals("Arrow")){
+                        Entity arrow = World.generateProjectile(inv.arrowSlot.item.subID, World.getPlayerRotationToCursor(), origin,World.player);
+                        arrow.bowInfo = selectedSlot.item.bowInfo;
+                        int r2 = 1+ r.nextInt(3);
+                        SoundPlayer.playSound("projectile_"+r2);
+                        inv.arrowSlot.reduce((byte)1);
+                    }
+                }
                 break;
             default:
                 break;

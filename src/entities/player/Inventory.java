@@ -22,7 +22,7 @@ public class Inventory {
     private Graphics g;
     private int selectedIndex = 0;
     public Slot[] specialSlots;
-    private Slot arrowSlot, spellSlot;
+    public Slot arrowSlot, spellSlot;
     public Inventory(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
@@ -407,6 +407,7 @@ public class Inventory {
             if(amount <= 0){
                 clear();
             }
+            updateSlot();
         }
         public void clear(){
             System.out.println("clearing");

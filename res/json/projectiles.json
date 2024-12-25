@@ -36,5 +36,15 @@
         "type":"Magic",
         "buff":"none",
         "texture":"magic_ball_0"
+    },
+    "magic_1":{
+        "id":4,
+        "name":"Homing Missile",
+        "damage":4,
+        "speed":7.0,
+        "max_distance":30,
+        "type":"Magic",
+        "buff":"none",
+        "texture":"homing_missile"
     }
 }

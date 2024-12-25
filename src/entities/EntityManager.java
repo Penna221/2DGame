@@ -37,7 +37,7 @@ public class EntityManager {
 
 
     private ArrayList<Entity> toView;
-    private ArrayList<Entity> newList;
+    public ArrayList<Entity> newList;
 
     public EntityManager() {
         entities = new ArrayList<Entity>();
