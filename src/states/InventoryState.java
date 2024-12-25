@@ -19,6 +19,7 @@ public class InventoryState extends State{
     private int slotSize = 50;
     public Slot[] inventorySlots;
     public Slot[] hotbarSlots;
+    public Slot[] specialSlots;
     private static boolean slotSelected = false;
     private static int selectedSlotID = -1;
     private static SlotRectangle[] slotRectangles;
@@ -156,26 +157,42 @@ public class InventoryState extends State{
         inv = PlayerAI.inv;
         inventorySlots = inv.inventorySlots;
         hotbarSlots = inv.hotbarSlots;
+        specialSlots = inv.specialSlots;
         int hotbarlength = hotbarSlots.length;
         int invlength = inventorySlots.length;
-        slotRectangles = new SlotRectangle[invlength + hotbarlength];
+        int specialLength = specialSlots.length;
+        slotRectangles = new SlotRectangle[invlength + hotbarlength + specialLength];
+        
         //Create hotbar. Put them in their position.
+        int latestX = 0;
         for(int i = 0; i < hotbarlength; i++){
             System.out.println(i);
             int y = Game.w.getHeight() - (int)(3*slotSize*1.3);
             int startX = Game.w.getWidth()/2- (hotbarSlots.length/2)*(spacing+slotSize);
             int x = startX + i*(spacing+slotSize);
+            latestX = x;
             Rectangle r = new Rectangle(x,y,slotSize,slotSize);
             Slot s = hotbarSlots[i];
             SlotRectangle sr = new SlotRectangle(i,r, s);
             slotRectangles[i] = sr;
+        }
+        int currentIndex = hotbarlength;
+        for(int i = 0; i < specialLength; i++){
+            System.out.println(i);
+            int yy = Game.w.getHeight() - (int)(3*slotSize*1.3);;
+            int xx = latestX +spacing+(slotSize*2)+ (i*(spacing+slotSize))+spacing;
+            Rectangle r = new Rectangle(xx,yy,slotSize,slotSize);
+            Slot s = specialSlots[i];
+            SlotRectangle sr = new SlotRectangle(currentIndex,r, s);
+            slotRectangles[currentIndex] = sr;
+            currentIndex++;
         }
         //Create Inventory. Put them in their position.
         int rows = 4;
         int perRow = inventorySlots.length/rows;
         System.out.println("Per row "+perRow);
         int remainder = inventorySlots.length%rows;
-        int currentIndex = hotbarlength;
+        
         int y = Game.w.getHeight()/3 - (int)(2*slotSize*1.3);
         int startX = Game.w.getWidth()/2- (perRow/2)*(spacing+slotSize);
         for(int row = 0; row < rows; row++){
@@ -200,6 +217,7 @@ public class InventoryState extends State{
                 currentIndex++;
             }
         }
+        
         Transition.canContinue = true;
     }
 

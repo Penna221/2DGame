@@ -21,11 +21,14 @@ public class Inventory {
     private BufferedImage overlay;
     private Graphics g;
     private int selectedIndex = 0;
+    public Slot[] specialSlots;
+    private Slot arrowSlot, spellSlot;
     public Inventory(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
         inventorySlots = new Slot[20];
         hotbarSlots = new Slot[5];
+        specialSlots = new Slot[2];
         load();
     }
     public void addSlot(byte amount){
@@ -42,6 +45,9 @@ public class Inventory {
         for(Slot s : hotbarSlots){
             s.updateSlot();
         }
+        for(Slot s : specialSlots){
+            s.updateSlot();
+        }
     }
     public void load(){
         //Initialize
@@ -51,6 +57,14 @@ public class Inventory {
         for(int i = 0; i < hotbarSlots.length; i++){
             hotbarSlots[i] = new Slot(slotSize,slotSize);
         }
+        //SPECIAL SLOTS
+        arrowSlot = new Slot(slotSize,slotSize);
+        arrowSlot.bgTexture = UIFactory.scaleToHeight(AssetStorage.images.get("arrow_placeholder"), slotSize);
+        spellSlot = new Slot(slotSize,slotSize);
+        spellSlot.bgTexture = UIFactory.scaleToHeight(AssetStorage.images.get("spell_placeholder"), slotSize);
+        specialSlots[0] = arrowSlot;
+        specialSlots[1] = spellSlot;
+
         //Load from saved data.
     }
     public void select(int i){
@@ -144,23 +158,40 @@ public class Inventory {
         }
         return false;
     }
-    public boolean addItem(Entity c){
-        
+    public boolean tryAddToArrows(Entity c){
         boolean added = false;
-
-        
-        int slotA = getSlotWithItemFromHotbarSlots(c);
-        if(slotA !=-1){
-            
-            added = hotbarSlots[slotA].add(c);
+        if(arrowSlot.item==null){
+            added = false;
         }else{
-            int slotB = getSlotWithItemFromInventorySlots(c);
-            
-            if(slotB!=-1){
-                added = inventorySlots[slotB].add(c);
-                
+            if(c.subID==arrowSlot.item.subID){
+                added = arrowSlot.add(c);
             }
         }
+        return added;
+    }
+    public boolean addItem(Entity c){
+        boolean added = false;
+        
+        if(c.info.id == 35){
+            added = tryAddToArrows(c);
+        }
+        if(!added){
+            //HOTBAT
+            int slotA = getSlotWithItemFromHotbarSlots(c);
+            if(slotA !=-1){
+                
+                added = hotbarSlots[slotA].add(c);
+            }else{
+                //INVENTORY
+                int slotB = getSlotWithItemFromInventorySlots(c);
+                
+                if(slotB!=-1){
+                    added = inventorySlots[slotB].add(c);
+                    
+                }
+            }
+        }
+        
         if(!added){
             for(int i = 0; i < hotbarSlots.length; i++){
                 Slot s = hotbarSlots[i];
@@ -298,11 +329,14 @@ public class Inventory {
         g = overlay.createGraphics();
         int startX = Game.w.getWidth()/2- (toShow/2)*(spacing+slotSize);
         y = Game.w.getHeight() - 100;
+        int latestX = startX;
         for(int i = 0; i < toShow; i++){
             Slot s = hotbarSlots[i];
-            s.render(g, startX + i*(spacing+slotSize), y);
+            latestX = startX + i*(spacing+slotSize);
+            s.render(g, latestX, y);
         }
-
+        arrowSlot.render(g, latestX+100, y);
+        spellSlot.render(g, latestX+100 + slotSize, y);
         g.drawImage(AssetStorage.images.get("frame"), startX + selectedIndex*(spacing+slotSize),y,slotSize+1,slotSize+1,null);
         return overlay;
     }
@@ -315,6 +349,7 @@ public class Inventory {
         public Slot(int width, int height){this.width=width;this.height=height;}
         public boolean highlight = false;
         public BufferedImage texture;
+        public BufferedImage bgTexture;
         public void updateSlot(){
             if(amount<=0){
                 clear();
@@ -383,11 +418,16 @@ public class Inventory {
             g.fillRect(x, y, width, height);
             g.setColor(Color.red);
             g.drawRect(x, y,width,height);
+            
             if(item!=null){
                 g.drawImage(texture, x, y, null);
                 // g.drawImage(item.texture, x +3, y+3,width-6,height-6, null);
                 // g.setColor(Color.red);
                 // g.drawString(""+amount, x+width/2, y);
+            }else{
+                if(bgTexture!=null){
+                    g.drawImage(bgTexture, x, y, null);
+                }
             }
             if(highlight){
                 g.setColor(Color.white);
