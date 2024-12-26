@@ -9,11 +9,11 @@
     },
     "dungeon_lvl1":{
         "nonSolidTiles":[0,1],
-        "solidTiles":[2],
+        "solidTiles":[36],
         "borderTiles":[0,1],
         "collectables":[2,3],
-        "entities":[15,17,32,33,34],
-        "structures":["empty_space_v1","vertical_tunnel","horizontal_tunnel"]
+        "entities":[15,17,32,33,34,41],
+        "structures":["empty_space_v1","vertical_tunnel","spidercave_tunnel"]
     },
     "dungeon_lvl2":{
         "nonSolidTiles":[35],
@@ -23,12 +23,12 @@
         "entities":[15,9],
         "structures":["dungeon_v1","vertical_tunnel","horizontal_tunnel"]
     },
-    "other":{
-        "nonSolidTiles":[1,2],
-        "solidTiles":[0],
-        "borderTiles":[0],
+    "dungeon_lvl3":{
+        "nonSolidTiles":[35],
+        "solidTiles":[36],
+        "borderTiles":[35],
         "collectables":[2],
-        "entities":[0],
+        "entities":[41,42],
         "structures":["dungeon_v1"]
     }
 }

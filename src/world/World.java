@@ -38,7 +38,7 @@ public class World {
     //Can the map change in world? or are there multiple worlds? each with own map, with own player, with own entitites...
     //Different worlds. each with own data.
 
-    public static final int LVL1 = 0, LVL2 = 1;
+    public static final int LVL1 = 0, LVL2 = 1, LVL3 = 2;
     public int type;
 
     public static Map map;
@@ -76,10 +76,10 @@ public class World {
                                     generate(LVL1);
                                 }else if(worldName.endsWith("lvl2")){
                                     generate(LVL2);
+                                }else if(worldName.endsWith("lvl3")){
+                                    generate(LVL3);
                                 }
                             }
-                            
-                            
                             else{
                                 String mapName = worldName;
                                 String ent = mapName+"_entities";
@@ -133,17 +133,12 @@ public class World {
     private static void generate(int level){
         entityManager.clearEntities();
         generateMap(level);
-        generateEntities(level);
         //generateMushrooms(type);
     }
     private static void generateMap(int type){
         map = new Map(type,200,200);
     }
-    private static void generateEntities(int type){
-        
-        map.populateWithEnemies(type);
-
-    }
+    
     private void generateMushrooms(int type){
         String biome;
         switch (type) {

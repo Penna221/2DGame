@@ -287,7 +287,7 @@
         "type":"Creature",
         "name":"Skeleton",
         "texture":"skeleton",
-        "speed":7.0,
+        "speed":4.0,
         "health":25,
         "animations":{
             "idle":"player_idle"
@@ -300,20 +300,20 @@
         "light_color":"#000000",
         "light_transparency":1.0
     },
-    "enemy_1":{
+    "spidercave_tunnel":{
         "id":16,
-        "type":"Creature",
-        "name":"Enemy 1",
-        "texture":"enemy_1_idle",
+        "type":"Door",
+        "name":"Spider Cave",
+        "texture":"ladder_hole",
         "speed":1.0,
         "health":20,
         "animations":{
-            "hostile":"enemy_1_hostile",
-            "idle":"enemy_1_idle"
+            "idle":"player_idle"
         },
-        "ai":"enemy_1",
+        "ai":"door",
         "width":16,
         "height":16,
+        "tunnel":"dungeon_lvl3",
         "light_source":false,
         "light_radius":0,
         "light_color":"#000000",
@@ -611,7 +611,7 @@
         "id":35,
         "type":"Projectile",
         "name":"Projectile",
-        "texture":"",
+        "texture":"iron_sword",
         "speed":0.0,
         "health":1,
         "animations":{
@@ -665,7 +665,7 @@
         "id":38,
         "type":"Particle",
         "name":"Particle",
-        "texture":"",
+        "texture":"iron_sword",
         "speed":0.0,
         "health":1,
         "animations":{
@@ -711,6 +711,51 @@
         "width":32,
         "height":32,
         "light_source":true,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
+    },
+    "cobweb":{
+        "id":41,
+        "type":"Decoration",
+        "name":"Cobweb",
+        "texture":"cobweb",
+        "speed":0.0,
+        "health":1,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
+    },
+    "spider":{
+        "id":42,
+        "type":"Creature",
+        "name":"Spider",
+        "texture":"spider_idle_0",
+        "speed":17.0,
+        "health":10,
+        "animations":{
+            "idle":"spider_idle",
+            "jump":"spider_jump",
+            "walk_west":"spider_move",
+            "walk_east":"spider_move",
+            "walk_north":"spider_move",
+            "walk_south":"spider_move",
+            "walk_south_west":"spider_move",
+            "walk_south_east":"spider_move",
+            "walk_north_west":"spider_move",
+            "walk_north_east":"spider_move"
+        },
+        "ai":"spider",
+        "width":16,
+        "height":16,
+        "light_source":false,
         "light_radius":50,
         "light_color":"#FFA000",
         "light_transparency":0.11

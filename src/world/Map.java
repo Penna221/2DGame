@@ -33,7 +33,19 @@ public class Map {
         this.width = width;
         this.height = height;
         generate(type);
-
+        switch (type) {
+            case World.LVL1:
+                populateWithEnemies(Biome.biomes.get("dungeon_lvl1"));     
+                break;
+            case World.LVL2:
+                populateWithEnemies(Biome.biomes.get("dungeon_lvl2")); 
+                break;
+            case World.LVL3:
+                populateWithEnemies(Biome.biomes.get("dungeon_lvl3")); 
+                break;
+            default:
+                break;
+        }
     }
     public Map(){}
     public static void loadStructures() throws Exception{
@@ -96,11 +108,15 @@ public class Map {
             case World.LVL2:
                 generateLVL2();
                 break;
+            case World.LVL3:
+                generateLVL3();
+                break;
             default:
                 generateLVL1();
                 break;
         }
-        
+        generateWalls(5);
+        generateBinaryMap();
         saveMapAsImage();
     }
     public void saveMapAsImage(){
@@ -129,6 +145,31 @@ public class Map {
     }
     private void generateLVL1(){
         Biome b = Biome.biomes.get("dungeon_lvl1");
+        basicGeneration(b);
+        //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
+        generateStructureAtRandomSpot("lvl2_tunnel");
+        generateStructureAtRandomSpot("lvl2_tunnel");
+        generateStructureAtRandomSpot("trader_room_v1");
+        
+    }
+    private void generateLVL2(){
+        Biome b = Biome.biomes.get("dungeon_lvl2");
+        basicGeneration(b);
+
+        //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
+        generateStructureAtRandomSpot("trader_room_v1");
+        generateStructureAtRandomSpot("boss_door");
+    }
+    private void generateLVL3(){
+        Biome b = Biome.biomes.get("dungeon_lvl3");
+        basicGeneration(b);
+
+        //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
+        generateStructureAtRandomSpot("trader_room_v1");
+        generateStructureAtRandomSpot("boss_door");
+    }
+
+    private void basicGeneration(Biome b){
         biomeName = b.name;
         Tile[] nonSolidTiles = b.nonSolidTiles;
         Tile[] solidTiles = b.solidTiles;
@@ -142,50 +183,14 @@ public class Map {
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
         generateSpawnArea();
-
         String[] structureList =  b.structures;
         int size = structureList.length;
         System.out.println("structure list size " + size);
         for(int i = 0; i < size; i++){
-            for(int j = 0; j < 1; j++){
+            for(int j = 0; j < 10; j++){
                 generateStructureAtRandomSpot(structureList[i]);
             }
         }
-        generateStructureAtRandomSpot("lvl2_tunnel");
-        generateStructureAtRandomSpot("trader_room_v1");
-        generateWalls(5);
-        generateBinaryMap();
-    }
-    private void generateLVL2(){
-        Biome b = Biome.biomes.get("dungeon_lvl2");
-        biomeName = b.name;
-        Tile[] nonSolidTiles = b.nonSolidTiles;
-        Tile[] solidTiles = b.solidTiles;
-        Tile[] borderTiles = b.borderTiles;
-        map = new int[width][height];
-        
-        initMapToZero();
-        generateWalls(5);
-        cellularAutomata(20,5);
-        setNonSolidTiles(nonSolidTiles);
-        setSolidTiles(solidTiles,borderTiles);
-        generateSpawnArea();
-        String[] structureList =  b.structures;
-        int size = structureList.length;
-        System.out.println("structure list size " + size);
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < 4; j++){
-                generateStructureAtRandomSpot(structureList[i]);
-            }
-        }
-        for(int j = 0; j < 100; j++){
-            generateStructureAtRandomSpot("vertical_tunnel");
-        }
-        generateStructureAtRandomSpot("trader_room_v1");
-        generateStructureAtRandomSpot("boss_door");
-        
-        generateWalls(5);
-        generateBinaryMap();
     }
     private void generateBinaryMap(){
         binaryMap = new boolean[width][height];
@@ -352,18 +357,9 @@ public class Map {
             }
         }
     }
-    public void populateWithEnemies(int type){
-        Biome biome = Biome.biomes.get("dungeon_lvl1");
-        switch (type) {
-            case World.LVL1:
-                biome = Biome.biomes.get("dungeon_lvl1");       
-                break;
-            case World.LVL2:
-                biome = Biome.biomes.get("dungeon_lvl2");       
-                break;
-            default:
-                biome = Biome.biomes.get("dungeon_lvl1");
-                break;
+    public void populateWithEnemies(Biome biome){
+        if(biome==null){
+            return;
         }
         int[] entities = biome.entities;
         int[] collectables = biome.collectables;
@@ -381,7 +377,7 @@ public class Map {
     
     public boolean generateRandomEntity(int[] entities, int x, int y){
         Random r = new Random();
-        int d = r.nextInt(200);
+        int d = r.nextInt(100);
         //change to spawn enemy.
         if(d ==1){
             int d2 = r.nextInt(entities.length);

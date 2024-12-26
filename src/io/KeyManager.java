@@ -52,7 +52,7 @@ public class KeyManager implements KeyListener{
                 }
                 break;
             case KeyEvent.VK_F2:
-                World.load("dungeon_lvl2");
+                World.load("dungeon_lvl3");
                 break;
             case KeyEvent.VK_F3:
                 State.setState(State.menuState,true);

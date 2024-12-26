@@ -22,6 +22,7 @@ import entities.ai.MoleAI;
 import entities.ai.PlayerAI;
 import entities.ai.ProjectileAI;
 import entities.ai.SkeletonAI;
+import entities.ai.SpiderAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
 import entities.bows.Bow;
@@ -117,6 +118,9 @@ public class Entity {
                 break;
             case "projectile":
                 ai = new ProjectileAI(this);
+                break;
+            case "spider":
+                ai = new SpiderAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

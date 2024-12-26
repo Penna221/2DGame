@@ -94,5 +94,17 @@
     "fire":{
         "images":["fire_1","fire_2","fire_3","fire_4","fire_5","fire_6","fire_7"],
         "times":[100,100,100,100,100,100,100]
+    },
+    "spider_idle":{
+        "images":["spider_idle_0","spider_idle_1","spider_idle_2","spider_idle_3","spider_idle_4"],
+        "times":[200,200,400,200,200]
+    },
+    "spider_jump":{
+        "images":["spider_jump_1","spider_jump_2","spider_jump_3","spider_jump_4","spider_jump_5","spider_jump_6","spider_jump_7","spider_jump_8"],
+        "times":[100,100,100,100,100,100,100,100]
+    },
+    "spider_move":{
+        "images":["spider_move_1","spider_move_2","spider_move_3","spider_move_4","spider_move_5","spider_move_6"],
+        "times":[100,100,100,100,100,100]
     }
 }
