@@ -171,11 +171,10 @@ public class EntityManager {
     public static int findIDWithName(String name){
         for (Map.Entry<Integer, EntityInfo> entry : entityInfos.entrySet()) {
             EntityInfo entityInfo = entry.getValue();
-            if (entityInfo.name.equals(name)) {
+            if(entityInfo.name.equals(name)) {
                 return entityInfo.id;
             }
         }
-
         return -1;
     }
     public void addEntity(Entity e){

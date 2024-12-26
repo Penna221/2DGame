@@ -231,7 +231,7 @@
         "name":"Trader",
         "texture":"trader",
         "speed":0.0,
-        "health":20,
+        "health":1000,
         "animations":{
             "idle":"trader_idle",
             "trade":"trader_stand"
@@ -287,7 +287,7 @@
         "type":"Creature",
         "name":"Skeleton",
         "texture":"skeleton",
-        "speed":10.0,
+        "speed":7.0,
         "health":25,
         "animations":{
             "idle":"player_idle"
@@ -361,7 +361,7 @@
         "name":"Blacksmith",
         "texture":"blacksmith_idle_0",
         "speed":1.0,
-        "health":100,
+        "health":1000,
         "animations":{
             "idle":"blacksmith_idle"
         },
@@ -469,7 +469,7 @@
         "name":"Witch",
         "texture":"witch_idle_0",
         "speed":1.0,
-        "health":100,
+        "health":1000,
         "animations":{
             "idle":"witch_idle"
         },
@@ -541,7 +541,7 @@
         "name":"Guide",
         "texture":"guide",
         "speed":1.0,
-        "health":100,
+        "health":1000,
         "animations":{
             "idle":"guide_idle"
         },

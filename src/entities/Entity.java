@@ -33,6 +33,7 @@ import gfx.Animation;
 import gfx.AssetStorage;
 import gfx.Factory;
 import gfx.Transition;
+import loot.LootTables;
 import main.Game;
 import sound.SoundPlayer;
 import states.State;
@@ -156,6 +157,8 @@ public class Entity {
             Transition.canContinue2 = true;
             Transition.canFinish = true;
         }else{
+            //LOOT?
+            LootTables.generateLoot(name, x, y);
             World.entityManager.removeEntity(this);
         }
 

@@ -26,7 +26,7 @@ public class SkeletonAI extends AI{
             public void perform(){tryToAttack();}
         };
         attackTimer = new Timer(1000,attackTask);
-        moveTimer = new Timer(1000,moveTask);
+        moveTimer = new Timer(500,moveTask);
         attackRadius = e.generateSurroundingCircle(50);
     }
     private void tryToAttack(){
@@ -52,7 +52,7 @@ public class SkeletonAI extends AI{
     }
     @Override
     public void update() {
-        e.slowdown(0.8);
+        e.slowdown(0.9);
         moveTimer.update();
         attackTimer.update();
         e.move();

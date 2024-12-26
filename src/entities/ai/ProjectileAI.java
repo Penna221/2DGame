@@ -115,18 +115,19 @@ public class ProjectileAI extends AI{
                 totalDamage+= e.bowInfo.damage;
             }
         }
-
-        attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation);
-        EntityManager.addAttackBox(attackBox);
+        if(e.xSpeed!=0&&e.ySpeed!=0){
+            attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation);
+            EntityManager.addAttackBox(attackBox);
+        }
         
     }
 
     @Override
     public void render(Graphics g) {
         // e.drawBounds(g);
-        if(transformedPolygon!=null){
-            g.drawPolygon(transformedPolygon);
-        }
+        // if(transformedPolygon!=null){
+        //     g.drawPolygon(transformedPolygon);
+        // }
     }
     
 }

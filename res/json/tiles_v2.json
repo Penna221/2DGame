@@ -256,6 +256,13 @@
         "x": 1,
         "y": 5,
         "solid": false
+      },
+      {
+        "id": 36,
+        "name": "Cave Wall",
+        "x": 2,
+        "y": 5,
+        "solid": true
       }
     ]
     

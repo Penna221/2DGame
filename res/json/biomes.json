@@ -8,11 +8,11 @@
         "structures":["dungeon_v1","vertical_tunnel","horizontal_tunnel"]
     },
     "dungeon_lvl1":{
-        "nonSolidTiles":[3],
+        "nonSolidTiles":[0,1],
         "solidTiles":[2],
-        "borderTiles":[3],
+        "borderTiles":[0,1],
         "collectables":[2,3],
-        "entities":[17,16,32,33,34],
+        "entities":[15,17,32,33,34],
         "structures":["empty_space_v1","vertical_tunnel","horizontal_tunnel"]
     },
     "dungeon_lvl2":{

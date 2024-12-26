@@ -48,34 +48,10 @@ public class ChestAI extends AI{
             default:
                 break;
         }
-        LootTable lt = LootTables.lootTables.get(searchVar);
-        for(int i = 0; i < lt.items.size(); i++){
-            LootItem item = lt.items.get(i);
-            int id = EntityManager.findIDWithName(item.name);
-            if(id==-1){
-                System.out.println("cannot find item with name: " + item.name);
-                continue;
-            }
-            int min = item.min;
-            int max = item.max;
-            int amount = generateRandomAmount(min, max);
-            for(int j = 0; j < amount; j++){
-                int randomXOffset = generateRandomAmount(-40, 40);
-                int randomYOffset = generateRandomAmount(-40, 40);
-                Entity e2 = World.entityManager.generateWithID(id,-1, (int)e.x+randomXOffset, (int)e.y+randomYOffset);
-                boolean success = PlayerAI.inv.addItem(e2);
-                if(success){
-                    World.entityManager.removeEntity(e2);
-                    
-                }
-            }
-        }
+        LootTables.generateLoot(searchVar, e.x, e.y);
         World.entityManager.removeEntity(e);
     }
-    private int generateRandomAmount(int lowerLimit,int maxLimit){
-        Random r = new Random();
-        return r.nextInt((maxLimit - lowerLimit) + 1) + lowerLimit;
-    }
+    
     @Override
     public void render(Graphics g) {
         if(talk){
