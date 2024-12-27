@@ -36,5 +36,19 @@
             "min":3,
             "max":10
         }
+    },
+    "Big Spider":{
+        "Coin":{
+            "id":2,
+            "id2":-1,
+            "min":5,
+            "max":10
+        },
+        "Spider Egg":{
+            "id":46,
+            "id2":-1,
+            "min":1,
+            "max":4
+        }
     }
 }

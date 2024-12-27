@@ -29,6 +29,6 @@
         "borderTiles":[35],
         "collectables":[2],
         "entities":[41,42,43],
-        "structures":["dungeon_v1"]
+        "structures":["dungeon_v1","dungeon_spider_v1"]
     }
 }

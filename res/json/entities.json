@@ -785,5 +785,59 @@
         "light_radius":50,
         "light_color":"#FFA000",
         "light_transparency":0.11
+    },
+    "bones_1":{
+        "id":44,
+        "type":"Decoration",
+        "name":"Bones",
+        "texture":"bones_1",
+        "speed":0.0,
+        "health":1,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
+    },
+    "bones_2":{
+        "id":45,
+        "type":"Decoration",
+        "name":"Bones",
+        "texture":"bones_2",
+        "speed":0.0,
+        "health":1,
+        "animations":{
+            "idle":""
+        },
+        "ai":"empty",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
+    },
+    "spider_egg":{
+        "id":46,
+        "type":"Collectable",
+        "name":"Spider Egg",
+        "texture":"spider_egg",
+        "speed":0.0,
+        "health":1,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
     }
 }
