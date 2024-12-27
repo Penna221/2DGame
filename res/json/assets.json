@@ -180,6 +180,13 @@
         "spider_move_4":"res\\gfx\\entities\\enemies\\spider\\move_4.png",
         "spider_move_5":"res\\gfx\\entities\\enemies\\spider\\move_5.png",
         "spider_move_6":"res\\gfx\\entities\\enemies\\spider\\move_6.png",
+        
+        "spider_move_r_1":"res\\gfx\\entities\\enemies\\spider\\move_r_1.png",
+        "spider_move_r_2":"res\\gfx\\entities\\enemies\\spider\\move_r_2.png",
+        "spider_move_r_3":"res\\gfx\\entities\\enemies\\spider\\move_r_3.png",
+        "spider_move_r_4":"res\\gfx\\entities\\enemies\\spider\\move_r_4.png",
+        "spider_move_r_5":"res\\gfx\\entities\\enemies\\spider\\move_r_5.png",
+        "spider_move_r_6":"res\\gfx\\entities\\enemies\\spider\\move_r_6.png",
         "fox":"res\\gfx\\entities\\fox\\fox.png",
         "coin_1":"res\\gfx\\entities\\items\\coin_1.png",
         "coin_2":"res\\gfx\\entities\\items\\coin_2.png",

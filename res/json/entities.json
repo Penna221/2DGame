@@ -744,13 +744,13 @@
             "idle":"spider_idle",
             "jump":"spider_jump",
             "walk_west":"spider_move",
-            "walk_east":"spider_move",
+            "walk_east":"spider_move_r",
             "walk_north":"spider_move",
-            "walk_south":"spider_move",
+            "walk_south":"spider_move_r",
             "walk_south_west":"spider_move",
-            "walk_south_east":"spider_move",
+            "walk_south_east":"spider_move_r",
             "walk_north_west":"spider_move",
-            "walk_north_east":"spider_move"
+            "walk_north_east":"spider_move_r"
         },
         "ai":"spider",
         "width":16,

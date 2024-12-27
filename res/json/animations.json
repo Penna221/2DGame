@@ -106,5 +106,9 @@
     "spider_move":{
         "images":["spider_move_1","spider_move_2","spider_move_3","spider_move_4","spider_move_5","spider_move_6"],
         "times":[100,100,100,100,100,100]
+    },
+    "spider_move_r":{
+        "images":["spider_move_r_1","spider_move_r_2","spider_move_r_3","spider_move_r_4","spider_move_r_5","spider_move_r_6"],
+        "times":[100,100,100,100,100,100]
     }
 }
