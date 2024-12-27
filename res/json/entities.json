@@ -759,5 +759,31 @@
         "light_radius":50,
         "light_color":"#FFA000",
         "light_transparency":0.11
+    },
+    "big_spider":{
+        "id":43,
+        "type":"Creature",
+        "name":"Big Spider",
+        "texture":"big_spider_idle_0",
+        "speed":10.0,
+        "health":100,
+        "animations":{
+            "idle":"big_spider_idle",
+            "walk_west":"big_spider_move",
+            "walk_east":"big_spider_move_r",
+            "walk_north":"big_spider_move",
+            "walk_south":"big_spider_move_r",
+            "walk_south_west":"big_spider_move",
+            "walk_south_east":"big_spider_move_r",
+            "walk_north_west":"big_spider_move",
+            "walk_north_east":"big_spider_move_r"
+        },
+        "ai":"big_spider",
+        "width":32,
+        "height":32,
+        "light_source":false,
+        "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11
     }
 }

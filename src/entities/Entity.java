@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import entities.ai.AI;
+import entities.ai.BigSpiderAI;
 import entities.ai.BlacksmithAI;
 import entities.ai.BossAI;
 import entities.ai.ChestAI;
@@ -121,6 +122,9 @@ public class Entity {
                 break;
             case "spider":
                 ai = new SpiderAI(this);
+                break;
+            case "big_spider":
+                ai = new BigSpiderAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

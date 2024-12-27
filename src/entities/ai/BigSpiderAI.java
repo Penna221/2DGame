@@ -10,10 +10,10 @@ import tools.Timer;
 import ui.Task;
 import world.World;
 
-public class SpiderAI extends AI{
+public class BigSpiderAI extends AI{
     private Ellipse2D.Double attackRadius;
     private Timer moveTimer, attackTimer;
-    public SpiderAI(Entity e){
+    public BigSpiderAI(Entity e){
         super(e);
     }
     @Override
@@ -26,15 +26,15 @@ public class SpiderAI extends AI{
         Task attackTask = new Task(){
             public void perform(){tryToAttack();}
         };
-        attackTimer = new Timer(200,attackTask);
+        attackTimer = new Timer(1500,attackTask);
         moveTimer = new Timer(3000,moveTask);
-        attackRadius = e.generateSurroundingCircle(50);
+        attackRadius = e.generateSurroundingCircle(100);
     }
     private void tryToAttack(){
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
                 System.out.println("attack");
-                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player)));
+                EntityManager.addAttackBox(new AttackBox(e, 5, e.bounds,null,World.getAngleBetween(e,World.player)));
             }
         }
     }
@@ -68,8 +68,8 @@ public class SpiderAI extends AI{
 
     @Override
     public void render(Graphics g) {
-        // e.drawBounds(g);
-        // g.drawOval((int)(attackRadius.x - World.camera.getXOffset()),(int)(attackRadius.y- World.camera.getYOffset()),(int)attackRadius.width,(int)attackRadius.height);
+        e.drawBounds(g);
+        g.drawOval((int)(attackRadius.x - World.camera.getXOffset()),(int)(attackRadius.y- World.camera.getYOffset()),(int)attackRadius.width,(int)attackRadius.height);
         
     }
     
