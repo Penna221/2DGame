@@ -22,7 +22,9 @@ public class EntityInfo {
     public int light_radius;
     public Color light_color;
     public double light_transparency;
-    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel, boolean lightSource, int light_radius,Color light_color,double light_transparency){
+
+    public int invisTime;
+    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel, boolean lightSource, int light_radius,Color light_color,double light_transparency, int invisTime){
         this.name = name;
         this.id = id;
         this.type = type;
@@ -38,5 +40,6 @@ public class EntityInfo {
         this.light_radius = light_radius;
         this.light_color = light_color;
         this.light_transparency = light_transparency;
+        this.invisTime = invisTime;
     }
 }

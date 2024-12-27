@@ -76,6 +76,7 @@ public class EntityManager {
             String color_string = c.findChild("light_color").getString();
             Color light_color = Color.decode(color_string);
             double light_transparency = c.findChild("light_transparency").getFloat();
+            int invisTime = c.findChild("invisTime").getInteger();
 
             HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
             KeyValuePair animations = c.findChild("animations");
@@ -86,7 +87,7 @@ public class EntityManager {
                 hashMap.put(a, Animations.animations.get(b));    
             }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency));
+            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime));
         }
 
 

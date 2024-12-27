@@ -40,6 +40,8 @@ import main.Game;
 import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
+import tools.Timer;
+import ui.Task;
 import world.World;
 
 public class Entity {
@@ -65,6 +67,9 @@ public class Entity {
     public Bow bowInfo;
     public Potion potionInfo;
     public int subID = -1;
+    public Timer invincibleTimer,invincibleTimer2;
+    public boolean noHit = false;
+    public boolean draw =true;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -147,8 +152,10 @@ public class Entity {
         copy.addAll(receivedHits);
         if(copy.size()>0){
             for(int i : copy){
-                System.out.println("Getting hit with " + i);
-                health -= i;
+                if(!noHit){
+                    hit(i);
+                    
+                }
             }
             Random r = new Random();
             int r1 = 1+ r.nextInt(3);
@@ -170,6 +177,13 @@ public class Entity {
             World.entityManager.removeEntity(this);
         }
 
+    }
+    public void hit(int amount){
+        System.out.println("Getting hit with " + amount);
+        health -= amount;
+        noHit=true;
+        invincibleTimer.backToStart();
+        invincibleTimer2.backToStart();
     }
     public void harm(int amount){
         receivedHits.add(amount);
@@ -221,11 +235,12 @@ public class Entity {
         }
     }
     public void render(Graphics g){
-        double xOffset = World.camera.getXOffset();
-        double yOffset = World.camera.getYOffset();
-        Point p = new Point((int)(x - xOffset + bounds.getWidth()/2),(int)((y - yOffset +bounds.getHeight()/2)));
-        Factory.drawCenteredAt(g, texture, p, scale);
-        // g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
+        if(draw){
+            double xOffset = World.camera.getXOffset();
+            double yOffset = World.camera.getYOffset();
+            Point p = new Point((int)(x - xOffset + bounds.getWidth()/2),(int)((y - yOffset +bounds.getHeight()/2)));
+            Factory.drawCenteredAt(g, texture, p, scale);
+        }
         renderAdditional(g);
         // drawBounds(g);
         if(focused){
@@ -233,6 +248,7 @@ public class Entity {
                 drawHighLight(g);
             }
         }
+        // g.drawImage(texture, (int)(x - xOffset), (int)(y - yOffset), null);
     }
     public void drawBounds(Graphics g){
         g.setColor(Color.white);
@@ -429,7 +445,27 @@ public class Entity {
         health =info.health;
         name = info.name;
         calculateBounds();
+        updateInvisTime(info.invisTime);
+
         ai.lateInit();
+
+    }
+    public void updateInvisTime(int time){
+        noHit = false;
+        draw = true;
+        Task t = new Task(){
+            public void perform(){
+                noHit = false;
+                draw = true;
+            }
+        };
+        Task t2 = new Task(){
+            public void perform(){
+                draw = !draw;
+            }
+        };
+        invincibleTimer = new Timer(time,t);
+        invincibleTimer2 = new Timer(100,t2);
     }
     public void loadBasicInfo(){
         
@@ -490,5 +526,9 @@ public class Entity {
         }
         
         ai.update();
+        if(noHit){
+            invincibleTimer2.update();
+            invincibleTimer.update();
+        }
     }
 }

@@ -229,7 +229,7 @@ public class PlayerAI extends AI{
         switch (selectedSlot.item.info.id) {
             case 26:
                 //POTION
-                
+                rotation = 0;
                 break;
             case 27:
                 //SWORD
