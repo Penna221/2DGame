@@ -15,7 +15,7 @@ public class OnFireEffect extends Effect{
                 }
             }
         };
-        t = new Timer(1000,task);
+        t = new Timer(1500,task);
         t.backToStart();
     }
 }

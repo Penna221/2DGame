@@ -204,8 +204,8 @@ public class PlayerAI extends AI{
         int currentTileY = (int)((e.bounds.y + e.bounds.height/2)/Tile.tileSize); 
         g.setColor(new Color(255,255,255,40));
         g.drawRect((int)(currentTileX*Tile.tileSize-World.camera.getXOffset()), (int)(currentTileY*Tile.tileSize - World.camera.getYOffset()), Tile.tileSize, Tile.tileSize);
-        g.setColor(Color.red);
-        e.drawBounds(g);
+        // g.setColor(Color.red);
+        // e.drawBounds(g);
         drawWeapon(g);
         hud.render(g);
     }

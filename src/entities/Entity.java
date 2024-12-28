@@ -39,6 +39,7 @@ import gfx.Factory;
 import gfx.Transition;
 import loot.LootTables;
 import main.Game;
+import particles.Particle;
 import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
@@ -74,6 +75,7 @@ public class Entity {
     public boolean noHit = false;
     public boolean draw =true;
     public ArrayList<Effect> effects, toAdd,toRemove;
+    public Timer particleGenerationTimer;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -250,6 +252,7 @@ public class Entity {
             double yOffset = World.camera.getYOffset();
             Point p = new Point((int)(x - xOffset + bounds.getWidth()/2),(int)((y - yOffset +bounds.getHeight()/2)));
             Factory.drawCenteredAt(g, texture, p, scale);
+            
         }
         renderAdditional(g);
         // drawBounds(g);
@@ -273,6 +276,24 @@ public class Entity {
         Factory.drawCenteredAt(g, highlight, p,scale);
     }
 
+    public void drawEffects(){
+        for(Effect e : effects){
+            switch (e.name) {
+                case "Regeneration":
+                    Particle p1 = new Particle("regen",300,-90);
+                    p1.setPosition((int)bounds.getCenterX(),(int)bounds.getCenterY());
+                    World.particleManager.addParticle(p1);
+                    break;
+                case "On Fire":
+                    Particle p2 = new Particle("fire",300,-90);
+                    p2.setPosition((int)bounds.getCenterX(),(int)bounds.getCenterY());
+                    World.particleManager.addParticle(p2);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     public void moveProjectile(){
         
@@ -469,6 +490,12 @@ public class Entity {
         maxHealth = health;
         name = info.name;
         calculateBounds();
+        Task par = new Task(){
+            public void perform(){
+                drawEffects();
+            }
+        };
+        particleGenerationTimer = new Timer(700,par);
         updateInvisTime(info.invisTime);
         effects = new ArrayList<Effect>();
         toRemove = new ArrayList<Effect>();
@@ -591,11 +618,11 @@ public class Entity {
         }
         effects.removeAll(toRemove);
         toRemove.clear();
+        particleGenerationTimer.update();
         ai.update();
         if(noHit){
             invincibleTimer2.update();
             invincibleTimer.update();
         }
-        
     }
 }

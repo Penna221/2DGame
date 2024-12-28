@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import entities.Entity;
 import entities.effects.FireResEffect;
+import entities.effects.OnFireEffect;
 import entities.effects.RegenEffect;
 import entities.effects.SlowEffect;
 import json.JSON;

@@ -48,7 +48,7 @@ public class TraderAI extends AI{
     }
     @Override
     public void render(Graphics g) {
-        g.drawOval((int)(interactCircle.x - World.camera.getXOffset()),(int) (interactCircle.y - World.camera.getYOffset()), (int)interactCircle.width,(int)interactCircle.height);
+        // g.drawOval((int)(interactCircle.x - World.camera.getXOffset()),(int) (interactCircle.y - World.camera.getYOffset()), (int)interactCircle.width,(int)interactCircle.height);
         if(talk){
             drawTalkBox(g);
         }
