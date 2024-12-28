@@ -1,16 +1,17 @@
 package entities.player;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import entities.Entity;
+import entities.ai.PlayerAI;
 import ui.Container;
 import ui.Text;
 
 public class InfoPacket {
     public Container c;
-    private Text itemName;
-    private Text damage;
     public int x, y;
+    public boolean draw = false;
     public InfoPacket(int x, int y){
         this.x = x;
         this.y = y;
@@ -18,15 +19,24 @@ public class InfoPacket {
     public void update(Entity e,int x, int y, int maxWidth, int height, boolean center){
         this.x = x;
         this.y = y;
-        c = null;
+        draw = false;
         if(e!=null){
             c = new Container(0,0,maxWidth,height);
             c.fillBg = true;
-            itemName = new Text(e.name, 0, 1,maxWidth, false);
+            Text itemName = new Text(e.name, 0, 1,maxWidth, false);
+            itemName.fillBg = true;
+            itemName.overrideColor = new Color(0,0,0,200);
             c.addElement(itemName);
+            int amt = PlayerAI.inv.calculateAmount(e);
+            Text amount = new Text("You have: "+amt, 0, itemName.bounds.height+10,maxWidth, false);
+            c.addElement(amount);
+            
+
             int d = e.getItemDamage();
             if(d!=0){
-                damage = new Text("Damage: " + d, 0, itemName.bounds.height+10, maxWidth, false);
+                Text damage = new Text("Damage: " + d, 0, amount.bounds.y+amount.bounds.height+10, maxWidth, false);
+                damage.overrideColor = Color.RED;
+                damage.fillBg = true;
                 c.addElement(damage);
             }
             c.updateBounds();
@@ -36,10 +46,13 @@ public class InfoPacket {
                 c.setPosition(x-c.bounds.width/3, y-c.bounds.height-10);
             }
         }
+        draw = true;
     }
     public void render(Graphics g){
         if(c!=null){
-            c.render(g);
+            if(draw){
+                c.render(g);
+            }
         }
     }
 }

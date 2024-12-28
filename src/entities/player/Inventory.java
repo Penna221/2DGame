@@ -219,9 +219,23 @@ public class Inventory {
         return added;
     }
     public boolean checkIfEnoughItemsWithID(int id, int id2, int amount){
-        if(id2==-1){
-            
-            int totalAmount = 0;
+        int totalAmount = calculateAmountWithID(id,id2);
+        if(totalAmount>=amount){
+            return true;
+        }
+        return false;
+    }
+    public int calculateAmount(Entity e){
+        int id = e.info.id;
+        int id2 = e.subID;
+        int totalAmount = calculateAmountWithID(id, id2);
+        // System.out.println(totalAmount);
+        return totalAmount;
+    }
+    public int calculateAmountWithID(int id, int id2){
+        int totalAmount = 0;
+
+        if(id2==-1){    
             for(Slot s : inventorySlots){
                 if(s.item==null){
                     continue;
@@ -231,9 +245,6 @@ public class Inventory {
                     continue;
                 }
                 totalAmount += s.amount;
-                if(totalAmount>=amount){
-                    return true;
-                }
             }
             for(Slot s : hotbarSlots){
                 if(s.item==null){
@@ -243,17 +254,13 @@ public class Inventory {
                     continue;
                 }
                 totalAmount += s.amount;
-                if(totalAmount>=amount){
-                    return true;
-                }
             }
         }else{
-            int totalAmount = 0;
             for(Slot s : inventorySlots){
                 if(s.item==null){
                     continue;
                 }
-                if(s.item.subID!=-1){
+                if(s.item.subID==-1){
                     continue;
                 }
                 if(s.item.info.id!=id){
@@ -261,16 +268,13 @@ public class Inventory {
                 }
                 if(s.item.subID==id2){
                     totalAmount += s.amount;
-                }
-                if(totalAmount>=amount){
-                    return true;
                 }
             }
             for(Slot s : hotbarSlots){
                 if(s.item==null){
                     continue;
                 }
-                if(s.item.subID!=-1){
+                if(s.item.subID==-1){
                     continue;
                 }
                 if(s.item.info.id!=id){
@@ -279,12 +283,9 @@ public class Inventory {
                 if(s.item.subID==id2){
                     totalAmount += s.amount;
                 }
-                if(totalAmount>=amount){
-                    return true;
-                }
             }
         }
-        return false;
+        return totalAmount;
     }
     public void pay(int id, int amount){
         for(Slot s : inventorySlots){
@@ -354,21 +355,23 @@ public class Inventory {
         public BufferedImage texture;
         public BufferedImage bgTexture;
         private int x, y;
-        private InfoPacket infoPacket;
+        public InfoPacket infoPacket;
         public Slot(int width, int height){this.width=width;this.height=height;infoPacket = new InfoPacket(0,0);}
         public void setPosition(int x, int y){
             this.x = x;
             this.y = y;
-            infoPacket.update(item,x,y,300,70, true);
+            infoPacket.update(item,x,y,400,70, true);
         }
         public void updateSlot(){
             if(amount<=0){
                 clear();
             }else{
                 generateImage();
+                
             }
         }
         public boolean add(Entity i){
+            i.loadBasicInfo();
             //IF item == null -> Slot does not have item.
             if(item ==null){
                 this.item = i;
@@ -411,7 +414,7 @@ public class Inventory {
         public void generateImage(){
             if(item!=null){
                 texture = UIFactory.generateIconWithAmount(item.texture,amount,width,height,false,new Color(0,0,0,0));
-                infoPacket.update(item, x,y,300,70,true);
+                infoPacket.update(item, x,y,400,70,true);
                 
             }
         }

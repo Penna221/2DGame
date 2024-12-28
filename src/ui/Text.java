@@ -10,6 +10,7 @@ public class Text extends UIElement{
     private int maxWidth;
     private boolean border;
     public boolean fillBg = false;
+    public Color overrideColor;
     public Text(String text, int x, int y, int maxWidth, boolean border) {
         super(x, y);
         this.border = border;
@@ -36,6 +37,9 @@ public class Text extends UIElement{
     public void render(Graphics g) {
         if(fillBg){
             g.setColor(UIFactory.textData.bgColor);
+            if(overrideColor!=null){
+                g.setColor(overrideColor);
+            }
             // g.setColor(Color.black);
             g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
         }
