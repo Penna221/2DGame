@@ -137,7 +137,8 @@ public class InventoryState extends State{
         
         for(SlotRectangle s : slotRectangles){
             Slot sl = s.slot;
-            sl.render(g,s.rect.x, s.rect.y);
+            sl.setPosition(s.rect.x, s.rect.y);
+            sl.render(g);
         }
         int mouseX = Game.mm.mouseX;
         int mouseY = Game.mm.mouseY;

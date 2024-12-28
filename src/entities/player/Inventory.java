@@ -9,6 +9,7 @@ import entities.Entity;
 import gfx.AssetStorage;
 import gfx.Factory;
 import main.Game;
+import ui.Text;
 import ui.UIFactory;
 
 public class Inventory {
@@ -333,10 +334,13 @@ public class Inventory {
         for(int i = 0; i < toShow; i++){
             Slot s = hotbarSlots[i];
             latestX = startX + i*(spacing+slotSize);
-            s.render(g, latestX, y);
+            s.setPosition(latestX, y);
+            s.render(g);
         }
-        arrowSlot.render(g, latestX+100, y);
-        spellSlot.render(g, latestX+100 + slotSize, y);
+        arrowSlot.setPosition(latestX+100, y);
+        arrowSlot.render(g);
+        spellSlot.setPosition(latestX+100+slotSize, y);
+        spellSlot.render(g);
         g.drawImage(AssetStorage.images.get("frame"), startX + selectedIndex*(spacing+slotSize),y,slotSize+1,slotSize+1,null);
         return overlay;
     }
@@ -346,10 +350,17 @@ public class Inventory {
         public Entity item;
         public byte amount;
         public int width,height;
-        public Slot(int width, int height){this.width=width;this.height=height;}
         public boolean highlight = false;
         public BufferedImage texture;
         public BufferedImage bgTexture;
+        private int x, y;
+        private InfoPacket infoPacket;
+        public Slot(int width, int height){this.width=width;this.height=height;infoPacket = new InfoPacket(0,0);}
+        public void setPosition(int x, int y){
+            this.x = x;
+            this.y = y;
+            infoPacket.update(item,x,y);
+        }
         public void updateSlot(){
             if(amount<=0){
                 clear();
@@ -400,6 +411,8 @@ public class Inventory {
         public void generateImage(){
             if(item!=null){
                 texture = UIFactory.generateIconWithAmount(item.texture,amount,width,height,false,new Color(0,0,0,0));
+                infoPacket.update(item, x,y);
+                
             }
         }
         public void reduce(byte amount){
@@ -414,7 +427,7 @@ public class Inventory {
             item = null;
             amount = 0;
         }
-        public void render(Graphics g, int x, int y){
+        public void render(Graphics g){
             g.setColor(new Color(0,0,0,180));
             g.fillRect(x, y, width, height);
             g.setColor(Color.red);
@@ -433,6 +446,7 @@ public class Inventory {
             if(highlight){
                 g.setColor(Color.white);
                 g.drawRect(x-1, y-1, width+2, height+2);
+                infoPacket.render(g);
             }
         }
     }

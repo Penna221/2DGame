@@ -86,6 +86,7 @@
         "equal":"res\\gfx\\alphabet\\equal.png",
         
         "dot":"res\\gfx\\alphabet\\dot.png",
+        "colon":"res\\gfx\\alphabet\\colon.png",
         "comma":"res\\gfx\\alphabet\\comma.png",
         "exclamation":"res\\gfx\\alphabet\\exclamation.png",
         "guestion":"res\\gfx\\alphabet\\guestion.png",

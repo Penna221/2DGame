@@ -206,6 +206,9 @@
         "char_dot":{
             "texture":"dot"
         },
+        "char_colon":{
+            "texture":"colon"
+        },
         "char_comma":{
             "texture":"comma"
         },

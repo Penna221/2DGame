@@ -561,6 +561,9 @@ public class UIFactory {
             case '.':
                 toReturn = alphabetCharacters.get("char_dot");
                 break;
+            case ':':
+                toReturn = alphabetCharacters.get("char_colon");
+                break;
             case ',':
                 toReturn = alphabetCharacters.get("char_comma");
                 break;

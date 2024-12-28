@@ -450,6 +450,26 @@ public class Entity {
         ai.lateInit();
 
     }
+    public int getItemDamage(){
+        int damage = 0;
+        switch (info.id) {
+            case 27:
+                damage = swordInfo.damage;
+                break;
+            case 35:
+                damage = projectileInfo.damage;
+                break;
+            case 36:
+                damage = staffInfo.damage;
+                break;
+            case 37:
+                damage = bowInfo.damage;
+                break;
+            default:
+                break;
+        }
+        return damage;
+    }
     public void updateInvisTime(int time){
         noHit = false;
         draw = true;
