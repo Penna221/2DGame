@@ -14,6 +14,7 @@ import entities.ai.BigSpiderAI;
 import entities.ai.BlacksmithAI;
 import entities.ai.BossAI;
 import entities.ai.ChestAI;
+import entities.ai.CobwebAI;
 import entities.ai.CollectableAI;
 import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
@@ -133,6 +134,9 @@ public class Entity {
                 break;
             case "big_spider":
                 ai = new BigSpiderAI(this);
+                break;
+            case "cobweb":
+                ai = new CobwebAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);
