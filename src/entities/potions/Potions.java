@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Entity;
+import entities.effects.SlowEffect;
 import json.JSON;
 import json.KeyValuePair;
 import sound.SoundPlayer;
@@ -35,8 +36,7 @@ public class Potions {
                 target.heal(10);
                 break;
             case "random":
-            //TODO
-                target.harm(1);
+                target.applyEffect(new SlowEffect(10000, target, 1.5));
                 break;
             
             default:

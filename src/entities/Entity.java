@@ -27,6 +27,7 @@ import entities.ai.SpiderAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
 import entities.bows.Bow;
+import entities.effects.Effect;
 import entities.potions.Potion;
 import entities.projectiles.Projectile;
 import entities.staves.Staff;
@@ -59,6 +60,7 @@ public class Entity {
     public int rotation;
     public double xSpeed, ySpeed;
     public double speed;
+    public double speedBuff;
     public Entity source;
     public ArrayList<Integer> receivedHits = new ArrayList<Integer>();
     public Projectile projectileInfo;
@@ -70,6 +72,7 @@ public class Entity {
     public Timer invincibleTimer,invincibleTimer2;
     public boolean noHit = false;
     public boolean draw =true;
+    public ArrayList<Effect> effects, toAdd,toRemove;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -341,7 +344,13 @@ public class Entity {
         canMove = checkTilesX();
         
         if(canMove){
-            x += xSpeed;
+            double newSpeed = xSpeed;
+            if(checkEffect("Slowness") || checkEffect("Speed")){
+                newSpeed *= speedBuff;
+                x+= newSpeed;
+            }else{
+                x += xSpeed;
+            }
         }
         return canMove;
         
@@ -351,7 +360,14 @@ public class Entity {
         canMove = checkTilesY();
 
         if(canMove){
-            y+= ySpeed;
+            double newSpeed = ySpeed;
+            if(checkEffect("Slowness") || checkEffect("Speed")){
+                newSpeed *= speedBuff;
+                y+= newSpeed;
+            }else{
+                y+= ySpeed;
+
+            }
         }
         return canMove;
     }
@@ -446,7 +462,9 @@ public class Entity {
         name = info.name;
         calculateBounds();
         updateInvisTime(info.invisTime);
-
+        effects = new ArrayList<Effect>();
+        toRemove = new ArrayList<Effect>();
+        toAdd = new ArrayList<Effect>();
         ai.lateInit();
 
     }
@@ -531,6 +549,12 @@ public class Entity {
         g.fillRect(drawX, drawY, (int)w,20);
 
     }
+    public void applyEffect(Effect effect){
+        toAdd.add(effect);
+    }
+    public void removeEffect(Effect effect){
+        toRemove.add(effect);
+    }
     public Rectangle generateSurroundingBox(int size){
         return new Rectangle((int)(bounds.x +bounds.width/2- size/2),(int) (bounds.y + bounds.height/2- size/2 ), size, size);
         
@@ -539,16 +563,31 @@ public class Entity {
         return new Ellipse2D.Double((int)(bounds.x +bounds.width/2- size/2),(int) (bounds.y + bounds.height/2- size/2 ), size, size);
         
     }
+    public boolean checkEffect(String name){
+        for(Effect eff : effects){
+            if(eff.name.equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
     public void update() {
         if(info.ai!="empty"){
             checkIfHit();
             
         }
-        
+        effects.addAll(toAdd);
+        toAdd.clear();
+        for(Effect e : effects){
+            e.update();
+        }
+        effects.removeAll(toRemove);
+        toRemove.clear();
         ai.update();
         if(noHit){
             invincibleTimer2.update();
             invincibleTimer.update();
         }
+        
     }
 }

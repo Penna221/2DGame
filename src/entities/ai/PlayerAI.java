@@ -13,6 +13,7 @@ import javax.sound.sampled.Clip;
 
 import entities.Entity;
 import entities.bows.Bows;
+import entities.effects.RegenEffect;
 import entities.player.HUD;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
@@ -68,6 +69,7 @@ public class PlayerAI extends AI{
         double scaleFactor = 20.0;
         e.currentAnimation = e.info.animations.get("idle");
         e.currentAnimation.restart();
+        e.applyEffect(new RegenEffect(5000,e,1));
     }
 
     @Override
