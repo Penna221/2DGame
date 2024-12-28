@@ -19,7 +19,7 @@ public class RegenEffect extends Effect{
                 e.heal(amount);
             }
         };
-        t = new Timer(1000,task);
+        t = new Timer(1500,task);
         t.backToStart();
     }
 }

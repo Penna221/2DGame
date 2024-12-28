@@ -69,7 +69,6 @@ public class PlayerAI extends AI{
         double scaleFactor = 20.0;
         e.currentAnimation = e.info.animations.get("idle");
         e.currentAnimation.restart();
-        e.applyEffect(new RegenEffect(5000,e,1));
     }
 
     @Override

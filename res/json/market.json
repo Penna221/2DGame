@@ -58,7 +58,7 @@
             "price":[
                 {
                     "item":[2],
-                    "amount":5
+                    "amount":10
                 },
                 {
                     "item":[3],
@@ -67,12 +67,32 @@
             ]
         },
         {
-            "id":[26,1],
+            "id":[26,2],
             "amount":1,
             "price":[
                 {
                     "item":[2],
-                    "amount":1
+                    "amount":10
+                }
+            ]
+        },
+        {
+            "id":[26,3],
+            "amount":1,
+            "price":[
+                {
+                    "item":[2],
+                    "amount":20
+                }
+            ]
+        },
+        {
+            "id":[26,4],
+            "amount":1,
+            "price":[
+                {
+                    "item":[2],
+                    "amount":20
                 }
             ]
         },

@@ -10,5 +10,23 @@
         "name":"Mystery Potion",
         "texture":"mystery_potion",
         "effect":"random"
+    },
+    "potion_2":{
+        "id":2,
+        "name":"Speed Potion",
+        "texture":"speed_potion",
+        "effect":"speed1"
+    },
+    "potion_3":{
+        "id":3,
+        "name":"Fire Resistance Potion",
+        "texture":"fire_res_potion",
+        "effect":"fire_res"
+    },
+    "potion_4":{
+        "id":4,
+        "name":"Regeneration Potion",
+        "texture":"regen_potion",
+        "effect":"regen"
     }
 }

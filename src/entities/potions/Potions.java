@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Entity;
+import entities.effects.FireResEffect;
+import entities.effects.RegenEffect;
 import entities.effects.SlowEffect;
 import json.JSON;
 import json.KeyValuePair;
@@ -34,6 +36,15 @@ public class Potions {
         switch (p.effect) {
             case "heal10":
                 target.heal(10);
+                break;
+            case "regen":
+                target.applyEffect(new RegenEffect(10000, target, 1));
+                break;
+            case "speed1":
+                target.applyEffect(new SlowEffect(10000, target, 1.5));
+                break;
+            case "fire_res":
+                target.applyEffect(new FireResEffect(60000, target));
                 break;
             case "random":
                 target.applyEffect(new SlowEffect(10000, target, 1.5));
