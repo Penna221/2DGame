@@ -359,7 +359,7 @@ public class Inventory {
         public void setPosition(int x, int y){
             this.x = x;
             this.y = y;
-            infoPacket.update(item,x,y);
+            infoPacket.update(item,x,y,300,70, true);
         }
         public void updateSlot(){
             if(amount<=0){
@@ -411,7 +411,7 @@ public class Inventory {
         public void generateImage(){
             if(item!=null){
                 texture = UIFactory.generateIconWithAmount(item.texture,amount,width,height,false,new Color(0,0,0,0));
-                infoPacket.update(item, x,y);
+                infoPacket.update(item, x,y,300,70,true);
                 
             }
         }

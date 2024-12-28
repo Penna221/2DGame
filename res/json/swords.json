@@ -2,7 +2,7 @@
     "sword_0":{
         "id":0,
         "name":"Iron Sword",
-        "damage":10,
+        "damage":6,
         "speed":1.0,
         "reach":1,
         "buff":"none",
@@ -11,7 +11,7 @@
     "sword_1":{
         "id":1,
         "name":"Iron Dagger",
-        "damage":10,
+        "damage":3,
         "speed":1.0,
         "reach":1,
         "buff":"none",

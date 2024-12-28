@@ -9,6 +9,7 @@ import entities.EntityInfo;
 import entities.EntityManager;
 import entities.ai.PlayerAI;
 import entities.bows.Bows;
+import entities.player.InfoPacket;
 import entities.potions.Potions;
 import entities.projectiles.Projectiles;
 import entities.staves.Staves;
@@ -484,17 +485,19 @@ public class PauseMenu {
         
         //GENERATE IMAGE BOX
         Image icon = generateImageIcon(texture,amount,150,150,true,Color.black);
-        
-
+        int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon.bounds.getWidth());
+        InfoPacket infoPacket = new InfoPacket(0,0);
+        infoPacket.update(ent,0,1,maxSizeForText1,100,false);
 
         leftSide.addElement(icon);
-        int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon.bounds.getWidth());
-        Text itemText = new Text(name,0,0,maxSizeForText1,false);
-        leftSide.addElement(itemText);
+        leftSide.addElement(infoPacket.c);
+        // Text itemText = new Text(name,0,0,maxSizeForText1,false);
+        // leftSide.addElement(itemText);
         leftSide.spaceHorizintally(20);
         leftSide.calculateBounds();
         leftSide.bounds.setSize(lockWidth,leftSide.bounds.height);
-        leftSide.centerVertically();
+        // leftSide.centerVertically();
+        
         c.addElement(leftSide);
 
 
@@ -549,11 +552,11 @@ public class PauseMenu {
         rightSide.calculateBounds();
         c.addElement(rightSide);
         // rightSide.setPosition(0, 0);
-
+        // leftSide.wrap();
 
         c.spaceHorizintally(0);
         c.calculateBounds();
-
+        c.wrap();
         return c;
     }
     

@@ -7,7 +7,7 @@ import ui.Container;
 import ui.Text;
 
 public class InfoPacket {
-    private Container c;
+    public Container c;
     private Text itemName;
     private Text damage;
     public int x, y;
@@ -15,16 +15,14 @@ public class InfoPacket {
         this.x = x;
         this.y = y;
     }
-    public void update(Entity e,int x, int y){
+    public void update(Entity e,int x, int y, int maxWidth, int height, boolean center){
         this.x = x;
         this.y = y;
         c = null;
         if(e!=null){
-            int maxWidth = 300;
-            int height = 70;
-            c = new Container((x-maxWidth/3), y-height-10, maxWidth, height);
+            c = new Container(0,0,maxWidth,height);
             c.fillBg = true;
-            itemName = new Text(e.name, 0, 0,maxWidth, false);
+            itemName = new Text(e.name, 0, 1,maxWidth, false);
             c.addElement(itemName);
             int d = e.getItemDamage();
             if(d!=0){
@@ -33,7 +31,10 @@ public class InfoPacket {
             }
             c.updateBounds();
             c.wrap();
-            c.setPosition((x-c.bounds.width/3), y-c.bounds.height-10);
+            c.setPosition(x, y);
+            if(center){
+                c.setPosition(x-c.bounds.width/3, y-c.bounds.height-10);
+            }
         }
     }
     public void render(Graphics g){
