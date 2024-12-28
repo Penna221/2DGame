@@ -51,7 +51,7 @@ public class Entity {
     public double scale;
     public Rectangle bounds;
     public boolean focused;
-    public int health;
+    public int health, maxHealth;
     public String name;
     public BufferedImage texture, highlight;
     public boolean inView = true;
@@ -197,6 +197,9 @@ public class Entity {
     }
     public void heal(int amount){
         health += amount;
+        if(health>=maxHealth){
+            health = maxHealth;
+        }
     }
     public void setScale(double d){
         this.scale = d;
@@ -463,6 +466,7 @@ public class Entity {
         texture = info.texture;
         speed = info.speed;
         health =info.health;
+        maxHealth = health;
         name = info.name;
         calculateBounds();
         updateInvisTime(info.invisTime);
@@ -541,7 +545,7 @@ public class Entity {
     }
     public void showHealth(Graphics g){
         int maxWidth = 100;
-        float percentage = (float)health / (float)info.health;
+        float percentage = (float)health / (float)maxHealth;
         float w = maxWidth * percentage;
         double xOffset = World.camera.getXOffset();
         double yOffset = World.camera.getYOffset();
