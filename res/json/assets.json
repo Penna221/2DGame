@@ -266,6 +266,10 @@
         "heart_half":"res\\gfx\\entities\\icons\\heart_half.png",
         "heart_half_white":"res\\gfx\\entities\\icons\\heart_half_white.png",
         "heart_empty":"res\\gfx\\entities\\icons\\heart_empty.png",
+        "onFire_icon":"res\\gfx\\entities\\icons\\onFire_icon.png",
+        "fire_res_icon":"res\\gfx\\entities\\icons\\fire_res_icon.png",
+        "regen_icon":"res\\gfx\\entities\\icons\\regen_icon.png",
+        "speed_icon":"res\\gfx\\entities\\icons\\speed_icon.png",
         
         "guide":"res\\gfx\\entities\\guide\\guide.png",
         "rocks_0":"res\\gfx\\entities\\extra\\rocks_0.png",

@@ -48,7 +48,7 @@ public class Potions {
                 target.applyEffect(new FireResEffect(60000, target));
                 break;
             case "random":
-                target.applyEffect(new SlowEffect(10000, target, 1.5));
+                target.applyEffect(new OnFireEffect(10000, target));
                 break;
             
             default:

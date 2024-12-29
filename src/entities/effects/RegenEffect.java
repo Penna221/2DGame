@@ -2,6 +2,7 @@ package entities.effects;
 
 
 import entities.Entity;
+import gfx.AssetStorage;
 import tools.Timer;
 import ui.Task;
 
@@ -11,6 +12,7 @@ public class RegenEffect extends Effect{
     public RegenEffect(int duration, Entity e, int amount){
         super(duration, e);
         name = "Regeneration";
+        icon = AssetStorage.images.get("regen_icon");
         this.e = e;
         this.amount = amount;
         Task task = new Task(){

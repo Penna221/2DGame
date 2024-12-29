@@ -8,9 +8,11 @@ import java.util.ArrayList;
 
 import entities.Entity;
 import entities.ai.PlayerAI;
+import entities.effects.Effect;
 import gfx.AssetStorage;
 import gfx.Factory;
 import tiles.Tile;
+import ui.UIFactory;
 import world.World;
 public class HUD {
     public boolean showHealth = true;
@@ -41,11 +43,26 @@ public class HUD {
             BufferedImage i = PlayerAI.inv.drawHotBar();
             toDraw.add(i);
         }
+        if(World.player.effects.size()!=0){
+            drawEffectIcons();
+        }
         for(BufferedImage i : toDraw){
             g.drawImage(i, 0, 0, null);
         }
         toDraw.clear();
         World.overlays.put("hud", overlay);
+    }
+    private void drawEffectIcons(){
+        BufferedImage i = Factory.generateNewOverlayImage();
+        Graphics gg = i.createGraphics();
+        int lastX = 100;
+        int y = 100;
+        for(Effect e : World.player.effects){
+            BufferedImage scaled = AssetStorage.scaleImage(e.icon, 2f);
+            gg.drawImage(scaled, lastX,y,null);
+            lastX += scaled.getWidth() + 10;
+        }
+        toDraw.add(i);
     }
     public void render(Graphics g2){
         g2.drawImage(overlay, 0, 0, null);
