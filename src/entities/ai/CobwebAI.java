@@ -6,6 +6,7 @@ import java.awt.geom.Ellipse2D;
 import entities.AttackBox;
 import entities.Entity;
 import entities.EntityManager;
+import entities.effects.OnFireEffect;
 import entities.effects.SlowEffect;
 import tools.Timer;
 import ui.Task;
@@ -32,13 +33,13 @@ public class CobwebAI extends AI{
                 if(en == e){
                     continue;
                 }
-                if(!en.checkEffect("Slowness"))
-                    en.applyEffect(new SlowEffect(1000, en, 0.4));
+                
+                en.applyEffect(new SlowEffect(1000, en, 0.4));
             }
-
-            
         }
-        
+        if(attackRadius.intersects(World.player.bounds)){
+            World.player.applyEffect(new SlowEffect(1000, World.player,0.4));
+        }
     }
     @Override
     public void update() {

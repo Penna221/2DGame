@@ -350,10 +350,11 @@
         "width":16,
         "height":16,
         "light_source":true,
-        "light_radius":550,
-        "light_color":"#AAAA00",
-        "light_transparency":0.78,
+        "light_radius":250,
+        "light_color":"#FFA000",
+        "light_transparency":0.11,
         "invisTime":1000
+        
     },
     "boss":{
         "id":18,
@@ -918,9 +919,9 @@
         "width":32,
         "height":32,
         "light_source":true,
-        "light_radius":100,
-        "light_color":"#FFA000",
-        "light_transparency":0.11,
+        "light_radius":550,
+        "light_color":"#AAAA00",
+        "light_transparency":0.78,
         "invisTime":1000
     }
 }

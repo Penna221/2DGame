@@ -5,7 +5,7 @@
         "borderTiles":[0,1],
         "collectables":[2,3],
         "entities":[15,17,32,33,34,41,48],
-        "structures":["empty_space_v1","vertical_tunnel"]
+        "structures":["empty_space_v1","vertical_tunnel", "dungeon_big"]
     },
     "cave_skeleton":{
         "nonSolidTiles":[35],
