@@ -347,7 +347,7 @@ public class Inventory {
     }
     //Inner class
     public class Slot{
-        private byte maxStack = 99;
+        private byte maxStack = 3;
         public Entity item;
         public byte amount;
         public int width,height;
@@ -429,6 +429,7 @@ public class Inventory {
             System.out.println("clearing");
             item = null;
             amount = 0;
+            infoPacket.update(null,x,y,400,70, true);
         }
         public void render(Graphics g){
             g.setColor(new Color(0,0,0,180));

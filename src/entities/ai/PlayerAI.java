@@ -51,15 +51,15 @@ public class PlayerAI extends AI{
 
         if(inv==null){
             inv = new Inventory();
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(3)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(4)));
+            // inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
+            // inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
+            // inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
         }
-        // inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
-        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
-        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
-        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
-        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(3)));
-        inv.addItem(World.entityManager.generatePotion(Potions.potions.get(4)));
-        // inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
-        // inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
     }
 
     @Override
@@ -119,8 +119,13 @@ public class PlayerAI extends AI{
             if(ee.bounds.intersects(viewRectangle)){
                 
                 ee.inView = true;
-                
+                if(!World.entityManager.inView.contains(ee)){
+                    World.entityManager.inView.add(ee);
+                }
             }else{
+                if(World.entityManager.inView.contains(ee)){
+                    World.entityManager.inView.remove(ee);
+                }
                 ee.inView = false;
             }
         }

@@ -20,14 +20,14 @@ public class FireplaceAI extends AI {
     public void lateInit() {
         e.currentAnimation = e.info.animations.get("idle");
         e.currentAnimation.restart();
-        attackRadius = e.generateSurroundingCircle(50);
+        attackRadius = e.generateSurroundingCircle(120);
         Task attackTask = new Task(){
             public void perform(){tryToAttack();}
         };
         attackTimer = new Timer(200,attackTask);
     }
     private void tryToAttack(){
-        for(Entity en : World.entityManager.newList){
+        for(Entity en : World.entityManager.inView){
             if(en== e){
                 continue;
             }
@@ -35,6 +35,10 @@ public class FireplaceAI extends AI {
                 en.applyEffect(new OnFireEffect(3000, en));
             }
         }
+        if(attackRadius.intersects(World.player.bounds)){
+            World.player.applyEffect(new OnFireEffect(3000, World.player));
+        }
+        
     }
     @Override
     public void update() {
@@ -45,6 +49,6 @@ public class FireplaceAI extends AI {
 
     @Override
     public void render(Graphics g) {
-
+        g.drawOval((int)(attackRadius.x-World.camera.getXOffset()),(int)(attackRadius.y-World.camera.getYOffset()), (int)attackRadius.width, (int)attackRadius.height);
     }
 }

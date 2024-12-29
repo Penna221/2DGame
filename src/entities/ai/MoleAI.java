@@ -38,6 +38,9 @@ public class MoleAI extends AI{
         e.updateBounds();
     }
     private void throwRock(){
+        if(!World.lineOfSightBetween(e, World.player)){
+            return;
+        }
         Point2D p1 = new Point((int)e.x,(int)(e.y));
         Point2D p2 = new Point((int)(World.player.x),(int)(World.player.y));
         float rotation = World.getAngleBetweenPoints(p2,p1);

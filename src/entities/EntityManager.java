@@ -239,6 +239,7 @@ public class EntityManager {
                     continue;
                 }
                 if(a.bounds.intersects(e.bounds)){
+                    
                     System.out.println("Dealing ["+a.damage+"] damage to " + e.name);
                     e.harm(a.damage);
                     e.giveMomentum(a.direction, 10);

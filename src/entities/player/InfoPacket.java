@@ -45,8 +45,8 @@ public class InfoPacket {
             if(center){
                 c.setPosition(x-c.bounds.width/3, y-c.bounds.height-10);
             }
+            draw = true;
         }
-        draw = true;
     }
     public void render(Graphics g){
         if(c!=null){

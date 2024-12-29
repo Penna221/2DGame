@@ -14,10 +14,10 @@ public class SlowEffect extends Effect{
         icon = AssetStorage.images.get("speed_icon");
         this.e = e;
         this.percentage = percentage;
+        e.speedBuff = percentage;
 
         Task task = new Task(){
             public void perform(){
-                e.speedBuff = percentage;
             }
         };
         t = new Timer(1000,task);

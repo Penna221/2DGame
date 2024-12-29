@@ -63,7 +63,7 @@ public class Entity {
     public int rotation;
     public double xSpeed, ySpeed;
     public double speed;
-    public double speedBuff;
+    public double speedBuff = 1;
     public Entity source;
     public ArrayList<Integer> receivedHits = new ArrayList<Integer>();
     public Projectile projectileInfo;
@@ -589,8 +589,14 @@ public class Entity {
 
     }
     public void applyEffect(Effect effect){
-        if(!checkEffect(effect.name))
+        if(!info.type.equals("Creature")){
+            return;
+        }
+        if(!checkEffect(effect.name)){
             toAdd.add(effect);
+        }else{
+
+        }
     }
     public void removeEffect(Effect effect){
         toRemove.add(effect);

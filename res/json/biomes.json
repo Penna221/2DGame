@@ -13,7 +13,7 @@
         "borderTiles":[35],
         "collectables":[2],
         "entities":[15,9,44,45],
-        "structures":["dungeon_v1","spidercave_tunnel","horizontal_tunnel"]
+        "structures":["dungeon_v1","dungeon_skeleton","spidercave_tunnel","horizontal_tunnel"]
     },
     "cave_spider":{
         "nonSolidTiles":[35],

@@ -12,7 +12,6 @@ import entities.effects.Effect;
 import gfx.AssetStorage;
 import gfx.Factory;
 import tiles.Tile;
-import ui.UIFactory;
 import world.World;
 public class HUD {
     public boolean showHealth = true;
