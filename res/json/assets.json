@@ -294,6 +294,11 @@
         "portrait_witch":"res\\gfx\\entities\\portraits\\p_witch.png",
         "swing_1":"res\\gfx\\animations\\attack\\swing_1.png",
         
+        "fireplace_1":"res\\gfx\\entities\\fireplace\\fireplace_1.png",
+        "fireplace_2":"res\\gfx\\entities\\fireplace\\fireplace_2.png",
+        "fireplace_3":"res\\gfx\\entities\\fireplace\\fireplace_3.png",
+        "fireplace_4":"res\\gfx\\entities\\fireplace\\fireplace_4.png",
+
         "fire_1":"res\\gfx\\animations\\fire\\fire_1.png",
         "fire_2":"res\\gfx\\animations\\fire\\fire_2.png",
         "fire_3":"res\\gfx\\animations\\fire\\fire_3.png",

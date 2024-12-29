@@ -1,29 +1,21 @@
 {
-    "forest":{
-        "nonSolidTiles":[3],
-        "solidTiles":[2],
-        "borderTiles":[6,7],
-        "collectables":[2],
-        "entities":[3],
-        "structures":["dungeon_v1","vertical_tunnel","horizontal_tunnel"]
-    },
-    "dungeon_lvl1":{
+    "cave_goblin":{
         "nonSolidTiles":[0,1],
         "solidTiles":[36],
         "borderTiles":[0,1],
         "collectables":[2,3],
-        "entities":[15,17,32,33,34,41],
-        "structures":["empty_space_v1","vertical_tunnel","spidercave_tunnel"]
+        "entities":[15,17,32,33,34,41,48],
+        "structures":["empty_space_v1","vertical_tunnel"]
     },
-    "dungeon_lvl2":{
+    "cave_skeleton":{
         "nonSolidTiles":[35],
         "solidTiles":[34],
         "borderTiles":[35],
         "collectables":[2],
-        "entities":[15,9],
-        "structures":["dungeon_v1","vertical_tunnel","horizontal_tunnel"]
+        "entities":[15,9,44,45],
+        "structures":["dungeon_v1","spidercave_tunnel","horizontal_tunnel"]
     },
-    "dungeon_lvl3":{
+    "cave_spider":{
         "nonSolidTiles":[35],
         "solidTiles":[36],
         "borderTiles":[35],

@@ -19,6 +19,7 @@ import entities.ai.CollectableAI;
 import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
 import entities.ai.Enemy1AI;
+import entities.ai.FireplaceAI;
 import entities.ai.GuideAI;
 import entities.ai.MoleAI;
 import entities.ai.PlayerAI;
@@ -139,6 +140,9 @@ public class Entity {
                 break;
             case "cobweb":
                 ai = new CobwebAI(this);
+                break;
+            case "fireplace":
+                ai = new FireplaceAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);
@@ -585,7 +589,8 @@ public class Entity {
 
     }
     public void applyEffect(Effect effect){
-        toAdd.add(effect);
+        if(!checkEffect(effect.name))
+            toAdd.add(effect);
     }
     public void removeEffect(Effect effect){
         toRemove.add(effect);

@@ -71,14 +71,15 @@ public class World {
                     public void run(){
                         try {
                             ready = false;
-                            if(worldName.startsWith("dungeon")){
-                                if(worldName.endsWith("lvl1")){
-                                    generate(LVL1);
-                                }else if(worldName.endsWith("lvl2")){
-                                    generate(LVL2);
-                                }else if(worldName.endsWith("lvl3")){
-                                    generate(LVL3);
-                                }
+                            if(worldName.startsWith("cave")){
+                                generate(worldName);
+                                // if(worldName.endsWith("spider")){
+                                //     generate(LVL1);
+                                // }else if(worldName.endsWith("skeleton")){
+                                //     generate(LVL2);
+                                // }else if(worldName.endsWith("goblin")){
+                                //     generate(LVL3);
+                                // }
                             }
                             else{
                                 String mapName = worldName;
@@ -130,13 +131,10 @@ public class World {
             e.printStackTrace();
         }
     }
-    private static void generate(int level){
+    private static void generate(String wn){
         entityManager.clearEntities();
-        generateMap(level);
+        map = new Map(wn,200,200);
         //generateMushrooms(type);
-    }
-    private static void generateMap(int type){
-        map = new Map(type,200,200);
     }
     
     private void generateMushrooms(int type){

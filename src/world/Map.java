@@ -29,23 +29,11 @@ public class Map {
     public static HashMap<String,Structure> structures = new HashMap<String,Structure>();
     private ArrayList<Rectangle> structureBounds;
     private boolean updating = false;
-    public Map(int type, int width, int height){
+    public Map(String wn, int width, int height){
         this.width = width;
         this.height = height;
-        generate(type);
-        switch (type) {
-            case World.LVL1:
-                populateWithEnemies(Biome.biomes.get("dungeon_lvl1"));     
-                break;
-            case World.LVL2:
-                populateWithEnemies(Biome.biomes.get("dungeon_lvl2")); 
-                break;
-            case World.LVL3:
-                populateWithEnemies(Biome.biomes.get("dungeon_lvl3")); 
-                break;
-            default:
-                break;
-        }
+        generate(wn);
+        populateWithEnemies(Biome.biomes.get(wn));     
     }
     public Map(){}
     public static void loadStructures() throws Exception{
@@ -99,20 +87,20 @@ public class Map {
         generateBinaryMap();
         
     }
-    public void generate(int type){
+    public void generate(String wn){
         structureBounds = new ArrayList<Rectangle>();
-        switch (type) {
-            case World.LVL1:
-                generateLVL1();        
+        switch (wn) {
+            case "cave_spider":
+                generateSpiderCave();        
                 break;
-            case World.LVL2:
-                generateLVL2();
+            case "cave_goblin":
+                generateGoblinCave();
                 break;
-            case World.LVL3:
-                generateLVL3();
+            case "cave_skeleton":
+                generateSkeletonCave();
                 break;
             default:
-                generateLVL1();
+                generateSpiderCave();
                 break;
         }
         generateWalls(5);
@@ -143,8 +131,8 @@ public class Map {
             e.printStackTrace();
         }
     }
-    private void generateLVL1(){
-        Biome b = Biome.biomes.get("dungeon_lvl1");
+    private void generateSpiderCave(){
+        Biome b = Biome.biomes.get("cave_spider");
         basicGeneration(b);
         //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
         generateStructureAtRandomSpot("lvl2_tunnel");
@@ -152,16 +140,16 @@ public class Map {
         generateStructureAtRandomSpot("trader_room_v1");
         
     }
-    private void generateLVL2(){
-        Biome b = Biome.biomes.get("dungeon_lvl2");
+    private void generateGoblinCave(){
+        Biome b = Biome.biomes.get("cave_goblin");
         basicGeneration(b);
 
         //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
         generateStructureAtRandomSpot("trader_room_v1");
         generateStructureAtRandomSpot("boss_door");
     }
-    private void generateLVL3(){
-        Biome b = Biome.biomes.get("dungeon_lvl3");
+    private void generateSkeletonCave(){
+        Biome b = Biome.biomes.get("cave_skeleton");
         basicGeneration(b);
 
         //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME

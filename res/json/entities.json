@@ -217,10 +217,10 @@
         "light_transparency":0.6,
         "invisTime":1000
     },
-    "ladder hole":{
+    "skeleton_tunnel":{
         "id":11,
         "type":"door",
-        "name":"Ladder Hole",
+        "name":"Skeleton tunnel" ,
         "texture":"ladder_hole",
         "speed":0.0,
         "health":2,
@@ -230,7 +230,7 @@
         "ai":"door",
         "width":16,
         "height":16,
-        "tunnel":"dungeon_lvl1",
+        "tunnel":"cave_skeleton",
         "light_source":true,
         "light_radius":200,
         "light_color":"#000000",
@@ -257,10 +257,10 @@
         "light_transparency":0.5,
         "invisTime":1000
     },
-    "lvl2_tunnel":{
+    "goblin_tunnel":{
         "id":13,
         "type":"door",
-        "name":"lvl2 Tunnel",
+        "name":"Goblin tunnel",
         "texture":"ladder_hole",
         "speed":0.0,
         "health":20,
@@ -270,7 +270,7 @@
         "ai":"door",
         "width":16,
         "height":16,
-        "tunnel":"dungeon_lvl2",
+        "tunnel":"cave_goblin",
         "light_source":true,
         "light_radius":200,
         "light_color":"#000000",
@@ -329,7 +329,7 @@
         "ai":"door",
         "width":16,
         "height":16,
-        "tunnel":"dungeon_lvl3",
+        "tunnel":"cave_spider",
         "light_source":false,
         "light_radius":0,
         "light_color":"#000000",
@@ -900,6 +900,25 @@
         "height":16,
         "light_source":false,
         "light_radius":50,
+        "light_color":"#FFA000",
+        "light_transparency":0.11,
+        "invisTime":1000
+    },
+    "fireplace":{
+        "id":48,
+        "type":"Decoration",
+        "name":"Fireplace",
+        "texture":"fireplace_1",
+        "speed":0.0,
+        "health":1,
+        "animations":{
+            "idle":"fireplace"
+        },
+        "ai":"fireplace",
+        "width":32,
+        "height":32,
+        "light_source":true,
+        "light_radius":100,
         "light_color":"#FFA000",
         "light_transparency":0.11,
         "invisTime":1000

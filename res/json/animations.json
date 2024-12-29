@@ -126,5 +126,9 @@
     "big_spider_move_r":{
         "images":["big_spider_move_r_1","big_spider_move_r_2","big_spider_move_r_3","big_spider_move_r_4","big_spider_move_r_5","big_spider_move_r_6"],
         "times":[100,100,100,100,100,100]
+    },
+    "fireplace":{
+        "images":["fireplace_1","fireplace_2","fireplace_3","fireplace_4"],
+        "times":[200,200,200,200]
     }
 }
