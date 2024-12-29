@@ -18,7 +18,7 @@ public class Inventory {
     public Slot[] hotbarSlots;
     private int y = Game.w.getHeight() - 40;
     private int spacing = 30;
-    private int slotSize = 50;
+    private int slotSize = 40;
     private BufferedImage overlay;
     private Graphics g;
     private int selectedIndex = 0;
@@ -330,7 +330,7 @@ public class Inventory {
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
         int startX = Game.w.getWidth()/2- (toShow/2)*(spacing+slotSize);
-        y = Game.w.getHeight() - 100;
+        y = Game.w.getHeight() - 50;
         int latestX = startX;
         for(int i = 0; i < toShow; i++){
             Slot s = hotbarSlots[i];

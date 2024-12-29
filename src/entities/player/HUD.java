@@ -55,8 +55,8 @@ public class HUD {
     private void drawEffectIcons(){
         BufferedImage i = Factory.generateNewOverlayImage();
         Graphics gg = i.createGraphics();
-        int lastX = 100;
-        int y = 100;
+        int lastX = 20;
+        int y = i.getHeight()-150;
         for(Effect e : World.player.effects){
             BufferedImage scaled = AssetStorage.scaleImage(e.icon, 2f);
             gg.drawImage(scaled, lastX,y,null);
@@ -72,7 +72,7 @@ public class HUD {
         Graphics gg = i.createGraphics();
 
         gg.setColor(new Color(63,32,18,140));
-        int height = 160;
+        int height = 60;
         gg.fillRect(0, i.getHeight()-height, i.getWidth(), height);
 
         toDraw.add(i);
@@ -104,7 +104,7 @@ public class HUD {
         int maxHealth = player.info.health;
         int hearts = health / 2;
         int half = health%2;
-        float scale = 3.0f;
+        float scale = 1.5f;
         BufferedImage heart_full = AssetStorage.scaleImage(AssetStorage.images.get("heart_full"), scale);
         BufferedImage heart_full_white = AssetStorage.scaleImage(AssetStorage.images.get("heart_full_white"), scale);
         BufferedImage heart_half = AssetStorage.scaleImage(AssetStorage.images.get("heart_half"), scale);
@@ -112,7 +112,7 @@ public class HUD {
 
         int totalWidth = 0;
         int xOffset = 10;
-        int yOffset = i.getHeight()-130;
+        int yOffset = i.getHeight()-50;
         int w = heart_full.getWidth();
         int space = 20;
         int lastX = xOffset+(0*(w+space));
