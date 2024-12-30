@@ -60,8 +60,8 @@ public class World {
     }
 
     public static void load(String worldName){
-        entityManager.clearEntities();
         entityManager.loading = true;
+        entityManager.clearEntities();
         entityManager.update();
         SoundPlayer.stopAllSounds();
         readyToUpdate = false;
@@ -86,13 +86,14 @@ public class World {
                             else{
                                 String mapName = worldName;
                                 String ent = mapName+"_entities";
-                                loadEntities(new File("res/maps/"+ent+".csv"));
                                 map.loadMap(new File("res/maps/"+mapName+".csv"));
+                                loadEntities(new File("res/maps/"+ent+".csv"));
 
                             }
                             ready = true;
                             readyToUpdate = true;
                             entityManager.loading = false;
+                            
                             update();
                             // Thread.sleep(3000);
                             Transition.canContinue2 = true;

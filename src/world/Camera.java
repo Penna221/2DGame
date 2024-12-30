@@ -70,7 +70,9 @@ public class Camera {
             // System.out.println("Centering on entity");
             centerOnEntity();
         }
-        lightUpdate.update();
+        if(light){
+            lightUpdate.update();
+        }
     }
     public double getXOffset(){return xOffset;}
     public double getYOffset(){return yOffset;}

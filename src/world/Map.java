@@ -195,6 +195,12 @@ public class Map {
         }
     }
 
+    public boolean checkIfSolid(int x, int y){
+        if(x < 0 || y < 0 || x > binaryMap.length || y > binaryMap[0].length){
+            return false;
+        }
+        return !binaryMap[x][y];
+    }
     //init everything to 0
     private void initMapToZero(){
         for(int y = 0; y < map[0].length; y++){

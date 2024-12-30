@@ -23,6 +23,7 @@ import gfx.AssetStorage;
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
+import tiles.Tile;
 import world.Camera;
 import world.World;
 
@@ -100,9 +101,11 @@ public class EntityManager {
 
     }
     public Entity spawnEntity(int id,int subID, double x, double y){
-        
-        // System.out.println("Added: " + e.name);
+        boolean solid = World.map.checkIfSolid((int)(x/Tile.tileSize), (int)(y/Tile.tileSize));
         Entity c = generateEntityWithID(id, subID, x, y);
+        if(solid && c.info.type=="Creature"){
+            return null;
+        }
         if(id==0){
             if(checkForPlayers()){
                 return null;
