@@ -26,4 +26,7 @@ public class Timer {
         lastTime = System.currentTimeMillis();
         elapsedTime = 0;
     }
+    public void setTime(int millis){
+        time = millis;
+    }
 }

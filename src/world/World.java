@@ -61,6 +61,8 @@ public class World {
 
     public static void load(String worldName){
         entityManager.clearEntities();
+        entityManager.loading = true;
+        entityManager.update();
         SoundPlayer.stopAllSounds();
         readyToUpdate = false;
         transition = new Transition(2000){
@@ -90,6 +92,7 @@ public class World {
                             }
                             ready = true;
                             readyToUpdate = true;
+                            entityManager.loading = false;
                             update();
                             // Thread.sleep(3000);
                             Transition.canContinue2 = true;
@@ -117,13 +120,10 @@ public class World {
             while((line = reader.readLine())!=null){
                 String[] tokens = line.split(",");
                 int id = Integer.parseInt(tokens[0]);
-                int x = Integer.parseInt(tokens[1])*Tile.tileSize;
-                int y = Integer.parseInt(tokens[2])*Tile.tileSize;
-                Entity e = entityManager.spawnEntity(id,-1, x, y);
-                if(id==0){
-                    player = e;
-                    Camera.setEntityToCenter(e);
-                }
+                double x = Integer.parseInt(tokens[1])*Tile.tileSize;
+                double y = Integer.parseInt(tokens[2])*Tile.tileSize;
+                entityManager.spawnEntity(id,-1, x, y);
+                
                 
             }
         } catch (IOException e) {

@@ -39,7 +39,7 @@ public class EntityManager {
 
     private ArrayList<Entity> toView;
     public ArrayList<Entity> newList;
-
+    public boolean loading = false;
     public EntityManager() {
         entities = new ArrayList<Entity>();
         toRemove = new ArrayList<Entity>();
@@ -178,6 +178,11 @@ public class EntityManager {
                 return true;
             }
         }
+        for(Entity e : toAdd){
+            if(e.info.id==0){
+                return true;
+            }
+        }
         return false;
     }
     public static int findIDWithName(String name){
@@ -206,6 +211,9 @@ public class EntityManager {
     }
     public void render(Graphics g){
         
+        if(World.player==null){
+            return;
+        }
         if(newList!=null){
             toView.clear();
             toView.addAll(newList);
@@ -213,60 +221,71 @@ public class EntityManager {
         Iterator<Entity> iterator = toView.iterator();
         while(iterator.hasNext()){
             Entity e = iterator.next();
+            
+            if(e==null){
+                return;
+            }
             e.render(g);
         }
         
     }
     public void update(){
-        newList = new ArrayList<Entity>();
-        newList.add(World.player);
-        for(Entity e : entities){
-            if(e.inView){
-                if(e.equals(World.player)){
-                    continue;
+        if(!loading){
+            newList = new ArrayList<Entity>();
+            newList.add(World.player);
+            for(Entity e : entities){
+                if(e.inView){
+                    if(e.equals(World.player)){
+                        continue;
+                    }
+                    newList.add(e);
+                    e.update();
                 }
-                newList.add(e);
-                e.update();
+            }
+            if(World.player!=null){
+                World.player.update();
             }
         }
-        World.player.update();
         entities.removeAll(toRemove);
         entities.addAll(toAdd);
         toRemove.clear();
         toAdd.clear();
         attackBoxes.addAll(newAttackBoxes);
         newAttackBoxes.clear();
-        for(AttackBox a : attackBoxes){
-            for(Entity e : entities){
-                if(e.equals(a.source) || e.equals(a.ignoreEntity)){
-                    continue;
-                }
-                if(a.source.projectileInfo!=null&&e.projectileInfo!=null){
-                    if(a.source.projectileInfo.id==e.projectileInfo.id){
+        if(!loading){
+
+            for(AttackBox a : attackBoxes){
+                for(Entity e : entities){
+                    if(e.equals(a.source) || e.equals(a.ignoreEntity)){
                         continue;
                     }
-                }
-                if(!e.info.type.equals("Creature")){
-                    continue;
-                }
-                if(a.bounds.intersects(e.bounds)){
-                    boolean canharm = true;
-                    System.out.println("Type of damage: " + a.type);
-                    
-                    for(String s : e.info.immune){
-                        System.out.println("Immune to: " + s);
-                        if(a.type.equals(s)){
-                            canharm = false;
-                            break;
+                    if(a.source.projectileInfo!=null&&e.projectileInfo!=null){
+                        if(a.source.projectileInfo.id==e.projectileInfo.id){
+                            continue;
                         }
                     }
-                    
-                    if(canharm){
-                        System.out.println("Dealing ["+a.damage+"] damage to " + e.name);
-                        e.harm(a.damage);
-                        e.giveMomentum(a.direction, 10);
-                        if(a.source.info.type.equals("Projectile")){
-                            removeEntity(a.source);
+                    if(!e.info.type.equals("Creature")){
+                        continue;
+                    }
+                    if(a.bounds.intersects(e.bounds)){
+                        boolean canharm = true;
+                        System.out.println("Type of damage: " + a.type);
+                        
+                        for(String s : e.info.immune){
+                            System.out.println("Immune to: " + s);
+                            if(a.type.equals(s)){
+                                canharm = false;
+                                break;
+                            }
+                        }
+                        
+                        if(canharm){
+                            System.out.println("Dealing ["+a.damage+"] damage to " + e.name);
+                            e.harm(a.damage);
+                            e.giveMomentum(a.direction, 10);
+                            if(a.source.info.type.equals("Projectile")){
+                                removeEntity(a.source);
+                            }
                         }
                     }
                 }
