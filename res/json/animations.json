@@ -130,5 +130,17 @@
     "fireplace":{
         "images":["fireplace_1","fireplace_2","fireplace_3","fireplace_4"],
         "times":[200,200,200,200]
+    },
+    "goblin_idle":{
+        "images":["goblin_idle_1","goblin_idle_2"],
+        "times":[250,250]
+    },
+    "goblin_run_left":{
+        "images":["goblin_run_left_1","goblin_run_left_2"],
+        "times":[150,150]
+    },
+    "goblin_run_right":{
+        "images":["goblin_run_right_1","goblin_run_right_2"],
+        "times":[150,150]
     }
 }

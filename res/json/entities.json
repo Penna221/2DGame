@@ -923,5 +923,32 @@
         "light_color":"#AAAA00",
         "light_transparency":0.78,
         "invisTime":1000
+    },
+    "goblin":{
+        "id":49,
+        "type":"Creature",
+        "name":"Goblin",
+        "texture":"goblin_idle_1",
+        "speed":4.5,
+        "health":40,
+        "animations":{
+            "idle":"goblin_idle",
+            "walk_west":"goblin_run_left",
+            "walk_east":"goblin_run_right",
+            "walk_north":"goblin_run_left",
+            "walk_south":"goblin_run_right",
+            "walk_south_west":"goblin_run_left",
+            "walk_south_east":"goblin_run_right",
+            "walk_north_west":"goblin_run_left",
+            "walk_north_east":"goblin_run_right"
+        },
+        "ai":"goblin",
+        "width":16,
+        "height":16,
+        "light_source":false,
+        "light_radius":550,
+        "light_color":"#AAAA00",
+        "light_transparency":0.78,
+        "invisTime":100
     }
 }

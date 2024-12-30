@@ -20,6 +20,7 @@ import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
 import entities.ai.Enemy1AI;
 import entities.ai.FireplaceAI;
+import entities.ai.GoblinAI;
 import entities.ai.GuideAI;
 import entities.ai.MoleAI;
 import entities.ai.PlayerAI;
@@ -143,6 +144,9 @@ public class Entity {
                 break;
             case "fireplace":
                 ai = new FireplaceAI(this);
+                break;
+            case "goblin":
+                ai = new GoblinAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);
