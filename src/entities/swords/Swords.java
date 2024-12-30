@@ -92,7 +92,7 @@ public class Swords {
         transform.scale(scaleFactor, scaleFactor);
         transform.rotate(rotationAngle);
         Polygon transformedPolygon = Factory.transformPolygon(s, transform);
-        AttackBox a = new AttackBox(source, damage, transformedPolygon, ignore, direction);
+        AttackBox a = new AttackBox(source, damage, transformedPolygon, ignore, direction,AttackBox.MELEE);
         EntityManager.addAttackBox(a);
 
         double rads = Math.toRadians(direction);

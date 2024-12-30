@@ -20,6 +20,7 @@ import entities.swords.Swords;
 import gfx.Animation;
 import gfx.Animations;
 import gfx.AssetStorage;
+import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
 import world.Camera;
@@ -77,6 +78,12 @@ public class EntityManager {
             Color light_color = Color.decode(color_string);
             double light_transparency = c.findChild("light_transparency").getFloat();
             int invisTime = c.findChild("invisTime").getInteger();
+            DataType[] imm = c.findChild("immune").getArray();
+            String[] immuneList = new String[imm.length];
+            
+            for(int i = 0; i < imm.length; i++){
+                immuneList[i] = imm[i].getString();
+            }
 
             HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
             KeyValuePair animations = c.findChild("animations");
@@ -87,15 +94,15 @@ public class EntityManager {
                 hashMap.put(a, Animations.animations.get(b));    
             }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime));
+            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime, immuneList));
         }
 
 
     }
-    public Entity generateWithID(int id,int subID, int x, int y){
-        EntityInfo e = entityInfos.get(id);
+    public Entity spawnEntity(int id,int subID, double x, double y){
+        
         // System.out.println("Added: " + e.name);
-        Entity c = new Entity(e,x,y);
+        Entity c = generateEntityWithID(id, subID, x, y);
         if(id==0){
             if(checkForPlayers()){
                 return null;
@@ -103,23 +110,6 @@ public class EntityManager {
             World.player = c;
             Camera.setEntityToCenter(c);
         }
-        switch (id) {
-            case 26:
-                c.potionInfo = Potions.potions.get(subID);
-                break;
-            case 27:
-                c.swordInfo = Swords.swords.get(subID);
-                break;
-            case 35:
-                c.projectileInfo = Projectiles.projectiles.get(subID);
-                break;
-            case 36:
-                c.staffInfo = Staves.staves.get(subID);
-                break;
-            default:
-                break;
-        }
-        c.loadBasicInfo();
         toAdd.add(c);
         return c;
     }
@@ -161,10 +151,31 @@ public class EntityManager {
         return c;
 
     }
+    public Entity generateEntityWithID(int id, int subID, double x, double y){
+        Entity c = new Entity(entityInfos.get(id),x,y);
+        switch (id) {
+            case 26:
+                c.potionInfo = Potions.potions.get(subID);
+                break;
+            case 27:
+                c.swordInfo = Swords.swords.get(subID);
+                break;
+            case 35:
+                c.projectileInfo = Projectiles.projectiles.get(subID);
+                break;
+            case 36:
+                c.staffInfo = Staves.staves.get(subID);
+                break;
+            default:
+                break;
+        }
+        c.loadBasicInfo();
+        return c;
+    }
     private boolean checkForPlayers(){
         for(Entity e: entities){
             if(e.info.id==0){
-                
+                return true;
             }
         }
         return false;
@@ -239,12 +250,24 @@ public class EntityManager {
                     continue;
                 }
                 if(a.bounds.intersects(e.bounds)){
+                    boolean canharm = true;
+                    System.out.println("Type of damage: " + a.type);
                     
-                    System.out.println("Dealing ["+a.damage+"] damage to " + e.name);
-                    e.harm(a.damage);
-                    e.giveMomentum(a.direction, 10);
-                    if(a.source.info.type.equals("Projectile")){
-                        removeEntity(a.source);
+                    for(String s : e.info.immune){
+                        System.out.println("Immune to: " + s);
+                        if(a.type.equals(s)){
+                            canharm = false;
+                            break;
+                        }
+                    }
+                    
+                    if(canharm){
+                        System.out.println("Dealing ["+a.damage+"] damage to " + e.name);
+                        e.harm(a.damage);
+                        e.giveMomentum(a.direction, 10);
+                        if(a.source.info.type.equals("Projectile")){
+                            removeEntity(a.source);
+                        }
                     }
                 }
             }

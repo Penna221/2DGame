@@ -42,7 +42,7 @@ public class BlacksmithAI extends AI {
         }else{
             talk = false;
         }
-        e.move();
+        e.move(true);
         e.updateBounds();
         e.currentAnimation.animate();
     }

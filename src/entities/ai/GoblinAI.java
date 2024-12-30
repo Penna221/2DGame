@@ -32,7 +32,7 @@ public class GoblinAI extends AI{
     private void tryToAttack(){
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
-                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player)));
+                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player),AttackBox.MELEE));
             }
         }
     }
@@ -57,7 +57,7 @@ public class GoblinAI extends AI{
         e.currentAnimation.animate();
         moveTimer.update();
         attackTimer.update();
-        e.move();
+        e.move(true);
         
         e.texture = e.currentAnimation.getFrame();
         e.updateBounds();

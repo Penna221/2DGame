@@ -34,7 +34,7 @@ public class BigSpiderAI extends AI{
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
                 System.out.println("attack");
-                EntityManager.addAttackBox(new AttackBox(e, 5, e.bounds,null,World.getAngleBetween(e,World.player)));
+                EntityManager.addAttackBox(new AttackBox(e, 5, e.bounds,null,World.getAngleBetween(e,World.player),AttackBox.MELEE));
             }
         }
     }
@@ -58,7 +58,7 @@ public class BigSpiderAI extends AI{
         e.slowdown(0.89);
         moveTimer.update();
         attackTimer.update();
-        e.move();
+        e.move(true);
         e.texture = e.currentAnimation.getFrame();
 
         e.updateBounds();

@@ -56,7 +56,7 @@ public class LootTables {
             for(int j = 0; j < amount; j++){
                 int randomXOffset = generateRandomAmount(-40, 40);
                 int randomYOffset = generateRandomAmount(-40, 40);
-                Entity e2 = World.entityManager.generateWithID(id,id2, (int)x+randomXOffset, (int)y+randomYOffset);
+                Entity e2 = World.entityManager.spawnEntity(id,id2, (int)x+randomXOffset, (int)y+randomYOffset);
                 e2.ai = new CollectableAI(e2);
                 // boolean success = PlayerAI.inv.addItem(e2);
                 // if(success){

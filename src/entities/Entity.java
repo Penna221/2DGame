@@ -27,6 +27,7 @@ import entities.ai.PlayerAI;
 import entities.ai.ProjectileAI;
 import entities.ai.SkeletonAI;
 import entities.ai.SpiderAI;
+import entities.ai.SummonerAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
 import entities.bows.Bow;
@@ -147,6 +148,9 @@ public class Entity {
                 break;
             case "goblin":
                 ai = new GoblinAI(this);
+                break;
+            case "summoner":
+                ai = new SummonerAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);
@@ -309,53 +313,56 @@ public class Entity {
             World.entityManager.removeEntity(this);
         }
     }
-    public void move(){
+    public void move(boolean animate){
         
         //Can you move?
         //are you frozen?
         //Collision?
         
+        if(animate){
+            if(xSpeed >0){
+                if(ySpeed ==0){
+                    setAnimation(info.animations.get("walk_east"));
+                }else{
+                    if(ySpeed>0){
+                        setAnimation(info.animations.get("walk_south_east"));
+                        
+                    }else{
+                        setAnimation(info.animations.get("walk_north_east"));
+                    }
+                }
+            }
+            //west
+            if(xSpeed <0){
+                if(ySpeed ==0){
+                    setAnimation(info.animations.get("walk_west"));
+                }else{
+                    if(ySpeed>0){
+                        setAnimation(info.animations.get("walk_south_west"));
+                        
+                    }else{
+                        setAnimation(info.animations.get("walk_north_west"));
+                    }
+                }
+            }
+            //south
+            if(ySpeed >0){
+                if(xSpeed ==0){
+                    setAnimation(info.animations.get("walk_south"));
+                }
+            }
+            
+            //north
+            if(ySpeed <0){
+                if(xSpeed ==0){
+                    setAnimation(info.animations.get("walk_north"));
+                }
+            }
+            
+
+        }
         // -- Set correct animation
         //east
-        if(xSpeed >0){
-            if(ySpeed ==0){
-                setAnimation(info.animations.get("walk_east"));
-            }else{
-                if(ySpeed>0){
-                    setAnimation(info.animations.get("walk_south_east"));
-                    
-                }else{
-                    setAnimation(info.animations.get("walk_north_east"));
-                }
-            }
-        }
-        //west
-        if(xSpeed <0){
-            if(ySpeed ==0){
-                setAnimation(info.animations.get("walk_west"));
-            }else{
-                if(ySpeed>0){
-                    setAnimation(info.animations.get("walk_south_west"));
-                    
-                }else{
-                    setAnimation(info.animations.get("walk_north_west"));
-                }
-            }
-        }
-        //south
-        if(ySpeed >0){
-            if(xSpeed ==0){
-                setAnimation(info.animations.get("walk_south"));
-            }
-        }
-        
-        //north
-        if(ySpeed <0){
-            if(xSpeed ==0){
-                setAnimation(info.animations.get("walk_north"));
-            }
-        }
-        
 
         moveX();
         moveY();

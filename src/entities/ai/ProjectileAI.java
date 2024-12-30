@@ -116,7 +116,13 @@ public class ProjectileAI extends AI{
             }
         }
         if(e.xSpeed!=0&&e.ySpeed!=0){
-            attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation);
+            if(e.projectileInfo.type.equals("Arrow")){
+                attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation,AttackBox.PROJECTILE);
+            }else if(e.projectileInfo.type.equals("Magic")){
+                attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation,AttackBox.MAGIC);
+            }else{
+                attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation,AttackBox.PROJECTILE);
+            }
             EntityManager.addAttackBox(attackBox);
         }
         

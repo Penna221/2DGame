@@ -216,6 +216,11 @@
         "goblin_run_right_1":"res\\gfx\\entities\\enemies\\goblin\\goblin_run_right_1.png",
         "goblin_run_right_2":"res\\gfx\\entities\\enemies\\goblin\\goblin_run_right_2.png",
         
+        "summoner_idle_1":"res\\gfx\\entities\\enemies\\summoner\\summoner_idle_1.png",
+        "summoner_idle_2":"res\\gfx\\entities\\enemies\\summoner\\summoner_idle_2.png",
+        "summoner_attack_1":"res\\gfx\\entities\\enemies\\summoner\\summoner_attack_1.png",
+        "summoner_attack_2":"res\\gfx\\entities\\enemies\\summoner\\summoner_attack_2.png",
+        
         "fox":"res\\gfx\\entities\\fox\\fox.png",
         "coin_1":"res\\gfx\\entities\\items\\coin_1.png",
         "coin_2":"res\\gfx\\entities\\items\\coin_2.png",

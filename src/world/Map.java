@@ -369,7 +369,7 @@ public class Map {
         //change to spawn enemy.
         if(d ==1){
             int d2 = r.nextInt(entities.length);
-            World.entityManager.generateWithID(entities[d2],-1, x, y);
+            World.entityManager.spawnEntity(entities[d2],-1, x, y);
             return true;
         }
         return false;
@@ -418,7 +418,7 @@ public class Map {
 
         structureBounds.add(r);
         for(StructureEntity e : s.entities){
-            World.entityManager.generateWithID(e.id,-1, (e.x + x)*Tile.tileSize, (e.y+y)*Tile.tileSize);
+            World.entityManager.spawnEntity(e.id,-1, (e.x + x)*Tile.tileSize, (e.y+y)*Tile.tileSize);
         }
         return true;
     }

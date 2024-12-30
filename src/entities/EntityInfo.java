@@ -24,7 +24,8 @@ public class EntityInfo {
     public double light_transparency;
 
     public int invisTime;
-    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel, boolean lightSource, int light_radius,Color light_color,double light_transparency, int invisTime){
+    public String[] immune;
+    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel, boolean lightSource, int light_radius,Color light_color,double light_transparency, int invisTime, String[] immune){
         this.name = name;
         this.id = id;
         this.type = type;
@@ -41,5 +42,6 @@ public class EntityInfo {
         this.light_color = light_color;
         this.light_transparency = light_transparency;
         this.invisTime = invisTime;
+        this.immune = immune;
     }
 }

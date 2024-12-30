@@ -40,7 +40,7 @@ public class GuideAI extends AI{
             talk = false;
         }
 
-        e.move();
+        e.move(true);
         e.updateBounds();
         e.currentAnimation.animate();
     }

@@ -13,6 +13,7 @@ import world.World;
 public class SpiderAI extends AI{
     private Ellipse2D.Double attackRadius;
     private Timer moveTimer, attackTimer;
+    
     public SpiderAI(Entity e){
         super(e);
     }
@@ -34,7 +35,7 @@ public class SpiderAI extends AI{
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
                 System.out.println("attack");
-                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player)));
+                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player),AttackBox.MELEE));
             }
         }
     }
@@ -58,7 +59,7 @@ public class SpiderAI extends AI{
         e.slowdown(0.89);
         moveTimer.update();
         attackTimer.update();
-        e.move();
+        e.move(true);
         e.texture = e.currentAnimation.getFrame();
 
         e.updateBounds();

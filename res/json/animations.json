@@ -142,5 +142,13 @@
     "goblin_run_right":{
         "images":["goblin_run_right_1","goblin_run_right_2"],
         "times":[150,150]
+    },
+    "summoner_idle":{
+        "images":["summoner_idle_1","summoner_idle_2"],
+        "times":[1000,1000]
+    },
+    "summoner_attack":{
+        "images":["summoner_attack_1","summoner_attack_2"],
+        "times":[200,200]
     }
 }

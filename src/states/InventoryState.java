@@ -93,7 +93,7 @@ public class InventoryState extends State{
                             s.slot.add(selected.item);
                         }
                         selected.clear();
-                        Entity e = World.entityManager.generateWithID(tempID, tempSubID,0,0);
+                        Entity e = World.entityManager.spawnEntity(tempID, tempSubID,0,0);
                         for(int i = 0; i < amount; i++){
                             selected.add(e);
                         }
@@ -104,7 +104,7 @@ public class InventoryState extends State{
                         //Copy selected
                         int copyID = selected.item.info.id;
                         int copyID2 = selected.item.subID;
-                        Entity e = World.entityManager.generateWithID(copyID, copyID2,0,0);
+                        Entity e = World.entityManager.spawnEntity(copyID, copyID2,0,0);
                         selected.clear();
                         putItemsInSlot(slotRectangles[selectedSlotID].slot, e,remainder);
                         slotSelected = false;
