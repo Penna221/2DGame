@@ -359,15 +359,17 @@ public class Entity {
                 }
             }
             
-
+            
         }
         // -- Set correct animation
         //east
-
+        
         moveX();
         moveY();
-        if(xSpeed == 0 && ySpeed == 0){
-            setAnimation(info.animations.get("idle"));
+        if(animate){
+            if(xSpeed == 0 && ySpeed == 0){
+                setAnimation(info.animations.get("idle"));
+            }
         }
         
     }

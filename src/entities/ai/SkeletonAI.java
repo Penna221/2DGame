@@ -8,12 +8,14 @@ import java.awt.geom.Point2D;
 import entities.AttackBox;
 import entities.Entity;
 import entities.EntityManager;
+import entities.swords.Swords;
 import tools.Timer;
 import ui.Task;
 import world.World;
 public class SkeletonAI extends AI{
     private Ellipse2D.Double attackRadius;
     private Timer moveTimer, attackTimer;
+    private boolean animate = true;
     public SkeletonAI(Entity e){
         super(e);
     }
@@ -25,14 +27,28 @@ public class SkeletonAI extends AI{
         Task attackTask = new Task(){
             public void perform(){tryToAttack();}
         };
-        attackTimer = new Timer(1000,attackTask);
-        moveTimer = new Timer(500,moveTask);
-        attackRadius = e.generateSurroundingCircle(50);
+        attackTimer = new Timer(1500,attackTask);
+        moveTimer = new Timer(250,moveTask);
+        attackRadius = e.generateSurroundingCircle(100);
     }
     private void tryToAttack(){
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
-                EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player),AttackBox.MELEE));
+                animate = false;
+                float rot = World.getAngleBetween(World.player,e);
+                float calcRot = rot+180;
+                
+                if(calcRot <90 || calcRot > 270){
+                    e.setAnimation(e.info.animations.get("attack_left"));
+                }else{
+                    e.setAnimation(e.info.animations.get("attack_right"));
+                }
+                
+                e.texture = e.currentAnimation.getFrame();
+                Swords.createSwordAttack(e, null, Swords.poke, rot, 1, new Point((int)(e.bounds.getCenterX()),(int)(e.bounds.getCenterY())));
+                // EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player),AttackBox.MELEE));
+            }else{
+                animate = true;
             }
         }
     }
@@ -44,7 +60,6 @@ public class SkeletonAI extends AI{
             if(World.lineOfSightBetween(e, World.player)){
                 float rot = World.getAngleBetween(World.player,e);
                 float rads = (float) Math.toRadians(rot);
-                System.out.println(rot);
                 e.xSpeed = e.speed*Math.cos(rads);
                 e.ySpeed = e.speed*Math.sin(rads);
             }else{
@@ -54,10 +69,11 @@ public class SkeletonAI extends AI{
     }
     @Override
     public void update() {
-        e.slowdown(0.9);
+        e.move(animate);
+        e.currentAnimation.animate();
+        e.texture = e.currentAnimation.getFrame();
         moveTimer.update();
         attackTimer.update();
-        e.move(true);
         e.updateBounds();
         attackRadius.x = e.x +e.bounds.width/2 - attackRadius.width/2;
         attackRadius.y = e.y +e.bounds.height/2 - attackRadius.height/2;

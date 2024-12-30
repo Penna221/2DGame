@@ -33,7 +33,6 @@ public class BigSpiderAI extends AI{
     private void tryToAttack(){
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
-                System.out.println("attack");
                 EntityManager.addAttackBox(new AttackBox(e, 5, e.bounds,null,World.getAngleBetween(e,World.player),AttackBox.MELEE));
             }
         }

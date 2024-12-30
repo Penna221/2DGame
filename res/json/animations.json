@@ -36,8 +36,8 @@
         "times":[100,100,100,100,100,100,100,100]
     },
     "coin_idle":{
-        "images":["coin_1","coin_2","coin_3","coin_2"],
-        "times":[1000,400,1000,400]
+        "images":["coin_1","coin_2","coin_3","coin_4"],
+        "times":[200,200,200,2000]
     },
     "rose_idle":{
         "images":["rose"],
@@ -89,6 +89,10 @@
     },
     "swing_attack":{
         "images":["swing_1"],
+        "times":[300]
+    },
+    "poke_attack":{
+        "images":["poke"],
         "times":[300]
     },
     "fire":{
@@ -150,5 +154,25 @@
     "summoner_attack":{
         "images":["summoner_attack_1","summoner_attack_2"],
         "times":[200,200]
+    },
+    "skeleton_idle":{
+        "images":["skeleton_idle_1","skeleton_idle_2"],
+        "times":[500,500]
+    },
+    "skeleton_run_left":{
+        "images":["skeleton_run_left_1","skeleton_run_left_2"],
+        "times":[100,100]
+    },
+    "skeleton_run_right":{
+        "images":["skeleton_run_right_1","skeleton_run_right_2"],
+        "times":[100,100]
+    },
+    "skeleton_attack_right":{
+        "images":["skeleton_run_right_1","skeleton_attack_right","skeleton_run_right_1"],
+        "times":[50,500,1000]
+    },
+    "skeleton_attack_left":{
+        "images":["skeleton_run_left_1","skeleton_attack_left","skeleton_run_left_1"],
+        "times":[50,500,1000]
     }
 }

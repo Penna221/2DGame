@@ -100,8 +100,12 @@ public class Swords {
         double unitY = Math.sin(rads);
         int xOffset = (int)(unitX * 80);
         int yOffset = (int)(unitY * 80);
-
-        Particle p = new Particle("swing_attack",300,direction);
+        Particle p;
+        if(s == swing){
+            p = new Particle("swing_attack",300,direction);
+        }else{
+            p = new Particle("poke_attack",300,direction);
+        }
         p.setPosition((int)origin.getX()+xOffset,(int)origin.getY()+yOffset);
         World.particleManager.addParticle(p);
         Random r = new Random();

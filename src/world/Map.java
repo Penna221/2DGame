@@ -196,7 +196,7 @@ public class Map {
     }
 
     public boolean checkIfSolid(int x, int y){
-        if(x < 0 || y < 0 || x > binaryMap.length || y > binaryMap[0].length){
+        if(x < 0 || y < 0 || x > binaryMap.length-1 || y > binaryMap[0].length-1){
             return false;
         }
         return !binaryMap[x][y];
