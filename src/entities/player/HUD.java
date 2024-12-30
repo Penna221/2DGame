@@ -12,11 +12,13 @@ import entities.effects.Effect;
 import gfx.AssetStorage;
 import gfx.Factory;
 import tiles.Tile;
+import ui.UIFactory;
 import world.World;
 public class HUD {
     public boolean showHealth = true;
     public boolean showCoordinates = true;
     public boolean showInventory = true;
+    public boolean showEnergy = true;
     private BufferedImage overlay;
     private Graphics g;
     public ArrayList<BufferedImage> toDraw = new ArrayList<BufferedImage>();
@@ -42,14 +44,41 @@ public class HUD {
             BufferedImage i = PlayerAI.inv.drawHotBar();
             toDraw.add(i);
         }
+        if(showEnergy){
+            drawEnergy();
+        }
         if(World.player.effects.size()!=0){
             drawEffectIcons();
         }
+        
         for(BufferedImage i : toDraw){
             g.drawImage(i, 0, 0, null);
         }
         toDraw.clear();
         World.overlays.put("hud", overlay);
+    }
+    private void drawEnergy(){
+        BufferedImage i = Factory.generateNewOverlayImage();
+        Graphics gg = i.createGraphics();
+        int lastX = 10;
+        int y = i.getHeight()-30;
+        BufferedImage icon1 = AssetStorage.images.get("energy_full");
+        BufferedImage icon2 = AssetStorage.images.get("energy_empty");
+        BufferedImage scaled1 = AssetStorage.scaleImage(icon1, 1.5f);
+        BufferedImage scaled2 = AssetStorage.scaleImage(icon2, 1.5f);
+        int buffer = 20;
+        for(int count = 0; count < PlayerAI.energy; count++){
+            
+            gg.drawImage(scaled1, lastX,y,null);
+            lastX += scaled1.getWidth() + buffer;
+        }
+        int remaining = PlayerAI.fullEnergy - PlayerAI.energy;
+        for(int count = 0; count < remaining; count++){
+            
+            gg.drawImage(scaled2, lastX,y,null);
+            lastX += scaled1.getWidth() + buffer;
+        }
+        toDraw.add(i);
     }
     private void drawEffectIcons(){
         BufferedImage i = Factory.generateNewOverlayImage();
@@ -57,8 +86,10 @@ public class HUD {
         int lastX = 20;
         int y = i.getHeight()-150;
         for(Effect e : World.player.effects){
-            BufferedImage scaled = AssetStorage.scaleImage(e.icon, 2f);
-            gg.drawImage(scaled, lastX,y,null);
+            BufferedImage scaled = AssetStorage.scaleImage(e.icon, 1.5f);
+            int seconds = e.timer.remainingSeconds;
+            BufferedImage icon = UIFactory.generateIconWithAmount(scaled,seconds,scaled.getWidth(),scaled.getHeight(),false,Color.black);
+            gg.drawImage(icon, lastX,y,null);
             lastX += scaled.getWidth() + 10;
         }
         toDraw.add(i);
@@ -111,7 +142,7 @@ public class HUD {
 
         int totalWidth = 0;
         int xOffset = 10;
-        int yOffset = i.getHeight()-50;
+        int yOffset = i.getHeight()-60;
         int w = heart_full.getWidth();
         int space = 20;
         int lastX = xOffset+(0*(w+space));

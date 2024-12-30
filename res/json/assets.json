@@ -291,7 +291,9 @@
         "fire_res_icon":"res\\gfx\\entities\\icons\\fire_res_icon.png",
         "regen_icon":"res\\gfx\\entities\\icons\\regen_icon.png",
         "speed_icon":"res\\gfx\\entities\\icons\\speed_icon.png",
-        
+        "energy_full":"res\\gfx\\entities\\icons\\energy_icon_full.png",
+        "energy_empty":"res\\gfx\\entities\\icons\\energy_icon_empty.png",
+
         "guide":"res\\gfx\\entities\\guide\\guide.png",
         "rocks_0":"res\\gfx\\entities\\extra\\rocks_0.png",
         "rocks_1":"res\\gfx\\entities\\extra\\rocks_1.png",

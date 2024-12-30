@@ -608,7 +608,7 @@ public class Entity {
         if(!checkEffect(effect.name)){
             toAdd.add(effect);
         }else{
-
+            reApplyEffect(effect.name);
         }
     }
     public void removeEffect(Effect effect){
@@ -629,6 +629,13 @@ public class Entity {
             }
         }
         return false;
+    }
+    public void reApplyEffect(String name){
+        for(Effect eff : effects){
+            if(eff.name.equals(name)){
+                eff.timer.backToStart();
+            }
+        }    
     }
     public void update() {
         if(info.ai!="empty"){

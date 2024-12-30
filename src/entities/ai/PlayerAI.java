@@ -14,6 +14,7 @@ import javax.sound.sampled.Clip;
 import entities.Entity;
 import entities.bows.Bows;
 import entities.effects.RegenEffect;
+import entities.effects.SlowEffect;
 import entities.player.HUD;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
@@ -37,6 +38,9 @@ public class PlayerAI extends AI{
     public static HUD hud;
     private static int buffer = 60;
     public Timer hudUpdateTimer;
+    public static int energy = 3;
+    public static int fullEnergy = 5;
+    public Timer regenEnergyTimer;
     public PlayerAI(Entity entity) {
         super(entity);
         if(hud==null){
@@ -61,6 +65,15 @@ public class PlayerAI extends AI{
             inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
             
         }
+        Task regenEnergyTask = new Task(){
+            public void perform(){
+                energy+=1;
+                if(energy>=fullEnergy){
+                    energy = fullEnergy;
+                }
+            }
+        };
+        regenEnergyTimer = new Timer(2000,regenEnergyTask);
     }
 
     @Override
@@ -136,9 +149,19 @@ public class PlayerAI extends AI{
         
         e.move(true);
         e.updateBounds();
+        regenEnergyTimer.update();
         e.currentAnimation.animate();
         hudUpdateTimer.update();
         
+    }
+    public static void reduceEnergy(int amount){
+        energy -= amount;
+        if(energy <0){
+            //DO SOMETHING BAD
+            World.player.applyEffect(new SlowEffect(10000, World.player, 0.3));
+            energy = 0;
+            
+        }
     }
     public static void doActionWithSelectedItem(){
         Slot selectedSlot = inv.getSelectedSlot();
@@ -149,60 +172,104 @@ public class PlayerAI extends AI{
         int y1 = (int)(World.player.bounds.getCenterY());
         Point2D origin = new Point(x1,y1);
         float rotation = World.getPlayerRotationToCursor();
-        Random r = new Random();
+        
+        
         switch (selectedSlot.item.info.id) {
             case 26:
                 //POTION
-                //Consume potion
-                Potions.consume(selectedSlot.item.potionInfo, World.player);
-                selectedSlot.reduce((byte)1);
+                drinkPotion(selectedSlot);
                 break;
             case 27:
                 //SWORD
                 //SWING SWORD
-                buffer *=-1;
-                int swordDamage = Swords.swords.get(selectedSlot.item.subID).damage;
-                int dam =  swordDamage;
-                Swords.createSwordAttack(World.player, null, Swords.swing, World.getPlayerRotationToCursor(),dam,origin);
-                
+                swordAttack(selectedSlot, origin);
                 break;
             case 35:
                 //PROJECTILE
                 //THROW PROJECTILE. IF ARROW
                 
-                World.generateProjectile(0, rotation, origin,World.player);
-                SoundPlayer.playSound("throw");
-                selectedSlot.reduce((byte)1);
+                throwProjectile(selectedSlot,rotation,origin);
                 break;
             case 36:
                 //STAFF
-                if(inv.spellSlot.item!=null&&inv.spellSlot.item.info.type.equals("Spell")){
-                    Entity spell = World.generateProjectile(4, rotation, origin,World.player);
-                    spell.staffInfo = selectedSlot.item.staffInfo;
-                    int r1 = 1+ r.nextInt(3);
-                    SoundPlayer.playSound("magic_"+r1);
-                }
+                magicSpell(selectedSlot,rotation,origin);
                 
                 //CAST SPELL
                 break;
             case 37:
                 //BOW
-                //Point bow at that direction.
-                if(inv.arrowSlot.item!=null){
-                    if(inv.arrowSlot.item.info.id==35&&inv.arrowSlot.item.projectileInfo.type.equals("Arrow")){
-                        Entity arrow = World.generateProjectile(inv.arrowSlot.item.subID, World.getPlayerRotationToCursor(), origin,World.player);
-                        arrow.bowInfo = selectedSlot.item.bowInfo;
-                        int r2 = 1+ r.nextInt(3);
-                        SoundPlayer.playSound("projectile_"+r2);
-                        inv.arrowSlot.reduce((byte)1);
-                    }
-                }
+                shootBow(selectedSlot, origin);
                 break;
             default:
                 break;
         }
     }
-
+    public static void swordAttack(Slot selectedSlot, Point2D origin){
+        int neededEnergy = 1;
+        Random r = new Random();
+        int r1 = r.nextInt(100);
+        boolean random = false;
+        if(r1 < 50){
+            random = true;
+        }
+        //r1 = random change that player has enough energy to swing badly and hurt self.
+        if(energy>=neededEnergy||random){
+            buffer *=-1;
+            int swordDamage = Swords.swords.get(selectedSlot.item.subID).damage;
+            int dam =  swordDamage;
+            if(random){
+                dam = (int)swordDamage/2;
+            }
+            Swords.createSwordAttack(World.player, null, Swords.swing, World.getPlayerRotationToCursor(),dam,origin);
+            reduceEnergy(neededEnergy);
+        }
+    }
+    public static void drinkPotion(Slot selectedSlot){
+        //Consume potion
+        Potions.consume(selectedSlot.item.potionInfo, World.player);
+        selectedSlot.reduce((byte)1);
+    }
+    public static void throwProjectile(Slot selectedSlot, float rotation, Point2D origin){
+        int neededEnergy = 1;
+        if(energy>=neededEnergy){
+            World.generateProjectile(0, rotation, origin,World.player);
+            SoundPlayer.playSound("throw");
+            selectedSlot.reduce((byte)1);
+            reduceEnergy(neededEnergy);
+        
+        }
+    }
+    public static void magicSpell(Slot selectedSlot, float rotation, Point2D origin){
+        if(inv.spellSlot.item!=null&&inv.spellSlot.item.info.type.equals("Spell")){
+            int neededEnergy = 3;
+            if(energy>=neededEnergy){
+                Random r = new Random();
+                Entity spell = World.generateProjectile(4, rotation, origin,World.player);
+                spell.staffInfo = selectedSlot.item.staffInfo;
+                int r1 = 1+ r.nextInt(3);
+                SoundPlayer.playSound("magic_"+r1);
+                reduceEnergy(neededEnergy);
+            
+            }
+        }
+    }
+    public static void shootBow(Slot selectedSlot, Point2D origin){
+        //Point bow at that direction.
+        if(inv.arrowSlot.item!=null){
+            if(inv.arrowSlot.item.info.id==35&&inv.arrowSlot.item.projectileInfo.type.equals("Arrow")){
+                int neededEnergy = 2;
+                if(energy>=neededEnergy){
+                    Random r = new Random();
+                    Entity arrow = World.generateProjectile(inv.arrowSlot.item.subID, World.getPlayerRotationToCursor(), origin,World.player);
+                    arrow.bowInfo = selectedSlot.item.bowInfo;
+                    int r2 = 1+ r.nextInt(3);
+                    SoundPlayer.playSound("projectile_"+r2);
+                    inv.arrowSlot.reduce((byte)1);
+                    reduceEnergy(neededEnergy);
+                }
+            }
+        }
+    }
     @Override
     public void render(Graphics g) {
         

@@ -6,6 +6,7 @@ public class Timer {
     private double elapsedTime, currentTime, lastTime;
     private double time;
     private Task t;
+    public int remainingSeconds;
     public Timer(int time, Task t){
         this.time = time;
         this.t = t;
@@ -15,6 +16,7 @@ public class Timer {
     public void update(){
         currentTime = System.currentTimeMillis();
         elapsedTime += currentTime - lastTime;
+        remainingSeconds = (int)(time - elapsedTime)/1000;
         // System.out.println(elapsedTime);
         if(elapsedTime>=time){
             t.perform();
