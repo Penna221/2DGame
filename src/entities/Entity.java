@@ -527,6 +527,9 @@ public class Entity {
     }
     public int getItemDamage(){
         int damage = 0;
+        if(swordInfo==null && projectileInfo== null && staffInfo==null && bowInfo==null){
+            return damage;
+        }
         switch (info.id) {
             case 27:
                 damage = swordInfo.damage;

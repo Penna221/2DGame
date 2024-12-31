@@ -20,7 +20,7 @@ public class InventoryState extends State{
     public Slot[] inventorySlots;
     public Slot[] hotbarSlots;
     public Slot[] specialSlots;
-    private static boolean slotSelected = false;
+    public static boolean slotSelected = false;
     private static int selectedSlotID = -1;
     private static SlotRectangle[] slotRectangles;
         @Override
@@ -89,22 +89,22 @@ public class InventoryState extends State{
                         int tempSubID = s.slot.item.subID;
                         int amount = s.slot.amount;
                         s.slot.clear();
+                        selected.item.loadBasicInfo();
                         for(int i = 0; i < selected.amount; i++){
                             s.slot.add(selected.item);
                         }
                         selected.clear();
-                        Entity e = World.entityManager.spawnEntity(tempID, tempSubID,0,0);
+                        Entity e = World.entityManager.generateEntityWithID(tempID, tempSubID,0,0);
                         for(int i = 0; i < amount; i++){
                             selected.add(e);
                         }
-                        World.entityManager.removeEntity(e);
                         break;
 
                     }else{
                         //Copy selected
                         int copyID = selected.item.info.id;
                         int copyID2 = selected.item.subID;
-                        Entity e = World.entityManager.spawnEntity(copyID, copyID2,0,0);
+                        Entity e = World.entityManager.generateEntityWithID(copyID, copyID2,0,0);
                         selected.clear();
                         putItemsInSlot(slotRectangles[selectedSlotID].slot, e,remainder);
                         slotSelected = false;

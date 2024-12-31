@@ -9,6 +9,7 @@ import entities.Entity;
 import gfx.AssetStorage;
 import gfx.Factory;
 import main.Game;
+import states.InventoryState;
 import ui.Text;
 import ui.UIFactory;
 
@@ -360,7 +361,9 @@ public class Inventory {
         public void setPosition(int x, int y){
             this.x = x;
             this.y = y;
-            infoPacket.update(item,x,y,400,70, true);
+            if(!InventoryState.slotSelected){
+                infoPacket.update(item,x,y,400,70, true);
+            }
         }
         public void updateSlot(){
             if(amount<=0){
@@ -414,7 +417,8 @@ public class Inventory {
         public void generateImage(){
             if(item!=null){
                 texture = UIFactory.generateIconWithAmount(item.texture,amount,width,height,false,new Color(0,0,0,0));
-                infoPacket.update(item, x,y,400,70,true);
+                if(!InventoryState.slotSelected)
+                    infoPacket.update(item, x,y,400,70,true);
                 
             }
         }
@@ -450,7 +454,8 @@ public class Inventory {
             if(highlight){
                 g.setColor(Color.white);
                 g.drawRect(x-1, y-1, width+2, height+2);
-                infoPacket.render(g);
+                if(!InventoryState.slotSelected)
+                    infoPacket.render(g);
             }
         }
     }
