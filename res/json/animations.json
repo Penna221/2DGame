@@ -174,5 +174,9 @@
     "skeleton_attack_left":{
         "images":["skeleton_run_left_1","skeleton_attack_left","skeleton_run_left_1"],
         "times":[50,500,1000]
+    },
+    "big_goblin_idle":{
+        "images":["big_goblin_idle_1","big_goblin_idle_2"],
+        "times":[1000,1000]
     }
 }

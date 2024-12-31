@@ -216,6 +216,9 @@
         "goblin_run_right_1":"res\\gfx\\entities\\enemies\\goblin\\goblin_run_right_1.png",
         "goblin_run_right_2":"res\\gfx\\entities\\enemies\\goblin\\goblin_run_right_2.png",
         
+        "big_goblin_idle_1":"res\\gfx\\entities\\enemies\\big_goblin\\big_goblin_idle_1.png",
+        "big_goblin_idle_2":"res\\gfx\\entities\\enemies\\big_goblin\\big_goblin_idle_2.png",
+
         "summoner_idle_1":"res\\gfx\\entities\\enemies\\summoner\\summoner_idle_1.png",
         "summoner_idle_2":"res\\gfx\\entities\\enemies\\summoner\\summoner_idle_2.png",
         "summoner_attack_1":"res\\gfx\\entities\\enemies\\summoner\\summoner_attack_1.png",

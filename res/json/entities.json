@@ -1029,5 +1029,25 @@
         "light_transparency":0.78,
         "invisTime":100,
         "immune":["Projectile","Magic"]
+    },
+    "big_goblin":{
+        "id":51,
+        "type":"Creature",
+        "name":"Big Goblin",
+        "texture":"big_goblin_idle_1",
+        "speed":2.0,
+        "health":500,
+        "animations":{
+            "idle":"big_goblin_idle"
+        },
+        "ai":"big_goblin",
+        "width":64,
+        "height":64,
+        "light_source":false,
+        "light_radius":550,
+        "light_color":"#AAAA00",
+        "light_transparency":0.78,
+        "invisTime":100,
+        "immune":["Melee"]
     }
 }

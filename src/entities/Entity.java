@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import entities.ai.AI;
+import entities.ai.BigGoblinAI;
 import entities.ai.BigSpiderAI;
 import entities.ai.BlacksmithAI;
 import entities.ai.BossAI;
@@ -79,6 +80,7 @@ public class Entity {
     public boolean draw =true;
     public ArrayList<Effect> effects, toAdd,toRemove;
     public Timer particleGenerationTimer;
+    public static boolean drawBounds = false;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -151,6 +153,9 @@ public class Entity {
                 break;
             case "summoner":
                 ai = new SummonerAI(this);
+                break;
+            case "big_goblin":
+                ai = new BigGoblinAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);
@@ -585,6 +590,9 @@ public class Entity {
         ai.render(g);
         if(health != info.health){
             showHealth(g);
+        }
+        if(drawBounds){
+            drawBounds(g);
         }
     }
     public void showHealth(Graphics g){
