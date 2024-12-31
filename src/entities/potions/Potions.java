@@ -8,7 +8,7 @@ import entities.Entity;
 import entities.effects.FireResEffect;
 import entities.effects.OnFireEffect;
 import entities.effects.RegenEffect;
-import entities.effects.SlowEffect;
+import entities.effects.SpeedEffect;
 import json.JSON;
 import json.KeyValuePair;
 import sound.SoundPlayer;
@@ -42,7 +42,7 @@ public class Potions {
                 target.applyEffect(new RegenEffect(10000, target, 1));
                 break;
             case "speed1":
-                target.applyEffect(new SlowEffect(10000, target, 1.5));
+                target.applyEffect(new SpeedEffect(10000, target, 1.5));
                 break;
             case "fire_res":
                 target.applyEffect(new FireResEffect(60000, target));

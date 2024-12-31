@@ -3,10 +3,7 @@ package entities.ai;
 import java.awt.Graphics;
 import java.awt.geom.Ellipse2D;
 
-import entities.AttackBox;
 import entities.Entity;
-import entities.EntityManager;
-import entities.effects.OnFireEffect;
 import entities.effects.SlowEffect;
 import tools.Timer;
 import ui.Task;

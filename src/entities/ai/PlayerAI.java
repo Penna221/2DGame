@@ -13,7 +13,6 @@ import javax.sound.sampled.Clip;
 
 import entities.Entity;
 import entities.bows.Bows;
-import entities.effects.RegenEffect;
 import entities.effects.SlowEffect;
 import entities.player.HUD;
 import entities.player.Inventory;

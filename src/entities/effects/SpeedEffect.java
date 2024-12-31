@@ -5,13 +5,13 @@ import gfx.AssetStorage;
 import tools.Timer;
 import ui.Task;
 
-public class SlowEffect extends Effect{
+public class SpeedEffect extends Effect{
     public Entity e;
     public double percentage;
-    public SlowEffect(int duration, Entity e,double percentage){
+    public SpeedEffect(int duration, Entity e,double percentage){
         super(duration, e);
-        name = "Slowness";
-        icon = AssetStorage.images.get("slow_icon");
+        name = "Speed";
+        icon = AssetStorage.images.get("speed_icon");
         this.e = e;
         this.percentage = percentage;
         e.speedBuff = percentage;

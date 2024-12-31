@@ -290,6 +290,7 @@
         "onFire_icon":"res\\gfx\\entities\\icons\\onFire_icon.png",
         "fire_res_icon":"res\\gfx\\entities\\icons\\fire_res_icon.png",
         "regen_icon":"res\\gfx\\entities\\icons\\regen_icon.png",
+        "slow_icon":"res\\gfx\\entities\\icons\\slow_icon.png",
         "speed_icon":"res\\gfx\\entities\\icons\\speed_icon.png",
         "energy_full":"res\\gfx\\entities\\icons\\energy_icon_full.png",
         "energy_empty":"res\\gfx\\entities\\icons\\energy_icon_empty.png",
