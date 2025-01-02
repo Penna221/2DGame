@@ -62,6 +62,10 @@ public class PlayerAI extends AI{
             inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
             inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
             inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
+            inv.addItem(World.entityManager.generateBow(Bows.bows.get(1)));
+            inv.addItem(World.entityManager.generateSword(Swords.swords.get(1)));
+            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
             
         }
         Task regenEnergyTask = new Task(){

@@ -58,23 +58,24 @@ public class InventoryState extends State{
             }
     }
     public static void releaseSlot(){
+        //DRAGGING SLOT AND RELEASING IT ON SOME SLOT.
+
         if(!slotSelected||selectedSlotID==-1)
             return;
 
         int mouseX = Game.mm.mouseX;
         int mouseY = Game.mm.mouseY;
         for(SlotRectangle s : slotRectangles){
-            System.out.println(selectedSlotID + "  " + s.id);
             if(selectedSlotID==s.id){
                 continue;
             }
             Rectangle r = s.rect;
-            System.out.println("selectedSlot: " + selectedSlotID);
             Slot selected = slotRectangles[selectedSlotID].slot;
             if(r.contains(mouseX,mouseY)){
                 //IF Slot has no item, put it there.
                 //IF SLOT HAS SAME item, combine.
                 if(s.slot.item==null){
+                    //This slot is FREE. Put selected items in there.
                     int remainder = putItemsInSlot(s.slot,selected.item,selected.amount);
                     
                     slotRectangles[selectedSlotID].slot.clear();
@@ -82,40 +83,55 @@ public class InventoryState extends State{
                     selectedSlotID = -1;
                     break;
                 }else{
-                    int remainder = putItemsInSlot(s.slot,selected.item,selected.amount);
-                    //IF same amount, probably different items.
-                    if(remainder == selected.amount){
-                        int tempID = s.slot.item.info.id;
-                        int tempSubID = s.slot.item.subID;
-                        int amount = s.slot.amount;
-                        s.slot.clear();
-                        selected.item.loadBasicInfo();
-                        for(int i = 0; i < selected.amount; i++){
-                            s.slot.add(selected.item);
+                    //Slot has something in it.
+                    //Check if item has same type.
+                    boolean sameType = Inventory.checkIfSameType(selected.item, s.slot.item);
+                    if(sameType){
+                        boolean sameSubId = Inventory.checkIfSameSubID(selected.item, s.slot.item);
+                        //SAMETYPE & same SubID so add items together. If remander == selected.amount or not zero, put rest back to selected slot
+                        if(sameSubId){
+                            int remainder = putItemsInSlot(s.slot,selected.item,selected.amount);
+                            if(remainder!=0){
+                                selected.amount = (byte)remainder;
+                            }
+                        }else{
+                            //Not Same item, SWAP has to happen.
+                            swapSlots(selected, s.slot);
                         }
-                        selected.clear();
-                        Entity e = World.entityManager.generateEntityWithID(tempID, tempSubID,0,0);
-                        for(int i = 0; i < amount; i++){
-                            selected.add(e);
-                        }
-                        break;
-
-                    }else{
-                        //Copy selected
-                        int copyID = selected.item.info.id;
-                        int copyID2 = selected.item.subID;
-                        Entity e = World.entityManager.generateEntityWithID(copyID, copyID2,0,0);
-                        selected.clear();
-                        putItemsInSlot(slotRectangles[selectedSlotID].slot, e,remainder);
-                        slotSelected = false;
-                        selectedSlotID = -1;
-                        break;
+                    }
+                    else{
+                        //not same item. SWAP has to happen.
+                        swapSlots(selected, s.slot);
                     }
                 }
             }
         }
         slotSelected = false;
         selectedSlotID = -1;
+        PlayerAI.inv.updateInventory();
+    }
+    private static void swapSlots(Slot a, Slot b){
+        int tempID = a.item.info.id;
+        int tempSubID = a.item.subID;
+        int amount = a.amount;
+        a.clear();
+        
+        int tempID2 = b.item.info.id;
+        int tempSubID2 = b.item.subID;
+        int amount2 = b.amount;
+        b.clear();
+
+        Entity e1 = World.entityManager.generateEntityWithID(tempID, tempSubID, 0,0);
+        Entity e2 = World.entityManager.generateEntityWithID(tempID2, tempSubID2, 0,0);
+
+        System.out.println("E1: " + e1.name + " " + e1.info.id + " " + e1.subID);
+        System.out.println("E2: " + e2.name + " " + e2.info.id + " " + e2.subID);
+        for(int i = 0; i < amount; i++){
+            b.add(e1);
+        }
+        for(int i = 0; i < amount2; i++){
+            a.add(e2);
+        }
     }
     private static int putItemsInSlot(Slot s, Entity e, int amount){
         int originalAmount = amount;
@@ -167,7 +183,6 @@ public class InventoryState extends State{
         //Create hotbar. Put them in their position.
         int latestX = 0;
         for(int i = 0; i < hotbarlength; i++){
-            System.out.println(i);
             int y = Game.w.getHeight() - (int)(3*slotSize*1.3);
             int startX = Game.w.getWidth()/2- (hotbarSlots.length/2)*(spacing+slotSize);
             int x = startX + i*(spacing+slotSize);
@@ -179,7 +194,6 @@ public class InventoryState extends State{
         }
         int currentIndex = hotbarlength;
         for(int i = 0; i < specialLength; i++){
-            System.out.println(i);
             int yy = Game.w.getHeight() - (int)(3*slotSize*1.3);;
             int xx = latestX +spacing+(slotSize*2)+ (i*(spacing+slotSize))+spacing;
             Rectangle r = new Rectangle(xx,yy,slotSize,slotSize);
@@ -191,24 +205,20 @@ public class InventoryState extends State{
         //Create Inventory. Put them in their position.
         int rows = 4;
         int perRow = inventorySlots.length/rows;
-        System.out.println("Per row "+perRow);
         int remainder = inventorySlots.length%rows;
         
         int y = Game.w.getHeight()/3 - (int)(2*slotSize*1.3);
         int startX = Game.w.getWidth()/2- (perRow/2)*(spacing+slotSize);
         for(int row = 0; row < rows; row++){
-            System.out.println("next Row: " + row);
             for(int i = 0; i < perRow; i++){
                 Rectangle r = new Rectangle(startX + i*(slotSize+spacing),y + row*(slotSize+spacing),slotSize,slotSize);
                 int lookUp = (row*perRow)+i;
-                System.out.println("*"+lookUp);
                 Slot s = inventorySlots[lookUp];
                 SlotRectangle sr = new SlotRectangle(currentIndex,r, s);
                 slotRectangles[currentIndex] = sr;
                 currentIndex++;
             }
         }
-        System.out.println("remainder " + remainder);
         if(remainder!=0){
             for(int i = 0; i < remainder; i++){
                 Rectangle r = new Rectangle(startX + i*(slotSize+spacing),y + (rows+1)*(slotSize+spacing),slotSize,slotSize);

@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import entities.bows.Bow;
+import entities.bows.Bows;
 import entities.potions.Potion;
 import entities.potions.Potions;
 import entities.projectiles.Projectile;
@@ -168,6 +169,9 @@ public class EntityManager {
                 break;
             case 36:
                 c.staffInfo = Staves.staves.get(subID);
+                break;
+            case 37:
+                c.bowInfo = Bows.bows.get(subID);
                 break;
             default:
                 break;

@@ -12,11 +12,11 @@
     "bow_1":{
         "id":1,
         "name":"Long bow",
-        "damage":10,
+        "damage":15,
         "speed":1.0,
         "max_distance":2,
         "buff":"none",
         "type":"normal",
-        "texture":"bow"
+        "texture":"longbow"
     }
 }

@@ -49,6 +49,16 @@
                     "amount":5
                 }
             ]
+        },
+        {
+            "id":[37,1],
+            "amount":1,
+            "price":[
+                {
+                    "item":[2],
+                    "amount":5
+                }
+            ]
         }
     ],
     "witch":[

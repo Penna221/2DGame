@@ -87,12 +87,35 @@ public class Inventory {
             if(s.item==null){
                 continue;
             }
-            boolean sameId = checkIfSameSubID(e, s.item);
-            if(sameId){
-                return i;
+            System.out.println(e.name);
+            boolean sameType = checkIfSameType(e, s.item);
+            System.out.println("Sametype: " + sameType);
+            if(sameType){
+                boolean sameId = checkIfSameSubID(e, s.item);
+                if(sameId){
+                    return i;
+                }
             }
         }
         return -1;
+    }
+    public Slot getEmptyHotbarSlot(){
+        for(int i = 0; i < hotbarSlots.length; i++){
+            Slot s = hotbarSlots[i];
+            if(s.item==null){
+                return s;
+            }
+        }
+        return null;
+    }
+    public Slot getEmptyInventorySlot(){
+        for(int i = 0; i < inventorySlots.length; i++){
+            Slot s = inventorySlots[i];
+            if(s.item==null){
+                return s;
+            }
+        }
+        return null;
     }
     public int getSlotWithItemFromInventorySlots(Entity e){
         for(int i = 0; i < inventorySlots.length; i++){
@@ -100,16 +123,10 @@ public class Inventory {
             if(s.item==null){
                 continue;
             }
-            if(s.item.subID!=-1){
+            boolean sameType = checkIfSameType(e, s.item);
+            if(sameType){
                 boolean sameId = checkIfSameSubID(e, s.item);
                 if(sameId){
-                    return i;
-                }
-            }else{
-                if(e.subID!=-1){
-                    continue;
-                }
-                if(s.item.info.id == e.info.id){
                     return i;
                 }
             }
@@ -118,47 +135,31 @@ public class Inventory {
         return -1;
     }
     public static boolean checkIfSameSubID(Entity e1, Entity e2){
-        if(e1.swordInfo!=null){
-            if(e2.swordInfo!=null){
-                if(e1.swordInfo.id == e2.swordInfo.id){
-                    return true;
-                }
-            }else{
-                return false;
-            }
-        }else if(e1.projectileInfo!=null){
-            if(e2.projectileInfo!=null){
-                if(e1.projectileInfo.id == e2.projectileInfo.id){
-                    return true;
-                }
-            }else{
-                return false;
-            }
-        }else if(e1.staffInfo!=null){
-            if(e2.staffInfo!=null){
-                if(e1.staffInfo.id == e2.staffInfo.id){
-                    return true;
-                }
-            }else{
-                return false;
-            }
-        }else if(e1.potionInfo!=null){
-            if(e2.potionInfo!=null){
-                if(e1.potionInfo.id == e2.potionInfo.id){
-                    return true;
-                }
-            }else{
-                return false;
-            }
-        }else{
-            //DOES NOT HAVE SUB ID
-            if(e1.info.id==e2.info.id){
-                return true;
-            }else{
-                return false;
-            }
+        //ASSUMING e1 and e2 has same info.id.
+        //FIRST USE checkIfSameType(e1, e2);
+        
+        if(e1.subID== e2.subID){
+            return true;
         }
         return false;
+    }
+    public static boolean checkIfSameType(Entity e1, Entity e2){
+        if(e1.swordInfo!=null && e2.swordInfo!=null){
+            return true;
+        }else if(e1.bowInfo!=null && e2.bowInfo!=null){
+            return true;
+        }else if(e1.projectileInfo!=null && e2.projectileInfo!=null){
+            return true;
+        }else if(e1.potionInfo!=null&&e2.potionInfo!=null){
+            return true;
+        }else if(e1.staffInfo!=null&&e2.staffInfo!=null){
+            return true;
+        }else if(e1.info.id == e2.info.id){
+            return true;
+        }else{
+            return false;
+        }
+        
     }
     public boolean tryAddToArrows(Entity c){
         boolean added = false;
@@ -178,46 +179,82 @@ public class Inventory {
             added = tryAddToArrows(c);
         }
         if(!added){
-            //HOTBAT
+            //HOTBAR
+            //Check hotbar for slots with "c" item.
             int slotA = getSlotWithItemFromHotbarSlots(c);
-            if(slotA !=-1){
-                
-                added = hotbarSlots[slotA].add(c);
-            }else{
-                //INVENTORY
+
+            if(slotA == -1){
+                //IF hotbar doesnot have sameitems check inventory.
                 int slotB = getSlotWithItemFromInventorySlots(c);
-                
-                if(slotB!=-1){
+                System.out.println("Hotbar does not have item "+c.name+". -> Checking inventory");
+                if(slotB == -1){
+                    System.out.println("inventory does not have item. Finding empty slot.");
+                    //Inventory does not have same item.
+                    //IF added returns false, slot is full.
+                    //-> check emptyslots.
+                    Slot s = getEmptySlot();
+                    if(s == null){
+                        //NO AVAILABLE SLOTS. 
+                        System.out.println("No available slots.");
+                        return false;
+                    }else{
+                        System.out.println("Found empty slot. Adding there.");
+                        s.add(c);
+                        return true;
+                    }
+                }else{
+                    //Inventory has slot with item "c"
                     added = inventorySlots[slotB].add(c);
-                    
-                }
-            }
-        }
-        
-        if(!added){
-            for(int i = 0; i < hotbarSlots.length; i++){
-                Slot s = hotbarSlots[i];
-                if(s.add(c)){
-                    added = true;
-                    System.out.println("Added item with id("+c.info.id+") to slot " + i);
-                    break;
-                }
-            }
-            if(!added){
-                for(int i = 0; i < inventorySlots.length; i++){
-                    Slot s = inventorySlots[i];
-                    if(s.add(c)){
-                        added = true;
-                        System.out.println("Added item with id("+c.info.id+") to slot " + i);
-                        break;
+                    //IF added returns false, slot is full.
+                    //-> check emptyslots.
+                    if(added){
+                        return true;
+                    }
+
+                    Slot s = getEmptySlot();
+                    if(s == null){
+                        //NO AVAILABLE SLOTS. 
+                        return false;
+                    }else{
+                        s.add(c);
+                        return true;
                     }
                 }
+                
+            }else{
+                System.out.println("Hotbar has item ");
+                //HOTBAR DOES HAVE slot with item "c".
+                added = hotbarSlots[slotA].add(c);
+                if(added){
+                    return true;
+                }
+                //IF added returns false, slot is full.
+                //-> check emptyslots.
+                Slot s = getEmptySlot();
+                if(s == null){
+                    //NO AVAILABLE SLOTS. 
+                    return false;
+                }else{
+                    s.add(c);
+                    return true;
+                }
             }
         }
-        if(!added){
-            System.out.println("no available slots.");
+        return false;
+    }
+    public Slot getEmptySlot(){
+        Slot s1 = getEmptyHotbarSlot();
+        if(s1 == null){
+            Slot s2 = getEmptyInventorySlot();
+            if(s2 == null){
+                return null;
+            }else{
+                return s2;
+            }
+        }else{
+            return s1;
         }
-        return added;
+        
     }
     public boolean checkIfEnoughItemsWithID(int id, int id2, int amount){
         int totalAmount = calculateAmountWithID(id,id2);
@@ -230,7 +267,6 @@ public class Inventory {
         int id = e.info.id;
         int id2 = e.subID;
         int totalAmount = calculateAmountWithID(id, id2);
-        // System.out.println(totalAmount);
         return totalAmount;
     }
     public int calculateAmountWithID(int id, int id2){
@@ -290,7 +326,6 @@ public class Inventory {
     }
     public void pay(int id, int amount){
         for(Slot s : inventorySlots){
-            System.out.println("nextSlot");
             if(s.item==null){
                 continue;
             }
@@ -388,7 +423,7 @@ public class Inventory {
                 }
                 //Slot has item. 
                 boolean b = false;
-                if(item.swordInfo!=null || item.projectileInfo!=null || item.staffInfo!=null || item.potionInfo!=null){
+                if(item.swordInfo!=null || item.projectileInfo!=null || item.staffInfo!=null || item.potionInfo!=null|| item.bowInfo!=null){
                     //Item has subID
                     b = checkIfSameSubID(item, i);
                     if(b){
@@ -400,7 +435,7 @@ public class Inventory {
                         return false;
                     }
                 }
-                if(i.swordInfo!=null || i.projectileInfo!=null|| i.staffInfo!=null || i.potionInfo!=null){
+                if(i.swordInfo!=null || i.projectileInfo!=null|| i.staffInfo!=null || i.potionInfo!=null|| i.bowInfo!=null){
                     generateImage();
                     return false;
                 }
@@ -430,7 +465,6 @@ public class Inventory {
             updateSlot();
         }
         public void clear(){
-            System.out.println("clearing");
             item = null;
             amount = 0;
             infoPacket.update(null,x,y,400,70, true);
