@@ -10,7 +10,7 @@ import tools.Timer;
 import ui.Task;
 import world.World;
 
-public class GoblinAI extends AI{
+public class GoblinAI extends EnemyAI{
     private Ellipse2D.Double attackRadius;
     private Timer moveTimer, attackTimer;
     public GoblinAI(Entity e){

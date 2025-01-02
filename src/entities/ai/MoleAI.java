@@ -11,7 +11,7 @@ import tools.Timer;
 import ui.Task;
 import world.World;
 
-public class MoleAI extends AI{
+public class MoleAI extends EnemyAI{
     private Ellipse2D.Double detectCircle;
     private Timer attackTimer;
     public MoleAI(Entity e){

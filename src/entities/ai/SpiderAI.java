@@ -10,7 +10,7 @@ import tools.Timer;
 import ui.Task;
 import world.World;
 
-public class SpiderAI extends AI{
+public class SpiderAI extends EnemyAI{
     private Ellipse2D.Double attackRadius;
     private Timer moveTimer, attackTimer;
     

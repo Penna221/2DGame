@@ -11,7 +11,7 @@ import tools.Timer;
 import ui.Task;
 import world.World;
 
-public class SummonerAI extends AI{
+public class SummonerAI extends EnemyAI{
     private boolean attacking = false;
     private Ellipse2D.Double attackRadius;
     private Timer attackTimer;

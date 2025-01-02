@@ -9,7 +9,7 @@ import entities.Entity;
 import gfx.Factory;
 import world.World;
 
-public class Enemy1AI extends AI {
+public class Enemy1AI extends EnemyAI{
     private int rot = 0;
     private boolean aiming = false;
     private Ellipse2D.Double tooCloseRect;

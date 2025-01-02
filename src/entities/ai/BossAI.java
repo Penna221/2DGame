@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import entities.Entity;
 
-public class BossAI extends AI{
+public class BossAI extends EnemyAI{
 
     public BossAI(Entity entity) {
         super(entity);

@@ -9,7 +9,7 @@ import entities.swords.Swords;
 import tools.Timer;
 import ui.Task;
 import world.World;
-public class SkeletonAI extends AI{
+public class SkeletonAI extends EnemyAI{
     private Ellipse2D.Double attackRadius;
     private Timer moveTimer, attackTimer;
     private boolean animate = true;

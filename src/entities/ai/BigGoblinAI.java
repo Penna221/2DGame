@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import entities.Entity;
 
-public class BigGoblinAI extends AI{
+public class BigGoblinAI extends EnemyAI{
     public BigGoblinAI(Entity e){
         super(e);
         e.setAnimation(e.info.animations.get("idle"));
