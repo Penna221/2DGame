@@ -45,16 +45,6 @@ public class SummonerAI extends EnemyAI{
         }
         
     }
-    
-    private void magicAttack(){
-        World.generateProjectile(3, World.getAngleBetween(World.player, e), new Point((int)e.x,(int)e.y),e);
-        Random r = new Random();
-        int r1 = 1+ r.nextInt(3);
-        SoundPlayer.playSound("magic_"+r1);
-        int r2 = 1000 + (r.nextInt(4)*100);
-        attackTimer.setTime(r2);
-        attackTimer.backToStart();
-    }
     private void summonAttack(){
         int amount = 5;
         int angle = -180;
