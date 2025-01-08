@@ -178,5 +178,9 @@
     "big_goblin_idle":{
         "images":["big_goblin_idle_1","big_goblin_idle_2"],
         "times":[1000,1000]
+    },
+    "tree_1_idle":{
+        "images":["tree_1"],
+        "times":[10000]
     }
 }

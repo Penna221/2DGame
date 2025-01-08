@@ -271,6 +271,8 @@
         "blacksmith_idle_1":"res\\gfx\\entities\\blacksmith\\blacksmith_idle_1.png",
         "anvil":"res\\gfx\\entities\\blacksmith\\anvil.png",
         "forge":"res\\gfx\\entities\\blacksmith\\forge.png",
+        "blacksmith_house":"res\\gfx\\entities\\blacksmith\\house.png",
+
         "cauldron":"res\\gfx\\entities\\potion_lady\\cauldron.png",
         "candelabra":"res\\gfx\\entities\\potion_lady\\candelabra.png",
         "cat":"res\\gfx\\entities\\potion_lady\\cat.png",
@@ -341,7 +343,8 @@
         "regen_4":"res\\gfx\\animations\\regen\\regen_4.png",
         "regen_5":"res\\gfx\\animations\\regen\\regen_5.png",
         "spell_tome_1":"res\\gfx\\entities\\spell_tome_1.png",
-        "spell_tome_2":"res\\gfx\\entities\\spell_tome_2.png"
+        "spell_tome_2":"res\\gfx\\entities\\spell_tome_2.png",
+        "tree_1":"res\\gfx\\entities\\trees\\tree_1.png"        
     },
     "texts":{
         "txt1":{

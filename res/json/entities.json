@@ -1049,5 +1049,45 @@
         "light_transparency":0.78,
         "invisTime":100,
         "immune":["Melee"]
+    },
+    "tree_1":{
+        "id":52,
+        "type":"Tree",
+        "name":"Tree",
+        "texture":"tree_1",
+        "speed":0,
+        "health":5,
+        "animations":{
+            "idle":"tree_1_idle"
+        },
+        "ai":"tree",
+        "width":16,
+        "height":32,
+        "light_source":false,
+        "light_radius":550,
+        "light_color":"#AAAA00",
+        "light_transparency":0.78,
+        "invisTime":100,
+        "immune":[""]
+    },
+    "house_1":{
+        "id":53,
+        "type":"house",
+        "name":"Blacksmith's House",
+        "texture":"blacksmith_house",
+        "speed":0,
+        "health":5,
+        "animations":{
+            "idle":"tree_1_idle"
+        },
+        "ai":"house",
+        "width":160,
+        "height":120,
+        "light_source":false,
+        "light_radius":550,
+        "light_color":"#AAAA00",
+        "light_transparency":0.78,
+        "invisTime":100,
+        "immune":[""]
     }
 }

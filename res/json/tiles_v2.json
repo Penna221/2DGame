@@ -7,7 +7,7 @@
     "tiles": [
       {
         "id": 0,
-        "name": "Grass v1asd",
+        "name": "Grass v1",
         "x": 0,
         "y": 0,
         "solid": false
@@ -261,6 +261,34 @@
         "id": 36,
         "name": "Cave Wall",
         "x": 2,
+        "y": 5,
+        "solid": true
+      },
+      {
+        "id": 37,
+        "name": "Dirt Path v1",
+        "x": 3,
+        "y": 5,
+        "solid": false
+      },
+      {
+        "id": 38,
+        "name": "Dirt Path v2",
+        "x": 4,
+        "y": 5,
+        "solid": false
+      },
+      {
+        "id": 39,
+        "name": "Dirt Path v3",
+        "x": 5,
+        "y": 5,
+        "solid": false
+      },
+      {
+        "id": 40,
+        "name": "Water v1",
+        "x": 6,
         "y": 5,
         "solid": true
       }
