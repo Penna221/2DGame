@@ -26,7 +26,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "fox":{
         "id":1,
@@ -47,7 +48,8 @@
         "light_transparency":1.0,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "coin":{
         "id":2,
@@ -68,7 +70,8 @@
         "light_transparency":0.3,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "rose":{
         "id":3,
@@ -89,7 +92,8 @@
         "light_transparency":1.0,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "sun_flower":{
         "id":4,
@@ -110,7 +114,8 @@
         "light_transparency":0.8,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "stone":{
         "id":5,
@@ -131,7 +136,8 @@
         "light_transparency":1.0,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "bench":{
         "id":6,
@@ -152,7 +158,8 @@
         "light_transparency":1.0,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "penquin":{
         "id":7,
@@ -173,7 +180,8 @@
         "light_transparency":1.0,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "dungeon overhang":{
         "id":8,
@@ -194,7 +202,8 @@
         "light_transparency":1.0,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "gold chest":{
         "id":9,
@@ -215,7 +224,8 @@
         "light_transparency":0.4,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "boss door":{
         "id":10,
@@ -237,7 +247,8 @@
         "light_transparency":0.6,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "skeleton_tunnel":{
         "id":11,
@@ -259,7 +270,8 @@
         "light_transparency":0.3,
         "invisTime":1000,
         "immune":["Magic"],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "trader":{
         "id":12,
@@ -281,7 +293,8 @@
         "light_transparency":0.5,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "goblin_tunnel":{
         "id":13,
@@ -303,7 +316,8 @@
         "light_transparency":0.3,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "lobby_tunnel":{
         "id":14,
@@ -325,7 +339,8 @@
         "light_transparency":0.4,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "skeleton":{
         "id":15,
@@ -356,7 +371,8 @@
         "light_transparency":1.0,
         "invisTime":100,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":true
     },
     "spidercave_tunnel":{
         "id":16,
@@ -378,7 +394,8 @@
         "light_transparency":1.0,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "candle":{
         "id":17,
@@ -399,7 +416,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
         
     },
     "boss":{
@@ -421,7 +439,8 @@
         "light_transparency":0.8,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "blacksmith":{
         "id":19,
@@ -442,7 +461,8 @@
         "light_transparency":0.8,
         "invisTime":1000,
         "immune":["Melee"],
-        "solid":true
+        "solid":true,
+        "movable":true
     },
     "anvil":{
         "id":20,
@@ -463,7 +483,8 @@
         "light_transparency":0.8,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "forge":{
         "id":21,
@@ -484,7 +505,8 @@
         "light_transparency":0.3,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "cauldron":{
         "id":22,
@@ -505,7 +527,8 @@
         "light_transparency":0.35,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "candelabra":{
         "id":23,
@@ -526,7 +549,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "cat":{
         "id":24,
@@ -547,7 +571,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "witch":{
         "id":25,
@@ -568,7 +593,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":["Magic"],
-        "solid":true
+        "solid":true,
+        "movable":true
     },
     "potion":{
         "id":26,
@@ -589,7 +615,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "sword":{
         "id":27,
@@ -610,7 +637,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "bomb":{
         "id":30,
@@ -631,7 +659,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":true
     },
     "guide":{
         "id":31,
@@ -652,7 +681,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":["Projectile"],
-        "solid":true
+        "solid":true,
+        "movable":true
     },
     "rocks_0":{
         "id":32,
@@ -673,7 +703,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "rocks_1":{
         "id":33,
@@ -694,7 +725,8 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "mole":{
         "id":34,
@@ -715,7 +747,8 @@
         "light_transparency":0.11,
         "invisTime":100,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "projectile":{
         "id":35,
@@ -736,7 +769,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "staff":{
         "id":36,
@@ -757,7 +791,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "bow":{
         "id":37,
@@ -778,7 +813,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "particle":{
         "id":38,
@@ -799,7 +835,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "spell_1":{
         "id":39,
@@ -820,7 +857,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "spell_2":{
         "id":40,
@@ -841,7 +879,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "cobweb":{
         "id":41,
@@ -862,7 +901,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "spider":{
         "id":42,
@@ -892,7 +932,8 @@
         "light_transparency":0.11,
         "invisTime":100,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":true
     },
     "big_spider":{
         "id":43,
@@ -921,7 +962,8 @@
         "light_transparency":0.11,
         "invisTime":100,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "bones_1":{
         "id":44,
@@ -942,7 +984,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "bones_2":{
         "id":45,
@@ -963,7 +1006,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "spider_egg":{
         "id":46,
@@ -984,7 +1028,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "silk":{
         "id":47,
@@ -1005,7 +1050,8 @@
         "light_transparency":0.11,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "fireplace":{
         "id":48,
@@ -1026,7 +1072,8 @@
         "light_transparency":0.78,
         "invisTime":1000,
         "immune":[""],
-        "solid":false
+        "solid":false,
+        "movable":false
     },
     "goblin":{
         "id":49,
@@ -1055,7 +1102,8 @@
         "light_transparency":0.78,
         "invisTime":100,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":true
     },
     "summoner":{
         "id":50,
@@ -1077,7 +1125,8 @@
         "light_transparency":0.78,
         "invisTime":100,
         "immune":["Projectile","Magic"],
-        "solid":true
+        "solid":true,
+        "movable":true
     },
     "big_goblin":{
         "id":51,
@@ -1098,7 +1147,8 @@
         "light_transparency":0.78,
         "invisTime":100,
         "immune":["Melee"],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "tree_1":{
         "id":52,
@@ -1119,7 +1169,8 @@
         "light_transparency":0.78,
         "invisTime":100,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     },
     "house_1":{
         "id":53,
@@ -1140,6 +1191,7 @@
         "light_transparency":0.78,
         "invisTime":100,
         "immune":[""],
-        "solid":true
+        "solid":true,
+        "movable":false
     }
 }

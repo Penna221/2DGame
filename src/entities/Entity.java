@@ -457,9 +457,13 @@ public class Entity {
                 Point p2 = new Point(nextX, bounds.y + bounds.height);
                 if(b.r.contains(p1)||b.r.contains(p2)){
                     //point is in collision box. Move entity leftSide of box;
-                    System.out.println("collision");
                     int pos = b.r.x-bounds.width-1;
                     x = pos;
+                    if(b.source!=null){
+                        if(b.source.info.movable){
+                            b.source.giveMomentum(0f, 1);
+                        }
+                    }
                     return false;
                 }else{
                     // System.out.println("no collision");
@@ -474,6 +478,11 @@ public class Entity {
                     //point is in collision box. Move entity leftSide of box;
                     int pos = b.r.x+b.r.width+1;
                     x = pos;
+                    if(b.source!=null){
+                        if(b.source.info.movable){
+                            b.source.giveMomentum(180f, 1);
+                        }
+                    }
                     return false;
                 }else{
                     continue;
@@ -501,6 +510,11 @@ public class Entity {
                     System.out.println("collision");
                     int pos = b.r.y-bounds.height-1;
                     y = pos;
+                    if(b.source!=null){
+                        if(b.source.info.movable){
+                            b.source.giveMomentum(90f, 1);
+                        }
+                    }
                     return false;
                 }else{
                     // System.out.println("no collision");
@@ -515,6 +529,11 @@ public class Entity {
                     //point is in collision box. Move entity leftSide of box;
                     int pos = b.r.y+b.r.height+1;
                     y = pos;
+                    if(b.source!=null){
+                        if(b.source.info.movable){
+                            b.source.giveMomentum(-90f, 1);
+                        }
+                    }
                     return false;
                 }else{
                     continue;

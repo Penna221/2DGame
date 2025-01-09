@@ -26,7 +26,8 @@ public class EntityInfo {
     public int invisTime;
     public String[] immune;
     public boolean solid;
-    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel, boolean lightSource, int light_radius,Color light_color,double light_transparency, int invisTime, String[] immune, boolean solid){
+    public boolean movable;
+    public EntityInfo(int id,String name,String type, BufferedImage texture, double speed, int health,HashMap<String,Animation> animations,String ai, int width, int height, String tunnel, boolean lightSource, int light_radius,Color light_color,double light_transparency, int invisTime, String[] immune, boolean solid,boolean movable){
         this.name = name;
         this.id = id;
         this.type = type;
@@ -45,5 +46,6 @@ public class EntityInfo {
         this.invisTime = invisTime;
         this.immune = immune;
         this.solid = solid;
+        this.movable = movable;
     }
 }

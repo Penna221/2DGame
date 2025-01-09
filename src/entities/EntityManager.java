@@ -85,6 +85,7 @@ public class EntityManager {
             DataType[] imm = c.findChild("immune").getArray();
             String[] immuneList = new String[imm.length];
             boolean solid = c.findChild("solid").getBoolean();
+            boolean movable = c.findChild("movable").getBoolean();
             for(int i = 0; i < imm.length; i++){
                 immuneList[i] = imm[i].getString();
             }
@@ -98,7 +99,7 @@ public class EntityManager {
                 hashMap.put(a, Animations.animations.get(b));    
             }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime, immuneList,solid));
+            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime, immuneList,solid,movable));
         }
 
 
