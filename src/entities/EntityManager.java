@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -226,7 +227,9 @@ public class EntityManager {
             toView.clear();
             toView.addAll(newList);
         }
+        toView.sort(Comparator.comparingDouble(e -> e.bounds.getCenterY()));
         Iterator<Entity> iterator = toView.iterator();
+        
         while(iterator.hasNext()){
             Entity e = iterator.next();
             
