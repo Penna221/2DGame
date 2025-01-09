@@ -287,6 +287,7 @@
         "mystery_potion":"res\\gfx\\entities\\items\\mystery_potion.png",
         "bomb":"res\\gfx\\entities\\items\\bomb.png",
         "spider_egg":"res\\gfx\\entities\\items\\spider_egg.png",
+        "stick":"res\\gfx\\entities\\items\\stick.png",
         "heart_full":"res\\gfx\\entities\\icons\\heart_full.png",
         "heart_full_white":"res\\gfx\\entities\\icons\\heart_full_white.png",
         "heart_half":"res\\gfx\\entities\\icons\\heart_half.png",

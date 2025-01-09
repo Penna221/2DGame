@@ -16,5 +16,14 @@
         "reach":1,
         "buff":"none",
         "texture":"iron_dagger"
+    },
+    "stick":{
+        "id":2,
+        "name":"Stick",
+        "damage":1,
+        "speed":1.0,
+        "reach":1,
+        "buff":"none",
+        "texture":"stick"
     }
 }

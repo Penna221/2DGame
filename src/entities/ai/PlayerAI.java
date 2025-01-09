@@ -59,7 +59,7 @@ public class PlayerAI extends AI{
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(3)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(4)));
-            inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
+            inv.addItem(World.entityManager.generateSword(Swords.swords.get(2)));
             inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
             inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
             inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
@@ -221,6 +221,7 @@ public class PlayerAI extends AI{
             int swordDamage = Swords.swords.get(selectedSlot.item.subID).damage;
             int dam =  swordDamage;
             if(random){
+                System.out.println("damage half");
                 dam = (int)swordDamage/2;
             }
             Swords.createSwordAttack(World.player, null, Swords.swing, World.getPlayerRotationToCursor(),dam,origin);
