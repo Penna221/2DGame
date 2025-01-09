@@ -371,6 +371,7 @@ public class Entity {
         
         moveX();
         moveY();
+        
         if(animate){
             if(xSpeed == 0 && ySpeed == 0){
                 setAnimation(info.animations.get("idle"));
@@ -378,6 +379,7 @@ public class Entity {
         }
         
     }
+    
     public void slowdown(double factor){
         xSpeed *= factor;
         ySpeed *= factor;
@@ -391,7 +393,12 @@ public class Entity {
     private boolean moveX(){
         boolean canMove = true;
         
-        canMove = checkTilesX();
+        boolean inMap = checkIfInWorldBounds();
+        if(inMap){
+            canMove = checkTilesX();
+        }else{
+            canMove = true;
+        }
         
         if(canMove){
             double newSpeed = xSpeed;
@@ -407,7 +414,12 @@ public class Entity {
     }
     private boolean moveY(){
         boolean canMove = true;
-        canMove = checkTilesY();
+        boolean inMap = checkIfInWorldBounds();
+        if(inMap){
+            canMove = checkTilesY();
+        }else{
+            canMove = true;
+        }
 
         if(canMove){
             double newSpeed = ySpeed;
@@ -421,6 +433,8 @@ public class Entity {
         }
         return canMove;
     }
+    
+
     private boolean checkTilesX(){
         int currentTileX = (int)(bounds.x/Tile.tileSize);
         int currentTileY = (int)(bounds.y/Tile.tileSize);
@@ -503,6 +517,17 @@ public class Entity {
         }else{
             return true;
         }
+    }
+    private boolean checkIfInWorldBounds(){
+        int w = (World.map.binaryMap.length * Tile.tileSize) - Tile.tileSize;
+        int h = (World.map.binaryMap[0].length * Tile.tileSize)-Tile.tileSize;
+        if(x > w || x < Tile.tileSize){
+            return false;
+        }
+        if(y > h || y <Tile.tileSize){
+            return false;
+        }
+        return true;
     }
     public void init() {
         setAI();
