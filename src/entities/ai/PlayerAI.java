@@ -83,7 +83,7 @@ public class PlayerAI extends AI{
     public void lateInit() {
         
         e.calculateBounds();
-        distance = 1200;
+        distance = 1000;
         viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
         
         double scaleFactor = 20.0;
@@ -146,6 +146,7 @@ public class PlayerAI extends AI{
                 ee.inView = false;
             }
         }
+        
         
         viewRectangle.x = (int)(e.x- distance);
         viewRectangle.y = (int)(e.y - distance);

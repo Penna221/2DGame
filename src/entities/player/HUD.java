@@ -11,6 +11,8 @@ import entities.ai.PlayerAI;
 import entities.effects.Effect;
 import gfx.AssetStorage;
 import gfx.Factory;
+import main.Game;
+import main.Launcher;
 import tiles.Tile;
 import ui.UIFactory;
 import world.World;
@@ -21,6 +23,7 @@ public class HUD {
     public boolean showEnergy = true;
     private BufferedImage overlay;
     private Graphics g;
+    public boolean showExtra = false;
     public ArrayList<BufferedImage> toDraw = new ArrayList<BufferedImage>();
     public HUD(){
         
@@ -54,8 +57,30 @@ public class HUD {
         for(BufferedImage i : toDraw){
             g.drawImage(i, 0, 0, null);
         }
+        if(showExtra){
+            drawExtra(g);
+        }
         toDraw.clear();
         World.overlays.put("hud", overlay);
+    }
+    private void drawExtra(Graphics g){
+        int startY = 100;
+        int entityCount = World.entityManager.getEntities().size();
+        int visibleCount = World.entityManager.newList.size();
+        int fps = Launcher.g.getCurrentFPS();
+        int width = Game.w.getWidth();
+        int height = Game.w.getHeight();
+
+
+        g.setFont(new Font("Arial",Font.BOLD,20));
+        g.setColor(Color.black);
+        g.fillRect(10,startY - 10, 230,400);
+        g.setColor(Color.WHITE);
+        g.drawString("Total Entitities: " + entityCount,20,startY +25);
+        g.drawString("Visible Entities: " + visibleCount,20,startY +50);
+        g.drawString("FPS: "+fps, 20, startY + 75);
+        g.drawString("Screen Width: "+width, 20, startY + 100);
+        g.drawString("Screen Height: "+height, 20, startY + 125);
     }
     private void drawEnergy(){
         BufferedImage i = Factory.generateNewOverlayImage();

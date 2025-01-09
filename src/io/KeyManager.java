@@ -52,6 +52,9 @@ public class KeyManager implements KeyListener{
                     Transition.canFinish = true;
                 }
                 break;
+            case KeyEvent.VK_F1:
+                PlayerAI.hud.showExtra = !PlayerAI.hud.showExtra;
+                break;
             case KeyEvent.VK_F2:
                 World.load("cave_goblin");
                 break;
@@ -71,6 +74,7 @@ public class KeyManager implements KeyListener{
             case KeyEvent.VK_F6:
                 Entity.drawBounds = !Entity.drawBounds;
                 break;
+            
             case KeyEvent.VK_ESCAPE:
                 if(State.getState() == State.gameState){
                     //If there is a container like talk dialog, close it. If there is a dialog, game is paused.
