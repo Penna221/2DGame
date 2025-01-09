@@ -408,6 +408,8 @@ public class Entity {
             }else{
                 x += xSpeed;
             }
+        }else{
+            xSpeed = 0;
         }
         return canMove;
         
@@ -430,6 +432,8 @@ public class Entity {
                 y+= ySpeed;
 
             }
+        }else{
+            ySpeed = 0;
         }
         return canMove;
     }
@@ -459,18 +463,19 @@ public class Entity {
         if(!currentSolid&&!currentSolid2){
             return false;
         }
-        
+        //False means its solid.
         boolean nextSolid = World.map.binaryMap[nextTileX][currentTileY];
         boolean nextSolid2 = World.map.binaryMap[nextTileX][currentTileY2];
         if(!nextSolid||!nextSolid2){
             if(xSpeed < 0){
                 int pos = nextTileX*Tile.tileSize + Tile.tileSize+1;
                 x = pos;
-                
-            }else{
+                // x+= xSpeed;
+            }else if(xSpeed>0){
                 int pos = nextTileX*Tile.tileSize -bounds.width-1;
                 x = pos;
-            }
+                // x+= xSpeed;
+            }else{return true;}
             return false;
         }else{
             return true;
@@ -509,9 +514,11 @@ public class Entity {
                 int pos = nextTileY*Tile.tileSize + Tile.tileSize+1;
                 y = pos;
                 
-            }else{
+            }else if(ySpeed >0){
                 int pos = nextTileY*Tile.tileSize -bounds.height-1;
                 y = pos;
+            }else{
+                return true;
             }
             return false;
         }else{
@@ -521,10 +528,10 @@ public class Entity {
     private boolean checkIfInWorldBounds(){
         int w = (World.map.binaryMap.length * Tile.tileSize) - Tile.tileSize;
         int h = (World.map.binaryMap[0].length * Tile.tileSize)-Tile.tileSize;
-        if(x > w || x < Tile.tileSize){
+        if(bounds.x+bounds.width > w || x < Tile.tileSize){
             return false;
         }
-        if(y > h || y <Tile.tileSize){
+        if(bounds.y+bounds.height > h || y <Tile.tileSize){
             return false;
         }
         return true;

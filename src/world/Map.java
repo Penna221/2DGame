@@ -21,7 +21,7 @@ import tiles.Tile;
 
 public class Map {
     public int[][] map;
-    //Binary map is used to find places where entities can be generated.
+    //Binary map is used to find places where entities can be generated. AND to check entity movement
     public boolean[][] binaryMap;
     public int width, height;
     public String biomeName;
