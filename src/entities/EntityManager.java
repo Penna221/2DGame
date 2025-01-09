@@ -10,6 +10,7 @@ import java.util.Map;
 
 import entities.bows.Bow;
 import entities.bows.Bows;
+import entities.collision.CollisionBox;
 import entities.potions.Potion;
 import entities.potions.Potions;
 import entities.projectiles.Projectile;
@@ -82,7 +83,7 @@ public class EntityManager {
             int invisTime = c.findChild("invisTime").getInteger();
             DataType[] imm = c.findChild("immune").getArray();
             String[] immuneList = new String[imm.length];
-            
+            boolean solid = c.findChild("solid").getBoolean();
             for(int i = 0; i < imm.length; i++){
                 immuneList[i] = imm[i].getString();
             }
@@ -96,7 +97,7 @@ public class EntityManager {
                 hashMap.put(a, Animations.animations.get(b));    
             }
             BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime, immuneList));
+            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime, immuneList,solid));
         }
 
 
@@ -246,6 +247,13 @@ public class EntityManager {
                         continue;
                     }
                     newList.add(e);
+                    boolean solid = true;
+                    if(e.info.solid){
+                        solid = true;
+                    }else{
+                        solid = false;
+                    }
+                    World.collisionBoxes.add(new CollisionBox(e,e.bounds,solid));
                     e.update();
                 }
             }

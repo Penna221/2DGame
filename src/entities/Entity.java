@@ -32,6 +32,7 @@ import entities.ai.SummonerAI;
 import entities.ai.TraderAI;
 import entities.ai.WitchAI;
 import entities.bows.Bow;
+import entities.collision.CollisionBox;
 import entities.effects.Effect;
 import entities.potions.Potion;
 import entities.projectiles.Projectile;
@@ -395,7 +396,8 @@ public class Entity {
         
         boolean inMap = checkIfInWorldBounds();
         if(inMap){
-            canMove = checkTilesX();
+            // canMove = checkTilesX();
+            canMove = checkCollisionX();
         }else{
             canMove = true;
         }
@@ -418,7 +420,8 @@ public class Entity {
         boolean canMove = true;
         boolean inMap = checkIfInWorldBounds();
         if(inMap){
-            canMove = checkTilesY();
+            // canMove = checkTilesY();
+            canMove = checkCollisionY();
         }else{
             canMove = true;
         }
@@ -438,7 +441,89 @@ public class Entity {
         return canMove;
     }
     
+    private boolean checkCollisionX(){
+        // System.out.println("collision box: " + World.collisionBoxes.size());
+        for(CollisionBox b : World.collisionBoxes){
+            if(!b.solid){
+                continue;
+            }
+            if(b.source == this){
+                continue;
+            }
+            if(xSpeed >0){
+                //Moving right
+                int nextX = (bounds.x + bounds.width)+(int)xSpeed;
+                Point p1 = new Point(nextX, bounds.y);
+                Point p2 = new Point(nextX, bounds.y + bounds.height);
+                if(b.r.contains(p1)||b.r.contains(p2)){
+                    //point is in collision box. Move entity leftSide of box;
+                    System.out.println("collision");
+                    int pos = b.r.x-bounds.width-1;
+                    x = pos;
+                    return false;
+                }else{
+                    // System.out.println("no collision");
+                    continue;
+                }
+            }else if(xSpeed<0){
+                //Moving left;
+                int nextX = (bounds.x)+(int)xSpeed;
+                Point p1 = new Point(nextX, bounds.y);
+                Point p2 = new Point(nextX, bounds.y + bounds.height);
+                if(b.r.contains(p1)||b.r.contains(p2)){
+                    //point is in collision box. Move entity leftSide of box;
+                    int pos = b.r.x+b.r.width+1;
+                    x = pos;
+                    return false;
+                }else{
+                    continue;
+                }
+            }
+        }
 
+        return true;
+    }
+    private boolean checkCollisionY(){
+        for(CollisionBox b : World.collisionBoxes){
+            if(!b.solid){
+                continue;
+            }
+            if(b.source == this){
+                continue;
+            }
+            if(ySpeed >0){
+                //Moving down
+                int nextY = (bounds.y + bounds.height)+(int)ySpeed;
+                Point p1 = new Point(bounds.x, nextY);
+                Point p2 = new Point(bounds.x + bounds.width,nextY);
+                if(b.r.contains(p1)||b.r.contains(p2)){
+                    //point is in collision box. Move entity leftSide of box;
+                    System.out.println("collision");
+                    int pos = b.r.y-bounds.height-1;
+                    y = pos;
+                    return false;
+                }else{
+                    // System.out.println("no collision");
+                    continue;
+                }
+            }else if(ySpeed<0){
+                //Moving up;
+                int nextY = (bounds.y)+(int)ySpeed;
+                Point p1 = new Point(bounds.x, nextY);
+                Point p2 = new Point(bounds.x + bounds.width,nextY);
+                if(b.r.contains(p1)||b.r.contains(p2)){
+                    //point is in collision box. Move entity leftSide of box;
+                    int pos = b.r.y+b.r.height+1;
+                    y = pos;
+                    return false;
+                }else{
+                    continue;
+                }
+            }
+        }
+
+        return true;
+    }
     private boolean checkTilesX(){
         int currentTileX = (int)(bounds.x/Tile.tileSize);
         int currentTileY = (int)(bounds.y/Tile.tileSize);

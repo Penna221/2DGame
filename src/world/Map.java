@@ -15,7 +15,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import entities.Entity;
-import entities.EntityManager;
+import entities.collision.CollisionBox;
 import main.Game;
 import tiles.Tile;
 
@@ -459,6 +459,19 @@ public class Map {
         if(endY > map[0].length){
             endY = map[0].length;
         }
+        ArrayList<CollisionBox> boxes = new ArrayList<CollisionBox>();
+        //Generate Collision Rectangles
+        for(int y = startY; y < endY; y++){
+            for(int x = startX; x < endX; x++){
+                Rectangle r = new Rectangle(x*Tile.tileSize, y*Tile.tileSize,Tile.tileSize,Tile.tileSize);
+                boolean solid = !binaryMap[x][y];
+                CollisionBox b = new CollisionBox(null,r,solid);
+                if(solid)
+                    boxes.add(b);
+            }
+        }
+        World.collisionBoxes = boxes;
+
         // System.out.println("endX " +endX);
         // System.out.println("endY " +endY);
         updating = false;

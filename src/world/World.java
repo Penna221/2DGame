@@ -21,9 +21,9 @@ import java.util.Set;
 
 import entities.Entity;
 import entities.EntityManager;
+import entities.collision.CollisionBox;
 import entities.projectiles.Projectile;
 import entities.projectiles.Projectiles;
-import gfx.Factory;
 import gfx.LightMap;
 import gfx.LineRectangleIntersection;
 import gfx.Transition;
@@ -48,6 +48,8 @@ public class World {
     public static Camera camera;
     public static boolean ready = false, readyToUpdate = false;
     private static Transition transition;
+    public static boolean drawCollisionBoxes = false;
+    public static ArrayList<CollisionBox> collisionBoxes = new ArrayList<CollisionBox>();
     public static HashMap<String,BufferedImage> overlays = new HashMap<String,BufferedImage>();
     public World(){
         entityManager = new EntityManager();
@@ -202,6 +204,16 @@ public class World {
                     g.drawImage(oi, 0,0,null);
                 }
                 // overlay.clear();
+            }
+            if(drawCollisionBoxes){
+                for(CollisionBox box : collisionBoxes){
+                    if(box.solid){
+                        g.setColor(Color.WHITE);
+                    }else{
+                        g.setColor(Color.BLUE);
+                    }
+                    g.drawRect((int)(box.r.x - camera.getXOffset()), (int)(box.r.y - camera.getYOffset()),box.r.width,box.r.height);
+                }
             }
         }
         transition.render(g);

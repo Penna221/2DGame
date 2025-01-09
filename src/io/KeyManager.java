@@ -73,6 +73,7 @@ public class KeyManager implements KeyListener{
                 break;
             case KeyEvent.VK_F6:
                 Entity.drawBounds = !Entity.drawBounds;
+                World.drawCollisionBoxes = !World.drawCollisionBoxes;
                 break;
             
             case KeyEvent.VK_ESCAPE:
