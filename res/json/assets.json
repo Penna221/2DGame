@@ -323,6 +323,7 @@
 
         "portrait_test":"res\\gfx\\entities\\portraits\\p_test.png",
         "portrait_witch":"res\\gfx\\entities\\portraits\\p_witch.png",
+        "portrait_blacksmith":"res\\gfx\\entities\\portraits\\p_blacksmith.png",
         "swing_1":"res\\gfx\\animations\\attack\\swing_1.png",
         "poke":"res\\gfx\\animations\\attack\\poke.png",
         

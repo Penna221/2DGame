@@ -462,7 +462,7 @@
         "invisTime":1000,
         "immune":["Melee"],
         "solid":true,
-        "movable":true
+        "movable":false
     },
     "anvil":{
         "id":20,
@@ -594,7 +594,7 @@
         "invisTime":1000,
         "immune":["Magic"],
         "solid":true,
-        "movable":true
+        "movable":false
     },
     "potion":{
         "id":26,
@@ -682,7 +682,7 @@
         "invisTime":1000,
         "immune":["Projectile"],
         "solid":true,
-        "movable":true
+        "movable":false
     },
     "rocks_0":{
         "id":32,

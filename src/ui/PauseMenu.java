@@ -90,12 +90,12 @@ public class PauseMenu {
                 containers.put("enter_witch", createNPCEntryDialog(t2,"Witch","Hi There","portrait_witch"));
                 break;
             case "enter_trader":
-            containers.put("enter_trader", createNPCEntryDialog(t3,"Trader","Hi There","portrait_test"));
+                containers.put("enter_trader", createNPCEntryDialog(t3,"Trader","Hi There","portrait_test"));
                 
                 break;
             case "enter_blacksmith":
                 
-                containers.put("enter_blacksmith", createNPCEntryDialog(t1,"BlackSmith","Hi There","portrait_test"));
+                containers.put("enter_blacksmith", createNPCEntryDialog(t1,"BlackSmith","Hi There","portrait_blacksmith"));
                 break;
             case "enter_guide":
                 containers.put("enter_guide", createNPCEntryDialog(t4,"Guide","Hi There","portrait_test"));
