@@ -50,7 +50,7 @@ public class GameState extends State{
         // paused = false;
         paused = true;
         world = new World();
-        World.load("village");
+        World.load("lobby");
         alreadyInitialized = false;
         State.setState(gameState, false);
     }

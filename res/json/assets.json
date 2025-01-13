@@ -7,7 +7,7 @@
         "sheepPolypore":"res\\gfx\\mushrooms\\herkkutatti.png",
         "chanterelle":"res\\gfx\\mushrooms\\kanttarelli.png",
         "russulaPaludosa":"res\\gfx\\mushrooms\\isohapero.png",
-
+        "connection_anchor":"res\\gfx\\entities\\connection_anchor.png",
         "spruceTree":"res\\gfx\\entities\\spruce.png",
         
         "mushroomDude":"res\\gfx\\entities\\mushroomDude.png",

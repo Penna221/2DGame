@@ -2,6 +2,7 @@ package world;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -33,7 +34,7 @@ public class Map {
         this.width = width;
         this.height = height;
         generate(wn);
-        populateWithEnemies(Biome.biomes.get(wn));     
+        // populateWithEnemies(Biome.biomes.get(wn));     
     }
     public Map(){}
     public static void loadStructures() throws Exception{
@@ -135,9 +136,9 @@ public class Map {
         Biome b = Biome.biomes.get("cave_spider");
         basicGeneration(b);
         //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
-        generateStructureAtRandomSpot("lvl2_tunnel");
-        generateStructureAtRandomSpot("lvl2_tunnel");
-        generateStructureAtRandomSpot("trader_room_v1");
+        // generateStructureAtRandomSpot("lvl2_tunnel");
+        // generateStructureAtRandomSpot("lvl2_tunnel");
+        // generateStructureAtRandomSpot("trader_room_v1");
         
     }
     private void generateGoblinCave(){
@@ -153,8 +154,8 @@ public class Map {
         basicGeneration(b);
 
         //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
-        generateStructureAtRandomSpot("trader_room_v1");
-        generateStructureAtRandomSpot("boss_door");
+        // generateStructureAtRandomSpot("trader_room_v1");
+        // generateStructureAtRandomSpot("boss_door");
     }
 
     private void basicGeneration(Biome b){
@@ -165,20 +166,223 @@ public class Map {
         
         map = new int[width][height];
         
+        //Neccesary
         initMapToZero();
         generateWalls(5);
-        cellularAutomata(48,6);
+
+        //Custom
+        // cellularAutomata(48,6);
+        // generateSpawnArea();
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
-        generateSpawnArea();
+        generateDungeon(50);
+        
+        //Styling
+        
+        //Last steps.
         String[] structureList =  b.structures;
         int size = structureList.length;
         System.out.println("structure list size " + size);
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < 10; j++){
-                generateStructureAtRandomSpot(structureList[i]);
+        // for(int i = 0; i < size; i++){
+        //     for(int j = 0; j < 10; j++){
+        //         generateStructureAtRandomSpot(structureList[i]);
+        //     }
+        // }
+    }
+
+    private void generateDungeon(int length){
+        int centerX = map.length/2;
+        int centerY = map[0].length/2;
+        Structure s1 = structures.get("room_15x15_all");
+        int lastX = centerX;
+        int lastY = centerY;
+        //Spawn
+        Room spawn = new Room(centerX, centerY,s1);
+        generateStructure(spawn.structure, spawn.x,spawn.y);
+        ArrayList<Structure> withEastConnection = new ArrayList<Structure>();
+        ArrayList<Structure> withWestConnection = new ArrayList<Structure>();
+        ArrayList<Structure> withNorthConnection = new ArrayList<Structure>();
+        ArrayList<Structure> withSouthConnection = new ArrayList<Structure>();
+
+        for(Structure s : structures.values()){
+            if(s.getEastConnectionPoint()!=null){
+                
+                withEastConnection.add(s);
+            }
+            if(s.getWestConnectionPoint()!=null){
+                withWestConnection.add(s);
+            }
+            if(s.getSouthConnectionPoint()!=null){
+                withSouthConnection.add(s);
+            }
+            if(s.getNorthConnectionPoint()!=null){
+                withNorthConnection.add(s);
             }
         }
+        
+        Room lastRoom = spawn;
+        for(int i = 0; i < length; i++){
+            System.out.println("Processing "+ i);
+            System.out.println("lastRoom: "+ lastRoom.structure.name);
+            boolean bool = false;
+            int tries = 0;
+            Room b = null;
+            ArrayList<Integer> choises = lastRoom.getConnections();
+            if(choises.size()==0){
+                System.out.println("No available choises");
+                break;
+            }
+            while(!bool && tries<3){
+
+                if(choises.size()==0){
+                    break;
+                }
+                System.out.println("available choises: ");
+                for(int is: choises){
+                    System.out.println(is);
+                }
+                Random r = new Random();
+                int dir = r.nextInt(choises.size());
+                int ans = choises.get(dir);
+                switch (ans) {
+                    case 0:
+                        System.out.println("Going East");
+                        b = connectRoomEast(lastRoom, getRandomStructureFromList(withWestConnection));
+                        break;
+                    case 1:
+                        System.out.println("Going West");
+                        b = connectRoomWest(lastRoom, getRandomStructureFromList(withEastConnection));
+                        break;
+                    case 2:
+                        System.out.println("Going North");
+                        b = connectRoomNorth(lastRoom, getRandomStructureFromList(withSouthConnection));
+                        break;
+                    case 3:
+                        System.out.println("Going South");
+                        b = connectRoomSouth(lastRoom, getRandomStructureFromList(withNorthConnection));
+                        break;
+                
+                    default:
+                        break;
+                }
+                if(b!=null){
+                    if(i < length-1 && b.getConnections().size()<1){
+                        System.out.println("Got room with 1 or less connections");
+                        // tries++;
+                        continue;
+                    }
+                    bool = generateStructure(b.structure,b.x,b.y);
+                    System.out.println("Offered Structure: " + b.structure.name);
+                    System.out.println("Generated: " + bool);
+                }
+                if(!bool){
+                    choises.remove(dir);
+                }
+                tries++;
+            }
+            if(b!=null && bool){
+
+                lastRoom = b;
+            }
+        }
+        // Room pipe1 = connectRoomEast(spawn, pipe_h);
+        // generateStructure(pipe1.structure,pipe1.x,pipe1.y);
+
+
+
+        lastX += s1.width;
+        int pX = spawn.x + 6;
+        int pY = spawn.y + 6;
+        World.entityManager.spawnEntity(0,0,pX*Tile.tileSize,pY*Tile.tileSize);
+        
+    }
+    private Structure getRandomStructureFromList(ArrayList<Structure> list){
+        int i = list.size();
+        Random r = new Random();
+        int random = r.nextInt(i);
+        Structure s = list.get(random);
+        // System.out.println("Returning "+s.name);
+        return list.get(random);
+    }
+    private Room connectRoomEast(Room a, Structure b){
+        Point connectionA = a.structure.getEastConnectionPoint();
+
+        Point connectionB = b.getWestConnectionPoint();
+        if(connectionA!=null && connectionB !=null){
+
+            int startX = (int)(a.x + connectionA.getX());
+            int startY = (int)(a.y + connectionA.getY());
+
+            int offsetX = (int)(startX+connectionB.getX()+1);
+            int offsetY = (int)(startY-connectionB.getY());
+
+            Room roomb = new Room(offsetX,offsetY,b);
+            roomb.west = true;
+            a.east = true;
+            return roomb;
+        }
+
+        return null;
+    }
+    private Room connectRoomWest(Room a, Structure b){
+        Point connectionA = a.structure.getWestConnectionPoint();
+
+        Point connectionB = b.getEastConnectionPoint();
+        if(connectionA!=null && connectionB !=null){
+
+            int startX = (int)(a.x + connectionA.getX());
+            int startY = (int)(a.y + connectionA.getY());
+
+            int offsetX = (int)(startX-connectionB.getX()-1);
+            int offsetY = (int)(startY-connectionB.getY());
+
+            Room roomb = new Room(offsetX,offsetY,b);
+            roomb.east = true;
+            a.west = true;
+            return roomb;
+        }
+
+        return null;
+    }
+    private Room connectRoomSouth(Room a, Structure b){
+        Point connectionA = a.structure.getSouthConnectionPoint();
+
+        Point connectionB = b.getNorthConnectionPoint();
+        if(connectionA!=null && connectionB !=null){
+
+            int startX = (int)(a.x + connectionA.getX());
+            int startY = (int)(a.y + connectionA.getY());
+
+            int offsetX = (int)(startX-connectionB.getX());
+            int offsetY = (int)(startY+connectionB.getY()+1);
+
+            Room roomb = new Room(offsetX,offsetY,b);
+            roomb.north = true;
+            a.south = true;
+            return roomb;
+        }
+
+        return null;
+    }
+    private Room connectRoomNorth(Room a, Structure b){
+        Point connectionA = a.structure.getNorthConnectionPoint();
+
+        Point connectionB = b.getSouthConnectionPoint();
+        if(connectionA!=null && connectionB !=null){
+
+            int startX = (int)(a.x + connectionA.getX());
+            int startY = (int)(a.y + connectionA.getY());
+
+            int offsetX = (int)(startX-connectionB.getX());
+            int offsetY = (int)(startY-connectionB.getY()-1);
+
+            Room roomb = new Room(offsetX,offsetY,b);
+            roomb.south = true;
+            a.north = true;
+            return roomb;
+        }
+
+        return null;
     }
     private void generateBinaryMap(){
         binaryMap = new boolean[width][height];
@@ -336,7 +540,7 @@ public class Map {
         Structure spawn = structures.get("spawn_area");
         int w = spawn.width;
         int h = spawn.height;
-        generateStructure("spawn_area", centerX-w/2, centerY-h/2);
+        generateStructure(spawn, centerX-w/2, centerY-h/2);
     }
     
     
@@ -388,10 +592,11 @@ public class Map {
         Random r = new Random();
         int retrys = 4;
         int counter = 0;
+        Structure s = structures.get(name);
         while(!b){
             rx = 25 + r.nextInt(map.length-50);
             ry = 25 + r.nextInt(map[0].length-50);
-            b = generateStructure(name,rx, ry);
+            b = generateStructure(s,rx, ry);
             counter++;
             if(counter>=retrys){
                 System.out.println("Failed to generate Strucure: " + name);
@@ -399,8 +604,8 @@ public class Map {
             }
         }
     }
-    public boolean generateStructure(String name, int x, int y){
-        Structure s = structures.get(name);
+    
+    public boolean generateStructure(Structure s, int x, int y){
         if(s==null){
             return false;
         }

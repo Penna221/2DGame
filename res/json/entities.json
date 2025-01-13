@@ -29,19 +29,19 @@
         "solid":false,
         "movable":false
     },
-    "fox":{
+    "anchor":{
         "id":1,
-        "type":"Creature",
-        "name":"Fox",
-        "texture":"fox",
-        "speed":6.0,
-        "health":100,
+        "type":"anchor",
+        "name":"Connection Anchor",
+        "texture":"connection_anchor",
+        "speed":0,
+        "health":1,
         "animations":{
-            "idle":"player_idle"
+            "idle":""
         },
-        "ai":"Fox",
-        "width":88,
-        "height":39,
+        "ai":"empty",
+        "width":16,
+        "height":16,
         "light_source":false,
         "light_radius":0,
         "light_color":"#000000",

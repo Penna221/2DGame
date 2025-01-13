@@ -136,7 +136,7 @@ public class World {
     }
     private static void generate(String wn){
         entityManager.clearEntities();
-        map = new Map(wn,200,200);
+        map = new Map(wn,1000,1000);
         //generateMushrooms(type);
     }
     

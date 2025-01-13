@@ -5,12 +5,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.Point;
 
 public class Structure {
     public int width, height;
     public int[][] tiles;
     public ArrayList<StructureEntity> entities;
+    private Point anchorNorth, anchorSouth, anchorWest, anchorEast;
+    public String name;
+
     public Structure(String name){
+        this.name = name;
         entities = new ArrayList<StructureEntity>();
         load(name);
     }
@@ -42,6 +47,26 @@ public class Structure {
                 int id = Integer.parseInt(vals[0]);
                 int x = Integer.parseInt(vals[1]);
                 int y = Integer.parseInt(vals[2]);
+                if(id==1){
+                    //Anchor connection for room.
+                    if(y==0){
+                        //NORTH
+                        anchorNorth = new Point(x,y);
+                    }
+                    if(y== height-1){
+                        //SOUTH
+                        anchorSouth = new Point(x,y);
+                    }
+                    if(x == 0){
+                        //WEST
+                        anchorWest = new Point(x,y);
+                    }
+                    if(x == width-1){
+                        //EAST
+                        anchorEast = new Point(x,y);
+                    }
+                    continue;
+                }
                 StructureEntity e = new StructureEntity(id, x, y);
                 entities.add(e);
             }
@@ -52,6 +77,19 @@ public class Structure {
             e.printStackTrace();
         }
         
+    }
+    
+    public Point getNorthConnectionPoint(){
+        return anchorNorth;
+    }
+    public Point getSouthConnectionPoint(){
+        return anchorSouth;
+    }
+    public Point getEastConnectionPoint(){
+        return anchorEast;
+    }
+    public Point getWestConnectionPoint(){
+        return anchorWest;
     }
 
 }
