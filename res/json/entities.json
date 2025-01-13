@@ -369,7 +369,7 @@
         "light_radius":0,
         "light_color":"#000000",
         "light_transparency":1.0,
-        "invisTime":100,
+        "invisTime":500,
         "immune":[""],
         "solid":true,
         "movable":true
@@ -680,7 +680,7 @@
         "light_color":"#FFA000",
         "light_transparency":0.55,
         "invisTime":1000,
-        "immune":["Projectile"],
+        "immune":["Melee"],
         "solid":true,
         "movable":false
     },
@@ -1100,7 +1100,7 @@
         "light_radius":550,
         "light_color":"#AAAA00",
         "light_transparency":0.78,
-        "invisTime":100,
+        "invisTime":500,
         "immune":[""],
         "solid":true,
         "movable":true

@@ -316,6 +316,10 @@ public class Entity {
     public void moveProjectile(){
         
         if(!moveX() ||!moveY()){
+            int expansion = 4;
+            Rectangle b = new Rectangle(bounds.x-expansion, bounds.y-expansion, bounds.width+(expansion*2), bounds.height+(expansion*2));
+            AttackBox attackBox = new AttackBox(this, projectileInfo.damage, b,source,rotation,AttackBox.PROJECTILE);
+            EntityManager.addAttackBox(attackBox);
             World.entityManager.removeEntity(this);
         }
     }

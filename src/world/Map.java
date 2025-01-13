@@ -31,6 +31,13 @@ public class Map {
     public static HashMap<String,Structure> structures = new HashMap<String,Structure>();
     private ArrayList<Rectangle> structureBounds;
     private boolean updating = false;
+
+    public ArrayList<Structure> withEastConnection;
+    public ArrayList<Structure> withWestConnection;
+    public ArrayList<Structure> withNorthConnection;
+    public ArrayList<Structure> withSouthConnection;
+
+
     public Map(String wn, int width, int height){
         this.width = width;
         this.height = height;
@@ -176,7 +183,7 @@ public class Map {
         // generateSpawnArea();
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
-        generateDungeon(5000);
+        generateDungeon(5);
         
         //Styling
         
@@ -194,33 +201,19 @@ public class Map {
     private void generateDungeon(int length){
         int centerX = map.length/2;
         int centerY = map[0].length/2;
-        Structure s1 = structures.get("room_15x15_all");
+        Structure s1 = structures.get("spawn_area");
+        Stack<Room> roomStack = new Stack<Room>();
         //Spawn
         Room spawn = new Room(centerX, centerY,s1);
         generateStructure(spawn.structure, spawn.x,spawn.y);
-        ArrayList<Structure> withEastConnection = new ArrayList<Structure>();
-        ArrayList<Structure> withWestConnection = new ArrayList<Structure>();
-        ArrayList<Structure> withNorthConnection = new ArrayList<Structure>();
-        ArrayList<Structure> withSouthConnection = new ArrayList<Structure>();
-        Stack<Room> roomStack = new Stack<Room>();
         roomStack.add(spawn);
-        for(Structure s : structures.values()){
-            if(s.getEastConnectionPoint()!=null){
-                withEastConnection.add(s);
-            }
-            if(s.getWestConnectionPoint()!=null){
-                withWestConnection.add(s);
-            }
-            if(s.getSouthConnectionPoint()!=null){
-                withSouthConnection.add(s);
-            }
-            if(s.getNorthConnectionPoint()!=null){
-                withNorthConnection.add(s);
-            }
-        }
+
+        //Load rooms that have connections.
+        loadConnections("");
+        
         
         Room lastRoom = spawn;
-        for(int i = 0; i < length+1; i++){
+        for(int i = 0; i < length; i++){
             System.out.println("Processing "+ i);
             boolean bool = false;
             int tries = 0;
@@ -237,25 +230,9 @@ public class Map {
                 Random r = new Random();
                 int dir = r.nextInt(choises.size());
                 int ans = choises.get(dir);
-                switch (ans) {
-                    case 0:
-                        b = connectRoomEast(lastRoom, getRandomStructureFromList(withWestConnection));
-                        break;
-                    case 1:
-                        b = connectRoomWest(lastRoom, getRandomStructureFromList(withEastConnection));
-                        break;
-                    case 2:
-                        b = connectRoomNorth(lastRoom, getRandomStructureFromList(withSouthConnection));
-                        break;
-                    case 3:
-                        b = connectRoomSouth(lastRoom, getRandomStructureFromList(withNorthConnection));
-                        break;
-                
-                    default:
-                        break;
-                }
+                b = connectRandomRoom(lastRoom, ans);
                 if(b!=null){
-                    if(i < length-1 && b.getConnections().size()<1){
+                    if(i < length && b.getConnections().size()<1){
                         // tries++;
                         continue;
                     }
@@ -276,23 +253,101 @@ public class Map {
                 //If available connections, try to continue there.
                 //If failure, trace even further back.
                 //If at spawn and fails, stop.
-                while(roomStack.size()!=0){
-                    Room r = roomStack.pop();
-                    if(r.getConnections().size()>0){
-                        lastRoom = r;
+                lastRoom = getRoomWithConnectionsFromStack(roomStack);
+            }
+            
+        }
+        while(true){
+            boolean success = false;
+            lastRoom = getRoomWithConnectionsFromStack(roomStack);
+            ArrayList<Integer> connections = lastRoom.getConnections();
+            for(int i : connections){
+                Room f = connectRoom(lastRoom,structures.get("exit"), i);
+                if(f!=null){
+                    success = generateStructure(f.structure, f.x,f.y);
+                    if(success){
                         break;
                     }
                 }
             }
-            
+            if(success){
+                break;
+            }
         }
+        
         // Room pipe1 = connectRoomEast(spawn, pipe_h);
         // generateStructure(pipe1.structure,pipe1.x,pipe1.y);
 
-        int pX = spawn.x + 6;
-        int pY = spawn.y + 6;
-        World.entityManager.spawnEntity(0,0,pX*Tile.tileSize,pY*Tile.tileSize);
         
+    }
+    private Room getRoomWithConnectionsFromStack(Stack<Room> stack){
+        Room rr = null;
+        while(stack.size()!=0){
+            Room r = stack.pop();
+            if(r.getConnections().size()>0){
+                rr = r;
+                break;
+            }
+        }
+        return rr;
+
+    }
+    //Loads rooms that you want to be in dungeon. If prefix is not empty, player can only get for example lvl1_rooms or lvl2_rooms
+    private void loadConnections(String prefix){
+        withEastConnection = new ArrayList<Structure>();
+        withWestConnection = new ArrayList<Structure>();
+        withNorthConnection = new ArrayList<Structure>();
+        withSouthConnection = new ArrayList<Structure>();
+        for(Structure s : structures.values()){
+            if(prefix!=""){
+                if(!s.name.startsWith(prefix)){
+                    continue;
+                }
+            }
+            if(s.name.equals("spawn_area")||s.name.equals("exit")){
+                continue;
+            }
+            if(s.getEastConnectionPoint()!=null){
+                withEastConnection.add(s);
+            }
+            if(s.getWestConnectionPoint()!=null){
+                withWestConnection.add(s);
+            }
+            if(s.getSouthConnectionPoint()!=null){
+                withSouthConnection.add(s);
+            }
+            if(s.getNorthConnectionPoint()!=null){
+                withNorthConnection.add(s);
+            }
+        }
+    }
+    private Room connectRandomRoom(Room lastRoom, int side){
+        switch (side) {
+            case 0:
+                return connectRoomEast(lastRoom, getRandomStructureFromList(withWestConnection));
+            case 1:
+                return connectRoomWest(lastRoom, getRandomStructureFromList(withEastConnection));
+            case 2:
+                return connectRoomNorth(lastRoom, getRandomStructureFromList(withSouthConnection));
+            case 3:
+                return connectRoomSouth(lastRoom, getRandomStructureFromList(withNorthConnection));
+            default:
+                return null;
+        }
+    }
+    private Room connectRoom(Room lastRoom, Structure newRoom, int side){
+        switch (side) {
+            case 0:
+                return connectRoomEast(lastRoom, newRoom);
+            case 1:
+                return connectRoomWest(lastRoom, newRoom);
+            case 2:
+                return connectRoomNorth(lastRoom, newRoom);
+            case 3:
+                return connectRoomSouth(lastRoom, newRoom);
+            default:
+                return null;
+        }
     }
     private Structure getRandomStructureFromList(ArrayList<Structure> list){
         int i = list.size();
