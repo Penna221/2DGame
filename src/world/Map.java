@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Stack;
 
 import javax.imageio.ImageIO;
 
@@ -175,7 +176,7 @@ public class Map {
         // generateSpawnArea();
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
-        generateDungeon(50);
+        generateDungeon(5000);
         
         //Styling
         
@@ -194,8 +195,6 @@ public class Map {
         int centerX = map.length/2;
         int centerY = map[0].length/2;
         Structure s1 = structures.get("room_15x15_all");
-        int lastX = centerX;
-        int lastY = centerY;
         //Spawn
         Room spawn = new Room(centerX, centerY,s1);
         generateStructure(spawn.structure, spawn.x,spawn.y);
@@ -203,10 +202,10 @@ public class Map {
         ArrayList<Structure> withWestConnection = new ArrayList<Structure>();
         ArrayList<Structure> withNorthConnection = new ArrayList<Structure>();
         ArrayList<Structure> withSouthConnection = new ArrayList<Structure>();
-
+        Stack<Room> roomStack = new Stack<Room>();
+        roomStack.add(spawn);
         for(Structure s : structures.values()){
             if(s.getEastConnectionPoint()!=null){
-                
                 withEastConnection.add(s);
             }
             if(s.getWestConnectionPoint()!=null){
@@ -221,15 +220,13 @@ public class Map {
         }
         
         Room lastRoom = spawn;
-        for(int i = 0; i < length; i++){
+        for(int i = 0; i < length+1; i++){
             System.out.println("Processing "+ i);
-            System.out.println("lastRoom: "+ lastRoom.structure.name);
             boolean bool = false;
             int tries = 0;
             Room b = null;
             ArrayList<Integer> choises = lastRoom.getConnections();
             if(choises.size()==0){
-                System.out.println("No available choises");
                 break;
             }
             while(!bool && tries<3){
@@ -237,28 +234,20 @@ public class Map {
                 if(choises.size()==0){
                     break;
                 }
-                System.out.println("available choises: ");
-                for(int is: choises){
-                    System.out.println(is);
-                }
                 Random r = new Random();
                 int dir = r.nextInt(choises.size());
                 int ans = choises.get(dir);
                 switch (ans) {
                     case 0:
-                        System.out.println("Going East");
                         b = connectRoomEast(lastRoom, getRandomStructureFromList(withWestConnection));
                         break;
                     case 1:
-                        System.out.println("Going West");
                         b = connectRoomWest(lastRoom, getRandomStructureFromList(withEastConnection));
                         break;
                     case 2:
-                        System.out.println("Going North");
                         b = connectRoomNorth(lastRoom, getRandomStructureFromList(withSouthConnection));
                         break;
                     case 3:
-                        System.out.println("Going South");
                         b = connectRoomSouth(lastRoom, getRandomStructureFromList(withNorthConnection));
                         break;
                 
@@ -267,30 +256,39 @@ public class Map {
                 }
                 if(b!=null){
                     if(i < length-1 && b.getConnections().size()<1){
-                        System.out.println("Got room with 1 or less connections");
                         // tries++;
                         continue;
                     }
                     bool = generateStructure(b.structure,b.x,b.y);
-                    System.out.println("Offered Structure: " + b.structure.name);
-                    System.out.println("Generated: " + bool);
                 }
                 if(!bool){
                     choises.remove(dir);
                 }
                 tries++;
             }
+            //Room generated properly
             if(b!=null && bool){
-
+                roomStack.add(b);
                 lastRoom = b;
+            }else{
+                //Room did not generate properly.
+                //Trace back to previous rooms.
+                //If available connections, try to continue there.
+                //If failure, trace even further back.
+                //If at spawn and fails, stop.
+                while(roomStack.size()!=0){
+                    Room r = roomStack.pop();
+                    if(r.getConnections().size()>0){
+                        lastRoom = r;
+                        break;
+                    }
+                }
             }
+            
         }
         // Room pipe1 = connectRoomEast(spawn, pipe_h);
         // generateStructure(pipe1.structure,pipe1.x,pipe1.y);
 
-
-
-        lastX += s1.width;
         int pX = spawn.x + 6;
         int pY = spawn.y + 6;
         World.entityManager.spawnEntity(0,0,pX*Tile.tileSize,pY*Tile.tileSize);
@@ -301,8 +299,7 @@ public class Map {
         Random r = new Random();
         int random = r.nextInt(i);
         Structure s = list.get(random);
-        // System.out.println("Returning "+s.name);
-        return list.get(random);
+        return s;
     }
     private Room connectRoomEast(Room a, Structure b){
         Point connectionA = a.structure.getEastConnectionPoint();
@@ -612,9 +609,10 @@ public class Map {
         int w = s.width;
         int h = s.height;
         int tiles[][] = s.tiles;
-        if(x+w > map.length-2 || y+h >map[0].length-2){
+        if(x+w > map.length-2 || y+h >map[0].length-2 || x < 2 || y < 2){
             return false;
         }
+        
         Rectangle r = new Rectangle(x,y,w,h);
         for(Rectangle r2 : structureBounds){
             if(r2.intersects(r)){
