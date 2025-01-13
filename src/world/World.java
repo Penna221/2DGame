@@ -84,6 +84,8 @@ public class World {
                                 // }else if(worldName.endsWith("goblin")){
                                 //     generate(LVL3);
                                 // }
+                            }else if(worldName.equals("dungeon")){
+                                generateDungeon();
                             }
                             else{
                                 String mapName = worldName;
@@ -136,10 +138,14 @@ public class World {
     }
     private static void generate(String wn){
         entityManager.clearEntities();
-        map = new Map(wn,1000,1000);
+        map = new Map(wn,200,200);
         //generateMushrooms(type);
     }
-    
+    private static void generateDungeon(){
+        entityManager.clearEntities();
+        map = new Map(3);
+
+    }
     private void generateMushrooms(int type){
         String biome;
         switch (type) {

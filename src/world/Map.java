@@ -42,7 +42,19 @@ public class Map {
         this.width = width;
         this.height = height;
         generate(wn);
-        // populateWithEnemies(Biome.biomes.get(wn));     
+        populateWithEnemies(Biome.biomes.get(wn));     
+    }
+    public Map(int length){
+        this.width = 1000;
+        this.height = 1000;
+        map = new int[width][height];
+        
+        structureBounds = new ArrayList<Rectangle>();
+        initMapTo(41);
+        generateDungeon(length);
+        generateWalls(5);
+        generateBinaryMap();
+        saveMapAsImage();
     }
     public Map(){}
     public static void loadStructures() throws Exception{
@@ -162,8 +174,8 @@ public class Map {
         basicGeneration(b);
 
         //BIOME SPECIFIC STRUCTURES THAT ONLY NEED TO SPAWN ONE TIME
-        // generateStructureAtRandomSpot("trader_room_v1");
-        // generateStructureAtRandomSpot("boss_door");
+        generateStructureAtRandomSpot("trader_room_v1");
+        generateStructureAtRandomSpot("boss_door");
     }
 
     private void basicGeneration(Biome b){
@@ -179,11 +191,11 @@ public class Map {
         generateWalls(5);
 
         //Custom
-        // cellularAutomata(48,6);
-        // generateSpawnArea();
+        cellularAutomata(48,6);
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
-        generateDungeon(5);
+        // generateDungeon(5);
+        generateSpawnArea();
         
         //Styling
         
@@ -191,14 +203,15 @@ public class Map {
         String[] structureList =  b.structures;
         int size = structureList.length;
         System.out.println("structure list size " + size);
-        // for(int i = 0; i < size; i++){
-        //     for(int j = 0; j < 10; j++){
-        //         generateStructureAtRandomSpot(structureList[i]);
-        //     }
-        // }
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < 10; j++){
+                generateStructureAtRandomSpot(structureList[i]);
+            }
+        }
     }
 
     private void generateDungeon(int length){
+
         int centerX = map.length/2;
         int centerY = map[0].length/2;
         Structure s1 = structures.get("spawn_area");
@@ -462,6 +475,13 @@ public class Map {
         for(int y = 0; y < map[0].length; y++){
             for(int x = 0; x < map.length; x++){
                 map[x][y] = 0;
+            }
+        }
+    }
+    private void initMapTo(int i){
+        for(int y = 0; y < map[0].length; y++){
+            for(int x = 0; x < map.length; x++){
+                map[x][y] = i;
             }
         }
     }

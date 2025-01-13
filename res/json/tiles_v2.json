@@ -291,6 +291,13 @@
         "x": 6,
         "y": 5,
         "solid": true
+      },
+      {
+        "id": 41,
+        "name": "Void",
+        "x": 7,
+        "y": 0,
+        "solid": true
       }
     ]
     
