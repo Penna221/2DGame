@@ -223,7 +223,18 @@ public class Map {
 
         //Load rooms that have connections.
         loadConnections("");
-        
+        for(Structure s : withEastConnection){
+            System.out.println(s.name);
+        }
+        for(Structure s : withSouthConnection){
+            System.out.println(s.name);
+        }
+        for(Structure s : withWestConnection){
+            System.out.println(s.name);
+        }
+        for(Structure s : withNorthConnection){
+            System.out.println(s.name);
+        }
         
         Room lastRoom = spawn;
         for(int i = 0; i < length; i++){
@@ -260,6 +271,9 @@ public class Map {
             if(b!=null && bool){
                 roomStack.add(b);
                 lastRoom = b;
+                if(lastRoom.structure.name.startsWith("d_")){
+                    // spawnEnemies(lastRoom, World.dungeonLevel);
+                }
             }else{
                 //Room did not generate properly.
                 //Trace back to previous rooms.
@@ -292,6 +306,52 @@ public class Map {
         // generateStructure(pipe1.structure,pipe1.x,pipe1.y);
 
         
+    }
+    private void spawnEnemies(Room r, int lvl){
+        Random random = new Random();
+        int amount = random.nextInt(10);
+        ArrayList<Point> points = new ArrayList<Point>();
+
+        Point randomPoint;
+        for(int i = 0; i < amount; i++){
+            while(true){
+                randomPoint = getRandomSpotInRoom(r);
+                boolean notFound = true;
+                for(Point p : points){
+                    if(p.x == randomPoint.x && p.y == randomPoint.y){
+                        notFound = false;
+                        break;
+                    }
+                }
+                if(notFound){
+                    points.add(randomPoint);
+                    break;
+                }
+            }
+            if(randomPoint!=null){
+                World.entityManager.spawnEntity(15, -1, randomPoint.getX()*Tile.tileSize,randomPoint.getY()*Tile.tileSize);
+            }
+        }
+
+        
+
+
+    }
+    private Point getRandomSpotInRoom(Room r){
+        int width = r.structure.width;
+        int height = r.structure.height;
+        Random random = new Random();
+        
+        while(true){
+            int x = random.nextInt(width);
+            int y = random.nextInt(height);
+            int tileID = r.structure.tiles[x][y];
+            boolean solid = Tile.getTileByID(tileID).solid;
+
+            if(!solid){
+                return new Point(r.x+x,r.y+y);
+            }
+        }
     }
     private Room getRoomWithConnectionsFromStack(Stack<Room> stack){
         Room rr = null;

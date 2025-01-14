@@ -51,6 +51,10 @@ public class World {
     public static boolean drawCollisionBoxes = false;
     public static ArrayList<CollisionBox> collisionBoxes = new ArrayList<CollisionBox>();
     public static HashMap<String,BufferedImage> overlays = new HashMap<String,BufferedImage>();
+
+    public static int dungeonLevel = 1;
+    public static int dungeonCounter = 10;
+
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
@@ -143,7 +147,7 @@ public class World {
     }
     private static void generateDungeon(){
         entityManager.clearEntities();
-        map = new Map(3);
+        map = new Map(dungeonCounter);
 
     }
     private void generateMushrooms(int type){
