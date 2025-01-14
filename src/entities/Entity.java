@@ -454,6 +454,9 @@ public class Entity {
             if(b.source == this){
                 continue;
             }
+            if(checkProjectileCollisionSource(b)){
+                continue;
+            }
             if(xSpeed >0){
                 //Moving right
                 int nextX = (bounds.x + bounds.width)+(int)xSpeed;
@@ -504,6 +507,9 @@ public class Entity {
             if(b.source == this){
                 continue;
             }
+            if(checkProjectileCollisionSource(b)){
+                continue;
+            }
             if(ySpeed >0){
                 //Moving down
                 int nextY = (bounds.y + bounds.height)+(int)ySpeed;
@@ -546,6 +552,17 @@ public class Entity {
         }
 
         return true;
+    }
+    private boolean checkProjectileCollisionSource(CollisionBox b){
+        if(info.type.equals("Projectile")){
+            if(b.source!=null){
+                if(b.source.equals(source)){
+                    return true;
+                }
+            }
+            
+        }
+        return false;
     }
     private boolean checkTilesX(){
         int currentTileX = (int)(bounds.x/Tile.tileSize);

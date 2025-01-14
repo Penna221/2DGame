@@ -52,7 +52,7 @@ public class World {
     public static ArrayList<CollisionBox> collisionBoxes = new ArrayList<CollisionBox>();
     public static HashMap<String,BufferedImage> overlays = new HashMap<String,BufferedImage>();
 
-    public static int dungeonLevel = 1;
+    public static int dungeonLevel = 10;
     public static int dungeonCounter = 10;
 
     public World(){

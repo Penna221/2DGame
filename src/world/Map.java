@@ -318,7 +318,7 @@ public class Map {
 
         int[] lvl1 = {15};
         int[] lvl5 = {15,49};
-        int[] lvl10 = {15,49,50};
+        int[] lvl10 = {50};
 
 
         Point randomPoint;
