@@ -24,6 +24,7 @@ public class HUD {
     private BufferedImage overlay;
     private Graphics g;
     public boolean showExtra = false;
+    public int roomCount = 1;
     public ArrayList<BufferedImage> toDraw = new ArrayList<BufferedImage>();
     public HUD(){
         
@@ -81,6 +82,8 @@ public class HUD {
         g.drawString("FPS: "+fps, 20, startY + 75);
         g.drawString("Screen Width: "+width, 20, startY + 100);
         g.drawString("Screen Height: "+height, 20, startY + 125);
+        g.drawString("Dungeon Lvl: " + World.dungeonLevel,20,startY+150);
+        g.drawString("Room count: " +roomCount,20,startY+175);
     }
     private void drawEnergy(){
         BufferedImage i = Factory.generateNewOverlayImage();

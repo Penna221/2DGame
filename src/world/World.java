@@ -90,6 +90,8 @@ public class World {
                                 // }
                             }else if(worldName.equals("dungeon")){
                                 generateDungeon();
+                                dungeonCounter++;
+                                dungeonLevel+=5;
                             }
                             else{
                                 String mapName = worldName;

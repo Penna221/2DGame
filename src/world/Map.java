@@ -17,6 +17,7 @@ import java.util.Stack;
 import javax.imageio.ImageIO;
 
 import entities.Entity;
+import entities.ai.PlayerAI;
 import entities.collision.CollisionBox;
 import main.Game;
 import tiles.Tile;
@@ -235,9 +236,12 @@ public class Map {
         for(Structure s : withNorthConnection){
             System.out.println(s.name);
         }
-        
+        int min = length/2;
+        Random rand = new Random();
+        int amount =min + rand.nextInt(length);
+        PlayerAI.hud.roomCount = amount;
         Room lastRoom = spawn;
-        for(int i = 0; i < length; i++){
+        for(int i = 0; i < amount; i++){
             System.out.println("Processing "+ i);
             boolean bool = false;
             int tries = 0;
@@ -272,7 +276,7 @@ public class Map {
                 roomStack.add(b);
                 lastRoom = b;
                 if(lastRoom.structure.name.startsWith("d_")){
-                    // spawnEnemies(lastRoom, World.dungeonLevel);
+                    spawnEnemies(lastRoom, World.dungeonLevel);
                 }
             }else{
                 //Room did not generate properly.
@@ -312,6 +316,11 @@ public class Map {
         int amount = random.nextInt(10);
         ArrayList<Point> points = new ArrayList<Point>();
 
+        int[] lvl1 = {15};
+        int[] lvl5 = {15,49};
+        int[] lvl10 = {15,49,50};
+
+
         Point randomPoint;
         for(int i = 0; i < amount; i++){
             while(true){
@@ -329,7 +338,15 @@ public class Map {
                 }
             }
             if(randomPoint!=null){
-                World.entityManager.spawnEntity(15, -1, randomPoint.getX()*Tile.tileSize,randomPoint.getY()*Tile.tileSize);
+                int enemy = 2;
+                if(lvl >=0 && lvl <5){
+                    enemy = lvl1[random.nextInt(lvl1.length)];
+                }else if(lvl >=5 && lvl <10){
+                    enemy = lvl5[random.nextInt(lvl5.length)];
+                }else if(lvl >=10){
+                    enemy = lvl10[random.nextInt(lvl10.length)];
+                }
+                World.entityManager.spawnEntity(enemy, -1, randomPoint.getX()*Tile.tileSize,randomPoint.getY()*Tile.tileSize);
             }
         }
 
