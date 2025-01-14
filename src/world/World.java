@@ -53,7 +53,7 @@ public class World {
     public static HashMap<String,BufferedImage> overlays = new HashMap<String,BufferedImage>();
 
     public static int dungeonLevel = 10;
-    public static int dungeonCounter = 10;
+    public static int dungeonCounter = 2;
 
     public World(){
         entityManager = new EntityManager();
@@ -89,16 +89,17 @@ public class World {
                                 //     generate(LVL3);
                                 // }
                             }else if(worldName.equals("dungeon")){
+                                
                                 generateDungeon();
+                                
                                 dungeonCounter++;
                                 dungeonLevel+=5;
                             }
                             else{
+                                
                                 String mapName = worldName;
-                                String ent = mapName+"_entities";
-                                map.loadMap(new File("res/maps/"+mapName+".csv"));
-                                loadEntities(new File("res/maps/"+ent+".csv"));
-
+                                Room r = map.loadMap(mapName);
+                                map.rooms.add(r);
                             }
                             ready = true;
                             readyToUpdate = true;
@@ -123,9 +124,9 @@ public class World {
         transition.start();
         
     }
-    private static void loadEntities(File f){
+    private static ArrayList<Entity> loadEntities(File f){
         //Load Entities
-        
+        ArrayList<Entity> entities = new ArrayList<Entity>();
         try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
             String line = "";
             while((line = reader.readLine())!=null){
@@ -133,14 +134,18 @@ public class World {
                 int id = Integer.parseInt(tokens[0]);
                 double x = Integer.parseInt(tokens[1])*Tile.tileSize;
                 double y = Integer.parseInt(tokens[2])*Tile.tileSize;
-                entityManager.spawnEntity(id,-1, x, y);
-                
-                
+                Entity e = entityManager.generateEntityWithID(id,-1, x, y);
+                if(id==0){
+                    player = e;
+                    continue;
+                }
+                entities.add(e);
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return entities;
     }
     private static void generate(String wn){
         entityManager.clearEntities();
@@ -492,12 +497,11 @@ public class World {
     }
     public static ArrayList<Entity> getEntitiesInArea(Polygon area){
         ArrayList<Entity> entities = new ArrayList<Entity>();
-        for(Entity e : entityManager.newList){
-            if(area.intersects(e.bounds)){
-                entities.add(e);
+        for(Room r : entityManager.roomsToUpdate){
+            if(area.intersects(r.bounds)){
+                entities.addAll(r.entities);
             }
         }
-        System.out.println(entities.size());
         return entities;
     }
 }

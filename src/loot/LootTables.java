@@ -7,9 +7,9 @@ import java.util.Random;
 
 import entities.Entity;
 import entities.ai.CollectableAI;
-import entities.ai.PlayerAI;
 import json.JSON;
 import json.KeyValuePair;
+import world.Room;
 import world.World;
 
 public class LootTables {
@@ -57,6 +57,7 @@ public class LootTables {
                 int randomXOffset = generateRandomAmount(-40, 40);
                 int randomYOffset = generateRandomAmount(-40, 40);
                 Entity e2 = World.entityManager.spawnEntity(id,id2, (int)x+randomXOffset, (int)y+randomYOffset);
+                
                 e2.ai = new CollectableAI(e2);
                 // boolean success = PlayerAI.inv.addItem(e2);
                 // if(success){

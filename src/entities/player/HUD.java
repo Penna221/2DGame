@@ -15,6 +15,7 @@ import main.Game;
 import main.Launcher;
 import tiles.Tile;
 import ui.UIFactory;
+import world.Room;
 import world.World;
 public class HUD {
     public boolean showHealth = true;
@@ -66,24 +67,33 @@ public class HUD {
     }
     private void drawExtra(Graphics g){
         int startY = 100;
-        int entityCount = World.entityManager.getEntities().size();
-        int visibleCount = World.entityManager.newList.size();
+        int entityCount = 0;
         int fps = Launcher.g.getCurrentFPS();
         int width = Game.w.getWidth();
         int height = Game.w.getHeight();
-
+        String roomName = "";
+        
+        for(Room r : World.entityManager.roomsToUpdate){
+            entityCount+=r.entities.size();
+            if(r.bounds.intersects(World.player.bounds)){
+                
+                roomName = r.structure.name;
+            }
+        }
 
         g.setFont(new Font("Arial",Font.BOLD,20));
         g.setColor(Color.black);
         g.fillRect(10,startY - 10, 230,400);
         g.setColor(Color.WHITE);
-        g.drawString("Total Entitities: " + entityCount,20,startY +25);
-        g.drawString("Visible Entities: " + visibleCount,20,startY +50);
-        g.drawString("FPS: "+fps, 20, startY + 75);
+        g.drawString("FPS: "+fps, 20, startY + 25);
+        g.drawString("Total Entitities: " + entityCount,20,startY +75);
+        
         g.drawString("Screen Width: "+width, 20, startY + 100);
         g.drawString("Screen Height: "+height, 20, startY + 125);
         g.drawString("Dungeon Lvl: " + World.dungeonLevel,20,startY+150);
         g.drawString("Room count: " +roomCount,20,startY+175);
+        
+        g.drawString("Room: " + roomName, 20, startY+200);
     }
     private void drawEnergy(){
         BufferedImage i = Factory.generateNewOverlayImage();

@@ -53,7 +53,10 @@ public class SummonerAI extends EnemyAI{
             double xOff = Math.cos(Math.toRadians(angle))*150;
             double yOff = Math.sin(Math.toRadians(angle))*150;
             angle += change;
-            World.entityManager.spawnEntity(15, -1, e.bounds.getCenterX()+xOff, e.bounds.getCenterY()+yOff);
+            Entity b = World.entityManager.spawnEntity(15, -1, e.bounds.getCenterX()+xOff, e.bounds.getCenterY()+yOff);
+            
+            // e.homeRoom.addEntity(b);
+
         }
         attackTimer.setTime(10000);
         attackTimer.backToStart();

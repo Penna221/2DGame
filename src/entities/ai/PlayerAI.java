@@ -30,7 +30,6 @@ import world.World;
 
 public class PlayerAI extends AI{
     public static Inventory inv;
-    private Rectangle viewRectangle;
     public int distance;
     private boolean moving = false;
     private Clip walkClip;
@@ -88,7 +87,6 @@ public class PlayerAI extends AI{
         
         e.calculateBounds();
         distance = 1000;
-        viewRectangle = new Rectangle((int)(0),(int)(0),(int)(distance*2 + e.bounds.width),(int)(distance*2 + e.bounds.height));
         
         double scaleFactor = 20.0;
         e.currentAnimation = e.info.animations.get("idle");
@@ -131,29 +129,6 @@ public class PlayerAI extends AI{
         }
         
         
-
-        ArrayList<Entity> entities = World.entityManager.getEntities();
-        for(Entity ee : entities){
-            if(ee == e){
-                continue;
-            }
-            if(ee.bounds.intersects(viewRectangle)){
-                
-                ee.inView = true;
-                if(!World.entityManager.inView.contains(ee)){
-                    World.entityManager.inView.add(ee);
-                }
-            }else{
-                if(World.entityManager.inView.contains(ee)){
-                    World.entityManager.inView.remove(ee);
-                }
-                ee.inView = false;
-            }
-        }
-        
-        
-        viewRectangle.x = (int)(e.x- distance);
-        viewRectangle.y = (int)(e.y - distance);
         
         e.move(true);
         e.updateBounds();

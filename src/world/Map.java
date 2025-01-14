@@ -38,7 +38,7 @@ public class Map {
     public ArrayList<Structure> withNorthConnection;
     public ArrayList<Structure> withSouthConnection;
 
-
+    public ArrayList<Room> rooms;
     public Map(String wn, int width, int height){
         this.width = width;
         this.height = height;
@@ -49,7 +49,6 @@ public class Map {
         this.width = 1000;
         this.height = 1000;
         map = new int[width][height];
-        
         structureBounds = new ArrayList<Rectangle>();
         initMapTo(41);
         generateDungeon(length);
@@ -76,37 +75,52 @@ public class Map {
             structures.put(name, s);
         }
     }
-    public void loadMap(File f){
+    public Room loadMap(String name){
         // mapLoaded = false;
-        String entityFile ="";
-        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
-            String line = reader.readLine();
-            String[] dimensions = line.split(" ");
-            int w = Integer.parseInt(dimensions[0]);
-            width = w;
-            int h = Integer.parseInt(dimensions[1]);
-            height = h;
-            int[][] loadedMap = new int[w][h];
-            int row = 0;
-            entityFile = reader.readLine();
-            while((line = reader.readLine())!=null){
-                String[] ids = line.split(",");
-                for(int i = 0; i < ids.length; i++){
+        rooms = new ArrayList<Room>();
+        // String entityFile ="";
+        // try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+        //     String line = reader.readLine();
+        //     String[] dimensions = line.split(" ");
+        //     int w = Integer.parseInt(dimensions[0]);
+        //     width = w;
+        //     int h = Integer.parseInt(dimensions[1]);
+        //     height = h;
+        //     int[][] loadedMap = new int[w][h];
+        //     int row = 0;
+        //     entityFile = reader.readLine();
+        //     while((line = reader.readLine())!=null){
+        //         String[] ids = line.split(",");
+        //         for(int i = 0; i < ids.length; i++){
 
-                    int j = Integer.parseInt(ids[i]);
-                    loadedMap[i][row] = j;
-                }
-                row++;
+        //             int j = Integer.parseInt(ids[i]);
+        //             loadedMap[i][row] = j;
+        //         }
+        //         row++;
                 
-            }
-            map = loadedMap;
-            // mapLoaded = true;
-            reader.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        //     }
+        //     map = loadedMap;
+        //     // mapLoaded = true;
+        //     reader.close();
+        // } catch (IOException e) {
+        //     // TODO Auto-generated catch block
+        //     e.printStackTrace();
+        // }
+        Structure loadedStructure = new Structure(name);
+        map = loadedStructure.tiles;
+        width = map.length;
+        height = map[0].length;
+        Room r = new Room(0,0,loadedStructure);
+        ArrayList<Entity> ent = generateStructureEntities(r.structure, r.x,r.y);
+        
+        for(Entity e : ent){
+            r.addEntity(e);
+            e.setHomeRoom(r);
         }
+
+
         generateBinaryMap();
+        return r;
         
     }
     public void generate(String wn){
@@ -212,7 +226,7 @@ public class Map {
     }
 
     private void generateDungeon(int length){
-
+        rooms = new ArrayList<Room>();
         int centerX = map.length/2;
         int centerY = map[0].length/2;
         Structure s1 = structures.get("spawn_area");
@@ -220,22 +234,20 @@ public class Map {
         //Spawn
         Room spawn = new Room(centerX, centerY,s1);
         generateStructure(spawn.structure, spawn.x,spawn.y);
+        ArrayList<Entity> ents = generateStructureEntities(spawn.structure,spawn.x,spawn.y);
+        for(Entity e : ents){
+            if(e!=null){
+                e.setHomeRoom(spawn);
+            }
+        }
+        spawn.entities.addAll(ents);
+        rooms.add(spawn);
+        // World.entityManager.roomsToUpdate.add(spawn);
         roomStack.add(spawn);
 
         //Load rooms that have connections.
         loadConnections("");
-        for(Structure s : withEastConnection){
-            System.out.println(s.name);
-        }
-        for(Structure s : withSouthConnection){
-            System.out.println(s.name);
-        }
-        for(Structure s : withWestConnection){
-            System.out.println(s.name);
-        }
-        for(Structure s : withNorthConnection){
-            System.out.println(s.name);
-        }
+        
         int min = length/2;
         Random rand = new Random();
         int amount =min + rand.nextInt(length);
@@ -265,6 +277,14 @@ public class Map {
                         continue;
                     }
                     bool = generateStructure(b.structure,b.x,b.y);
+                    if(bool){
+                        ArrayList<Entity> ent = generateStructureEntities(b.structure, b.x,b.y);
+                        
+                        for(Entity e : ent){
+                            b.addEntity(e);
+                            e.setHomeRoom(b);
+                        }
+                    }
                 }
                 if(!bool){
                     choises.remove(dir);
@@ -275,6 +295,7 @@ public class Map {
             if(b!=null && bool){
                 roomStack.add(b);
                 lastRoom = b;
+                rooms.add(lastRoom);
                 if(lastRoom.structure.name.startsWith("d_")){
                     spawnEnemies(lastRoom, World.dungeonLevel);
                 }
@@ -296,7 +317,16 @@ public class Map {
                 Room f = connectRoom(lastRoom,structures.get("exit"), i);
                 if(f!=null){
                     success = generateStructure(f.structure, f.x,f.y);
+                    
                     if(success){
+                        ArrayList<Entity> ents2 = generateStructureEntities(f.structure,f.x,f.y);
+                        for(Entity e : ents2){
+                            if(e!=null){
+                                e.setHomeRoom(f);
+                            }
+                        }
+                        f.entities.addAll(ents2);
+                        rooms.add(f);
                         break;
                     }
                 }
@@ -315,7 +345,7 @@ public class Map {
         Random random = new Random();
         int amount = random.nextInt(10);
         ArrayList<Point> points = new ArrayList<Point>();
-
+        r.entities = new ArrayList<Entity>();
         int[] lvl1 = {15};
         int[] lvl5 = {15,49};
         int[] lvl10 = {50};
@@ -346,7 +376,7 @@ public class Map {
                 }else if(lvl >=10){
                     enemy = lvl10[random.nextInt(lvl10.length)];
                 }
-                World.entityManager.spawnEntity(enemy, -1, randomPoint.getX()*Tile.tileSize,randomPoint.getY()*Tile.tileSize);
+                r.entities.add(World.entityManager.generateEntityWithID(enemy, -1, randomPoint.getX()*Tile.tileSize,randomPoint.getY()*Tile.tileSize));
             }
         }
 
@@ -690,8 +720,16 @@ public class Map {
         int w = spawn.width;
         int h = spawn.height;
         generateStructure(spawn, centerX-w/2, centerY-h/2);
+        ArrayList<Entity> ents = generateStructureEntities(spawn,centerX-w/2, centerY-h/2);
     }
-    
+    private ArrayList<Entity> generateStructureEntities(Structure s, int x, int y){
+        ArrayList<Entity> entities = new ArrayList<Entity>();
+        for(StructureEntity e : s.entities){
+            Entity ent = World.entityManager.generateEntityWithID(e.id,-1, (e.x + x)*Tile.tileSize, (e.y+y)*Tile.tileSize);
+            entities.add(ent);
+        }
+        return entities;
+    }
     
     //Generate border
     private void generateWalls(int id){
@@ -776,11 +814,7 @@ public class Map {
                 map[x+i][y+j] = tiles[i][j];
             }
         }
-
         structureBounds.add(r);
-        for(StructureEntity e : s.entities){
-            World.entityManager.spawnEntity(e.id,-1, (e.x + x)*Tile.tileSize, (e.y+y)*Tile.tileSize);
-        }
         return true;
     }
     //Can there be added some kind of rayCasting to set viewable area?

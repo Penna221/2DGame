@@ -28,27 +28,26 @@ import json.JSON;
 import json.KeyValuePair;
 import tiles.Tile;
 import world.Camera;
+import world.Room;
 import world.World;
 
 public class EntityManager {
     private static ArrayList<AttackBox> attackBoxes;
     private static ArrayList<AttackBox> newAttackBoxes;
-    private ArrayList<Entity> entities;
+    public ArrayList<Entity> entities;
     private ArrayList<Entity> toRemove;
     private ArrayList<Entity> toAdd;
-    public ArrayList<Entity> inView;
     public static int scale = 1;
     public static HashMap<Integer,EntityInfo> entityInfos;
 
 
     private ArrayList<Entity> toView;
-    public ArrayList<Entity> newList;
     public boolean loading = false;
+    public ArrayList<Room> roomsToUpdate = new ArrayList<Room>();
     public EntityManager() {
         entities = new ArrayList<Entity>();
         toRemove = new ArrayList<Entity>();
         toAdd = new ArrayList<Entity>();
-        inView = new ArrayList<Entity>();
         toView = new ArrayList<Entity>();
         attackBoxes = new ArrayList<AttackBox>();
         newAttackBoxes = new ArrayList<AttackBox>();
@@ -111,13 +110,17 @@ public class EntityManager {
             return null;
         }
         if(id==0){
-            if(checkForPlayers()){
-                return null;
-            }
             World.player = c;
             Camera.setEntityToCenter(c);
         }
-        toAdd.add(c);
+        for(Room r : World.map.rooms){
+            if(r.bounds.intersects(c.bounds)){
+                c.setHomeRoom(r);
+                r.addEntity(c);
+                break;
+            }
+        }
+        
         return c;
     }
     public Entity generateProjectile(Projectile info, int x, int y, int rotation){
@@ -126,7 +129,13 @@ public class EntityManager {
         c.projectileInfo = info;
         c.rotation = rotation;
         c.ai.lateInit();
-        toAdd.add(c);
+        for(Room r : World.map.rooms){
+            if(r.bounds.intersects(c.bounds)){
+                c.setHomeRoom(r);
+                r.addEntity(c);
+                break;
+            }
+        }
         return c;
     }
     public Entity generateSword(Sword info){
@@ -160,6 +169,11 @@ public class EntityManager {
     }
     public Entity generateEntityWithID(int id, int subID, double x, double y){
         Entity c = new Entity(entityInfos.get(id),x,y);
+        if(id==0){
+            System.out.println("Player loaded");
+            World.player = c;
+            Camera.setEntityToCenter(c);
+        }
         switch (id) {
             case 26:
                 c.potionInfo = Potions.potions.get(subID);
@@ -182,18 +196,18 @@ public class EntityManager {
         c.loadBasicInfo();
         return c;
     }
-    private boolean checkForPlayers(){
+    private Entity checkForPlayers(){
         for(Entity e: entities){
             if(e.info.id==0){
-                return true;
+                return e;
             }
         }
         for(Entity e : toAdd){
             if(e.info.id==0){
-                return true;
+                return e;
             }
         }
-        return false;
+        return null;
     }
     public static int findIDWithName(String name){
         for (Map.Entry<Integer, EntityInfo> entry : entityInfos.entrySet()) {
@@ -208,9 +222,14 @@ public class EntityManager {
         toAdd.add(e);
     }
     public void removeEntity(Entity e){
-        toRemove.add(e);
+        if(e.homeRoom!=null){
+            e.homeRoom.removeEntity(e);
+        }else{
+            toRemove.add(e);
+        }
     }
     public void clearEntities(){
+        roomsToUpdate.clear();
         for(Entity e : entities){
             toRemove.add(e);
         }
@@ -224,10 +243,10 @@ public class EntityManager {
         if(World.player==null){
             return;
         }
-        if(newList!=null){
-            toView.clear();
-            toView.addAll(newList);
-        }
+        
+        toView.clear();
+        toView.addAll(entities);
+        
         toView.sort(Comparator.comparingDouble(e -> e.bounds.getCenterY()));
         Iterator<Entity> iterator = toView.iterator();
         
@@ -242,33 +261,39 @@ public class EntityManager {
         
     }
     public void update(){
+        
         if(!loading){
-            newList = new ArrayList<Entity>();
-            newList.add(World.player);
-            for(Entity e : entities){
-                if(e.inView){
-                    if(e.equals(World.player)){
+            entities = new ArrayList<Entity>();
+            // entities.add(World.player);
+            //put loaded rooms in list.
+            if(World.map.rooms!=null){
+                for(Room room : World.map.rooms){
+                    if(roomsToUpdate.contains(room)){
                         continue;
                     }
-                    newList.add(e);
-                    boolean solid = true;
-                    if(e.info.solid){
-                        solid = true;
-                    }else{
-                        solid = false;
+                    // System.out.println(room.bounds.x + " " + room.bounds.y + " " + room.bounds.width + " " + room.bounds.height);
+                    if(World.player.bounds.intersects(room.bounds)){
+                        roomsToUpdate.add(room);
+                        room.resetEntityClocks();
                     }
-                    World.collisionBoxes.add(new CollisionBox(e,e.bounds,solid));
-                    e.update();
                 }
             }
-            if(World.player!=null){
-                World.player.update();
+            //For every room loaded, update entities.
+            // System.out.println("RoomsTo Update: ");
+            for(Room room : roomsToUpdate){
+                room.updateCollisionBoxes();
             }
+            for(Room room : roomsToUpdate){
+                // System.out.println(room.structure.name);
+                room.updateEntities();
+                entities.addAll(room.entities);
+            }
+            entities.addAll(toAdd);
+            entities.removeAll(toRemove);
+            // if(World.player!=null){
+            //     World.player.update();
+            // }
         }
-        entities.removeAll(toRemove);
-        entities.addAll(toAdd);
-        toRemove.clear();
-        toAdd.clear();
         attackBoxes.addAll(newAttackBoxes);
         newAttackBoxes.clear();
         if(!loading){
@@ -310,7 +335,6 @@ public class EntityManager {
                 }
             }
         }
-        entities.removeAll(toRemove);
         attackBoxes.clear();
         
     }

@@ -19,6 +19,11 @@ public class Structure {
         entities = new ArrayList<StructureEntity>();
         load(name);
     }
+    public Structure(int[][] map){
+        this.tiles = map;
+        width = tiles.length;
+        height = tiles[0].length;
+    }
     public void load(String name){
         File f = new File("res/maps/structures/"+name+".csv");
         try {

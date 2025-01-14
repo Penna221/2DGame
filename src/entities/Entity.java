@@ -50,6 +50,7 @@ import states.State;
 import tiles.Tile;
 import tools.Timer;
 import ui.Task;
+import world.Room;
 import world.World;
 
 public class Entity {
@@ -82,12 +83,16 @@ public class Entity {
     public ArrayList<Effect> effects, toAdd,toRemove;
     public Timer particleGenerationTimer;
     public static boolean drawBounds = false;
+    public Room homeRoom;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
         this.info = info;
         this.scale = EntityManager.scale;
         init();
+    }
+    public void setHomeRoom(Room r){
+        this.homeRoom = r;
     }
     public void stop(){
         xSpeed = 0;
