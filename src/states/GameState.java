@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
+import entities.ai.PlayerAI;
+import entities.player.Inventory;
 import ui.PauseMenu;
 import world.World;
 
@@ -49,21 +51,29 @@ public class GameState extends State{
     public static void newGame(){
         // paused = false;
         paused = true;
-        if(world !=null){
-            world = new World();
-        }
-        World.load("lobby");
+        
+        world = new World();
+        World.load("lobby","");
+        PlayerAI.inv = new Inventory();
         alreadyInitialized = false;
+        State.setState(gameState, false);
+    }
+    public static void loadGame(String savedGame){
+        paused = true;
+        
+        world = new World();
+        World.load("lobby",savedGame);
+        
+        alreadyInitialized = true;
         State.setState(gameState, false);
     }
     @Override
     public void init() {
         System.out.println("Gamestate init");
         if(!alreadyInitialized){
-            // world = new World(World.FOREST);
-            
+            world = new World();
+            World.load("lobby","");
         }
-        world = new World();
         paused = false;
     }
 

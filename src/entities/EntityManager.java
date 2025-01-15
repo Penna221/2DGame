@@ -68,9 +68,7 @@ public class EntityManager {
 
             String ai = c.findChild("ai").getString();
             if(ai.equals("door")){
-                System.out.println("****************");
                 tunnel = c.findChild("tunnel").getString();
-                System.out.println(tunnel);
             }
             // System.out.println("SCALE IS " + scale);
             int width = (int) (c.findChild("width").getInteger()*scale);

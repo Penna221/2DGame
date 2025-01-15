@@ -9,10 +9,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Line2D.Double;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +25,7 @@ import gfx.LineRectangleIntersection;
 import gfx.Transition;
 import main.Game;
 import particles.ParticleManager;
+import save.SavedGame;
 import sound.SoundPlayer;
 import tiles.Tile;
 
@@ -54,7 +51,6 @@ public class World {
 
     public static int dungeonLevel = 10;
     public static int dungeonCounter = 2;
-
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
@@ -65,7 +61,7 @@ public class World {
         // load();
     }
 
-    public static void load(String worldName){
+    public static void load(String worldName,String savedGame){
         entityManager.loading = true;
         entityManager.clearEntities();
         entityManager.update();
@@ -96,10 +92,15 @@ public class World {
                                 dungeonLevel+=5;
                             }
                             else{
-                                
+                                System.out.println("Loading Map named: " + worldName);
                                 String mapName = worldName;
                                 Room r = map.loadMap(mapName);
                                 map.rooms.add(r);
+                                // System.out.println("Saved Game: "+savedGame);
+                                if(!savedGame.equals("")){
+                                    System.out.println("loading player from save");
+                                    SavedGame.tryLoad(savedGame);
+                                }
                             }
                             ready = true;
                             readyToUpdate = true;

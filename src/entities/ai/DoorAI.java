@@ -43,7 +43,7 @@ public class DoorAI extends AI{
         Task t = new Task(){
             public void perform(){
                 PauseMenu.setContainer(null);
-                World.load(e.info.tunnel);
+                World.load(e.info.tunnel,"");
                 GameState.paused = false;
             }
         };

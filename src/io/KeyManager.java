@@ -56,7 +56,7 @@ public class KeyManager implements KeyListener{
                 PlayerAI.hud.showExtra = !PlayerAI.hud.showExtra;
                 break;
             case KeyEvent.VK_F2:
-                World.load("cave_goblin");
+                World.load("cave_goblin","");
                 break;
             case KeyEvent.VK_F3:
                 State.setState(State.menuState,true);

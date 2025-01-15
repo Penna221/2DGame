@@ -1,11 +1,7 @@
 {
-    "position":{
-        "x":10,
-        "y":4
-    },
     "stats":{
-        "health":5,
-        "effects":["speed"]
+        "health":10,
+        "maxHealth":10
     },
     "inventory":{
         "inventorySlots":{

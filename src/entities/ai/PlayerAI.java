@@ -54,8 +54,8 @@ public class PlayerAI extends AI{
 
         if(inv==null){
             
-            // inv = new Inventory();
-            SavedGame.tryLoad("save1");
+            inv = new Inventory();
+            
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
             // for(int i = 0; i < 99; i++){

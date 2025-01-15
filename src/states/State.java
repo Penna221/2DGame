@@ -62,7 +62,6 @@ public abstract class State {
             @Override
             public void end(){
                 SoundPlayer.stopAllSounds();
-                System.out.println("end");
                 State.running = true;
             }
         };

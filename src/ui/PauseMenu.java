@@ -133,9 +133,16 @@ public class PauseMenu {
                 GameState.newGame();
             }
         };
+        Task load = new Task(){
+            public void perform(){
+                GameState.loadGame("save1");
+            }
+        };
         ClickButton newGameButton = new ClickButton(100, 200, new Text("New Game",0,0,0,false));
         newGameButton.setTask(t);
         ClickButton loadGameButton = new ClickButton(100, 320,new Text("Load Game",0,0,0,false));
+        loadGameButton.setTask(load);
+        
         Task t2 = new Task(){public void perform(){System.exit(0);}};
         ClickButton exitButton = new ClickButton(100, 440, new Text("Exit",0,0,0,false));
         exitButton.setTask(t2);

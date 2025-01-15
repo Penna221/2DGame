@@ -16,12 +16,14 @@ import world.World;
 
 public class SavedGame {
     public Inventory inventory;
-    public World world;
+    public int playerHealth;
+    public int playerMaxHealth;
     public static HashMap<String, SavedGame> savedGames = new HashMap<String, SavedGame>();
     public static SavedGame currentSave;
-    public SavedGame(Inventory inv, World w){
+    public SavedGame(Inventory inv, int playerHealth, int maxHealth){
         this.inventory = inv;
-        this.world = w;
+        this.playerHealth = playerHealth;
+        this.playerMaxHealth = maxHealth;
     }
     public static void tryLoad(String save){
         boolean loadSuccess = false;
@@ -30,6 +32,9 @@ public class SavedGame {
         // GameState.world = currentSave.world;
         PlayerAI.inv = currentSave.inventory;
         PlayerAI.inv.updateInventory();
+
+        World.player.health = currentSave.playerHealth;
+        World.player.maxHealth = currentSave.playerMaxHealth;
         //Load Player Stats
         // - Inventory
         // - currenthealth
@@ -60,38 +65,40 @@ public class SavedGame {
                 continue;
             }
             File playerData = new File(folder, "player_data.json");
-            //Build saved game objects from files.
-            if(playerData.exists()){
-                System.out.println("json exists");
-            }else{
-                System.out.println("playerdata file not found");
-                throw new Exception("Player Data file not found in folder: " + folder.getAbsolutePath());
-            }
-            Inventory inv = readInventory(playerData);
+            File unlockData = new File(folder, "unlocks.json");
             
-            SavedGame s = new SavedGame(inv,null);
-            savedGames.put(folder.getName(),s);
+            if(!playerData.exists()){
+                System.out.println("playerdata file not found");
+                System.out.println("Corrupted save: " + folder.getName());
+                continue;
+            }
+            
+            if(!unlockData.exists()){
+                System.out.println("UnlockData file not found");
+                System.out.println("Corrupted save: " + folder.getName());
+                continue;
+            }
+            JSON json = new JSON(playerData);
+            KeyValuePair s = json.parse("JSON");
+            KeyValuePair stats = s.findChild("stats");
+            int ph = stats.findChild("health").getInteger();
+            int mph = stats.findChild("maxHealth").getInteger();
+            KeyValuePair inv = s.findChild("inventory");
+            Inventory newInventory = readInventory(inv);
+            
+            SavedGame sa = new SavedGame(newInventory,ph,mph);
+            savedGames.put(folder.getName(),sa);
 
         }
     } 
-    private static Inventory readInventory(File f){
+    private static Inventory readInventory(KeyValuePair inv){
         System.out.println("Reading inventory file json");
-        
         Inventory newInventory = new Inventory();
-        JSON json = new JSON(f);
-        System.out.println("0");
-        KeyValuePair s = json.parse("JSON");
-        System.out.println("a");
-        KeyValuePair inv = s.findChild("inventory");
-        System.out.println("1");
+        
         KeyValuePair invSlots = inv.findChild("inventorySlots");
-        System.out.println("2");
         KeyValuePair hotbarSlots = inv.findChild("hotbarSlots");
-        System.out.println("3");
         KeyValuePair spellSlot = inv.findChild("spellSlot");
-        System.out.println("4");
         KeyValuePair arrowSlot = inv.findChild("arrowSlot");
-        System.out.println("5");
         //INVENTORY SLOTS
         for(KeyValuePair slot : invSlots.getObject()){
             if(slot.getKey().equals("empty")){
@@ -101,28 +108,21 @@ public class SavedGame {
             int itemID = slot.findChild("itemID").getInteger();
             int itemSubID = slot.findChild("itemSubID").getInteger();
             int itemAmount = slot.findChild("amount").getInteger();
-            System.out.println("entitymanager");
             Entity e = World.entityManager.generateEntityWithID(itemID, itemSubID, 0,0);
             newInventory.inventorySlots[slotID].setItem(e, (byte)itemAmount);
         }
-        System.out.println("6");
         //HotBAR SLOTS
         for(KeyValuePair slot : hotbarSlots.getObject()){
             if(slot.getKey().equals("empty")){
                 continue;
             }
-            System.out.println("slotID");
             int slotID = Integer.parseInt(slot.getKey());
-            System.out.println("ItemID");
             int itemID = slot.findChild("itemID").getInteger();
-            System.out.println("SubID");
             int itemSubID = slot.findChild("itemSubID").getInteger();
-            System.out.println("amount");
             int itemAmount = slot.findChild("amount").getInteger();
             Entity e = World.entityManager.generateEntityWithID(itemID, itemSubID, 0,0);
             newInventory.hotbarSlots[slotID].setItem(e, (byte)itemAmount);
         }
-        System.out.println("7");
         if(!arrowSlot.findChild("empty").getBoolean()){
             int arrowID = arrowSlot.findChild("itemID").getInteger();
             int arrowSubID = arrowSlot.findChild("itemSubID").getInteger();
@@ -131,7 +131,6 @@ public class SavedGame {
             newInventory.specialSlots[0].setItem(arrow, (byte)arrowAmount);
         }
         
-        System.out.println("8");
         if(!spellSlot.findChild("empty").getBoolean()){
             int spellID = spellSlot.findChild("itemID").getInteger();
             int spellSubID = spellSlot.findChild("itemSubID").getInteger();
@@ -139,7 +138,6 @@ public class SavedGame {
             Entity spell = World.entityManager.generateEntityWithID(spellID, spellSubID,0,0);
             newInventory.specialSlots[1].setItem(spell, (byte)spellAmount);
         }
-        System.out.println("9");
         
         
         
