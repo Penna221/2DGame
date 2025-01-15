@@ -200,7 +200,7 @@ public class Entity {
     }
     public void die(){
         if(name.equals("Player")&&info.id==0){
-            State.setState(State.menuState, true);
+            State.setState(State.deadState, false);
             Transition.canContinue2 = true;
             Transition.canFinish = true;
         }else{

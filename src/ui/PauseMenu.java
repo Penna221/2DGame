@@ -31,14 +31,7 @@ public class PauseMenu {
     public static void loadPauseMenus() throws Exception{
         containers.put("basic", createBasicPauseMenu());
         containers.put("main", createMenuStateContainer());
-        // containers.put("blacksmith",createBlacksmithContainer());
-        // containers.put("witch",createWitchContainer());
-        // containers.put("trader",createTraderContainer());
-
-
-        // containers.put("enter_blacksmith", createBlacksmithEntryDialog());
-        // containers.put("enter_witch", createWitchEntryDialog());
-        // containers.put("enter_trader", createTraderEntryDialog());
+        containers.put("dead",createDeadPauseMenu());
         
     }
     public static void generateNewContainer(String text){
@@ -105,7 +98,33 @@ public class PauseMenu {
         }
     }
     
+    private static Container createDeadPauseMenu(){
+        int w = Game.w.getWidth()/2;
+        int h = (int)(Game.w.getHeight()*0.75);
+        int x = Game.w.getWidth() /2 - w/2;
+        int y = Game.w.getWidth() /2 - h/3;
 
+        Container c = new Container(x,y,w,h);
+        c.fillBg = true;
+        Text title = new Text("Game over!", 0, 0, 0, true);
+        // c.setHeader(title);
+        c.addElement(title);
+        Task t = new Task(){
+            public void perform(){
+                State.setState(State.menuState, true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        };
+
+        ClickButton backToMenu = new ClickButton(0, 0, new Text("Back to Menu",0,0,0,false));
+        backToMenu.setTask(t);
+        backToMenu.setPosition(0,h-backToMenu.bounds.height-10);
+        c.addElement(backToMenu);
+        c.centerElements();
+        // c.calculateBounds();
+        return c;
+    }
     private static Container createMenuStateContainer(){
         Container container = new Container(0, 0, Game.w.getWidth(),Game.w.getHeight());
         Text title = new Text("Game Title", 0, 50, 0, true);

@@ -11,6 +11,7 @@ public abstract class State {
     public static State gameState, menuState,nullState,settingsState;
     public static State inventoryState;
     public static State traderState, blacksmithState,witchState;
+    public static State deadState;
     protected static boolean running = true;
     public static Transition transition;
     public static void createStates() throws Exception{
@@ -23,7 +24,7 @@ public abstract class State {
         blacksmithState = new BlacksmithState();
         witchState = new WitchState();
         settingsState = new SettingsState();
-
+        deadState = new DeadState();
         inventoryState = new InventoryState();
 
         nullState = new NullState();
