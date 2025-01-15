@@ -27,7 +27,7 @@ public class FireplaceAI extends AI {
         attackTimer = new Timer(200,attackTask);
     }
     private void tryToAttack(){
-        for(Entity en : World.entityManager.inView){
+        for(Entity en : World.entityManager.entities){
             if(en== e){
                 continue;
             }

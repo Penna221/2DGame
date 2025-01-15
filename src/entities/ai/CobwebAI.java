@@ -25,7 +25,7 @@ public class CobwebAI extends AI{
         attackRadius = e.generateSurroundingCircle(50);
     }
     private void tryToAttack(){
-        for(Entity en : World.entityManager.inView){
+        for(Entity en : World.entityManager.entities){
             if(attackRadius.intersects(en.bounds)){
                 if(en == e){
                     continue;
