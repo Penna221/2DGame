@@ -22,6 +22,7 @@ import entities.staves.Staves;
 import entities.swords.Swords;
 import gfx.Factory;
 import io.KeyManager;
+import save.SavedGame;
 import sound.SoundPlayer;
 import tiles.Tile;
 import tools.Timer;
@@ -52,25 +53,27 @@ public class PlayerAI extends AI{
         hudUpdateTimer = new Timer(50, t);
 
         if(inv==null){
-            inv = new Inventory();
-            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
-            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
-            for(int i = 0; i < 99; i++){
-                inv.addItem(World.entityManager.generateEntityWithID(35, 0, 0,0));
-            }
             
-            inv.addItem(World.entityManager.generateEntityWithID(58, 0, 0,0));
+            // inv = new Inventory();
+            SavedGame.tryLoad("save1");
+            // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
+            // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
+            // for(int i = 0; i < 99; i++){
+            //     inv.addItem(World.entityManager.generateEntityWithID(35, 0, 0,0));
+            // }
+            // inv.addItem(World.entityManager.generateEntityWithID(58, 0, 0,0));
+            // inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
+            // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
+            
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(3)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(4)));
-            inv.addItem(World.entityManager.generateSword(Swords.swords.get(0)));
             // inv.addItem(World.entityManager.generateBow(Bows.bows.get(0)));
             // inv.addItem(World.entityManager.generateStaff(Staves.staves.get(0)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
             // inv.addItem(World.entityManager.generateBow(Bows.bows.get(1)));
             // inv.addItem(World.entityManager.generateSword(Swords.swords.get(1)));
-            inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
             
         }
         Task regenEnergyTask = new Task(){

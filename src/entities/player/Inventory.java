@@ -400,6 +400,12 @@ public class Inventory {
                 infoPacket.update(item,x,y,400,70, true);
             }
         }
+        public void setItem(Entity i, byte amount){
+            i.loadBasicInfo();
+            this.item = i;
+
+            this.amount = amount;
+        }
         public void updateSlot(){
             if(amount<=0){
                 clear();

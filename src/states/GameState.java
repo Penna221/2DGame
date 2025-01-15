@@ -49,7 +49,9 @@ public class GameState extends State{
     public static void newGame(){
         // paused = false;
         paused = true;
-        world = new World();
+        if(world !=null){
+            world = new World();
+        }
         World.load("lobby");
         alreadyInitialized = false;
         State.setState(gameState, false);
@@ -61,6 +63,7 @@ public class GameState extends State{
             // world = new World(World.FOREST);
             
         }
+        world = new World();
         paused = false;
     }
 

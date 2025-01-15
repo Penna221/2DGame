@@ -124,29 +124,7 @@ public class World {
         transition.start();
         
     }
-    private static ArrayList<Entity> loadEntities(File f){
-        //Load Entities
-        ArrayList<Entity> entities = new ArrayList<Entity>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
-            String line = "";
-            while((line = reader.readLine())!=null){
-                String[] tokens = line.split(",");
-                int id = Integer.parseInt(tokens[0]);
-                double x = Integer.parseInt(tokens[1])*Tile.tileSize;
-                double y = Integer.parseInt(tokens[2])*Tile.tileSize;
-                Entity e = entityManager.generateEntityWithID(id,-1, x, y);
-                if(id==0){
-                    player = e;
-                    continue;
-                }
-                entities.add(e);
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return entities;
-    }
+    
     private static void generate(String wn){
         entityManager.clearEntities();
         map = new Map(wn,100,100);

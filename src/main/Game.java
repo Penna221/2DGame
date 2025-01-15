@@ -17,6 +17,7 @@ import io.KeyManager;
 import io.MouseManager;
 import loot.LootTables;
 import loot.Market;
+import save.SavedGame;
 import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
@@ -244,6 +245,16 @@ public class Game extends Engine{
             goAway();
         }
         
+        
+        status = "Loading Saved Games";
+        try {
+            SavedGame.loadSavedGames();
+        } catch (Exception e) {
+            status = "Error occured while Saved Games";
+            goAway();
+        }
+
+
 
         status = "Everything loaded. Happy gaming :)";
         SoundPlayer.playSound("allDone");
