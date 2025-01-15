@@ -346,7 +346,16 @@
         "regen_5":"res\\gfx\\animations\\regen\\regen_5.png",
         "spell_tome_1":"res\\gfx\\entities\\spell_tome_1.png",
         "spell_tome_2":"res\\gfx\\entities\\spell_tome_2.png",
-        "tree_1":"res\\gfx\\entities\\trees\\tree_1.png"        
+        "tree_1":"res\\gfx\\entities\\trees\\tree_1.png",
+        
+        "gold_key":"res\\gfx\\entities\\locks\\gold_key.png",
+        "ruby_key":"res\\gfx\\entities\\locks\\ruby_key.png",
+        "diamond_key":"res\\gfx\\entities\\locks\\diamond_key.png",
+
+        "gold_lock":"res\\gfx\\entities\\locks\\gold_lock.png",
+        "ruby_lock":"res\\gfx\\entities\\locks\\ruby_lock.png",
+        "diamond_lock":"res\\gfx\\entities\\locks\\diamond_lock.png"
+
     },
     "texts":{
         "txt1":{

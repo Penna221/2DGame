@@ -238,7 +238,8 @@ public class Map {
         roomStack.add(spawn);
 
         //Load rooms that have connections.
-        loadConnections("");
+        String[] banned = {"spawn_area","exit","t_r1"};
+        loadConnections("",banned);
         
         int min = length/2;
         Random rand = new Random();
@@ -262,7 +263,17 @@ public class Map {
                 Random r = new Random();
                 int dir = r.nextInt(choises.size());
                 int ans = choises.get(dir);
-                b = connectRandomRoom(lastRoom, ans);
+                int randForTreasure = r.nextInt(100);
+                
+                if(i == amount){
+                    if(randForTreasure==1){
+                        b = connectRoom(lastRoom, structures.get("t_r1"), ans);
+                    }else{
+                        b = connectRandomRoom(lastRoom, ans);
+                    }
+                }else{
+                    b = connectRandomRoom(lastRoom, ans);
+                }
                 if(b!=null){
                     if(i < length && b.getConnections().size()<1){
                         // tries++;
@@ -405,19 +416,22 @@ public class Map {
 
     }
     //Loads rooms that you want to be in dungeon. If prefix is not empty, player can only get for example lvl1_rooms or lvl2_rooms
-    private void loadConnections(String prefix){
+    private void loadConnections(String prefix,String[] banned){
         withEastConnection = new ArrayList<Structure>();
         withWestConnection = new ArrayList<Structure>();
         withNorthConnection = new ArrayList<Structure>();
         withSouthConnection = new ArrayList<Structure>();
+        
         for(Structure s : structures.values()){
             if(prefix!=""){
                 if(!s.name.startsWith(prefix)){
                     continue;
                 }
             }
-            if(s.name.equals("spawn_area")||s.name.equals("exit")){
-                continue;
+            for(String ban : banned){
+                if(ban.equals(s.name)){
+                    continue;
+                }
             }
             if(s.getEastConnectionPoint()!=null){
                 withEastConnection.add(s);

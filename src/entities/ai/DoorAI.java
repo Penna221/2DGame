@@ -52,7 +52,6 @@ public class DoorAI extends AI{
         GameState.paused = true;
     }
     public void render(Graphics g) {
-        g.drawOval((int)(interactCircle.x - World.camera.getXOffset()),(int) (interactCircle.y - World.camera.getYOffset()), (int)interactCircle.width,(int)interactCircle.height);
         if(talk){
             drawTalkBox(g);
         }

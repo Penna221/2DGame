@@ -23,6 +23,7 @@ import entities.ai.Enemy1AI;
 import entities.ai.FireplaceAI;
 import entities.ai.GoblinAI;
 import entities.ai.GuideAI;
+import entities.ai.LockAI;
 import entities.ai.MoleAI;
 import entities.ai.PlayerAI;
 import entities.ai.ProjectileAI;
@@ -162,6 +163,9 @@ public class Entity {
                 break;
             case "big_goblin":
                 ai = new BigGoblinAI(this);
+                break;
+            case "lock":
+                ai = new LockAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

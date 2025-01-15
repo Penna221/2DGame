@@ -160,7 +160,12 @@ public class PauseMenu {
         container.addElement(settingsButton);
         return container;
     }
-
+    public static Container generateTradeContainer(Entity item,int amount, String question, ArrayList<ClickButton> buttons){
+        
+        Container c = createBasicDialog(question, buttons);
+        c.fillBg = true;
+        return c;
+    }
 
     private static Container createBasicPauseMenu(){
         int w = 600;

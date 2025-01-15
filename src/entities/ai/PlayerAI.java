@@ -55,9 +55,11 @@ public class PlayerAI extends AI{
             inv = new Inventory();
             inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
             inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
-            for(int i = 0; i < 100; i++){
+            for(int i = 0; i < 99; i++){
                 inv.addItem(World.entityManager.generateEntityWithID(35, 0, 0,0));
             }
+            
+            inv.addItem(World.entityManager.generateEntityWithID(58, 0, 0,0));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(1)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(2)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(3)));
