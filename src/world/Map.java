@@ -32,7 +32,7 @@ public class Map {
     public static HashMap<String,Structure> structures = new HashMap<String,Structure>();
     private ArrayList<Rectangle> structureBounds;
     private boolean updating = false;
-
+    private Room cave;
     public ArrayList<Structure> withEastConnection;
     public ArrayList<Structure> withWestConnection;
     public ArrayList<Structure> withNorthConnection;
@@ -43,7 +43,7 @@ public class Map {
         this.width = width;
         this.height = height;
         generate(wn);
-        populateWithEnemies(Biome.biomes.get(wn));     
+        populateWithEnemies(Biome.biomes.get(wn),cave);     
     }
     public Map(int length){
         this.width = 1000;
@@ -76,36 +76,8 @@ public class Map {
         }
     }
     public Room loadMap(String name){
-        // mapLoaded = false;
         rooms = new ArrayList<Room>();
-        // String entityFile ="";
-        // try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
-        //     String line = reader.readLine();
-        //     String[] dimensions = line.split(" ");
-        //     int w = Integer.parseInt(dimensions[0]);
-        //     width = w;
-        //     int h = Integer.parseInt(dimensions[1]);
-        //     height = h;
-        //     int[][] loadedMap = new int[w][h];
-        //     int row = 0;
-        //     entityFile = reader.readLine();
-        //     while((line = reader.readLine())!=null){
-        //         String[] ids = line.split(",");
-        //         for(int i = 0; i < ids.length; i++){
-
-        //             int j = Integer.parseInt(ids[i]);
-        //             loadedMap[i][row] = j;
-        //         }
-        //         row++;
-                
-        //     }
-        //     map = loadedMap;
-        //     // mapLoaded = true;
-        //     reader.close();
-        // } catch (IOException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
+        
         Structure loadedStructure = new Structure(name);
         map = loadedStructure.tiles;
         width = map.length;
@@ -125,6 +97,14 @@ public class Map {
     }
     public void generate(String wn){
         structureBounds = new ArrayList<Rectangle>();
+        rooms = new ArrayList<Room>();
+        rooms.clear();
+        cave = new Room(0,0,null);
+        cave.bounds = new Rectangle(0,0,width*Tile.tileSize,height*Tile.tileSize);
+        rooms.add(cave);
+
+        System.out.println("Amount of rooms: "+rooms.size());
+        
         switch (wn) {
             case "cave_spider":
                 generateSpiderCave();        
@@ -139,6 +119,7 @@ public class Map {
                 generateSpiderCave();
                 break;
         }
+        System.out.println("Amount of rooms after:"+ rooms.size());
         generateWalls(5);
         generateBinaryMap();
         saveMapAsImage();
@@ -175,6 +156,7 @@ public class Map {
         // generateStructureAtRandomSpot("lvl2_tunnel");
         // generateStructureAtRandomSpot("trader_room_v1");
         
+        
     }
     private void generateGoblinCave(){
         Biome b = Biome.biomes.get("cave_goblin");
@@ -194,6 +176,7 @@ public class Map {
     }
 
     private void basicGeneration(Biome b){
+        
         biomeName = b.name;
         Tile[] nonSolidTiles = b.nonSolidTiles;
         Tile[] solidTiles = b.solidTiles;
@@ -210,7 +193,16 @@ public class Map {
         setNonSolidTiles(nonSolidTiles);
         setSolidTiles(solidTiles,borderTiles);
         // generateDungeon(5);
-        generateSpawnArea();
+        
+        //SPAWN
+        Structure s1 = new Structure("spawn_area");
+        int centerX = width/2-s1.width;
+        int centerY = height/2-s1.height;
+        generateStructure(s1, centerX, centerY);
+        Room spawn = new Room(centerX,centerY, s1);
+        ArrayList<Entity> ents = generateStructureEntities(spawn.structure,spawn.x,spawn.y);
+        spawn.entities.addAll(ents);
+        rooms.add(spawn);
         
         //Styling
         
@@ -713,15 +705,7 @@ public class Map {
         }
         return false;
     }
-    private void generateSpawnArea(){
-        int centerX = map.length/2;
-        int centerY = map[0].length/2;
-        Structure spawn = structures.get("spawn_area");
-        int w = spawn.width;
-        int h = spawn.height;
-        generateStructure(spawn, centerX-w/2, centerY-h/2);
-        ArrayList<Entity> ents = generateStructureEntities(spawn,centerX-w/2, centerY-h/2);
-    }
+    
     private ArrayList<Entity> generateStructureEntities(Structure s, int x, int y){
         ArrayList<Entity> entities = new ArrayList<Entity>();
         for(StructureEntity e : s.entities){
@@ -742,7 +726,7 @@ public class Map {
             }
         }
     }
-    public void populateWithEnemies(Biome biome){
+    public void populateWithEnemies(Biome biome, Room r){
         if(biome==null){
             return;
         }
@@ -752,21 +736,24 @@ public class Map {
             for(int x = 0; x < binaryMap.length; x++){
                 if(binaryMap[x][y]){
                     //IF cannot spawn entity, try to spawn collectable.
-                    if(!generateRandomEntity(entities, x*Tile.tileSize, y*Tile.tileSize)){
-                        generateRandomEntity(collectables, x*Tile.tileSize, y*Tile.tileSize);
+                    if(!generateRandomEntity(entities, x*Tile.tileSize, y*Tile.tileSize, r)){
+                        generateRandomEntity(collectables, x*Tile.tileSize, y*Tile.tileSize,r);
                     }
                 }
             }
         }
     }
     
-    public boolean generateRandomEntity(int[] entities, int x, int y){
+    public boolean generateRandomEntity(int[] entities, int x, int y, Room room){
         Random r = new Random();
         int d = r.nextInt(100);
         //change to spawn enemy.
-        if(d ==1){
+        if(d <=3){
             int d2 = r.nextInt(entities.length);
-            World.entityManager.spawnEntity(entities[d2],-1, x, y);
+            Entity e = World.entityManager.spawnEntity(entities[d2],-1, x, y);
+            if(e.homeRoom==null){
+                room.addEntity(e);
+            }
             return true;
         }
         return false;
@@ -781,12 +768,22 @@ public class Map {
         int counter = 0;
         Structure s = structures.get(name);
         while(!b){
-            rx = 25 + r.nextInt(map.length-50);
-            ry = 25 + r.nextInt(map[0].length-50);
+            rx = 25 + r.nextInt(map.length-s.width);
+            ry = 25 + r.nextInt(map[0].length-s.height);
+            // System.out.println("Random Spot: " + rx + "," + ry);
             b = generateStructure(s,rx, ry);
+            if(b){
+                Room room = new Room(rx,ry,s);
+                ArrayList<Entity> ents = generateStructureEntities(s, rx, ry);
+                if(s.name.startsWith("d_")){
+                    spawnEnemies(room, 1);
+                }
+                room.entities.addAll(ents);
+                rooms.add(room);
+            }
             counter++;
             if(counter>=retrys){
-                System.out.println("Failed to generate Strucure: " + name);
+                // System.out.println("Failed to generate Strucure: " + name);
                 break;
             }
         }
@@ -806,6 +803,8 @@ public class Map {
         Rectangle r = new Rectangle(x,y,w,h);
         for(Rectangle r2 : structureBounds){
             if(r2.intersects(r)){
+                System.out.println(r2.x + " " + r2.y + " " + r2.width + " " + r2.height);
+                // System.out.println("structurebounds intersection");
                 return false;
             }
         }

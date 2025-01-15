@@ -5,7 +5,7 @@
         "borderTiles":[0,1],
         "collectables":[2,3],
         "entities":[32,33,34,48,49,51],
-        "structures":["dungeon_goblin_2","dungeon_big"]
+        "structures":["d_big","d_lvl1_r1"]
     },
     "cave_skeleton":{
         "nonSolidTiles":[35],
@@ -13,7 +13,7 @@
         "borderTiles":[35],
         "collectables":[2],
         "entities":[15,9,44,45,50],
-        "structures":["dungeon_v1","dungeon_skeleton","spidercave_tunnel","horizontal_tunnel"]
+        "structures":["d_big","d_lvl1_r1"]
     },
     "cave_spider":{
         "nonSolidTiles":[35],
@@ -21,6 +21,6 @@
         "borderTiles":[35],
         "collectables":[2],
         "entities":[41,42,43],
-        "structures":["dungeon_v1","dungeon_spider_v1"]
+        "structures":["d_big","d_lvl1_r1"]
     }
 }

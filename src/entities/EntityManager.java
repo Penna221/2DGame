@@ -114,13 +114,15 @@ public class EntityManager {
             Camera.setEntityToCenter(c);
         }
         for(Room r : World.map.rooms){
+            if(r.structure==null){
+                continue;
+            }
             if(r.bounds.intersects(c.bounds)){
                 c.setHomeRoom(r);
                 r.addEntity(c);
                 break;
             }
         }
-        
         return c;
     }
     public Entity generateProjectile(Projectile info, int x, int y, int rotation){

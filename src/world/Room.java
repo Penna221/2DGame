@@ -25,7 +25,9 @@ public class Room {
         this.x = x;
         this.y = y;
         this.structure = s;
-        bounds = new Rectangle(x*Tile.tileSize,y*Tile.tileSize,s.width*Tile.tileSize,s.height*Tile.tileSize);
+        if(s!=null){
+            bounds = new Rectangle(x*Tile.tileSize,y*Tile.tileSize,s.width*Tile.tileSize,s.height*Tile.tileSize);
+        }
         
     }
     public ArrayList<Integer> getConnections(){

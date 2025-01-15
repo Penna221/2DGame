@@ -76,8 +76,11 @@ public class HUD {
         for(Room r : World.entityManager.roomsToUpdate){
             entityCount+=r.entities.size();
             if(r.bounds.intersects(World.player.bounds)){
-                
-                roomName = r.structure.name;
+                if(r.structure==null){
+                    roomName = "Cave";
+                }else{
+                    roomName = r.structure.name;
+                }
             }
         }
 

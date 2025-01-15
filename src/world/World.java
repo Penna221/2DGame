@@ -149,7 +149,7 @@ public class World {
     }
     private static void generate(String wn){
         entityManager.clearEntities();
-        map = new Map(wn,200,200);
+        map = new Map(wn,100,100);
         //generateMushrooms(type);
     }
     private static void generateDungeon(){
