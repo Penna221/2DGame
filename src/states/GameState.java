@@ -55,7 +55,7 @@ public class GameState extends State{
         world = new World();
         World.load("lobby","");
         PlayerAI.inv = new Inventory();
-        alreadyInitialized = false;
+        alreadyInitialized = true;
         State.setState(gameState, false);
     }
     public static void loadGame(String savedGame){
@@ -73,6 +73,7 @@ public class GameState extends State{
         if(!alreadyInitialized){
             world = new World();
             World.load("lobby","");
+            alreadyInitialized = true;
         }
         paused = false;
     }

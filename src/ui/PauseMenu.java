@@ -135,7 +135,7 @@ public class PauseMenu {
         };
         Task load = new Task(){
             public void perform(){
-                GameState.loadGame("save1");
+                GameState.loadGame("test");
             }
         };
         ClickButton newGameButton = new ClickButton(100, 200, new Text("New Game",0,0,0,false));

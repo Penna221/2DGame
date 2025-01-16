@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Entity;
-import entities.EntityManager;
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
-import json.DataType;
+import entities.player.Inventory.Slot;
+import json.BooleanValue;
 import json.JSON;
 import json.KeyValuePair;
-import states.GameState;
+import json.NumberValue;
+import json.ObjectValue;
 import world.World;
 
 public class SavedGame {
@@ -20,13 +21,14 @@ public class SavedGame {
     public int playerMaxHealth;
     public static HashMap<String, SavedGame> savedGames = new HashMap<String, SavedGame>();
     public static SavedGame currentSave;
-    public SavedGame(Inventory inv, int playerHealth, int maxHealth){
+    public String saveName;
+    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth){
+        this.saveName = saveName;
         this.inventory = inv;
         this.playerHealth = playerHealth;
         this.playerMaxHealth = maxHealth;
     }
     public static void tryLoad(String save){
-        boolean loadSuccess = false;
         currentSave = savedGames.get(save);
 
         // GameState.world = currentSave.world;
@@ -86,7 +88,7 @@ public class SavedGame {
             KeyValuePair inv = s.findChild("inventory");
             Inventory newInventory = readInventory(inv);
             
-            SavedGame sa = new SavedGame(newInventory,ph,mph);
+            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph);
             savedGames.put(folder.getName(),sa);
 
         }
@@ -144,9 +146,163 @@ public class SavedGame {
         return newInventory;
     }
     public static void saveGame(){
-        if(currentSave!=null){
+        System.out.println("Saving game...");
+        File folder;
+        if(currentSave==null){
             //Create save files in folder.
+            folder = new File("savedGames/test");
+            if(!folder.exists()){
+                folder.mkdir();
+            }
+
+        }else{
+            folder = new File("savedGames/"+currentSave.saveName);
+        }
+        savePlayerStats(folder);
+
+        System.out.println("DONE!");
+    }
+    private static void savePlayerStats(File folder){
+        
+        //Stats
+        KeyValuePair health = new KeyValuePair("health", new NumberValue(10));
+        KeyValuePair maxhealth = new KeyValuePair("maxHealth", new NumberValue(10));
+        ArrayList<KeyValuePair> statsArray = new ArrayList<KeyValuePair>();
+        statsArray.add(health);
+        statsArray.add(maxhealth);
+        JSON p_data = new JSON();
+        
+        ArrayList<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>();
+        KeyValuePair health_val = new KeyValuePair("health",new NumberValue(10));
+        KeyValuePair maxhealth_val = new KeyValuePair("maxHealth",new NumberValue(10));
+        ArrayList<KeyValuePair> stats_vals = new ArrayList<KeyValuePair>();
+        stats_vals.add(health_val);
+        stats_vals.add(maxhealth_val);
+        KeyValuePair statsObj = new KeyValuePair("stats", new ObjectValue(stats_vals));
+        keyValuePairs.add(statsObj);
+        
+        
+        
+        
+        ArrayList<KeyValuePair> allInventoryArrays = new ArrayList<KeyValuePair>();
+        //INVENTORY inventorySlots
+        ArrayList<KeyValuePair> inventorySlot = new ArrayList<KeyValuePair>();
+        for(int i = 0; i < PlayerAI.inv.inventorySlots.length;i++){
+            Slot s = PlayerAI.inv.inventorySlots[i];
+            ArrayList<KeyValuePair> slotObject = slotToKeyValuePair(s);
+            if(slotObject!=null){
+                System.out.println("Slot [" + i + "] not empty");
+                ObjectValue inventorySlots = new ObjectValue(slotObject);
+                String slotName = ""+i;
+                inventorySlot.add(new KeyValuePair(slotName,inventorySlots));
+            }else{
+                System.out.println("Slot [" + i + "] empty");
+            }
+        }
+        if(inventorySlot.size()==0){
+            //Create Empty thing
+            inventorySlot.add(generateEmptySlot());
+        }
+        KeyValuePair inventorySlotsObject = new KeyValuePair("inventorySlots", new ObjectValue(inventorySlot));
+        allInventoryArrays.add(inventorySlotsObject);
+        
+        
+        //HotbarSlots
+        ArrayList<KeyValuePair> hotbarSlot = new ArrayList<KeyValuePair>();
+        for(int i = 0; i < PlayerAI.inv.hotbarSlots.length;i++){
+            Slot s = PlayerAI.inv.hotbarSlots[i];
+            ArrayList<KeyValuePair> slotObject = slotToKeyValuePair(s);
+            if(slotObject!=null){
+                System.out.println("Slot [" + i + "] not empty");
+                ObjectValue inventorySlots = new ObjectValue(slotObject);
+                String slotName = ""+i;
+                hotbarSlot.add(new KeyValuePair(slotName,inventorySlots));
+            }else{
+                System.out.println("Slot [" + i + "] empty");
+            }
+        }
+        if(hotbarSlot.size()==0){
+            //Create Empty thing
+            hotbarSlot.add(generateEmptySlot());
+        }
+        KeyValuePair hotbarSlotsObject = new KeyValuePair("hotbarSlots", new ObjectValue(hotbarSlot));
+        allInventoryArrays.add(hotbarSlotsObject);
+
+        //SpellSlot
+        ArrayList<KeyValuePair> spellSlot = new ArrayList<KeyValuePair>();
+        boolean spellEmpty = false;
+        int spellID = 0;
+        int spellSubID = 0;
+        int spellAmount = 0;
+        if(PlayerAI.inv.specialSlots[1].item==null){
+            spellEmpty = true;
+        }else{
+            spellID = PlayerAI.inv.specialSlots[1].item.info.id;
+            spellSubID = PlayerAI.inv.specialSlots[1].item.subID;
+            spellAmount = PlayerAI.inv.specialSlots[1].amount;
+        }
+        spellSlot.add(new KeyValuePair("empty",new BooleanValue(spellEmpty)));
+        spellSlot.add(new KeyValuePair("itemID",new NumberValue(spellID)));
+        spellSlot.add(new KeyValuePair("itemSubID",new NumberValue(spellSubID)));
+        spellSlot.add(new KeyValuePair("amount",new NumberValue(spellAmount)));
+        ObjectValue spellObj = new ObjectValue(spellSlot);
+
+        allInventoryArrays.add(new KeyValuePair("spellSlot", spellObj));
+        
+        //arrowSlot
+        ArrayList<KeyValuePair> arrowSlot = new ArrayList<KeyValuePair>();
+        boolean arrowEmpty = false;
+        int arrowID = 0;
+        int arrowSubID = 0;
+        int arrowAmount = 0;
+        if(PlayerAI.inv.specialSlots[0].item==null){
+            arrowEmpty = true;
+        }else{
+            arrowID = PlayerAI.inv.specialSlots[0].item.info.id;
+            arrowSubID = PlayerAI.inv.specialSlots[0].item.subID;
+            arrowAmount = PlayerAI.inv.specialSlots[0].amount;
+        }
+        arrowSlot.add(new KeyValuePair("empty",new BooleanValue(arrowEmpty)));
+        arrowSlot.add(new KeyValuePair("itemID",new NumberValue(arrowID)));
+        arrowSlot.add(new KeyValuePair("itemSubID",new NumberValue(arrowSubID)));
+        arrowSlot.add(new KeyValuePair("amount",new NumberValue(arrowAmount)));
+        ObjectValue arrowObj = new ObjectValue(arrowSlot);
+
+        allInventoryArrays.add(new KeyValuePair("arrowSlot", arrowObj));
+
+
+
+        KeyValuePair inventoryObj = new KeyValuePair("inventory", new ObjectValue(allInventoryArrays));
+        keyValuePairs.add(inventoryObj);
+        ObjectValue objectContainer = new ObjectValue(keyValuePairs);
+        KeyValuePair obj = new KeyValuePair("", objectContainer);
+        p_data.setKeyValuePair(obj);
+        try {
+            p_data.writeFile(new File(folder, "player_data.json"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-    
+    private static KeyValuePair generateEmptySlot(){
+        KeyValuePair empty = new KeyValuePair("empty", new BooleanValue(true));
+        return empty;
+    }
+    private static ArrayList<KeyValuePair> slotToKeyValuePair(Slot s){
+        ArrayList<KeyValuePair> slotInfo = new ArrayList<KeyValuePair>();
+        Entity item = s.item;
+        
+        if(item == null){
+            return null;
+        }
+        int id = item.info.id;
+        int subID = item.subID;
+        int amt = s.amount;
+        KeyValuePair itemID = new KeyValuePair("itemID", new NumberValue(id));
+        KeyValuePair itemSubID = new KeyValuePair("itemSubID", new NumberValue(subID));
+        KeyValuePair amount = new KeyValuePair("amount", new NumberValue(amt));
+        slotInfo.add(itemID);
+        slotInfo.add(itemSubID);
+        slotInfo.add(amount);
+        return slotInfo;
+    }   
 }
