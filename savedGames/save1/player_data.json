@@ -1,7 +1,9 @@
 {
     "stats":{
         "health":10,
-        "maxHealth":10
+        "maxHealth":10,
+        "dungeonCounter":1,
+        "dungeonLevel":100
     },
     "inventory":{
         "inventorySlots":{

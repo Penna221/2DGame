@@ -16,17 +16,24 @@ import json.ObjectValue;
 import world.World;
 
 public class SavedGame {
+    public String saveName;
     public Inventory inventory;
     public int playerHealth;
     public int playerMaxHealth;
+    public int dungeonCounter;
     public static HashMap<String, SavedGame> savedGames = new HashMap<String, SavedGame>();
     public static SavedGame currentSave;
-    public String saveName;
-    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth){
+    public int dungeonLevel;
+    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter, int dungeonLevel){
         this.saveName = saveName;
         this.inventory = inv;
         this.playerHealth = playerHealth;
         this.playerMaxHealth = maxHealth;
+        this.dungeonCounter = dungeonCounter;
+        this.dungeonLevel = dungeonLevel;
+    }
+    public static void startNewSave(String name){
+        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1);
     }
     public static void tryLoad(String save){
         currentSave = savedGames.get(save);
@@ -37,6 +44,8 @@ public class SavedGame {
 
         World.player.health = currentSave.playerHealth;
         World.player.maxHealth = currentSave.playerMaxHealth;
+        World.dungeonCounter = currentSave.dungeonCounter;
+        World.dungeonLevel = currentSave.dungeonLevel;
         //Load Player Stats
         // - Inventory
         // - currenthealth
@@ -67,7 +76,6 @@ public class SavedGame {
                 continue;
             }
             File playerData = new File(folder, "player_data.json");
-            File unlockData = new File(folder, "unlocks.json");
             
             if(!playerData.exists()){
                 System.out.println("playerdata file not found");
@@ -75,20 +83,17 @@ public class SavedGame {
                 continue;
             }
             
-            if(!unlockData.exists()){
-                System.out.println("UnlockData file not found");
-                System.out.println("Corrupted save: " + folder.getName());
-                continue;
-            }
             JSON json = new JSON(playerData);
             KeyValuePair s = json.parse("JSON");
             KeyValuePair stats = s.findChild("stats");
             int ph = stats.findChild("health").getInteger();
             int mph = stats.findChild("maxHealth").getInteger();
+            int dungeonCounter = stats.findChild("dungeonCounter").getInteger();
+            int dungeonLevel = stats.findChild("dungeonLevel").getInteger();
             KeyValuePair inv = s.findChild("inventory");
             Inventory newInventory = readInventory(inv);
             
-            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph);
+            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,dungeonLevel);
             savedGames.put(folder.getName(),sa);
 
         }
@@ -149,14 +154,13 @@ public class SavedGame {
         System.out.println("Saving game...");
         File folder;
         if(currentSave==null){
-            //Create save files in folder.
-            folder = new File("savedGames/test");
-            if(!folder.exists()){
-                folder.mkdir();
-            }
-
+            System.out.println("something went wrong.");
+            return;
         }else{
             folder = new File("savedGames/"+currentSave.saveName);
+            if(!folder.exists()){
+                folder.mkdirs();
+            }
         }
         savePlayerStats(folder);
 
@@ -164,20 +168,22 @@ public class SavedGame {
     }
     private static void savePlayerStats(File folder){
         
-        //Stats
-        KeyValuePair health = new KeyValuePair("health", new NumberValue(10));
-        KeyValuePair maxhealth = new KeyValuePair("maxHealth", new NumberValue(10));
-        ArrayList<KeyValuePair> statsArray = new ArrayList<KeyValuePair>();
-        statsArray.add(health);
-        statsArray.add(maxhealth);
+        
         JSON p_data = new JSON();
         
+        //Stats
+        currentSave.playerHealth = World.player.health;
+        currentSave.playerMaxHealth = World.player.maxHealth;
         ArrayList<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>();
-        KeyValuePair health_val = new KeyValuePair("health",new NumberValue(10));
-        KeyValuePair maxhealth_val = new KeyValuePair("maxHealth",new NumberValue(10));
+        KeyValuePair health_val = new KeyValuePair("health",new NumberValue(World.player.health));
+        KeyValuePair maxhealth_val = new KeyValuePair("maxHealth",new NumberValue(World.player.maxHealth));
+        KeyValuePair dungeonCounter_val = new KeyValuePair("dungeonCounter",new NumberValue(World.dungeonCounter));
+        KeyValuePair dungeonLevel_val = new KeyValuePair("dungeonLevel",new NumberValue(World.dungeonLevel));
         ArrayList<KeyValuePair> stats_vals = new ArrayList<KeyValuePair>();
         stats_vals.add(health_val);
         stats_vals.add(maxhealth_val);
+        stats_vals.add(dungeonCounter_val);
+        stats_vals.add(dungeonLevel_val);
         KeyValuePair statsObj = new KeyValuePair("stats", new ObjectValue(stats_vals));
         keyValuePairs.add(statsObj);
         
@@ -278,6 +284,7 @@ public class SavedGame {
         KeyValuePair obj = new KeyValuePair("", objectContainer);
         p_data.setKeyValuePair(obj);
         try {
+            
             p_data.writeFile(new File(folder, "player_data.json"));
         } catch (Exception e) {
             e.printStackTrace();

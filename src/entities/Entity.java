@@ -46,6 +46,7 @@ import gfx.Transition;
 import loot.LootTables;
 import main.Game;
 import particles.Particle;
+import save.SavedGame;
 import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;
@@ -676,6 +677,12 @@ public class Entity {
         speed = info.speed;
         health =info.health;
         maxHealth = health;
+        if(info.name.equals("Player")){
+            if(SavedGame.currentSave!=null){
+                health = SavedGame.currentSave.playerHealth;
+                maxHealth = SavedGame.currentSave.playerMaxHealth;
+            }
+        }
         name = info.name;
         calculateBounds();
         Task par = new Task(){
@@ -757,7 +764,7 @@ public class Entity {
     }
     public void renderAdditional(Graphics g) {
         ai.render(g);
-        if(health != info.health){
+        if(health != maxHealth){
             showHealth(g);
         }
         if(drawBounds){

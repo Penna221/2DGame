@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
+import save.SavedGame;
 import ui.PauseMenu;
 import world.World;
 
@@ -51,7 +52,7 @@ public class GameState extends State{
     public static void newGame(){
         // paused = false;
         paused = true;
-        
+        SavedGame.startNewSave("test1");
         world = new World();
         World.load("lobby","");
         PlayerAI.inv = new Inventory();

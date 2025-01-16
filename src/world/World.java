@@ -49,8 +49,8 @@ public class World {
     public static ArrayList<CollisionBox> collisionBoxes = new ArrayList<CollisionBox>();
     public static HashMap<String,BufferedImage> overlays = new HashMap<String,BufferedImage>();
 
-    public static int dungeonLevel = 10;
-    public static int dungeonCounter = 2;
+    public static int dungeonLevel = 1;
+    public static int dungeonCounter = 1;
     public World(){
         entityManager = new EntityManager();
         entityManager.loadEntityData();
@@ -62,6 +62,12 @@ public class World {
     }
 
     public static void load(String worldName,String savedGame){
+        if(SavedGame.currentSave!=null){
+            if(player!=null){
+                SavedGame.currentSave.playerHealth = player.health;
+                SavedGame.currentSave.playerMaxHealth = player.maxHealth;
+            }
+        }
         entityManager.loading = true;
         entityManager.clearEntities();
         entityManager.update();
@@ -89,7 +95,7 @@ public class World {
                                 generateDungeon();
                                 
                                 dungeonCounter++;
-                                dungeonLevel+=5;
+                                dungeonLevel++;
                             }
                             else{
                                 System.out.println("Loading Map named: " + worldName);

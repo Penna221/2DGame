@@ -239,7 +239,7 @@ public class Map {
         String[] banned = {"spawn_area","exit","t_r1"};
         loadConnections("",banned);
         
-        int min = length/2;
+        int min = 1+length/2;
         Random rand = new Random();
         int amount =min + rand.nextInt(length);
         PlayerAI.hud.roomCount = amount;
@@ -428,6 +428,7 @@ public class Map {
             }
             for(String ban : banned){
                 if(ban.equals(s.name)){
+                    System.out.println("Skipping " + s.name);
                     continue;
                 }
             }
