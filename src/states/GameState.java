@@ -49,10 +49,10 @@ public class GameState extends State{
             transition.render(g);
         }
     }
-    public static void newGame(){
+    public static void newGame(String name){
         // paused = false;
         paused = true;
-        SavedGame.startNewSave("test1");
+        SavedGame.startNewSave(name);
         world = new World();
         World.load("lobby","");
         PlayerAI.inv = new Inventory();

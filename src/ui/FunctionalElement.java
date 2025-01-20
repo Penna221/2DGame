@@ -1,6 +1,7 @@
 package ui;
 import java.awt.Color;
 
+import io.KeyManager;
 import main.Game;
 import sound.SoundPlayer;
 public abstract class FunctionalElement extends UIElement{
@@ -22,9 +23,11 @@ public abstract class FunctionalElement extends UIElement{
                 bg = UIFactory.highlightedButtonData.bgColor;
                 brd = UIFactory.highlightedButtonData.borderColor;
             }else{
-                bg = UIFactory.buttonData.bgColor;
-                brd = UIFactory.buttonData.borderColor;
-                focused = false;
+                if(!KeyManager.textFieldFocus){
+                    bg = UIFactory.buttonData.bgColor;
+                    brd = UIFactory.buttonData.borderColor;
+                    focused = false;
+                }
             }
             updateAdditional();
         }else{

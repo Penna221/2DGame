@@ -17,17 +17,37 @@ public class KeyManager implements KeyListener{
 
     public static boolean up, down, left, right;
     public static boolean interactKey;
+    public static boolean textFieldFocus = false;
+    public static boolean finished = true;
+    public static String text = "";
     @Override
     public void keyTyped(KeyEvent e) {
-        char c = e.getKeyChar();
-        char c2 = Character.toLowerCase(c);
-        if(c2 == 'e'){
-
+        if(textFieldFocus){
+            char c = e.getKeyChar();
+            if(c=='\n'){
+                finished = true;
+            }else if(c=='\b'){
+                if(text.length()>0){
+                    text = text.substring(0,text.length()-1);
+                }
+            }else{
+                if(text.length()<12){
+                    text += c;
+                }
+                System.out.println(c);
+            }
+            PauseMenu.currentContainer.sendClick();
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(textFieldFocus){
+            // if(e.getKeyCode()== KeyEvent.VK_BACK_SPACE){
+            //     text = text.substring(0,text.length()-1);
+            // }
+            return;
+        }
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_A:

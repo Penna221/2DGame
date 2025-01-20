@@ -16,6 +16,7 @@ import entities.staves.Staves;
 import entities.swords.Swords;
 import gfx.AssetStorage;
 import gfx.Transition;
+import io.KeyManager;
 import loot.Market;
 import loot.MarketItem;
 import main.Game;
@@ -33,6 +34,8 @@ public class PauseMenu {
         containers.put("basic", createBasicPauseMenu());
         containers.put("main", createMenuStateContainer());
         containers.put("dead",createDeadPauseMenu());
+        containers.put("newgame",createNewGamePauseMenu());
+        
     }
     public static Container generateSavedGamesContainer(){
         int w = Game.w.getWidth()/2;
@@ -149,7 +152,34 @@ public class PauseMenu {
                 break;
         }
     }
-    
+    private static Container createNewGamePauseMenu(){
+        Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
+        Task backTask = new Task(){
+            public void perform(){
+                State.setState(State.menuState,false);
+            }
+        };
+        ClickButton back = new ClickButton(0,0,new Text("Return", 0, 0, 0, false));
+        back.setTask(backTask);
+        c.addElement(back);
+        
+        Text info = new Text("Click box, type text, press ENTER.", 240, 40, 400, false);
+        c.addElement(info);
+        TextField field = new TextField(240,250);
+        c.addElement(field);
+        
+        Task accept = new Task(){
+            public void perform(){
+                if(KeyManager.text.length()>0){
+                    GameState.newGame(KeyManager.text);
+                }
+            }
+        };
+        ClickButton okButton = new ClickButton(240,350,new Text("START", 0, 0, 0, false));
+        okButton.setTask(accept);
+        c.addElement(okButton);
+        return c;
+    }
     private static Container createDeadPauseMenu(){
         int w = Game.w.getWidth()/2;
         int h = (int)(Game.w.getHeight()*0.75);
@@ -182,7 +212,7 @@ public class PauseMenu {
         Text title = new Text("Game Title", 0, 50, 0, true);
         Task t = new Task(){
             public void perform(){
-                GameState.newGame();
+                State.setState(State.newGameState,false);
             }
         };
         Task load = new Task(){
@@ -213,6 +243,7 @@ public class PauseMenu {
         container.addElement(newGameButton);
         container.addElement(loadGameButton);
         container.addElement(exitButton);
+
         container.centerElements();
         container.spaceOutVertically(35);
 
