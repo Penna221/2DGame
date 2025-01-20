@@ -1,6 +1,12 @@
 package save;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,7 +61,34 @@ public class SavedGame {
 
         //Load Unlocked characters
     }
+    public static void deleteSave(String save){
+        File f = new File("savedGames");
+        File file = new File(f,save);
+        if(file.exists()){
+            System.out.println("Deleting file: " + file.getAbsolutePath());
+            try {
+            Files.walkFileTree(file.toPath(), new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);  // Delete each file
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);  // Delete directory after files inside are deleted
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+
+            System.out.println("Folder deleted successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to delete folder: " + e.getMessage());
+        }
+        }
+    }
     public static void loadSavedGames()throws Exception{
+        savedGames.clear();
         //Check if save folder exists.
         File f = new File("savedGames");
         if(f.isDirectory()&& f.exists()){

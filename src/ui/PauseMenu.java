@@ -56,11 +56,22 @@ public class PauseMenu {
                     GameState.loadGame(s.saveName);
                 }
             };
-            ClickButton loadButton = new ClickButton(0,0,new Text("LOAD", 0,0,160,false));
+            Task deleteSave = new Task(){
+                public void perform(){
+                    SavedGame.deleteSave(s.saveName);
+                    State.setState(State.loadState, false);
+                }
+            };
+            ClickButton loadButton = new ClickButton(0,0,new Text("LOAD", 0,0,0,false));
             loadButton.setTask(loadSave);
+            loadButton.scaleWithFactor(0.9f);
+            ClickButton deleteButton = new ClickButton(0,0,new Text("DELETE", 0,0,0,false));
+            deleteButton.setTask(deleteSave);
+            deleteButton.scaleWithFactor(0.8f);
             Text saveName = new Text(s.saveName, 0,0,150,false);
             saveContainer.addElement(saveName);
             saveContainer.addElement(loadButton);
+            saveContainer.addElement(deleteButton);
             saveContainer.centerAndSpaceHorizontally(20);
             saveContainer.wrap();
             c.addElement(saveContainer);
