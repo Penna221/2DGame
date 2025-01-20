@@ -97,11 +97,13 @@ public class MouseManager implements MouseListener, MouseMotionListener, MouseWh
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        int notches = e.getWheelRotation();
-        if (notches < 0) {
-            PlayerAI.inv.scroll(-1);
-        } else {
-            PlayerAI.inv.scroll(1);
+        if(State.currentState==State.gameState){
+            int notches = e.getWheelRotation();
+            if (notches < 0) {
+                PlayerAI.inv.scroll(-1);
+            } else {
+                PlayerAI.inv.scroll(1);
+            }
         }
     }
     

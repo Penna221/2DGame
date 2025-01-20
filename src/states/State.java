@@ -8,7 +8,7 @@ import ui.PauseMenu;
 
 public abstract class State {
     public static State currentState;
-    public static State gameState, menuState,nullState,settingsState;
+    public static State gameState, menuState,nullState,settingsState,loadState;
     public static State inventoryState;
     public static State traderState, blacksmithState,witchState;
     public static State deadState;
@@ -20,6 +20,7 @@ public abstract class State {
         gameState = new GameState();
         gameState.init();
         menuState = new MenuState();
+        loadState = new LoadSaveState();
         traderState = new TraderState();
         blacksmithState = new BlacksmithState();
         witchState = new WitchState();

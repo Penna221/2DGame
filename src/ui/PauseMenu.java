@@ -19,6 +19,7 @@ import gfx.Transition;
 import loot.Market;
 import loot.MarketItem;
 import main.Game;
+import save.SavedGame;
 import states.GameState;
 import states.State;
 
@@ -32,7 +33,47 @@ public class PauseMenu {
         containers.put("basic", createBasicPauseMenu());
         containers.put("main", createMenuStateContainer());
         containers.put("dead",createDeadPauseMenu());
-        
+    }
+    public static Container generateSavedGamesContainer(){
+        int w = Game.w.getWidth()/2;
+        int h = (int)(Game.w.getHeight()*0.75);
+        int x = Game.w.getWidth() /2 - w/2;
+        int y = Game.w.getHeight() /2 - h/3;
+
+        Container c = new Container(x,y,w,h);
+        c.fillBg = true;
+        try {
+            SavedGame.loadSavedGames();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        for(SavedGame s : SavedGame.savedGames.values()){
+            System.out.println(s.saveName);
+            Container saveContainer = new Container(0, 0, w, 40);
+            Task loadSave = new Task(){
+                public void perform(){
+                    GameState.loadGame(s.saveName);
+                }
+            };
+            ClickButton loadButton = new ClickButton(0,0,new Text("LOAD", 0,0,160,false));
+            loadButton.setTask(loadSave);
+            Text saveName = new Text(s.saveName, 0,0,150,false);
+            saveContainer.addElement(saveName);
+            saveContainer.addElement(loadButton);
+            saveContainer.centerAndSpaceHorizontally(20);
+            saveContainer.wrap();
+            c.addElement(saveContainer);
+        }
+        // c.updateBounds();
+        c.updateList();
+        // c.spaceOutVertically(20);
+        // c.centerVertically();        
+
+
+
+
+        return c;
     }
     public static void generateNewContainer(String text){
         Task t1 = new Task(){
@@ -102,7 +143,7 @@ public class PauseMenu {
         int w = Game.w.getWidth()/2;
         int h = (int)(Game.w.getHeight()*0.75);
         int x = Game.w.getWidth() /2 - w/2;
-        int y = Game.w.getWidth() /2 - h/3;
+        int y = Game.w.getHeight() /2 - h/3;
 
         Container c = new Container(x,y,w,h);
         c.fillBg = true;
@@ -135,7 +176,7 @@ public class PauseMenu {
         };
         Task load = new Task(){
             public void perform(){
-                GameState.loadGame("test");
+                State.setState(State.loadState, false);
             }
         };
         ClickButton newGameButton = new ClickButton(100, 200, new Text("New Game",0,0,0,false));
