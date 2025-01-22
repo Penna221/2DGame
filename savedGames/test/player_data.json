@@ -1,1 +1,42 @@
-{"stats":{"health":10,"maxHealth":10,"dungeonCounter":4,"dungeonLevel":16},"inventory":{"inventorySlots":{"empty":true},"hotbarSlots":{"0":{"itemID":2,"itemSubID":-1,"amount":9},"1":{"itemID":26,"itemSubID":0,"amount":1},"2":{"itemID":35,"itemSubID":1,"amount":5},"3":{"itemID":3,"itemSubID":-1,"amount":2}},"spellSlot":{"empty":true,"itemID":0,"itemSubID":0,"amount":0},"arrowSlot":{"empty":true,"itemID":0,"itemSubID":0,"amount":0}}}
+{
+    "stats": {
+        "health": 20,
+        "maxHealth": 20,
+        "dungeonCounter": 4,
+        "dungeonLevel": 16
+    },
+    "inventory": {
+        "inventorySlots": {
+            "empty": true
+        },
+        "hotbarSlots": {
+            "0": {
+                "itemID": 26,
+                "itemSubID": 0,
+                "amount": 20
+            },
+            "1": {
+                "itemID": 26,
+                "itemSubID": 2,
+                "amount": 20
+            },
+            "2": {
+                "itemID": 27,
+                "itemSubID": 1,
+                "amount": 1
+            }
+        },
+        "spellSlot": {
+            "empty": true,
+            "itemID": 0,
+            "itemSubID": 0,
+            "amount": 0
+        },
+        "arrowSlot": {
+            "empty": true,
+            "itemID": 0,
+            "itemSubID": 0,
+            "amount": 0
+        }
+    }
+}

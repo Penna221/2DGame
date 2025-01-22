@@ -236,80 +236,59 @@ public class Map {
         roomStack.add(spawn);
 
         //Load rooms that have connections.
-        String[] banned = {"spawn_area","exit","t_r1"};
+        String[] banned = {"spawn_area","exit","t_r1",
+                            "d_room_15x15_up","d_room_15x15_down","d_room_15x15_left",
+                            "d_room_15x15_right"};
         loadConnections("",banned);
         
-        int min = 1+length/2;
+        int min = 10+length;
         Random rand = new Random();
         int amount =min + rand.nextInt(length);
         PlayerAI.hud.roomCount = amount;
         Room lastRoom = spawn;
         for(int i = 0; i < amount; i++){
-            System.out.println("Processing "+ i);
-            boolean bool = false;
-            int tries = 0;
-            Room b = null;
-            ArrayList<Integer> choises = lastRoom.getConnections();
-            if(choises.size()==0){
-                break;
-            }
-            while(!bool && tries<3){
+            if(i>0 && i%8==0){
+                Room junction;
+                while(true){
+                    junction = generateRoom(roomStack,lastRoom, structures.get("d_room_15x15_all"),-1);
+                    if(junction!=null){
+                        break;
+                    }
+                    lastRoom = getRoomWithConnectionsFromStack(roomStack);
+                }
+                lastRoom = junction;
+                int len = 1+rand.nextInt(10);
+                for(int j = 0; j < len; j++){
+                    lastRoom = generateRoom(roomStack, lastRoom, null,-1);
+                }
+                //Endpoint with key
+                boolean success = generateEndPoint(roomStack,lastRoom);
+                if(!success){
+                    System.out.println("Spawning key");
+                    //Spawn key in lastRoom.
+                    Point p = getRandomSpotInRoom(lastRoom);
+                    lastRoom.entities.add(World.entityManager.generateEntityWithID(58, -1, p.getX()*Tile.tileSize,p.getY()*Tile.tileSize));
+                }
 
-                if(choises.size()==0){
-                    break;
-                }
-                Random r = new Random();
-                int dir = r.nextInt(choises.size());
-                int ans = choises.get(dir);
-                int randForTreasure = r.nextInt(100);
-                
-                if(i == amount){
-                    if(randForTreasure==1){
-                        b = connectRoom(lastRoom, structures.get("t_r1"), ans);
-                    }else{
-                        b = connectRandomRoom(lastRoom, ans);
-                    }
-                }else{
-                    b = connectRandomRoom(lastRoom, ans);
-                }
-                if(b!=null){
-                    if(i < length && b.getConnections().size()<1){
-                        // tries++;
-                        continue;
-                    }
-                    bool = generateStructure(b.structure,b.x,b.y);
-                    if(bool){
-                        ArrayList<Entity> ent = generateStructureEntities(b.structure, b.x,b.y);
-                        
-                        for(Entity e : ent){
-                            b.addEntity(e);
-                            e.setHomeRoom(b);
-                        }
-                    }
-                }
-                if(!bool){
-                    choises.remove(dir);
-                }
-                tries++;
-            }
-            //Room generated properly
-            if(b!=null && bool){
-                roomStack.add(b);
-                lastRoom = b;
-                rooms.add(lastRoom);
-                if(lastRoom.structure.name.startsWith("d_")){
-                    spawnEnemies(lastRoom, World.dungeonLevel);
-                }
+
+                lastRoom = junction;
+                System.out.println("treasure");
+                lastRoom = generateRoom(roomStack,lastRoom,structures.get("t_r1"),-1);
             }else{
-                //Room did not generate properly.
-                //Trace back to previous rooms.
-                //If available connections, try to continue there.
-                //If failure, trace even further back.
-                //If at spawn and fails, stop.
-                lastRoom = getRoomWithConnectionsFromStack(roomStack);
+                if(lastRoom==null){
+                    lastRoom = getRoomWithConnectionsFromStack(roomStack);
+                }
+                lastRoom = generateRoom(roomStack,lastRoom,null,-1);
             }
-            
         }
+        generateExit(roomStack, lastRoom);
+        
+        // Room pipe1 = connectRoomEast(spawn, pipe_h);
+        // generateStructure(pipe1.structure,pipe1.x,pipe1.y);
+
+        
+    }
+    private boolean generateExit(Stack<Room> roomStack, Room lastRoom){
         while(true){
             boolean success = false;
             lastRoom = getRoomWithConnectionsFromStack(roomStack);
@@ -333,14 +312,115 @@ public class Map {
                 }
             }
             if(success){
+                return success;
+            }
+        }
+    }
+    private boolean generateEndPoint(Stack<Room> roomStack, Room lastRoom){
+        System.out.println("generating endpoint");
+        ArrayList<Integer> sides = lastRoom.getConnections();
+        System.out.println("available sides: " + sides);
+        String structureName = "";
+        boolean success = false;
+        int side = -1;
+        for(int i : sides){
+            switch (i) {
+                case 0:
+                    //East
+                    structureName = "d_room_15x15_left";
+                    side = 0;
+                    break;
+                case 1:
+                    //West
+                    structureName = "d_room_15x15_right";
+                    side = 1;
+                    break;
+                case 2:
+                    //North
+                    structureName = "d_room_15x15_down";
+                    side = 2;
+                    break;
+                case 3:
+                    //South
+                    structureName = "d_room_15x15_up";
+                    side = 3;
+                    break;
+                default:
+                    break;
+            }
+            System.out.println(structureName);
+            Room r = generateRoom(roomStack, lastRoom, structures.get(structureName),side);
+            if(r!=null){
+                success = true;
                 break;
             }
         }
-        
-        // Room pipe1 = connectRoomEast(spawn, pipe_h);
-        // generateStructure(pipe1.structure,pipe1.x,pipe1.y);
-
-        
+        return success;
+    }
+    private Room generateRoom(Stack<Room> roomStack, Room lastRoom, Structure force, int side){
+        int tries = 0;
+        boolean bool = false;
+        Room b = null;
+        int a = 0;
+        ArrayList<Integer> choises = lastRoom.getConnections();
+        while(!bool && tries<5){
+            if(choises.size()==0){
+                break;
+            }
+            Random r = new Random();
+            int dir = r.nextInt(choises.size());
+            int ans = choises.get(dir);
+            if(side!=-1){
+                ans = side;
+            }
+            if(force!=null){
+                System.out.println("generating forced room");
+                b = connectRoom(lastRoom, force, ans);
+            }else{
+                b = connectRandomRoom(lastRoom, ans);    
+            }
+            
+            if(b!=null){
+                bool = generateStructure(b.structure,b.x,b.y);
+                if(bool){
+                    a = 0;
+                    ArrayList<Entity> ent = generateStructureEntities(b.structure, b.x,b.y);
+                    for(Entity e : ent){
+                        b.addEntity(e);
+                        e.setHomeRoom(b);
+                    }
+                }
+            }
+            if(!bool){
+                a++;
+                if(a>=5){
+                    a = 0;
+                    choises.remove(dir);
+                }
+            }
+            tries++;
+        }
+        //Room generated properly
+        if(b!=null && bool){
+            roomStack.add(b);
+            lastRoom = b;
+            rooms.add(lastRoom);
+            if(lastRoom.structure.name.startsWith("d_")){
+                spawnEnemies(lastRoom, World.dungeonLevel);
+            }
+        }else{
+            //Room did not generate properly.
+            //Trace back to previous rooms.
+            //If available connections, try to continue there.
+            //If failure, trace even further back.
+            //If at spawn and fails, stop.
+            if(force!=null){
+                return null;
+            }
+            lastRoom = getRoomWithConnectionsFromStack(roomStack);
+        }
+        return lastRoom;
+    
     }
     private void spawnEnemies(Room r, int lvl){
         Random random = new Random();
@@ -426,11 +506,16 @@ public class Map {
                     continue;
                 }
             }
+            boolean foundBanned = false;
             for(String ban : banned){
                 if(ban.equals(s.name)){
                     System.out.println("Skipping " + s.name);
-                    continue;
+                    foundBanned = true;
+                    break;
                 }
+            }
+            if(foundBanned){
+                continue;
             }
             if(s.getEastConnectionPoint()!=null){
                 withEastConnection.add(s);
