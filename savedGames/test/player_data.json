@@ -24,6 +24,11 @@
                 "itemID": 27,
                 "itemSubID": 1,
                 "amount": 1
+            },
+            "3": {
+                "itemID": 26,
+                "itemSubID": 5,
+                "amount": 20
             }
         },
         "spellSlot": {

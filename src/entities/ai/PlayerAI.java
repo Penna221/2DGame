@@ -146,7 +146,9 @@ public class PlayerAI extends AI{
         energy -= amount;
         if(energy <0){
             //DO SOMETHING BAD
-            World.player.applyEffect(new SlowEffect(10000, World.player, 0.3));
+            boolean extra = World.player.checkEffect("Extra Energy");
+            if(!extra)
+                World.player.applyEffect(new SlowEffect(10000, World.player, 0.3));
             energy = 0;
             
         }

@@ -282,6 +282,8 @@
         "speed_potion":"res\\gfx\\entities\\items\\speed_potion.png",
         "fire_res_potion":"res\\gfx\\entities\\items\\fire_res_potion.png",
         "regen_potion":"res\\gfx\\entities\\items\\regen_potion.png",
+        "energy_potion":"res\\gfx\\entities\\items\\energy_potion.png",
+        
         "iron_sword":"res\\gfx\\entities\\items\\iron_sword.png",
         "iron_dagger":"res\\gfx\\entities\\items\\iron_dagger.png",
         "mystery_potion":"res\\gfx\\entities\\items\\mystery_potion.png",
@@ -296,6 +298,7 @@
         "onFire_icon":"res\\gfx\\entities\\icons\\onFire_icon.png",
         "fire_res_icon":"res\\gfx\\entities\\icons\\fire_res_icon.png",
         "regen_icon":"res\\gfx\\entities\\icons\\regen_icon.png",
+        "extra_energy_icon":"res\\gfx\\entities\\icons\\extra_energy_icon.png",
         "slow_icon":"res\\gfx\\entities\\icons\\slow_icon.png",
         "speed_icon":"res\\gfx\\entities\\icons\\speed_icon.png",
         "energy_full":"res\\gfx\\entities\\icons\\energy_icon_full.png",

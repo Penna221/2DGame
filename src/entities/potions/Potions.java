@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Entity;
+import entities.effects.EnergyEffect;
 import entities.effects.FireResEffect;
 import entities.effects.OnFireEffect;
 import entities.effects.RegenEffect;
@@ -46,6 +47,9 @@ public class Potions {
                 break;
             case "fire_res":
                 target.applyEffect(new FireResEffect(60000, target));
+                break;
+            case "energy":
+                target.applyEffect(new EnergyEffect(60000,target));
                 break;
             case "random":
                 target.applyEffect(new OnFireEffect(10000, target));

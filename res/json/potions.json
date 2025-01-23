@@ -28,5 +28,11 @@
         "name":"Regeneration Potion",
         "texture":"regen_potion",
         "effect":"regen"
+    },
+    "potion_5":{
+        "id":5,
+        "name":"Energy Potion",
+        "texture":"energy_potion",
+        "effect":"energy"
     }
 }
