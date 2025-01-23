@@ -32,7 +32,9 @@ public class GoblinAI extends EnemyAI{
             e.stop();
             meleeTimer.update();
         }else{
-            chaseTimer.update();
+            if(World.getDistanceBetweenEntities(e, World.player)<200){
+                chaseTimer.update();
+            }
             
         }
         
