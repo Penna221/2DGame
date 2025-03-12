@@ -56,15 +56,24 @@ public class Map {
     }
     public Map(){}
     public static void loadStructures() throws Exception{
-        File[] list = new File("res/maps/structures").listFiles();
+        File[] folderList = new File("res/maps/structures").listFiles();
+
+        
         ArrayList<File> files = new ArrayList<File>();
-        for(File f : list){
-            if(f.getName().endsWith("entities.csv")){
+        for(File f : folderList){
+            if(!f.isDirectory()){
                 continue;
-            }else{
-                files.add(f);
+            }
+            for(File ff : f.listFiles()){
+                if(ff.getName().endsWith("entities.csv")){
+                    continue;
+                }else{
+                    files.add(ff);
+                }
             }
         }
+
+
         for(File f : files){
             String fileName = f.getName();
             String name = fileName.substring(0,fileName.length()-4);

@@ -25,7 +25,7 @@ public class Structure {
         height = tiles[0].length;
     }
     public void load(String name){
-        File f = new File("res/maps/structures/"+name+".csv");
+        File f = new File("res/maps/structures/"+name+"/"+name+".csv");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(f));
             String line = reader.readLine();
@@ -45,7 +45,7 @@ public class Structure {
 
             reader.close();
 
-            BufferedReader reader2 = new BufferedReader(new FileReader(new File("res/maps/structures/"+entityFile)));
+            BufferedReader reader2 = new BufferedReader(new FileReader(new File("res/maps/structures/"+name+"/"+entityFile)));
             String line2;
             while((line2 = reader2.readLine())!=null){
                 String[] vals = line2.split(",");

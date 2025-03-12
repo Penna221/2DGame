@@ -231,6 +231,7 @@ public class Game extends Engine{
         }
 
         status = "Loading Structures";
+        System.out.println("Loading Structures");
         try {
             Map.loadStructures();
         } catch (Exception e) {
