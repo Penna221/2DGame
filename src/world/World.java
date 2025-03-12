@@ -44,6 +44,7 @@ public class World {
     public static ParticleManager particleManager;
     public static Camera camera;
     public static boolean ready = false, readyToUpdate = false;
+    public static boolean cursorFocus = false;
     private static Transition transition;
     public static boolean drawCollisionBoxes = false;
     public static ArrayList<CollisionBox> collisionBoxes = new ArrayList<CollisionBox>();
@@ -186,6 +187,11 @@ public class World {
             map.updateVisible(player);
             entityManager.update();
             particleManager.update();
+            if(cursorFocus){
+                Game.updateCursor("pointer_cursor");
+            }else{
+                Game.updateCursor("default_cursor");
+            }
         }else{
         }
         transition.update();

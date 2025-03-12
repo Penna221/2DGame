@@ -1,17 +1,20 @@
 package main;
 
 import java.awt.Canvas;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 
+import ui.Image;
 import world.World;
 
 public class Window {
-    private JFrame frame;
+    public JFrame frame;
     private String title;
     private int width, height;    
     private Canvas canvas;
@@ -43,6 +46,10 @@ public class Window {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+    
+
+
     public void refresh() {
         Insets insets = frame.getInsets();
 System.out.println("Insets - Top: " + insets.top + ", Left: " + insets.left +

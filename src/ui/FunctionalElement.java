@@ -1,5 +1,6 @@
 package ui;
 import java.awt.Color;
+import java.awt.RenderingHints.Key;
 
 import io.KeyManager;
 import main.Game;
@@ -15,6 +16,11 @@ public abstract class FunctionalElement extends UIElement{
     }
     public void update(){
         if(!disabled){
+            if(KeyManager.textFieldFocus){
+                if(!(this instanceof TextField)){
+                    return;
+                }
+            }
             if(bounds.contains(Game.mm.mouseX,Game.mm.mouseY)){
                 if(!focused){
                     focused = true;
@@ -39,6 +45,11 @@ public abstract class FunctionalElement extends UIElement{
         this.task = t;
     }
     public boolean click(){
+        if(KeyManager.textFieldFocus){
+            if(!(this instanceof TextField)){
+                return false;
+            }
+        }
         if(focused){
             if(task!=null){
                 task.perform();

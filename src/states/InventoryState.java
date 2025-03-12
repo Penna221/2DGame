@@ -23,39 +23,40 @@ public class InventoryState extends State{
     public static boolean slotSelected = false;
     private static int selectedSlotID = -1;
     private static SlotRectangle[] slotRectangles;
-        @Override
-        public void update() {
-            if(running){
-                int mouseX = Game.mm.mouseX;
-                int mouseY = Game.mm.mouseY;
-                for(SlotRectangle s : slotRectangles){
-                    Rectangle r = s.rect;
-                    if(r.contains(mouseX,mouseY)){
-                        s.slot.highlight = true;
-                    }else{
-                        s.slot.highlight = false;
-                    }
-                }
     
-            }else{
-                State.transition.update();
-            }
-        }
-        public static void pickSlot(){
-            if(slotSelected)
-                return;
-
+    @Override
+    public void update() {
+        if(running){
             int mouseX = Game.mm.mouseX;
             int mouseY = Game.mm.mouseY;
             for(SlotRectangle s : slotRectangles){
                 Rectangle r = s.rect;
                 if(r.contains(mouseX,mouseY)){
-                    if(s.slot.item!=null){
-                        selectedSlotID = s.id;
-                        slotSelected = true;   
-                    }
+                    s.slot.highlight = true;
+                }else{
+                    s.slot.highlight = false;
                 }
             }
+
+        }else{
+            State.transition.update();
+        }
+    }
+    public static void pickSlot(){
+        if(slotSelected)
+            return;
+
+        int mouseX = Game.mm.mouseX;
+        int mouseY = Game.mm.mouseY;
+        for(SlotRectangle s : slotRectangles){
+            Rectangle r = s.rect;
+            if(r.contains(mouseX,mouseY)){
+                if(s.slot.item!=null){
+                    selectedSlotID = s.id;
+                    slotSelected = true;   
+                }
+            }
+        }
     }
     public static void releaseSlot(){
         //DRAGGING SLOT AND RELEASING IT ON SOME SLOT.

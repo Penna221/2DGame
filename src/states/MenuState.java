@@ -23,6 +23,7 @@ public class MenuState extends State{
             
             container.centerElements();
             container.spaceOutVertically(35);
+            Container.focus = false;
             container.update();
         }else{
             State.transition.update();

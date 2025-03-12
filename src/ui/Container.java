@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import main.Game;
+
 public class Container extends UIElement{
     public ArrayList<UIElement> elements;
     public ArrayList<UIElement> change;
     public boolean changing = false;
-
+    public static boolean focus = false;
     public UIElement header;
     public boolean fillBg = false;
     public boolean drawBounds = false;
@@ -230,7 +232,7 @@ public class Container extends UIElement{
         change.clear();
     }
     public void update(){
-    
+        String type = "";
         for(UIElement e : elements){
             if(changing){
                 break;
@@ -239,9 +241,24 @@ public class Container extends UIElement{
             if(e instanceof FunctionalElement){
                 FunctionalElement ee = (FunctionalElement)e;
                 ee.update();
+                if(ee.focused){
+                    focus = true;
+                    if(ee instanceof TextField){
+                        type = "text";
+                    }
+                }
             }else if(e instanceof Container){
                 ((Container)e).update();
             }  
+        }
+        if(focus){
+            if(type.equals("text")){
+                Game.updateCursor("write_cursor");
+            }else{
+                Game.updateCursor("pointer_cursor");
+            }
+        }else{
+            Game.updateCursor("default_cursor");
         }
     }
     

@@ -15,6 +15,7 @@ public class NewGameState extends State{
     @Override
     public void update() {
         if(running){
+            Container.focus = false;
             container.update();
         }else{
             State.transition.update();

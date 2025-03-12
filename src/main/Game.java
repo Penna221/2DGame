@@ -1,10 +1,14 @@
 package main;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
-
+import java.io.File;
+import java.awt.Image;
 import entities.bows.Bows;
 import entities.potions.Potions;
 import entities.projectiles.Projectiles;
@@ -254,7 +258,7 @@ public class Game extends Engine{
             status = "Error occured while Saved Games";
             goAway();
         }
-
+        updateCursor("default_cursor");
 
 
         status = "Everything loaded. Happy gaming :)";
@@ -270,6 +274,41 @@ public class Game extends Engine{
         Transition.canContinue2= true;
         
     }
+
+    public static void updateCursor(String name){
+        // Load the cursor image
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        File cursorFile = new File("res/cursor/"+name+".png");
+        if(cursorFile.exists()){
+            Image cursorImage = toolkit.getImage(cursorFile.getAbsolutePath());
+            // Create the custom cursor (hotspot at (0, 0))
+            int x = 0;
+            int y = 0;
+            switch (name) {
+                case "default_cursor":
+                    x = 0;
+                    y = 0;
+                    break;
+                case "write_cursor":
+                    x = 0;
+                    y = 0;
+                case "pointer_cursor":
+                    x=7;
+                    y =0;
+                default:
+                    x = 0;
+                    y = 0;
+                    break;
+            }
+            Cursor customCursor = toolkit.createCustomCursor(cursorImage, new Point(x,y), "Custom Cursor");
+            // Set the cursor for the frame
+            w.frame.setCursor(customCursor);
+        }else{
+            System.out.println("Could not set cursor");
+        }
+    }
+
+
     @Override
     public void render() {
         bs = w.getCanvas().getBufferStrategy();

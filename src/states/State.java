@@ -3,7 +3,9 @@ package states;
 import java.awt.Graphics;
 
 import gfx.Transition;
+import main.Game;
 import sound.SoundPlayer;
+import ui.Container;
 import ui.PauseMenu;
 
 public abstract class State {
@@ -34,6 +36,8 @@ public abstract class State {
     }
     public static void setState(State s, boolean trans){
         PauseMenu.setContainer(null);
+        Container.focus = false;
+        Game.updateCursor("default_cursor");
         if(currentState !=nullState){
             //System.out.println("clearing buttons");
         }

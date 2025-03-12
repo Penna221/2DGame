@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
 import save.SavedGame;
+import ui.Container;
 import ui.PauseMenu;
 import world.World;
 
@@ -18,9 +19,11 @@ public class GameState extends State{
     public void update() {
         if(running){
             if(!paused){
+                Container.focus = false;
                 world.update();
             }else{
                 if(PauseMenu.currentContainer!=null){
+                    Container.focus = false;
                     PauseMenu.currentContainer.update();
                 }
             }
