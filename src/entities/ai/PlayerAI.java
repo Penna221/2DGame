@@ -3,7 +3,6 @@ package entities.ai;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -11,19 +10,17 @@ import java.util.Random;
 
 import javax.sound.sampled.Clip;
 
+import cards.Card;
 import entities.Entity;
-import entities.bows.Bows;
 import entities.effects.SlowEffect;
 import entities.player.HUD;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
 import entities.player.InventoryBag;
 import entities.potions.Potions;
-import entities.staves.Staves;
 import entities.swords.Swords;
 import gfx.Factory;
 import io.KeyManager;
-import save.SavedGame;
 import sound.SoundPlayer;
 import tiles.Tile;
 import tools.Timer;
@@ -42,6 +39,9 @@ public class PlayerAI extends AI{
     public static int fullEnergy = 5;
     public Timer regenEnergyTimer;
     public InventoryBag bag;
+
+    public static ArrayList<Card> cardBag = new ArrayList<Card>();
+
     public PlayerAI(Entity entity) {
         super(entity);
         if(hud==null){

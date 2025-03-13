@@ -30,6 +30,7 @@ public abstract class State {
         deadState = new DeadState();
         newGameState = new NewGameState();
         cardTraderState = new CardTraderState();
+        inventoryState = new InventoryState();
         nullState = new NullState();
         nullState.init();
         currentState = nullState;

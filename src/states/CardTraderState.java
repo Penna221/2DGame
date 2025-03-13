@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cards.Card;
+import entities.ai.PlayerAI;
 import gfx.Transition;
 import main.Game;
 import ui.ClickButton;
@@ -83,6 +84,9 @@ public class CardTraderState extends State{
     }
     private void confirmChoise(){
         System.out.println("You chose: " + chosenOne.name);
+
+        PlayerAI.cardBag.add(chosenOne);
+
         GameState.paused = false;
         State.setState(State.gameState, true);
         Transition.canContinue2 = true;
