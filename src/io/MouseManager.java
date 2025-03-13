@@ -1,19 +1,15 @@
 package io;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.geom.Point2D;
-import java.util.Random;
 
 import entities.ai.PlayerAI;
+import entities.player.InventoryBag;
 import states.GameState;
-import states.InventoryState;
 import states.State;
 import ui.PauseMenu;
-import world.World;
 public class MouseManager implements MouseListener, MouseMotionListener, MouseWheelListener{
     public int mouseX, mouseY;
     @Override
@@ -65,7 +61,7 @@ public class MouseManager implements MouseListener, MouseMotionListener, MouseWh
         mouseX = e.getX();
         mouseY = e.getY(); 
         if(State.currentState==State.inventoryState){
-            InventoryState.pickSlot();
+            InventoryBag.pickSlot();
         }
         
         // if(PauseMenu.currentContainer!=null){
@@ -79,7 +75,7 @@ public class MouseManager implements MouseListener, MouseMotionListener, MouseWh
         mouseY = e.getY();
         // UiHub.sendToggle(false);
         if(State.currentState==State.inventoryState){
-            InventoryState.releaseSlot();
+            InventoryBag.releaseSlot();
         }
     }
 

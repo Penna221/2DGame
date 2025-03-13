@@ -118,6 +118,13 @@ public class PauseMenu {
                 Transition.canFinish = true;
             }
         };
+        Task t5 = new Task(){
+            public void perform(){
+                State.setState(State.cardTraderState, true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        };
         switch (text) {
             case "basic":
                 containers.put("basic", createBasicPauseMenu());
@@ -139,7 +146,9 @@ public class PauseMenu {
                 break;
             case "enter_trader":
                 containers.put("enter_trader", createNPCEntryDialog(t3,"Trader","Hi There","portrait_test"));
-                
+                break;
+            case "enter_card_trader":
+                containers.put("enter_card_trader", createNPCEntryDialog(t5,"Card Trader","Would you like to trade some cards?","portrait_test"));
                 break;
             case "enter_blacksmith":
                 

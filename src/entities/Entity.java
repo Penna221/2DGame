@@ -14,6 +14,7 @@ import entities.ai.BigGoblinAI;
 import entities.ai.BigSpiderAI;
 import entities.ai.BlacksmithAI;
 import entities.ai.BossAI;
+import entities.ai.CardTraderAI;
 import entities.ai.ChestAI;
 import entities.ai.CobwebAI;
 import entities.ai.CollectableAI;
@@ -167,6 +168,9 @@ public class Entity {
                 break;
             case "lock":
                 ai = new LockAI(this);
+                break;
+            case "card_trader":
+                ai = new CardTraderAI(this);
                 break;
             default:
                 ai = new EmptyAI(this);

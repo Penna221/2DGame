@@ -2,23 +2,16 @@ package states;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import entities.EntityManager;
 import gfx.Animation;
 import gfx.AssetStorage;
-import gfx.Factory;
-import gfx.Transition;
-import main.Game;
-import ui.ClickButton;
 import ui.Container;
 import ui.PauseMenu;
-import ui.Task;
-import ui.Text;
 
 public class TraderState extends State {
-    private BufferedImage table, trader, sell_board;
+    private BufferedImage trader;
     private Animation an;
     private Container c;
     @Override

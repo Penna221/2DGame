@@ -1,4 +1,4 @@
-package states;
+package entities.player;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,15 +6,12 @@ import java.awt.Rectangle;
 
 import entities.Entity;
 import entities.ai.PlayerAI;
-import entities.player.Inventory;
 import entities.player.Inventory.Slot;
-import entities.player.SlotRectangle;
 import gfx.Transition;
 import main.Game;
 import world.World;
 
-public class InventoryState extends State{
-    public Inventory inv;
+public class InventoryBag{
     private int spacing = 30;
     private int slotSize = 50;
     public Slot[] inventorySlots;
@@ -24,22 +21,19 @@ public class InventoryState extends State{
     private static int selectedSlotID = -1;
     private static SlotRectangle[] slotRectangles;
     
-    @Override
-    public void update() {
-        if(running){
-            int mouseX = Game.mm.mouseX;
-            int mouseY = Game.mm.mouseY;
-            for(SlotRectangle s : slotRectangles){
-                Rectangle r = s.rect;
-                if(r.contains(mouseX,mouseY)){
-                    s.slot.highlight = true;
-                }else{
-                    s.slot.highlight = false;
-                }
-            }
+    
 
-        }else{
-            State.transition.update();
+    public void update() {
+        
+        int mouseX = Game.mm.mouseX;
+        int mouseY = Game.mm.mouseY;
+        for(SlotRectangle s : slotRectangles){
+            Rectangle r = s.rect;
+            if(r.contains(mouseX,mouseY)){
+                s.slot.highlight = true;
+            }else{
+                s.slot.highlight = false;
+            }
         }
     }
     public static void pickSlot(){
@@ -146,7 +140,6 @@ public class InventoryState extends State{
         }
         return originalAmount;
     }
-    @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
         g.drawString("Inventory", 0, 25);
@@ -164,15 +157,11 @@ public class InventoryState extends State{
                 g.drawImage(slotRectangles[selectedSlotID].slot.texture, mouseX - (int)(slotSize*0.5), mouseY - (int)(slotSize*0.5),(int)(slotSize*0.8),(int)(slotSize*0.8), null);
             }
         }
-        if(transition !=null){
-            transition.render(g);
-        }
     }
 
-    @Override
     public void init() {
         System.out.println("Inventory init");
-        inv = PlayerAI.inv;
+        Inventory inv = PlayerAI.inv;
         inventorySlots = inv.inventorySlots;
         hotbarSlots = inv.hotbarSlots;
         specialSlots = inv.specialSlots;
@@ -231,11 +220,6 @@ public class InventoryState extends State{
         }
         
         Transition.canContinue = true;
-    }
-
-    @Override
-    public void updateOnceBetweenTransitions() {
-        //Save inventory?
     }
     
 }

@@ -8,6 +8,9 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.io.File;
+
+import cards.Card;
+
 import java.awt.Image;
 import entities.bows.Bows;
 import entities.potions.Potions;
@@ -243,12 +246,23 @@ public class Game extends Engine{
             goAway();
         }
         status = "Loading Loot Tables";
+        System.out.println("Loading Loot tables");
         try {
             LootTables.loadLootTables();
         } catch (Exception e) {
             status = "Error occured while loading Loot Tables";
             goAway();
         }
+        
+        status = "Loading Cards";
+        System.out.println("Loading Cards");
+        try {
+            Card.loadCards();
+        } catch (Exception e) {
+            status = "Error occured while loading cards.";
+            goAway();
+        }
+
         
         
         status = "Loading Saved Games";

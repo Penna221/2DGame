@@ -259,6 +259,11 @@
 		"skeleton_attack_left":"res\\gfx\\entities\\enemies\\skeleton\\skeleton_attack_left.png",
 		"skeleton_attack_right":"res\\gfx\\entities\\enemies\\skeleton\\skeleton_attack_right.png",
 
+        "card_trader":"res\\gfx\\entities\\card_trader\\card_trader.png",
+        "common_card":"res\\gfx\\entities\\cards\\common_card.png",
+        "rare_card":"res\\gfx\\entities\\cards\\rare_card.png",
+        "curse_card":"res\\gfx\\entities\\cards\\curse_card.png",
+
         "enemy_1_idle":"res\\gfx\\entities\\enemy1\\enemy_idle.png",
         "enemy_1_hostile":"res\\gfx\\entities\\enemy1\\enemy_hostile.png",
 

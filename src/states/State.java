@@ -12,7 +12,7 @@ public abstract class State {
     public static State currentState;
     public static State gameState, menuState,nullState,settingsState,loadState,newGameState;
     public static State inventoryState;
-    public static State traderState, blacksmithState,witchState;
+    public static State traderState, cardTraderState, blacksmithState,witchState;
     public static State deadState;
     protected static boolean running = true;
     public static Transition transition;
@@ -28,8 +28,8 @@ public abstract class State {
         witchState = new WitchState();
         settingsState = new SettingsState();
         deadState = new DeadState();
-        inventoryState = new InventoryState();
         newGameState = new NewGameState();
+        cardTraderState = new CardTraderState();
         nullState = new NullState();
         nullState.init();
         currentState = nullState;

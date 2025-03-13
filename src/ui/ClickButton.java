@@ -1,10 +1,13 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 public class ClickButton extends FunctionalElement{
     private BufferedImage texture;
+    private int selectBuffer = 10;
+    public boolean selected = false;
     public ClickButton(int x, int y, Text t) {
         super(x, y);
         texture = UIFactory.generateBorder(t.textImage, UIFactory.buttonData.borderThickness);
@@ -17,6 +20,7 @@ public class ClickButton extends FunctionalElement{
     }
     @Override
     public void updateAdditional() {
+        
     }
 
     public void scaleWithFactor(float factor){
@@ -29,6 +33,11 @@ public class ClickButton extends FunctionalElement{
     }
     @Override
     public void render(Graphics g) {
+        if(selected){
+            g.setColor(Color.yellow);
+            g.fillRect(bounds.x-selectBuffer, bounds.y-selectBuffer, bounds.width+selectBuffer*2,bounds.height+selectBuffer*2);
+
+        }
         g.setColor(bg);
         g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
 

@@ -123,6 +123,12 @@ public class UIFactory {
         }
         return AssetStorage.scaleImage(texture,(float)factor);
     }
+    public static BufferedImage scaleToWidth(BufferedImage texture, int width){
+        float w = texture.getWidth();
+        float scaleFactor = (float) width / w;
+
+        return AssetStorage.scaleImage(texture,scaleFactor);
+    }
     
     public static BufferedImage generateText(String text, int maxWidth){
         int len = calculateWidth(text);

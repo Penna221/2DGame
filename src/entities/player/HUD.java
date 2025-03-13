@@ -22,6 +22,7 @@ public class HUD {
     public boolean showCoordinates = true;
     public boolean showInventory = true;
     public boolean showEnergy = true;
+    public boolean showBag = true;
     private BufferedImage overlay;
     private Graphics g;
     public boolean showExtra = false;

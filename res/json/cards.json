@@ -1,0 +1,55 @@
+{
+    "weapons":{
+        "0":{
+            "name":"Bow",
+            "rarity":"Common",
+            "type":"Weapon",
+            "info":["Regular Bow","Pretty bad but does the job.","Uses reqular arrows if no Arrow card is selected"],
+            "icon_id":[37,0]
+        },
+        "1":{
+            "name":"Dagger",
+            "rarity":"Common",
+            "type":"Weapon",
+            "info":["Small Dagger","Stabby Stab Stab."],
+            "icon_id":[27,1]
+        },
+        "2":{
+            "name":"Magic Wand",
+            "rarity":"Rare",
+            "type":"Weapon",
+            "info":["Makes Little sparks","For those who like magic."],
+            "icon_id":[36,0]
+        }
+    },
+    "buffs":{
+        "0":{
+            "name":"Regeneration",
+            "rarity":"Rare",
+            "type":"Buff",
+            "info":["Regenerates your hitpoints.","Can be activated 1 time in dungeon."],
+            "icon_id":[26,4]
+        },
+        "1":{
+            "name":"Goblin master",
+            "rarity":"Rare",
+            "type":"Buff",
+            "info":["Goblins fear you."],
+            "icon_id":[51,0]
+        },
+        "2":{
+            "name":"Sword Double Damage",
+            "rarity":"Curse",
+            "type":"Buff",
+            "info":["You Deal Double Damage With Melee Weapons", "You Take Double Damage"],
+            "icon_id":[27,0]
+        },
+        "3":{
+            "name":"Bow Double Damage",
+            "rarity":"Curse",
+            "type":"Buff",
+            "info":["You Deal Double Damage With Bows", "You Take Double Damage"],
+            "icon_id":[37,1]
+        }
+    }
+}

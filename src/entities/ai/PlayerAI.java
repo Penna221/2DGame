@@ -17,6 +17,7 @@ import entities.effects.SlowEffect;
 import entities.player.HUD;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
+import entities.player.InventoryBag;
 import entities.potions.Potions;
 import entities.staves.Staves;
 import entities.swords.Swords;
@@ -40,6 +41,7 @@ public class PlayerAI extends AI{
     public static int energy = 3;
     public static int fullEnergy = 5;
     public Timer regenEnergyTimer;
+    public InventoryBag bag;
     public PlayerAI(Entity entity) {
         super(entity);
         if(hud==null){
@@ -55,7 +57,8 @@ public class PlayerAI extends AI{
         if(inv==null){
             
             inv = new Inventory();
-            
+            bag = new InventoryBag();
+            bag.init();
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
             // inv.addItem(World.entityManager.generatePotion(Potions.potions.get(0)));
             // for(int i = 0; i < 99; i++){
@@ -134,7 +137,7 @@ public class PlayerAI extends AI{
         }
         
         
-        
+        // bag.update();
         e.move(true);
         e.updateBounds();
         regenEnergyTimer.update();
@@ -274,6 +277,7 @@ public class PlayerAI extends AI{
         // g.setColor(Color.red);
         // e.drawBounds(g);
         drawWeapon(g);
+        // bag.render(g);
         hud.render(g);
     }
     private void drawWeapon(Graphics g){

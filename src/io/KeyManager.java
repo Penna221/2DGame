@@ -67,17 +67,17 @@ public class KeyManager implements KeyListener{
                 break;
             case KeyEvent.VK_E:
                 if(State.currentState== State.gameState){
-                    GameState.paused = true;
-                    State.setState(State.inventoryState,true);
-                    Transition.canContinue2 = true;
-                    Transition.canFinish = true;
+                    // GameState.paused = true;
+                    // State.setState(State.inventoryState,true);
+                    // Transition.canContinue2 = true;
+                    // Transition.canFinish = true;
                 }
                 break;
             case KeyEvent.VK_F1:
                 PlayerAI.hud.showExtra = !PlayerAI.hud.showExtra;
                 break;
             case KeyEvent.VK_F2:
-                World.load("cave_goblin","");
+                // World.load("cave_goblin","");
                 break;
             case KeyEvent.VK_F3:
                 State.setState(State.menuState,true);
@@ -85,12 +85,12 @@ public class KeyManager implements KeyListener{
                 Transition.canFinish = true;
                 break;
             case KeyEvent.VK_F4:
-                State.setState(State.gameState,false);
-                Transition.canContinue2 = true;
-                Transition.canFinish = true;
+                // State.setState(State.gameState,false);
+                // Transition.canContinue2 = true;
+                // Transition.canFinish = true;
                 break;
             case KeyEvent.VK_F5:
-                Camera.light = !Camera.light;
+                // Camera.light = !Camera.light;
                 break;
             case KeyEvent.VK_F6:
                 Entity.drawBounds = !Entity.drawBounds;
