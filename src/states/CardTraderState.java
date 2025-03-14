@@ -16,10 +16,13 @@ import ui.Task;
 import ui.Text;
 public class CardTraderState extends State{
     private ClickButton b1;
+    private Text questPoints;
     private Container container;
-    private ClickButton selectButton;
+    private Text title;
+    private ClickButton selectButton,returnButton;
     private Card chosenOne = null;
     private Container infoTextContainer;
+    private boolean changing = false;
     private ArrayList<ClickButton> choises = new ArrayList<ClickButton>();
 
     @Override
@@ -35,7 +38,10 @@ public class CardTraderState extends State{
 
     @Override
     public void render(Graphics g) {
-        container.render(g);
+        if(!changing){
+            container.render(g);
+        }
+
         if(transition !=null){
             transition.render(g);
         }
@@ -77,20 +83,43 @@ public class CardTraderState extends State{
         selectButton.setPosition(infoTextContainer.bounds.width-selectButton.bounds.width, infoTextContainer.bounds.y-selectButton.bounds.height);
         container.addElement(infoTextContainer);
         container.addElement(selectButton);
-        Text title = new Text("Pick a card", 0, 0, 0, true);
-        container.addElement(title);
         
+        returnButton = new ClickButton(0,0,new Text("Return",0,0,0,false));
+        returnButton.setTask(new Task(){
+            @Override
+            public void perform(){
+                GameState.paused = false;
+                State.setState(State.gameState, true);
+                Transition.canContinue2 = true;
+                Transition.canFinish = true;
+            }
+        });
+        returnButton.setPosition(selectButton.bounds.x - returnButton.bounds.width-10, selectButton.bounds.y);
+        container.addElement(returnButton);
+        
+        title = new Text("Pick a card", 0, 0, 0, true);
+        container.addElement(title);
+        questPoints = new Text("Available Quest points: " + PlayerAI.questPoints, title.bounds.width+20,0,0,false);
+        container.addElement(questPoints);
         PauseMenu.setContainer(container);
+        changing = false;
     }
     private void confirmChoise(){
+        if(chosenOne==null){
+            return;
+        }
         System.out.println("You chose: " + chosenOne.name);
-
-        PlayerAI.cardBag.add(chosenOne);
-
-        GameState.paused = false;
-        State.setState(State.gameState, true);
-        Transition.canContinue2 = true;
-        Transition.canFinish = true;
+        if(PlayerAI.questPoints>0){
+            PlayerAI.cardBag.add(chosenOne);
+            PlayerAI.questPoints--;
+            changing = true;
+            State.setState(this, false);
+            
+        }else{
+            System.out.println("Not enough Quest Points");
+        }
+        chosenOne = null;
+        
     }
     private void updateText(){
         

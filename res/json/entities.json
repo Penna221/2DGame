@@ -332,7 +332,7 @@
         "ai":"door",
         "width":16,
         "height":16,
-        "tunnel":"lobby",
+        "tunnel":"start",
         "light_source":true,
         "light_radius":200,
         "light_color":"#000000",

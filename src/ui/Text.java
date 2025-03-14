@@ -16,10 +16,10 @@ public class Text extends UIElement{
         this.border = border;
         this.maxWidth = maxWidth;
         if(maxWidth==0){
-            maxWidth = 400;
+            this.maxWidth = 400;
         }
         this.text = text;
-        textImage = UIFactory.generateText(text, maxWidth);
+        textImage = UIFactory.generateText(text, this.maxWidth);
         if(border){
             textImage = UIFactory.generateBorder(textImage,UIFactory.textData.borderThickness);
         }

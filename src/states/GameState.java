@@ -17,13 +17,12 @@ public class GameState extends State{
     private static boolean alreadyInitialized = false;
     @Override
     public void update() {
+        Container.focus = false;
         if(running){
             if(!paused){
-                Container.focus = false;
                 world.update();
             }else{
                 if(PauseMenu.currentContainer!=null){
-                    Container.focus = false;
                     PauseMenu.currentContainer.update();
                 }
             }

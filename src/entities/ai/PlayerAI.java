@@ -39,7 +39,7 @@ public class PlayerAI extends AI{
     public static int fullEnergy = 5;
     public Timer regenEnergyTimer;
     public InventoryBag bag;
-
+    public static int questPoints = 0;
     public static ArrayList<Card> cardBag = new ArrayList<Card>();
 
     public PlayerAI(Entity entity) {

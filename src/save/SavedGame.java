@@ -10,6 +10,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cards.Card;
 import entities.Entity;
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
@@ -27,19 +28,25 @@ public class SavedGame {
     public int playerHealth;
     public int playerMaxHealth;
     public int dungeonCounter;
+    public int questPoints;
+
+
+    public ArrayList<Card> ownedCards = new ArrayList<Card>();
+    
     public static HashMap<String, SavedGame> savedGames = new HashMap<String, SavedGame>();
     public static SavedGame currentSave;
     public int dungeonLevel;
-    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter, int dungeonLevel){
+    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter, int dungeonLevel, int questPoints){
         this.saveName = saveName;
         this.inventory = inv;
         this.playerHealth = playerHealth;
         this.playerMaxHealth = maxHealth;
         this.dungeonCounter = dungeonCounter;
         this.dungeonLevel = dungeonLevel;
+        this.questPoints = questPoints;
     }
     public static void startNewSave(String name){
-        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1);
+        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1);
     }
     public static void tryLoad(String save){
         currentSave = savedGames.get(save);
@@ -52,6 +59,7 @@ public class SavedGame {
         World.player.maxHealth = currentSave.playerMaxHealth;
         World.dungeonCounter = currentSave.dungeonCounter;
         World.dungeonLevel = currentSave.dungeonLevel;
+        PlayerAI.questPoints = currentSave.questPoints;
         //Load Player Stats
         // - Inventory
         // - currenthealth
@@ -123,10 +131,11 @@ public class SavedGame {
             int mph = stats.findChild("maxHealth").getInteger();
             int dungeonCounter = stats.findChild("dungeonCounter").getInteger();
             int dungeonLevel = stats.findChild("dungeonLevel").getInteger();
+            int questPoints = stats.findChild("questPoints").getInteger();
             KeyValuePair inv = s.findChild("inventory");
             Inventory newInventory = readInventory(inv);
             
-            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,dungeonLevel);
+            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,dungeonLevel,questPoints);
             savedGames.put(folder.getName(),sa);
 
         }
@@ -212,11 +221,13 @@ public class SavedGame {
         KeyValuePair maxhealth_val = new KeyValuePair("maxHealth",new NumberValue(World.player.maxHealth));
         KeyValuePair dungeonCounter_val = new KeyValuePair("dungeonCounter",new NumberValue(World.dungeonCounter));
         KeyValuePair dungeonLevel_val = new KeyValuePair("dungeonLevel",new NumberValue(World.dungeonLevel));
+        KeyValuePair questPoints_val = new KeyValuePair("questPoints",new NumberValue(PlayerAI.questPoints));
         ArrayList<KeyValuePair> stats_vals = new ArrayList<KeyValuePair>();
         stats_vals.add(health_val);
         stats_vals.add(maxhealth_val);
         stats_vals.add(dungeonCounter_val);
         stats_vals.add(dungeonLevel_val);
+        stats_vals.add(questPoints_val);
         KeyValuePair statsObj = new KeyValuePair("stats", new ObjectValue(stats_vals));
         keyValuePairs.add(statsObj);
         
