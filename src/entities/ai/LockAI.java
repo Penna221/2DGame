@@ -68,14 +68,14 @@ public class LockAI extends AI{
                 GameState.paused = false;
             }
         };
-        ClickButton yesButton = new ClickButton(0,250,new Text("Open",0,0,0,false));
+        ClickButton yesButton = new ClickButton(0,250,new Text("Open",0,0,0,false,false));
         yesButton.setTask(open);
         
         boolean b = PlayerAI.inv.checkIfEnoughItemsWithID(neededKey.info.id, neededKey.subID, amount);
         if(!b){
             yesButton.disabled = true;
         }
-        ClickButton noButton = new ClickButton(0,250,new Text("Leave",0,0,0,false));
+        ClickButton noButton = new ClickButton(0,250,new Text("Leave",0,0,0,false,false));
         noButton.setTask(unPause);
         ArrayList<ClickButton> buttons = new ArrayList<ClickButton>();
         buttons.add(yesButton);

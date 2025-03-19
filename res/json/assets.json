@@ -392,7 +392,24 @@
         "throw":"res\\sound\\throw.wav",
         "magic_1":"res\\sound\\magic1.wav",
         "magic_2":"res\\sound\\magic2.wav",
-        "magic_3":"res\\sound\\magic3.wav"
+        "magic_3":"res\\sound\\magic3.wav",
+        "talk1":"res\\sound\\talk1.wav",
+        "talk2":"res\\sound\\talk2.wav",
+        "beep_1":"res\\sound\\beep_1.wav",
+        "beep_2":"res\\sound\\beep_2.wav",
+        "beep_3":"res\\sound\\beep_3.wav",
+        "beep_4":"res\\sound\\beep_4.wav",
+        "beep_5":"res\\sound\\beep_5.wav",
+        "beep_6":"res\\sound\\beep_6.wav",
+        "beep_7":"res\\sound\\beep_7.wav",
+        "beep_8":"res\\sound\\beep_8.wav",
+        "type_1":"res\\sound\\type_1.wav",
+        "type_2":"res\\sound\\type_2.wav",
+        "type_3":"res\\sound\\type_3.wav",
+        "type_4":"res\\sound\\type_4.wav",
+        "temp_music":"res\\sound\\temp_music.wav",
+        "temp_adventure":"res\\sound\\temp_adventure_music.wav"
+        
     }
     
 }

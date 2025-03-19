@@ -7,6 +7,7 @@ import main.Game;
 import sound.SoundPlayer;
 import ui.Container;
 import ui.PauseMenu;
+import world.World;
 
 public abstract class State {
     public static State currentState;
@@ -46,7 +47,9 @@ public abstract class State {
             s.init();
             currentState = s;
             currentState.updateOnceBetweenTransitions();
-            
+            if(s.equals(gameState)){
+                World.playMusic();
+            }
             return;
         }
         
@@ -57,18 +60,22 @@ public abstract class State {
                 Thread t = new Thread(){
                     @Override
                     public void run(){
+                        SoundPlayer.stopAllSounds();
                         s.init();
                         currentState = s;
                         currentState.updateOnceBetweenTransitions();
                         canContinue = true;
+                        if(s.equals(gameState)){
+                            World.playMusic();
+                        }
                     }
                 };
                 t.start();
             }
             @Override
             public void end(){
-                SoundPlayer.stopAllSounds();
                 State.running = true;
+                
             }
         };
         transition.start();

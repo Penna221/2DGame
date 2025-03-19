@@ -73,7 +73,7 @@ public class CardTraderState extends State{
         infoTextContainer = new Container(0,infoYStart, container.bounds.width, Game.w.getHeight()-infoYStart);
         infoTextContainer.fillBg = true;
         infoTextContainer.overrideColor = Color.blue;
-        selectButton = new ClickButton(0, infoTextContainer.bounds.y, new Text("Select", 0, 0, 0,false));
+        selectButton = new ClickButton(0, infoTextContainer.bounds.y, new Text("Select", 0, 0, 0,false,false));
         selectButton.setTask(new Task(){
             @Override
             public void perform(){
@@ -84,7 +84,7 @@ public class CardTraderState extends State{
         container.addElement(infoTextContainer);
         container.addElement(selectButton);
         
-        returnButton = new ClickButton(0,0,new Text("Return",0,0,0,false));
+        returnButton = new ClickButton(0,0,new Text("Return",0,0,0,false,false));
         returnButton.setTask(new Task(){
             @Override
             public void perform(){
@@ -97,9 +97,9 @@ public class CardTraderState extends State{
         returnButton.setPosition(selectButton.bounds.x - returnButton.bounds.width-10, selectButton.bounds.y);
         container.addElement(returnButton);
         
-        title = new Text("Pick a card", 0, 0, 0, true);
+        title = new Text("Pick a card", 0, 0, 0, true,false);
         container.addElement(title);
-        questPoints = new Text("Available Quest points: " + PlayerAI.questPoints, title.bounds.width+20,0,0,false);
+        questPoints = new Text("Available Quest points: " + PlayerAI.questPoints, title.bounds.width+20,0,0,false,false);
         container.addElement(questPoints);
         PauseMenu.setContainer(container);
         changing = false;
@@ -124,7 +124,8 @@ public class CardTraderState extends State{
     private void updateText(){
         
         for(String s : chosenOne.info){
-            Text t = new Text(s, 0, 0, infoTextContainer.bounds.width, false);
+            Text t = new Text(s, 0, 0, infoTextContainer.bounds.width, false,false);
+
             infoTextContainer.addLate(t);
         }
         infoTextContainer.swap();
@@ -141,7 +142,8 @@ public class CardTraderState extends State{
                 }
                 b.selected = true;
                 System.out.println("picked " +c.name);
-                chosenOne = c;updateText();
+                chosenOne = c;
+                updateText();
             }
         });
         return b;

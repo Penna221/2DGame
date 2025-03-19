@@ -52,10 +52,10 @@ public abstract class FunctionalElement extends UIElement{
         }
         if(focused){
             if(task!=null){
+                SoundPlayer.playNonStoppableSound("pick2");
                 task.perform();
                 return true;
             }
-            SoundPlayer.playSound("pick2");
         }
         return false;
     }

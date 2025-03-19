@@ -23,18 +23,18 @@ public class InfoPacket {
         if(e!=null){
             c = new Container(0,0,maxWidth,height);
             c.fillBg = true;
-            Text itemName = new Text(e.name, 0, 1,maxWidth, false);
+            Text itemName = new Text(e.name, 0, 1,maxWidth, false,false);
             itemName.fillBg = true;
             itemName.overrideColor = new Color(0,0,0,200);
             c.addElement(itemName);
             int amt = PlayerAI.inv.calculateAmount(e);
-            Text amount = new Text("You have: "+amt, 0, itemName.bounds.height+10,maxWidth, false);
+            Text amount = new Text("You have: "+amt, 0, itemName.bounds.height+10,maxWidth, false,false);
             c.addElement(amount);
             
 
             int d = e.getItemDamage();
             if(d!=0){
-                Text damage = new Text("Damage: " + d, 0, amount.bounds.y+amount.bounds.height+10, maxWidth, false);
+                Text damage = new Text("Damage: " + d, 0, amount.bounds.y+amount.bounds.height+10, maxWidth, false,false);
                 damage.overrideColor = Color.RED;
                 damage.fillBg = true;
                 c.addElement(damage);

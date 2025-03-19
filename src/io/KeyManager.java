@@ -2,11 +2,13 @@ package io;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 import entities.Entity;
 import entities.ai.PlayerAI;
 import gfx.Transition;
 import save.SavedGame;
+import sound.SoundPlayer;
 import states.GameState;
 import states.State;
 import ui.PauseMenu;
@@ -20,9 +22,17 @@ public class KeyManager implements KeyListener{
     public static boolean textFieldFocus = false;
     public static boolean finished = true;
     public static String text = "";
+    public Random r = new Random();
     @Override
     public void keyTyped(KeyEvent e) {
         if(textFieldFocus){
+            
+            String[] options = {"type_1","type_2","type_3","type_4"};
+            String sound = options[r.nextInt(options.length)];
+            SoundPlayer.playSound(sound);
+
+
+
             char c = e.getKeyChar();
             if(c=='\n'){
                 finished = true;
