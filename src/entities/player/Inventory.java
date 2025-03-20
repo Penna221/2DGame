@@ -3,13 +3,18 @@ package entities.player;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import cards.Card;
 import entities.Entity;
+import entities.bows.Bows;
+import entities.swords.Swords;
 import gfx.AssetStorage;
 import gfx.Factory;
 import main.Game;
 import ui.UIFactory;
+import world.World;
 
 public class Inventory {
     
@@ -26,10 +31,69 @@ public class Inventory {
     public Inventory(){
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
-        inventorySlots = new Slot[20];
-        hotbarSlots = new Slot[5];
+        inventorySlots = new Slot[10];
+        hotbarSlots = new Slot[3];
         specialSlots = new Slot[2];
-        load();
+        init();
+    }
+    public void clearInventory(){
+        init();
+    }
+
+    public void applyCards(ArrayList<Card> cards){
+        clearInventory();
+        for(Card c : cards){
+            if(c.type.equals("Weapon")){
+                handleWeaponCard(c);
+            }else{
+                handleBuffCard(c);
+            }
+        }
+    }
+    private void handleWeaponCard(Card c){
+        int id = c.id;
+        switch (id) {
+            case 0:
+                //Bow
+                addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
+                Entity arrow = World.entityManager.generateEntityWithID(35,1, 0,0);
+                
+                setArrows(arrow, (byte)50);
+                break;
+            case 1:
+                addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
+                break;
+            case 2:
+                addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
+                break;
+            default:
+                break;
+        }
+    }
+    private void handleBuffCard(Card c){
+        int id = c.id;
+        switch (id) {
+            case 0:
+                addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
+                break;
+            case 1:
+            //Goblin master
+                System.out.println("Goblin master card functionality not implemented yet.");
+                break;
+            case 2:
+                System.out.println("Sword Double Damage card functionality not implemented yet.");
+                //Sword double damage
+                
+                break;
+            case 3:
+                System.out.println("Bow Double Damage card functionality not implemented yet.");
+                //Bow double damage
+                
+                break;
+                
+            default:
+                break;
+        }
     }
     public void addSlot(byte amount){
         int newSize = inventorySlots.length+amount;
@@ -49,7 +113,7 @@ public class Inventory {
             s.updateSlot();
         }
     }
-    public void load(){
+    public void init(){
         //Initialize
         for(int i = 0; i < inventorySlots.length; i++){
             inventorySlots[i] = new Slot(slotSize,slotSize);
@@ -158,6 +222,10 @@ public class Inventory {
             return false;
         }
         
+    }
+    public void setArrows(Entity a, byte amount){
+        arrowSlot.item = a;
+        arrowSlot.amount = amount;
     }
     public boolean tryAddToArrows(Entity c){
         boolean added = false;

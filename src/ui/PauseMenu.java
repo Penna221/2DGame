@@ -23,6 +23,7 @@ import main.Game;
 import save.SavedGame;
 import states.GameState;
 import states.State;
+import world.World;
 
 public class PauseMenu {
     
@@ -126,6 +127,7 @@ public class PauseMenu {
             public void perform(){
                 Text.typing = false;
                 State.setState(State.cardTraderState, true);
+                // World.load("dungeon", "");
                 Transition.canContinue2 = true;
                 Transition.canFinish = true;
             }
@@ -153,7 +155,7 @@ public class PauseMenu {
                 containers.put("enter_trader", createNPCEntryDialog(t3,"Trader","Hi There","portrait_test"));
                 break;
             case "enter_card_trader":
-                containers.put("enter_card_trader", createNPCEntryDialog(t5,"Card Trader","Would you like to trade some cards?","portrait_test"));
+                containers.put("enter_card_trader", createNPCEntryDialog(t5,"Card Trader","Haluaisitko ostaa kortteja?","portrait_test"));
                 break;
             case "enter_blacksmith":
                 

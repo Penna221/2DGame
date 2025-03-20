@@ -77,10 +77,10 @@ public class KeyManager implements KeyListener{
                 break;
             case KeyEvent.VK_E:
                 if(State.currentState== State.gameState){
-                    GameState.paused = true;
-                    State.setState(State.inventoryState,true);
-                    Transition.canContinue2 = true;
-                    Transition.canFinish = true;
+                    // GameState.paused = true;
+                    // State.setState(State.inventoryState,true);
+                    // Transition.canContinue2 = true;
+                    // Transition.canFinish = true;
                 }
                 break;
             case KeyEvent.VK_F1:
@@ -98,6 +98,7 @@ public class KeyManager implements KeyListener{
                 // State.setState(State.gameState,false);
                 // Transition.canContinue2 = true;
                 // Transition.canFinish = true;
+                // SavedGame.currentSave.inventory.clearInventory();
                 break;
             case KeyEvent.VK_F5:
                 // Camera.light = !Camera.light;

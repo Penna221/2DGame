@@ -71,6 +71,7 @@ public class GameState extends State{
         alreadyInitialized = true;
         State.setState(gameState, false);
     }
+    
     @Override
     public void init() {
         System.out.println("Gamestate init");

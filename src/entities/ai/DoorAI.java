@@ -9,6 +9,7 @@ import gfx.AssetStorage;
 import gfx.Transition;
 import io.KeyManager;
 import states.GameState;
+import states.SelectCardsState;
 import states.State;
 import ui.Container;
 import ui.PauseMenu;
@@ -42,9 +43,15 @@ public class DoorAI extends AI{
     private void openTradingMenu(){
         Task t = new Task(){
             public void perform(){
-                PauseMenu.setContainer(null);
-                World.load(e.info.tunnel,"");
-                GameState.paused = false;
+                if(e.info.tunnel.equals("dungeon")){
+                    State.setState(State.selectCardsState, true);
+                    Transition.canContinue2 = true;
+                    Transition.canFinish = true;
+                }else{
+                    PauseMenu.setContainer(null);
+                    World.load(e.info.tunnel,"");
+                    GameState.paused = false;
+                }
             }
         };
         Container c = PauseMenu.createTunnelEntryDialog(t);

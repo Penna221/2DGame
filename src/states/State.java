@@ -14,6 +14,7 @@ public abstract class State {
     public static State gameState, menuState,nullState,settingsState,loadState,newGameState;
     public static State inventoryState;
     public static State traderState, cardTraderState, blacksmithState,witchState;
+    public static State selectCardsState;
     public static State deadState;
     protected static boolean running = true;
     public static Transition transition;
@@ -32,6 +33,7 @@ public abstract class State {
         newGameState = new NewGameState();
         cardTraderState = new CardTraderState();
         inventoryState = new InventoryState();
+        selectCardsState = new SelectCardsState();
         nullState = new NullState();
         nullState.init();
         currentState = nullState;
@@ -48,7 +50,7 @@ public abstract class State {
             currentState = s;
             currentState.updateOnceBetweenTransitions();
             if(s.equals(gameState)){
-                World.playMusic();
+                // World.playMusic();
             }
             return;
         }
@@ -66,7 +68,7 @@ public abstract class State {
                         currentState.updateOnceBetweenTransitions();
                         canContinue = true;
                         if(s.equals(gameState)){
-                            World.playMusic();
+                            // World.playMusic();
                         }
                     }
                 };

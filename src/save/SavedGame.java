@@ -15,11 +15,14 @@ import entities.Entity;
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
+import json.ArrayValue;
 import json.BooleanValue;
+import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
 import json.NumberValue;
 import json.ObjectValue;
+import json.StringValue;
 import world.World;
 
 public class SavedGame {
@@ -36,7 +39,8 @@ public class SavedGame {
     public static HashMap<String, SavedGame> savedGames = new HashMap<String, SavedGame>();
     public static SavedGame currentSave;
     public int dungeonLevel;
-    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter, int dungeonLevel, int questPoints){
+    private ArrayList<Card> wc, bc;
+    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter, int dungeonLevel, int questPoints,ArrayList<Card> wc, ArrayList<Card> bc){
         this.saveName = saveName;
         this.inventory = inv;
         this.playerHealth = playerHealth;
@@ -44,9 +48,11 @@ public class SavedGame {
         this.dungeonCounter = dungeonCounter;
         this.dungeonLevel = dungeonLevel;
         this.questPoints = questPoints;
+        this.wc = wc;
+        this.bc = bc;
     }
     public static void startNewSave(String name){
-        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1);
+        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1,null,null);
     }
     public static void tryLoad(String save){
         currentSave = savedGames.get(save);
@@ -60,6 +66,8 @@ public class SavedGame {
         World.dungeonCounter = currentSave.dungeonCounter;
         World.dungeonLevel = currentSave.dungeonLevel;
         PlayerAI.questPoints = currentSave.questPoints;
+        PlayerAI.buffCards = currentSave.bc;
+        PlayerAI.weaponCards = currentSave.wc;
         //Load Player Stats
         // - Inventory
         // - currenthealth
@@ -133,13 +141,35 @@ public class SavedGame {
             int dungeonLevel = stats.findChild("dungeonLevel").getInteger();
             int questPoints = stats.findChild("questPoints").getInteger();
             KeyValuePair inv = s.findChild("inventory");
-            Inventory newInventory = readInventory(inv);
-            
-            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,dungeonLevel,questPoints);
+            // Inventory newInventory = readInventory(inv);
+            Inventory newInventory = new Inventory();
+            KeyValuePair cards = s.findChild("cards");
+            DataType[] wc = cards.findChild("weapons").getArray();
+            DataType[] bc = cards.findChild("buffs").getArray();
+            ArrayList<Card> weaponCards = readCards(wc,"Weapon");
+            ArrayList<Card> buffCards = readCards(bc, "");
+            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,dungeonLevel,questPoints,weaponCards,buffCards);
             savedGames.put(folder.getName(),sa);
 
         }
     } 
+    private static ArrayList<Card> readCards(DataType[] cards, String type){
+        ArrayList<Card> a = new ArrayList<Card>();
+        
+        if(cards[0].getString()!=null && cards[0].getString().equals("empty")){
+            return a;
+        }
+        for(DataType d : cards){
+            int v = d.getInteger();
+            if(type.equals("Weapon")){
+                a.add(Card.weapon_cards.get(v));
+            }else{
+                a.add(Card.buff_cards.get(v));
+            }
+        }
+        return a;
+        
+    }
     private static Inventory readInventory(KeyValuePair inv){
         System.out.println("Reading inventory file json");
         Inventory newInventory = new Inventory();
@@ -231,9 +261,59 @@ public class SavedGame {
         KeyValuePair statsObj = new KeyValuePair("stats", new ObjectValue(stats_vals));
         keyValuePairs.add(statsObj);
         
+        // KeyValuePair inventoryObj = new KeyValuePair("inventory", new ObjectValue(saveInventory()));
+        // keyValuePairs.add(inventoryObj);
         
         
         
+        //Cards
+        ArrayList<KeyValuePair> cardArrays = new ArrayList<KeyValuePair>();
+
+        DataType[] wa;
+        if(PlayerAI.weaponCards.size()==0){
+            wa = new DataType[1];
+            wa[0] = new StringValue("empty");
+        }else{
+            wa = new DataType[PlayerAI.weaponCards.size()];
+            for(int i = 0; i < wa.length; i++){
+                int id = PlayerAI.weaponCards.get(i).id;
+                wa[i] = new NumberValue(id);
+            }
+        }
+        ArrayValue weapons = new ArrayValue(wa);
+        cardArrays.add(new KeyValuePair("weapons", weapons));
+        
+        DataType[] ba;
+        if(PlayerAI.buffCards.size()==0){
+            ba = new DataType[1];
+            ba[0] = new StringValue("empty");
+        }else{
+            ba = new DataType[PlayerAI.buffCards.size()];
+            for(int i = 0; i < ba.length; i++){
+                int id = PlayerAI.buffCards.get(i).id;
+                ba[i] = new NumberValue(id);
+            }
+        }
+        ArrayValue buffs = new ArrayValue(ba);
+        cardArrays.add(new KeyValuePair("buffs", buffs));
+
+        KeyValuePair cardObject = new KeyValuePair("cards", new ObjectValue(cardArrays));
+        keyValuePairs.add(cardObject);
+
+        
+
+
+        ObjectValue objectContainer = new ObjectValue(keyValuePairs);
+        KeyValuePair obj = new KeyValuePair("", objectContainer);
+        p_data.setKeyValuePair(obj);
+        try {
+            
+            p_data.writeFile(new File(folder, "player_data.json"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private static ArrayList<KeyValuePair> saveInventory(){
         ArrayList<KeyValuePair> allInventoryArrays = new ArrayList<KeyValuePair>();
         //INVENTORY inventorySlots
         ArrayList<KeyValuePair> inventorySlot = new ArrayList<KeyValuePair>();
@@ -322,17 +402,8 @@ public class SavedGame {
 
 
 
-        KeyValuePair inventoryObj = new KeyValuePair("inventory", new ObjectValue(allInventoryArrays));
-        keyValuePairs.add(inventoryObj);
-        ObjectValue objectContainer = new ObjectValue(keyValuePairs);
-        KeyValuePair obj = new KeyValuePair("", objectContainer);
-        p_data.setKeyValuePair(obj);
-        try {
-            
-            p_data.writeFile(new File(folder, "player_data.json"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return allInventoryArrays;
+        
     }
     private static KeyValuePair generateEmptySlot(){
         KeyValuePair empty = new KeyValuePair("empty", new BooleanValue(true));

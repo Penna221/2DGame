@@ -38,7 +38,7 @@ public class InventoryState extends State{
     @Override
     public void init() {
         container = new Container(0, 0, Game.w.getWidth(), Game.w.getHeight());
-        for(Card c : PlayerAI.cardBag){
+        for(Card c : PlayerAI.weaponCards){
             ClickButton ca = generateCardButton(c);
             container.addElement(ca);
             choises.add(ca);

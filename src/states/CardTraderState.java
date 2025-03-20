@@ -110,7 +110,11 @@ public class CardTraderState extends State{
         }
         System.out.println("You chose: " + chosenOne.name);
         if(PlayerAI.questPoints>0){
-            PlayerAI.cardBag.add(chosenOne);
+            if(chosenOne.type.equals("Weapon")){
+                PlayerAI.weaponCards.add(chosenOne);
+            }else{
+                PlayerAI.buffCards.add(chosenOne);
+            }
             PlayerAI.questPoints--;
             changing = true;
             State.setState(this, false);
