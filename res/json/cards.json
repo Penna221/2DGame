@@ -20,6 +20,20 @@
             "type":"Weapon",
             "info":["Makes Little sparks","For those who like magic."],
             "item_id":[36,0]
+        },
+        "3":{
+            "name":"Sword",
+            "rarity":"Common",
+            "type":"Weapon",
+            "info":["Sword","Swing swing swingeling."],
+            "item_id":[27,0]
+        },
+        "4":{
+            "name":"Super Stick",
+            "rarity":"Rare",
+            "type":"Weapon",
+            "info":["Literally a stick."],
+            "item_id":[27,2]
         }
     },
     "buffs":{

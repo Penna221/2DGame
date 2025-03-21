@@ -232,6 +232,9 @@ public class Container extends UIElement{
         change.clear();
     }
     public void update(){
+
+
+
         String type = "";
         for(UIElement e : elements){
             if(changing){

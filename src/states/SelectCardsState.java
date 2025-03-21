@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import cards.Card;
 import entities.ai.PlayerAI;
+import entities.player.InfoPacket;
 import gfx.AssetStorage;
 import gfx.Transition;
 import main.Game;
@@ -113,7 +114,7 @@ public class SelectCardsState extends State{
         container.addElement(okButton);
         container.addElement(title);
         
-        infoContainer = new Container(0,(int)(scroll.bounds.getY()+scroll.bounds.getHeight()), Game.w.getWidth(),200);
+        infoContainer = new Container(0,(int)(scroll.bounds.getY()+scroll.bounds.getHeight()+50), Game.w.getWidth(),200);
         info = new Text("Valitut Kortit:", 0,0,(int)(infoContainer.bounds.getWidth()),false,true);
         updateContent();
         infoContainer.addElement(info);
@@ -167,6 +168,9 @@ public class SelectCardsState extends State{
                 updateInfo();
             }
         });
+        
+        InfoPacket info = new InfoPacket(c.info, 0, 0);
+        b.setInfoPacket(info);
         return b;
     }
     @Override

@@ -617,8 +617,8 @@ public class PauseMenu {
         //GENERATE IMAGE BOX
         Image icon = generateImageIcon(texture,amount,150,150,true,Color.black);
         int maxSizeForText1 = (int)(leftSide.bounds.getWidth()-icon.bounds.getWidth());
-        InfoPacket infoPacket = new InfoPacket(0,0);
-        infoPacket.update(ent,0,1,maxSizeForText1,100,false);
+        InfoPacket infoPacket = new InfoPacket(null,0,0);
+        infoPacket.update(0,1);
 
         leftSide.addElement(icon);
         leftSide.addElement(infoPacket.c);

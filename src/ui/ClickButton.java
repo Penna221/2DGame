@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+import entities.ai.PlayerAI;
+
 public class ClickButton extends FunctionalElement{
     private BufferedImage texture;
     private int selectBuffer = 10;
@@ -18,9 +21,14 @@ public class ClickButton extends FunctionalElement{
         this.texture = tex;
         bounds = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
     }
+    
     @Override
     public void updateAdditional() {
-        
+        if(!focused){
+            if(infoPacket!=null){
+                infoPacket.focused = false;
+            }
+        }
     }
 
     public void scaleWithFactor(float factor){
@@ -46,6 +54,9 @@ public class ClickButton extends FunctionalElement{
         
         g.setColor(brd);
         g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
+        if(focused && infoPacket!=null){
+            infoPacket.render(g);
+        }
     }
     
 }

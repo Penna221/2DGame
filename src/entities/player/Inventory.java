@@ -49,6 +49,7 @@ public class Inventory {
                 handleBuffCard(c);
             }
         }
+        updateInventory();
     }
     private void handleWeaponCard(Card c){
         int id = c.id;
@@ -61,14 +62,26 @@ public class Inventory {
                 setArrows(arrow, (byte)50);
                 break;
             case 1:
+                //Dagger
                 addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
                 break;
             case 2:
+            //Magic wand
+                addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
+                setSpell(World.entityManager.generateEntityWithID(39, 0, 0,0));
+                break;
+            case 3:
+                //Sword
+                addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
+                break;
+            case 4:
+            //Stick
                 addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
                 break;
             default:
                 break;
         }
+        
     }
     private void handleBuffCard(Card c){
         int id = c.id;
@@ -226,6 +239,10 @@ public class Inventory {
     public void setArrows(Entity a, byte amount){
         arrowSlot.item = a;
         arrowSlot.amount = amount;
+    }
+    public void setSpell(Entity e){
+        spellSlot.item = e;
+        spellSlot.amount = 1;
     }
     public boolean tryAddToArrows(Entity c){
         boolean added = false;
@@ -458,12 +475,12 @@ public class Inventory {
         public BufferedImage bgTexture;
         private int x, y;
         public InfoPacket infoPacket;
-        public Slot(int width, int height){this.width=width;this.height=height;infoPacket = new InfoPacket(0,0);}
+        public Slot(int width, int height){this.width=width;this.height=height;infoPacket = new InfoPacket(null,0,0);}
         public void setPosition(int x, int y){
             this.x = x;
             this.y = y;
             if(!InventoryBag.slotSelected){
-                infoPacket.update(item,x,y,400,70, true);
+                infoPacket.update(400,70);
             }
         }
         public void setItem(Entity i, byte amount){
@@ -525,7 +542,7 @@ public class Inventory {
             if(item!=null){
                 texture = UIFactory.generateIconWithAmount(item.texture,amount,width,height,false,new Color(0,0,0,0));
                 if(!InventoryBag.slotSelected)
-                    infoPacket.update(item, x,y,400,70,true);
+                    infoPacket.update(400,70);
                 
             }
         }
@@ -539,7 +556,7 @@ public class Inventory {
         public void clear(){
             item = null;
             amount = 0;
-            infoPacket.update(null,x,y,400,70, true);
+            infoPacket.update(400,70);
         }
         public void render(Graphics g){
             g.setColor(new Color(0,0,0,180));

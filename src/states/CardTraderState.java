@@ -7,6 +7,7 @@ import java.util.Random;
 
 import cards.Card;
 import entities.ai.PlayerAI;
+import entities.player.InfoPacket;
 import gfx.Transition;
 import main.Game;
 import ui.ClickButton;
@@ -150,6 +151,8 @@ public class CardTraderState extends State{
                 updateText();
             }
         });
+        InfoPacket info = new InfoPacket(c.info, 0, 0);
+        b.setInfoPacket(info);
         return b;
     }
     
