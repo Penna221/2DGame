@@ -1,12 +1,10 @@
 package ui;
 import java.awt.Color;
 
-import entities.ai.PlayerAI;
 import entities.player.InfoPacket;
 import io.KeyManager;
 import main.Game;
 import sound.SoundPlayer;
-import world.World;
 public abstract class FunctionalElement extends UIElement{
     public Color bg, brd;
     public boolean focused;

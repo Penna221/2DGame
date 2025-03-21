@@ -23,7 +23,6 @@ import main.Game;
 import save.SavedGame;
 import states.GameState;
 import states.State;
-import world.World;
 
 public class PauseMenu {
     

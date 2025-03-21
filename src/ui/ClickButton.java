@@ -5,12 +5,13 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import entities.ai.PlayerAI;
+import cards.Card;
 
 public class ClickButton extends FunctionalElement{
     private BufferedImage texture;
     private int selectBuffer = 10;
     public boolean selected = false;
+    public Card card;
     public ClickButton(int x, int y, Text t) {
         super(x, y);
         texture = UIFactory.generateBorder(t.textImage, UIFactory.buttonData.borderThickness);
@@ -21,7 +22,6 @@ public class ClickButton extends FunctionalElement{
         this.texture = tex;
         bounds = new Rectangle(x,y,texture.getWidth(),texture.getHeight());
     }
-    
     @Override
     public void updateAdditional() {
         if(!focused){

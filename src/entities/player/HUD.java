@@ -65,7 +65,6 @@ public class HUD {
         }
         toDraw.clear();
         World.overlays.put("hud", overlay);
-        System.out.println("drawing ovelra");
     }
     private void drawExtra(Graphics g){
         int startY = 100;

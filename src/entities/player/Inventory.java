@@ -38,6 +38,14 @@ public class Inventory {
     }
     public void clearInventory(){
         init();
+        for(int i = 0; i < hotbarSlots.length; i++){
+            hotbarSlots[i].clear();
+        }
+        for(int i = 0; i < inventorySlots.length; i++){
+            inventorySlots[i].clear();
+        }
+        arrowSlot.clear();
+        spellSlot.clear();
     }
 
     public void applyCards(ArrayList<Card> cards){
