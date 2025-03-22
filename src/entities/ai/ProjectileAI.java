@@ -2,6 +2,7 @@ package entities.ai;
 
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
@@ -97,7 +98,6 @@ public class ProjectileAI extends AI{
     public void update() {
         e.moveProjectile();
         e.updateBounds();
-        int totalDamage = damage;
         if(e.projectileInfo.type.equals("Magic")){
             switch (e.projectileInfo.id) {
                 case 4:
@@ -107,23 +107,6 @@ public class ProjectileAI extends AI{
                 default:
                     break;
             }
-            if(e.staffInfo!=null){
-                totalDamage+= e.staffInfo.damage;
-            }
-        }else if(e.projectileInfo.type.equals("Arrow")){
-            if(e.bowInfo!=null){
-                totalDamage+= e.bowInfo.damage;
-            }
-        }
-        if(e.xSpeed!=0&&e.ySpeed!=0){
-            if(e.projectileInfo.type.equals("Arrow")){
-                attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation,AttackBox.PROJECTILE);
-            }else if(e.projectileInfo.type.equals("Magic")){
-                attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation,AttackBox.MAGIC);
-            }else{
-                attackBox = new AttackBox(e, totalDamage, e.bounds,e.source,e.rotation,AttackBox.PROJECTILE);
-            }
-            EntityManager.addAttackBox(attackBox);
         }
         
     }

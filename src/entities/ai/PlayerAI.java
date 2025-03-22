@@ -88,7 +88,7 @@ public class PlayerAI extends AI{
                 }
             }
         };
-        regenEnergyTimer = new Timer(2000,regenEnergyTask);
+        regenEnergyTimer = new Timer(1000,regenEnergyTask);
     }
 
     @Override
@@ -239,7 +239,7 @@ public class PlayerAI extends AI{
             int neededEnergy = 3;
             if(energy>=neededEnergy){
                 Random r = new Random();
-                Entity spell = World.generateProjectile(4, rotation, origin,World.player);
+                Entity spell = World.generateProjectile(3, rotation, origin,World.player);
                 spell.staffInfo = selectedSlot.item.staffInfo;
                 int r1 = 1+ r.nextInt(3);
                 SoundPlayer.playSound("magic_"+r1);

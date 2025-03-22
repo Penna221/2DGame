@@ -761,8 +761,8 @@
             "idle":""
         },
         "ai":"projectile",
-        "width":4,
-        "height":4,
+        "width":10,
+        "height":10,
         "light_source":false,
         "light_radius":200,
         "light_color":"#FFA000",

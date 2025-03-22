@@ -300,17 +300,25 @@ public class EntityManager {
 
             for(AttackBox a : attackBoxes){
                 for(Entity e : entities){
+
+
+                    //If attack source is same as entity or type of enemy that has ignore enemy -> continue;
                     if(e.equals(a.source) || e.equals(a.ignoreEntity)){
                         continue;
                     }
+
+                    //If two projectiles are the same type -> ignore 
+                    
                     if(a.source.projectileInfo!=null&&e.projectileInfo!=null){
                         if(a.source.projectileInfo.id==e.projectileInfo.id){
                             continue;
                         }
                     }
+                    //If entity is something else than Creature -> ignore.
                     if(!e.info.type.equals("Creature")){
                         continue;
                     }
+                    
                     if(a.bounds.intersects(e.bounds)){
                         boolean canharm = true;
                         System.out.println("Type of damage: " + a.type);

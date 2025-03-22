@@ -329,13 +329,41 @@ public class Entity {
 
     public void moveProjectile(){
         
+        //If cannot move anymore, make one last attackbox.
+
         if(!moveX() ||!moveY()){
-            int expansion = 4;
+            int expansion = (int)projectileInfo.speed;
             Rectangle b = new Rectangle(bounds.x-expansion, bounds.y-expansion, bounds.width+(expansion*2), bounds.height+(expansion*2));
-            AttackBox attackBox = new AttackBox(this, projectileInfo.damage, b,source,rotation,AttackBox.PROJECTILE);
+            int totalDamage = calculateTotalDamage();
+            AttackBox attackBox;
+            if(projectileInfo.type.equals("Arrow")){
+                attackBox = new AttackBox(this, totalDamage, b,source,rotation,AttackBox.PROJECTILE);
+            }else if(projectileInfo.type.equals("Magic")){
+                attackBox = new AttackBox(this, totalDamage, b,source,rotation,AttackBox.MAGIC);
+            }else{
+                attackBox = new AttackBox(this, totalDamage, b,source,rotation,AttackBox.PROJECTILE);
+            }
             EntityManager.addAttackBox(attackBox);
             World.entityManager.removeEntity(this);
         }
+    }
+    public int calculateTotalDamage(){
+        int totalDamage = projectileInfo.damage;
+        switch (projectileInfo.type) {
+            case "Arrow":
+                if(bowInfo!=null){
+                    totalDamage+= bowInfo.damage;
+                }
+                break;
+            case "Magic":
+                if(staffInfo!=null){
+                    totalDamage+= staffInfo.damage;
+                }
+                break;    
+            default:
+                break;
+        }
+        return totalDamage;
     }
     public void move(boolean animate){
         
@@ -531,7 +559,7 @@ public class Entity {
                 Point p2 = new Point(bounds.x + bounds.width,nextY);
                 if(b.r.contains(p1)||b.r.contains(p2)){
                     //point is in collision box. Move entity leftSide of box;
-                    System.out.println("collision");
+                    // System.out.println("collision");
                     int pos = b.r.y-bounds.height-1;
                     y = pos;
                     if(b.source!=null){

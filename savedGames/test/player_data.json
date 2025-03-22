@@ -2,9 +2,9 @@
   "stats": {
     "health": 20,
     "maxHealth": 20,
-    "dungeonCounter": 2,
-    "dungeonLevel": 2,
+    "dungeonCounter": 3,
+    "dungeonLevel": 3,
     "questPoints": 10
   },
-  "cards": { "weapons": [0, 1, 2,3,4], "buffs": [0, 1, 2, 3] }
+  "cards": { "weapons": [0, 1, 2, 3, 4], "buffs": [0, 1, 2, 3] }
 }
