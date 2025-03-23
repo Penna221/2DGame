@@ -30,7 +30,7 @@ public abstract class FunctionalElement extends UIElement{
             if(bounds.contains(Game.mm.mouseX,Game.mm.mouseY)){
                 if(!focused){
                     focused = true;
-                    // SoundPlayer.playSound("pick");
+                    // SoundPlayer.playSound("pick",true,false);
                 }
                 if(infoPacket!=null){
                     int ix = (int)((bounds.x + bounds.getWidth()/2) - infoPacket.c.bounds.getWidth()/2);
@@ -76,7 +76,7 @@ public abstract class FunctionalElement extends UIElement{
         }
         if(focused){
             if(task!=null){
-                SoundPlayer.playNonStoppableSound("pick2");
+                SoundPlayer.playSound("pick2",false,false);
                 task.perform();
                 return true;
             }

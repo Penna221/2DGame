@@ -51,7 +51,7 @@ public class Text extends UIElement{
                             newText += chars[i];
                         }
                         String sound = options[r.nextInt(options.length)];
-                        SoundPlayer.playSound(sound);
+                        SoundPlayer.playSound(sound,true,false);
                         updateText(newText);
                         Thread.sleep(100 + r.nextInt(3)*100);
                     } catch (InterruptedException e) {

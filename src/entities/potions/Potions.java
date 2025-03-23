@@ -58,6 +58,6 @@ public class Potions {
             default:
                 break;
         }
-        SoundPlayer.playSound("potion");
+        SoundPlayer.playSound("potion",true,false);
     }
 }

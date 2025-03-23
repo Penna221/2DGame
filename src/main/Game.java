@@ -278,7 +278,7 @@ public class Game extends Engine{
 
 
         status = "Everything loaded. Happy gaming :)";
-        SoundPlayer.playSound("allDone");
+        SoundPlayer.playSound("allDone",true,false);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

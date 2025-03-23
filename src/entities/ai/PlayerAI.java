@@ -228,7 +228,7 @@ public class PlayerAI extends AI{
         int neededEnergy = 1;
         if(energy>=neededEnergy){
             World.generateProjectile(0, rotation, origin,World.player);
-            SoundPlayer.playSound("throw");
+            SoundPlayer.playSound("throw",true,false);
             selectedSlot.reduce((byte)1);
             reduceEnergy(neededEnergy);
         
@@ -242,7 +242,7 @@ public class PlayerAI extends AI{
                 Entity spell = World.generateProjectile(3, rotation, origin,World.player);
                 spell.staffInfo = selectedSlot.item.staffInfo;
                 int r1 = 1+ r.nextInt(3);
-                SoundPlayer.playSound("magic_"+r1);
+                SoundPlayer.playSound("magic_"+r1,true,false);
                 reduceEnergy(neededEnergy);
             
             }
@@ -258,7 +258,7 @@ public class PlayerAI extends AI{
                     Entity arrow = World.generateProjectile(inv.arrowSlot.item.subID, World.getPlayerRotationToCursor(), origin,World.player);
                     arrow.bowInfo = selectedSlot.item.bowInfo;
                     int r2 = 1+ r.nextInt(3);
-                    SoundPlayer.playSound("projectile_"+r2);
+                    SoundPlayer.playSound("projectile_"+r2,true,false);
                     inv.arrowSlot.reduce((byte)1);
                     reduceEnergy(neededEnergy);
                 }

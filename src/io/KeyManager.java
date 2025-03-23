@@ -29,7 +29,7 @@ public class KeyManager implements KeyListener{
             
             String[] options = {"type_1","type_2","type_3","type_4"};
             String sound = options[r.nextInt(options.length)];
-            SoundPlayer.playSound(sound);
+            SoundPlayer.playSound(sound,true,false);
 
 
 

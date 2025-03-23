@@ -200,7 +200,7 @@ public class Entity {
             }
             Random r = new Random();
             int r1 = 1+ r.nextInt(3);
-            SoundPlayer.playSound("hit_"+r1);
+            SoundPlayer.playSound("hit_"+r1,true,false);
         }
         if(health<=0){
             die();

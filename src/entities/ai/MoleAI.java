@@ -45,7 +45,7 @@ public class MoleAI extends EnemyAI{
         Point2D p2 = new Point((int)(World.player.x),(int)(World.player.y));
         float rotation = World.getAngleBetweenPoints(p2,p1);
         World.generateProjectile(0, rotation, p1,e);
-        SoundPlayer.playSound("throw");
+        SoundPlayer.playSound("throw",true,false);
     }
     @Override
     public void render(Graphics g) {

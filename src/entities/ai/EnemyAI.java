@@ -95,7 +95,7 @@ public abstract class EnemyAI extends AI{
         World.generateProjectile(3, World.getAngleBetween(World.player, e), new Point((int)e.bounds.getCenterX(),(int)e.bounds.getCenterY()),e);
         Random r = new Random();
         int r1 = 1+ r.nextInt(3);
-        SoundPlayer.playSound("magic_"+r1);
+        SoundPlayer.playSound("magic_"+r1,true,false);
         int r2 = 1000 + (r.nextInt(4)*100);
         magicTimer.setTime(r2);
         magicTimer.backToStart();

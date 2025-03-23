@@ -110,6 +110,6 @@ public class Swords {
         World.particleManager.addParticle(p);
         Random r = new Random();
         int r1 = 1+ r.nextInt(3);
-        SoundPlayer.playSound("sword_swing_"+r1);
+        SoundPlayer.playSound("sword_swing_"+r1,true,false);
     }
 }

@@ -30,7 +30,7 @@ public class CollectableAI extends AI{
             boolean added = PlayerAI.inv.addItem(e);
             if(added){
                 World.entityManager.removeEntity(e);
-                SoundPlayer.playSound("pickup");
+                SoundPlayer.playSound("pickup",true,false);
             }
         }
     }

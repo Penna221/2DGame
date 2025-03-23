@@ -141,10 +141,10 @@ public class World {
         System.out.println("Playing music");
         switch (World.loadedWorld) {
             case "start":
-                SoundPlayer.playSound("temp_music");
+                SoundPlayer.playSound("temp_music",true,true);
                 break;
             case "dungeon":
-                SoundPlayer.playSound("temp_adventure");    
+                SoundPlayer.playSound("temp_adventure",true,true);    
                 break;
             default:
                 break;
