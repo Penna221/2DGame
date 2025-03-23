@@ -14,6 +14,7 @@ import ui.PauseMenu;
 import ui.ScrollableCardContainer;
 import ui.Task;
 import ui.Text;
+import world.World;
 public class CardTraderState extends State{
     private Text questPoints;
     private Container container;
@@ -59,12 +60,15 @@ public class CardTraderState extends State{
         for(ClickButton b : scrollObj.choises){
             Task t = new Task(){
                 public void perform(){
-                    for(ClickButton cb : choises){
+                    
+                    for(ClickButton cb : scrollObj.choises){
                         cb.selected = false;
                     }
-                    b.selected = true;
-                    System.out.println("picked " +b.card.name);
-                    chosenOne = b.card;
+                    if(World.playerLevel >= b.card.levelReq){
+                        b.selected = true;
+                        System.out.println("picked " +b.card.name);
+                        chosenOne = b.card;
+                    }
                 }
             };
             b.setTask(t);
@@ -112,7 +116,12 @@ public class CardTraderState extends State{
 
         int wl = Card.weapon_cards.size();
         int bl = Card.buff_cards.size();
+        
+        
         cards.add(Card.weapon_cards.get(r.nextInt(wl)));
+
+
+
         for(int i = 0; i < amount-1; i++){
             int id = r.nextInt(bl);
             Card c = Card.buff_cards.get(id);

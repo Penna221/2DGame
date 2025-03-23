@@ -72,11 +72,13 @@ public class ScrollableCardContainer{
             ClickButton b = new ClickButton(0, 0, c.texture);
             b.card = c;
             int owned = calculateOwned(b.card);
-            String[] info = new String[c.info.length+1];
-            info[0] = "You have: "+owned;
+            String[] info = new String[c.info.length+2];
+            info[0] = "Required level: " + c.levelReq;
+            info[1] = "You have: "+owned;
             for(int j = 0; j < c.info.length; j++){
-                info[j+1] = c.info[j];
+                info[j+2] = c.info[j];
             }
+
             InfoPacket packet = new InfoPacket(info, 0, 0);
             b.setInfoPacket(packet);
             buttons.add(b);

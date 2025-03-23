@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import cards.Card;
+import gfx.AssetStorage;
+import world.World;
 
 public class ClickButton extends FunctionalElement{
     private BufferedImage texture;
@@ -52,6 +54,16 @@ public class ClickButton extends FunctionalElement{
         
         g.drawImage(texture, bounds.x, bounds.y, null);
         
+        if(card!=null){
+            if(card.levelReq>World.playerLevel){
+                //Player level not hight enough.
+                g.setColor(new Color(0,0,0,200));
+                g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
+                BufferedImage lock = AssetStorage.images.get("gold_lock");
+                g.drawImage(lock,(int)(bounds.x+bounds.getWidth()/2-lock.getWidth()/2),(int)(bounds.y+bounds.getHeight()/2-lock.getHeight()/2),null);
+            }
+        }
+
         g.setColor(brd);
         g.drawRect(bounds.x,bounds.y,bounds.width,bounds.height);
         if(focused && infoPacket!=null){

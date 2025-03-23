@@ -61,8 +61,11 @@ public class SelectCardsState extends State{
                         selectedCards.remove(b.card);
                     }else{
                         if(selectedCards.size()<selectAmount){
-                            selectedCards.add(b.card);
-                            b.selected = true;
+
+                            if(World.playerLevel >= b.card.levelReq){
+                                b.selected = true;   
+                                selectedCards.add(b.card);
+                            }
                         }
                     }
                     updateInfo();

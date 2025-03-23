@@ -24,7 +24,8 @@ public class Card {
     public int itemID1, itemID2;
     public static HashMap<Integer, Card> weapon_cards = new HashMap<Integer,Card>();
     public static HashMap<Integer, Card> buff_cards = new HashMap<Integer,Card>();
-    public Card(int id, String name, String rarity, String type, String[] info,int itemID1, int itemID2,BufferedImage text){
+    public int levelReq;
+    public Card(int id, String name, String rarity, String type, String[] info,int itemID1, int itemID2,BufferedImage text, int levelReq){
         this.id = id;
         this.name = name;
         this.info = info;
@@ -38,6 +39,7 @@ public class Card {
             Entity e = World.entityManager.generateEntityWithID(itemID1, itemID2,0,0);
             this.icon = e.texture;
         }
+        this.levelReq = levelReq;
         generateTexture();
     }
     private void generateTexture(){
@@ -112,7 +114,9 @@ public class Card {
         if(kv!=null){
             texture = AssetStorage.images.get(kv.getString());
         }
-        Card c = new Card(id,name,rarity,type,info,id1,id2,texture);
+
+        int levelReq = card.findChild("levelReq").getInteger();
+        Card c = new Card(id,name,rarity,type,info,id1,id2,texture, levelReq);
         return c;
     }
 }

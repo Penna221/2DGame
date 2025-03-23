@@ -5,35 +5,40 @@
             "rarity":"Common",
             "type":"Weapon",
             "info":["Regular Bow. Comes with 50x arrows.","Pretty bad but does the job.","Uses reqular arrows if no Arrow card is selected"],
-            "item_id":[37,0]
+            "item_id":[37,0],
+            "levelReq":2
         },
         "1":{
             "name":"Dagger",
             "rarity":"Common",
             "type":"Weapon",
             "info":["Small Dagger","Stabby Stab Stab."],
-            "item_id":[27,1]
+            "item_id":[27,1],
+            "levelReq":0
         },
         "2":{
             "name":"Magic Wand",
             "rarity":"Rare",
             "type":"Weapon",
             "info":["Makes Little sparks","For those who like magic."],
-            "item_id":[36,0]
+            "item_id":[36,0],
+            "levelReq":5
         },
         "3":{
             "name":"Sword",
             "rarity":"Common",
             "type":"Weapon",
             "info":["Sword","Swing swing swingeling."],
-            "item_id":[27,0]
+            "item_id":[27,0],
+            "levelReq":1
         },
         "4":{
             "name":"Super Stick",
             "rarity":"Rare",
             "type":"Weapon",
             "info":["Literally a stick."],
-            "item_id":[27,2]
+            "item_id":[27,2],
+            "levelReq":10
         }
     },
     "buffs":{
@@ -42,14 +47,16 @@
             "rarity":"Rare",
             "type":"Buff",
             "info":["Regenerates your hitpoints.","Can be activated 1 time in dungeon."],
-            "item_id":[26,4]
+            "item_id":[26,4],
+            "levelReq":4
         },
         "1":{
             "name":"Goblin master",
             "rarity":"Rare",
             "type":"Buff",
             "info":["Goblins fear you."],
-            "item_id":[51,0]
+            "item_id":[51,0],
+            "levelReq":2
         },
         "2":{
             "name":"It Hurts",
@@ -57,7 +64,8 @@
             "type":"Buff",
             "info":["All Damage Doubled"],
             "item_id":[27,0],
-            "texture":"double_damage"
+            "texture":"double_damage",
+            "levelReq":2
         }
     }
 }
