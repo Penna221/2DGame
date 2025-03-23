@@ -52,18 +52,12 @@
             "item_id":[51,0]
         },
         "2":{
-            "name":"Sword Double Damage",
+            "name":"It Hurts",
             "rarity":"Curse",
             "type":"Buff",
-            "info":["You Deal Double Damage With Melee Weapons", "You Take Double Damage"],
-            "item_id":[27,0]
-        },
-        "3":{
-            "name":"Bow Double Damage",
-            "rarity":"Curse",
-            "type":"Buff",
-            "info":["You Deal Double Damage With Bows", "You Take Double Damage"],
-            "item_id":[37,1]
+            "info":["All Damage Doubled"],
+            "item_id":[27,0],
+            "texture":"double_damage"
         }
     }
 }
