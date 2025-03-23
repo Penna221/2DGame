@@ -28,6 +28,9 @@ public class FireplaceAI extends AI {
     }
     private void tryToAttack(){
         for(Entity en : World.entityManager.entities){
+            if(en.equals(World.player)){
+                continue;
+            }
             if(en== e){
                 continue;
             }
