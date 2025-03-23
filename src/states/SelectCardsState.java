@@ -23,7 +23,7 @@ public class SelectCardsState extends State{
     private Container infoContainer;
     private Text info;
     public static int selectAmount = 3;
-    private ArrayList<Card> selectedCards = new ArrayList<Card>();
+    private ArrayList<Card> selectedCards;
     @Override
     public void update() {
         if(running){
@@ -47,7 +47,7 @@ public class SelectCardsState extends State{
     public void init() {
         container = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
         Text title = new Text("Valitse Käytettävät kortit", 0, 0, 700, true,true);
-        
+        selectedCards = new ArrayList<Card>();
         ArrayList<Card> allCards = new ArrayList<Card>();
         allCards.addAll(PlayerAI.weaponCards);
         allCards.addAll(PlayerAI.buffCards);
