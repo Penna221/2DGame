@@ -250,7 +250,7 @@ public class Map {
                             "d_room_15x15_right"};
         loadConnections("",banned);
         
-        int min = 10+length;
+        int min = 2;
         Random rand = new Random();
         int amount =min + rand.nextInt(length);
         PlayerAI.hud.roomCount = amount;
@@ -415,7 +415,7 @@ public class Map {
             lastRoom = b;
             rooms.add(lastRoom);
             if(lastRoom.structure.name.startsWith("d_")){
-                spawnEnemies(lastRoom, World.dungeonLevel);
+                spawnEnemies(lastRoom, World.playerLevel);
             }
         }else{
             //Room did not generate properly.
