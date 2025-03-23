@@ -94,7 +94,7 @@ public class HUD {
         
         g.drawString("Screen Width: "+width, 20, startY + 100);
         g.drawString("Screen Height: "+height, 20, startY + 125);
-        g.drawString("Dungeon Lvl: " + World.dungeonLevel,20,startY+150);
+        g.drawString("Player Lvl: " + World.playerLevel,20,startY+150);
         g.drawString("Room count: " +roomCount,20,startY+175);
         
         g.drawString("Room: " + roomName, 20, startY+200);

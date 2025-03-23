@@ -3,7 +3,7 @@
     "health": 20,
     "maxHealth": 20,
     "dungeonCounter": 3,
-    "dungeonLevel": 3,
+    "playerLevel": 3,
     "questPoints": 10
   },
   "cards": { "weapons": [0, 1, 2, 3, 4], "buffs": [0, 1, 2] }

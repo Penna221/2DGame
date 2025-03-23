@@ -52,7 +52,7 @@ public class World {
     public static ArrayList<CollisionBox> collisionBoxes = new ArrayList<CollisionBox>();
     public static HashMap<String, BufferedImage> overlays = new HashMap<String, BufferedImage>();
 
-    public static int dungeonLevel = 1;
+    public static int playerLevel = 1;
     public static int dungeonCounter = 1;
 
     public World() {
@@ -101,7 +101,7 @@ public class World {
                                 generateDungeon();
 
                                 dungeonCounter++;
-                                dungeonLevel++;
+                                // playerLevel++;
                             } else {
                                 System.out.println("Loading Map named: " + worldName);
 
