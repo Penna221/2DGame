@@ -263,6 +263,7 @@
         "common_card":"res\\gfx\\entities\\cards\\common_card.png",
         "rare_card":"res\\gfx\\entities\\cards\\rare_card.png",
         "curse_card":"res\\gfx\\entities\\cards\\curse_card.png",
+        "mana_ball":"res\\gfx\\entities\\cards\\mana_ball.png",
 
         "enemy_1_idle":"res\\gfx\\entities\\enemy1\\enemy_idle.png",
         "enemy_1_hostile":"res\\gfx\\entities\\enemy1\\enemy_hostile.png",

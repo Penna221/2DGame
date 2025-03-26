@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cards.Card;
 import entities.Entity;
 import entities.EntityInfo;
 import entities.EntityManager;
@@ -23,6 +24,7 @@ import main.Game;
 import save.SavedGame;
 import states.GameState;
 import states.State;
+import world.World;
 
 public class PauseMenu {
     
@@ -89,6 +91,8 @@ public class PauseMenu {
 
         return c;
     }
+
+
     public static void generateNewContainer(String text){
         Task t1 = new Task(){
             public void perform(){
@@ -507,9 +511,8 @@ public class PauseMenu {
             listItem.centerVertically();
             // listItem.fillBg = true;
             // listItem.overrideColor = Color.magenta;
-            c.addLate(listItem);
         }
-        c.swap();
+        // c.swap();
         c.updateList();
         PlayerAI.inv.updateInventory();
     }

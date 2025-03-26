@@ -40,6 +40,7 @@ public class PlayerAI extends AI{
     public Timer regenEnergyTimer;
     public InventoryBag bag;
     public static int questPoints = 0;
+    public static int mana = 0;
     public static ArrayList<Card> buffCards = new ArrayList<Card>();
     public static ArrayList<Card> weaponCards = new ArrayList<Card>();
     public static ArrayList<Card> abilityCards = new ArrayList<Card>();

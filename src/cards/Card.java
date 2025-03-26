@@ -6,8 +6,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.accessibility.AccessibleStateSet;
+
 import entities.Entity;
 import gfx.AssetStorage;
+import gfx.Factory;
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
@@ -26,7 +29,8 @@ public class Card {
     public static HashMap<Integer, Card> buff_cards = new HashMap<Integer,Card>();
     public static HashMap<Integer, Card> ability_cards = new HashMap<Integer,Card>();
     public int levelReq;
-    public Card(int id, String name, String rarity, String type, String[] info,int itemID1, int itemID2,BufferedImage text, int levelReq){
+    public int cost;
+    public Card(int id, String name, String rarity, String type, String[] info,int itemID1, int itemID2,BufferedImage text, int levelReq, int cost){
         this.id = id;
         this.name = name;
         this.info = info;
@@ -41,6 +45,7 @@ public class Card {
             this.icon = e.texture;
         }
         this.levelReq = levelReq;
+        this.cost = cost;
         generateTexture();
     }
     private void generateTexture(){
@@ -76,9 +81,25 @@ public class Card {
         if(title.getWidth()>maxW){
             title = UIFactory.scaleToWidth(title, maxW);
         }
-        g.drawImage(title, buffer, 10, null);
-        
+        g.drawImage(title, buffer, 10, null);  
+        BufferedImage manaball = generateManaBall();
+        g.drawImage(manaball,texture.getWidth()-manaball.getWidth(),texture.getHeight()-manaball.getHeight(),null);
     }
+    private BufferedImage generateManaBall(){
+        BufferedImage manaball = AssetStorage.images.get("mana_ball");
+        BufferedImage image = new BufferedImage(manaball.getWidth(), manaball.getHeight(),BufferedImage.TYPE_INT_ARGB);
+        Graphics g = image.createGraphics();
+        g.drawImage(manaball, 0,0,null);
+        BufferedImage manacost = UIFactory.generateText(""+cost, 400);
+        manacost =AssetStorage.scaleImage(manacost,0.5f);
+        g.drawImage(manacost, image.getWidth()/2-manacost.getWidth()/2,image.getHeight()/2 - manacost.getHeight()/2, null);
+        // image = AssetStorage.scaleImage(image, 2.3f);
+        // BufferedImage manacost = UIFactory.generateIconWithAmount(manaball, cost, image.getWidth(),image.getHeight(),false,null);
+
+        return image;
+    }
+
+
     public static void loadCards(){
         File f = new File("res\\json\\cards.json");
         JSON json = new JSON(f);
@@ -122,7 +143,8 @@ public class Card {
         }
 
         int levelReq = card.findChild("levelReq").getInteger();
-        Card c = new Card(id,name,rarity,type,info,id1,id2,texture, levelReq);
+        int cost = card.findChild("cost").getInteger();
+        Card c = new Card(id,name,rarity,type,info,id1,id2,texture, levelReq,cost);
         return c;
     }
 }

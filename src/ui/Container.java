@@ -122,6 +122,7 @@ public class Container extends UIElement{
             startX += e.bounds.getWidth()+buffer;
         }
 
+
     }
     public void spaceHorizintally(int buffer){
         int totalWidth = 0;
@@ -193,10 +194,7 @@ public class Container extends UIElement{
         e.setOffset(x, y);
         elements.add(e);
     }
-    public void addLate(UIElement e){
-        e.setOffset(x, y);
-        change.add(e);
-    }
+    
     @Override
     public void render(Graphics g) {
         //Draw container
@@ -212,6 +210,9 @@ public class Container extends UIElement{
             g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
 
         }
+        if(changing){
+            return;
+        }
         if(header!=null)header.render(g);
         //Draw elements
         if(!changing){
@@ -223,14 +224,7 @@ public class Container extends UIElement{
             }
         }
     }
-    public void swap(){
-        elements.clear();
-        elements.addAll(change);
-        updateList();
-        updateBounds();
-        changing = false;
-        change.clear();
-    }
+    
     public void update(){
 
 
@@ -262,6 +256,12 @@ public class Container extends UIElement{
             }
         }else{
             Game.updateCursor("default_cursor");
+        }
+        if(changing){
+            // updateList();
+            updateBounds();
+            changing = false;
+            
         }
     }
     

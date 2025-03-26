@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import cards.Card;
@@ -14,7 +15,7 @@ public class ScrollableCardContainer{
     public Container container;
     public Container cardContainer;
     public int startIndex;
-    public int amount = 5;
+    public int amount = 2;
     public int x, y,width, height;
     public ScrollableCardContainer(int x, int y,int w, int h, ArrayList<Card> cards) {
         this.x = x;
@@ -30,9 +31,10 @@ public class ScrollableCardContainer{
     public void generate(){
         container = new Container(x,y,width,height);
         container.fillBg = true;
-        
-        cardContainer = new Container(x,y,(int)(width*0.85),height);
-        
+        container.overrideColor = Color.green;
+        cardContainer = new Container(0,0,(int)(width*0.85),height);
+        cardContainer.fillBg = true;
+        cardContainer.overrideColor = Color.pink;
 
         choises = generateChoises();
         updateContent();
@@ -64,6 +66,7 @@ public class ScrollableCardContainer{
         container.addElement(rightButton);
         container.centerAndSpaceHorizontally(20);
         container.centerVertically();
+        // updateContent();
     }
     private ArrayList<ClickButton> generateChoises(){
         ArrayList<ClickButton> buttons = new ArrayList<ClickButton>();
@@ -109,20 +112,18 @@ public class ScrollableCardContainer{
         return amount;
     }
     public void updateContent(){
-        x = container.bounds.x;
-        y = container.bounds.y;
+        cardContainer.changing = true;
+        cardContainer.elements.clear();
         for(int i = startIndex; i < startIndex + amount; i++){
             if(i >cards.size()){
                 break;
             }
             ClickButton c = choises.get(i);
-            cardContainer.addLate(c);
+            cardContainer.addElement(c);
         }
-        cardContainer.swap();
-        // scroll.spaceHorizintally(25);
         cardContainer.centerAndSpaceHorizontally(20);
         cardContainer.centerVertically();
-        container.setPosition(x, y);
+        container.setPosition(container.x, container.y);
     }
     public Container getContainer(){
         return container;

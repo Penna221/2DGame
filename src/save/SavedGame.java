@@ -32,7 +32,7 @@ public class SavedGame {
     public int playerMaxHealth;
     public int dungeonCounter;
     public int questPoints;
-
+    public int mana;
 
     public ArrayList<Card> ownedCards = new ArrayList<Card>();
     
@@ -41,7 +41,8 @@ public class SavedGame {
     public int playerLevel;
     private ArrayList<Card> wc, bc, ac;
     public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter,
-     int playerLevel, int questPoints,ArrayList<Card> wc, ArrayList<Card> bc, ArrayList<Card> ac){
+     int playerLevel, int questPoints,ArrayList<Card> wc, ArrayList<Card> bc, ArrayList<Card> ac,
+     int mana){
         this.saveName = saveName;
         this.inventory = inv;
         this.playerHealth = playerHealth;
@@ -52,9 +53,10 @@ public class SavedGame {
         this.wc = wc;
         this.bc = bc;
         this.ac = ac;
+        this.mana = mana;
     }
     public static void startNewSave(String name){
-        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1,null,null,null);
+        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1,null,null,null,3);
     }
     public static void tryLoad(String save){
         currentSave = savedGames.get(save);
@@ -71,6 +73,7 @@ public class SavedGame {
         PlayerAI.buffCards = currentSave.bc;
         PlayerAI.weaponCards = currentSave.wc;
         PlayerAI.abilityCards = currentSave.ac;
+        PlayerAI.mana = currentSave.mana;
         //Load Player Stats
         // - Inventory
         // - currenthealth
@@ -143,6 +146,7 @@ public class SavedGame {
             int dungeonCounter = stats.findChild("dungeonCounter").getInteger();
             int playerLevel = stats.findChild("playerLevel").getInteger();
             int questPoints = stats.findChild("questPoints").getInteger();
+            int mana = stats.findChild("mana").getInteger();
             KeyValuePair inv = s.findChild("inventory");
             // Inventory newInventory = readInventory(inv);
             Inventory newInventory = new Inventory();
@@ -153,7 +157,7 @@ public class SavedGame {
             ArrayList<Card> weaponCards = readCards(wc,"Weapon");
             ArrayList<Card> buffCards = readCards(bc, "Buff");
             ArrayList<Card> abilityCards = readCards(ac, "Ability");
-            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,playerLevel,questPoints,weaponCards,buffCards, abilityCards);
+            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,playerLevel,questPoints,weaponCards,buffCards, abilityCards, mana);
             savedGames.put(folder.getName(),sa);
 
         }
@@ -259,12 +263,14 @@ public class SavedGame {
         KeyValuePair dungeonCounter_val = new KeyValuePair("dungeonCounter",new NumberValue(World.dungeonCounter));
         KeyValuePair playerLevel_val = new KeyValuePair("playerLevel",new NumberValue(World.playerLevel));
         KeyValuePair questPoints_val = new KeyValuePair("questPoints",new NumberValue(PlayerAI.questPoints));
+        KeyValuePair mana_val = new KeyValuePair("mana",new NumberValue(PlayerAI.mana));
         ArrayList<KeyValuePair> stats_vals = new ArrayList<KeyValuePair>();
         stats_vals.add(health_val);
         stats_vals.add(maxhealth_val);
         stats_vals.add(dungeonCounter_val);
         stats_vals.add(playerLevel_val);
         stats_vals.add(questPoints_val);
+        stats_vals.add(mana_val);
         KeyValuePair statsObj = new KeyValuePair("stats", new ObjectValue(stats_vals));
         keyValuePairs.add(statsObj);
         

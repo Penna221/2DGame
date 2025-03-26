@@ -4,7 +4,8 @@
     "maxHealth": 20,
     "dungeonCounter": 3,
     "playerLevel": 3,
-    "questPoints": 10
+    "questPoints": 10,
+    "mana":4
   },
-  "cards": { "weapons": [0, 1], "buffs": [0, 1, 2] ,"abilities":[0]}
+  "cards": { "weapons": [0, 1,1,2,1], "buffs": [0, 1, 2] ,"abilities":[0]}
 }
