@@ -53,8 +53,10 @@ public class Inventory {
         for(Card c : cards){
             if(c.type.equals("Weapon")){
                 handleWeaponCard(c);
-            }else{
+            }else if(c.type.equals("Buff")){
                 handleBuffCard(c);
+            }else{
+                handleAbilityCard(c);
             }
         }
         updateInventory();
@@ -115,6 +117,9 @@ public class Inventory {
             default:
                 break;
         }
+    }
+    private void handleAbilityCard(Card c){
+        
     }
     public void addSlot(byte amount){
         int newSize = inventorySlots.length+amount;

@@ -39,8 +39,9 @@ public class SavedGame {
     public static HashMap<String, SavedGame> savedGames = new HashMap<String, SavedGame>();
     public static SavedGame currentSave;
     public int playerLevel;
-    private ArrayList<Card> wc, bc;
-    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter, int playerLevel, int questPoints,ArrayList<Card> wc, ArrayList<Card> bc){
+    private ArrayList<Card> wc, bc, ac;
+    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter,
+     int playerLevel, int questPoints,ArrayList<Card> wc, ArrayList<Card> bc, ArrayList<Card> ac){
         this.saveName = saveName;
         this.inventory = inv;
         this.playerHealth = playerHealth;
@@ -50,9 +51,10 @@ public class SavedGame {
         this.questPoints = questPoints;
         this.wc = wc;
         this.bc = bc;
+        this.ac = ac;
     }
     public static void startNewSave(String name){
-        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1,null,null);
+        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1,null,null,null);
     }
     public static void tryLoad(String save){
         currentSave = savedGames.get(save);
@@ -68,6 +70,7 @@ public class SavedGame {
         PlayerAI.questPoints = currentSave.questPoints;
         PlayerAI.buffCards = currentSave.bc;
         PlayerAI.weaponCards = currentSave.wc;
+        PlayerAI.abilityCards = currentSave.ac;
         //Load Player Stats
         // - Inventory
         // - currenthealth
@@ -146,9 +149,11 @@ public class SavedGame {
             KeyValuePair cards = s.findChild("cards");
             DataType[] wc = cards.findChild("weapons").getArray();
             DataType[] bc = cards.findChild("buffs").getArray();
+            DataType[] ac = cards.findChild("abilities").getArray();
             ArrayList<Card> weaponCards = readCards(wc,"Weapon");
-            ArrayList<Card> buffCards = readCards(bc, "");
-            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,playerLevel,questPoints,weaponCards,buffCards);
+            ArrayList<Card> buffCards = readCards(bc, "Buff");
+            ArrayList<Card> abilityCards = readCards(ac, "Ability");
+            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,playerLevel,questPoints,weaponCards,buffCards, abilityCards);
             savedGames.put(folder.getName(),sa);
 
         }
@@ -163,8 +168,10 @@ public class SavedGame {
             int v = d.getInteger();
             if(type.equals("Weapon")){
                 a.add(Card.weapon_cards.get(v));
-            }else{
+            }else if(type.equals("Buff")){
                 a.add(Card.buff_cards.get(v));
+            }else if(type.equals("Ability")){
+                a.add(Card.ability_cards.get(v));
             }
         }
         return a;
@@ -269,33 +276,17 @@ public class SavedGame {
         //Cards
         ArrayList<KeyValuePair> cardArrays = new ArrayList<KeyValuePair>();
 
-        DataType[] wa;
-        if(PlayerAI.weaponCards.size()==0){
-            wa = new DataType[1];
-            wa[0] = new StringValue("empty");
-        }else{
-            wa = new DataType[PlayerAI.weaponCards.size()];
-            for(int i = 0; i < wa.length; i++){
-                int id = PlayerAI.weaponCards.get(i).id;
-                wa[i] = new NumberValue(id);
-            }
-        }
-        ArrayValue weapons = new ArrayValue(wa);
-        cardArrays.add(new KeyValuePair("weapons", weapons));
         
-        DataType[] ba;
-        if(PlayerAI.buffCards.size()==0){
-            ba = new DataType[1];
-            ba[0] = new StringValue("empty");
-        }else{
-            ba = new DataType[PlayerAI.buffCards.size()];
-            for(int i = 0; i < ba.length; i++){
-                int id = PlayerAI.buffCards.get(i).id;
-                ba[i] = new NumberValue(id);
-            }
-        }
-        ArrayValue buffs = new ArrayValue(ba);
+        ArrayValue weapons = new ArrayValue(getCardArray(PlayerAI.weaponCards));
+        cardArrays.add(new KeyValuePair("weapons", weapons));
+       
+        ArrayValue buffs = new ArrayValue(getCardArray(PlayerAI.buffCards));
         cardArrays.add(new KeyValuePair("buffs", buffs));
+
+        ArrayValue abilities = new ArrayValue(getCardArray(PlayerAI.abilityCards));
+        cardArrays.add(new KeyValuePair("abilities", abilities));
+
+
 
         KeyValuePair cardObject = new KeyValuePair("cards", new ObjectValue(cardArrays));
         keyValuePairs.add(cardObject);
@@ -312,6 +303,20 @@ public class SavedGame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private static DataType[] getCardArray(ArrayList<Card> caca){
+        DataType[] wa;
+        if(caca.size()==0){
+            wa = new DataType[1];
+            wa[0] = new StringValue("empty");
+        }else{
+            wa = new DataType[caca.size()];
+            for(int i = 0; i < wa.length; i++){
+                int id = caca.get(i).id;
+                wa[i] = new NumberValue(id);
+            }
+        }
+        return wa;
     }
     private static ArrayList<KeyValuePair> saveInventory(){
         ArrayList<KeyValuePair> allInventoryArrays = new ArrayList<KeyValuePair>();

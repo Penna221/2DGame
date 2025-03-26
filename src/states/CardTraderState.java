@@ -140,8 +140,10 @@ public class CardTraderState extends State{
         if(PlayerAI.questPoints>0){
             if(chosenOne.type.equals("Weapon")){
                 PlayerAI.weaponCards.add(chosenOne);
-            }else{
+            }else if(chosenOne.type.equals("Buff")){
                 PlayerAI.buffCards.add(chosenOne);
+            }else{
+                PlayerAI.abilityCards.add(chosenOne);
             }
             PlayerAI.questPoints--;
             changing = true;

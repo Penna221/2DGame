@@ -51,6 +51,7 @@ public class SelectCardsState extends State{
         ArrayList<Card> allCards = new ArrayList<Card>();
         allCards.addAll(PlayerAI.weaponCards);
         allCards.addAll(PlayerAI.buffCards);
+        allCards.addAll(PlayerAI.abilityCards);
         ScrollableCardContainer scrollObj = new ScrollableCardContainer(0,0,(int)(container.bounds.getWidth()-200),(int)(250), allCards);
         scroll = scrollObj.getContainer();
         for(ClickButton b : scrollObj.choises){

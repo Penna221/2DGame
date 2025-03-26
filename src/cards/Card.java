@@ -24,6 +24,7 @@ public class Card {
     public int itemID1, itemID2;
     public static HashMap<Integer, Card> weapon_cards = new HashMap<Integer,Card>();
     public static HashMap<Integer, Card> buff_cards = new HashMap<Integer,Card>();
+    public static HashMap<Integer, Card> ability_cards = new HashMap<Integer,Card>();
     public int levelReq;
     public Card(int id, String name, String rarity, String type, String[] info,int itemID1, int itemID2,BufferedImage text, int levelReq){
         this.id = id;
@@ -85,6 +86,7 @@ public class Card {
         KeyValuePair kv = json.parse("json");
         ArrayList<KeyValuePair> weapons = kv.findChild("weapons").getObject();
         ArrayList<KeyValuePair> buffs = kv.findChild("buffs").getObject();
+        ArrayList<KeyValuePair> abilities = kv.findChild("abilities").getObject();
 
         for(KeyValuePair weapon : weapons){
             Card c = loadCard(weapon);
@@ -93,6 +95,10 @@ public class Card {
         for(KeyValuePair buff : buffs){
             Card c = loadCard(buff);
             buff_cards.put(c.id, c);
+        }
+        for(KeyValuePair ability : abilities){
+            Card c = loadCard(ability);
+            ability_cards.put(c.id, c);
         }
     }
     private static Card loadCard(KeyValuePair card){

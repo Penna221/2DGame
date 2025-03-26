@@ -93,8 +93,14 @@ public class ScrollableCardContainer{
                     amount ++;
                 }
             }
-        }else{
+        }else if(c.type.equals("Buff")){
             for(Card card : PlayerAI.buffCards){
+                if(card.id == c.id){
+                    amount ++;
+                }
+            }
+        }else {
+            for(Card card : PlayerAI.abilityCards){
                 if(card.id == c.id){
                     amount ++;
                 }

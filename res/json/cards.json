@@ -56,7 +56,7 @@
             "type":"Buff",
             "info":["Goblins fear you."],
             "item_id":[51,0],
-            "levelReq":2
+            "levelReq":20
         },
         "2":{
             "name":"It Hurts",
@@ -64,6 +64,17 @@
             "type":"Buff",
             "info":["All Damage Doubled"],
             "item_id":[27,0],
+            "texture":"double_damage",
+            "levelReq":2
+        }
+    },
+    "abilities":{
+        "0":{
+            "name":"Dash",
+            "rarity":"common",
+            "type":"Ability",
+            "info":["You can Dash now"],
+            "item_id":[36,0],
             "texture":"double_damage",
             "levelReq":2
         }
