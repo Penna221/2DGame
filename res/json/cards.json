@@ -92,9 +92,9 @@
             "type":"Ability",
             "info":["You can Dash now"],
             "item_id":[36,0],
-            "texture":"double_damage",
+            "texture":"dash_icon",
             "levelReq":2,
-            "cost":1
+            "cost":2
         }
     }
 }

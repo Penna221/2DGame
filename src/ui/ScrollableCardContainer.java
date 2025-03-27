@@ -7,6 +7,7 @@ import cards.Card;
 import entities.ai.PlayerAI;
 import entities.player.InfoPacket;
 import gfx.AssetStorage;
+import world.World;
 
 public class ScrollableCardContainer{
 
@@ -75,14 +76,19 @@ public class ScrollableCardContainer{
             ClickButton b = new ClickButton(0, 0, c.texture);
             b.card = c;
             int owned = calculateOwned(b.card);
-            String[] info = new String[c.info.length+2];
-            info[0] = "Required level: " + c.levelReq;
-            info[1] = "You have: "+owned;
+
+
+            ArrayList<String> infoara = new ArrayList<String>();
+            infoara.add("Mana cost: " + c.cost);
+            if(World.playerLevel<c.levelReq){
+                infoara.add("Required level: " +c.levelReq);
+            }
+            infoara.add("You have: "+owned);
             for(int j = 0; j < c.info.length; j++){
-                info[j+2] = c.info[j];
+                infoara.add(c.info[j]);
             }
 
-            InfoPacket packet = new InfoPacket(info, 0, 0);
+            InfoPacket packet = new InfoPacket(infoara.toArray(new String[0]), 0, 0);
             b.setInfoPacket(packet);
             buttons.add(b);
         }
