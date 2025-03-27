@@ -7,7 +7,7 @@
             "info":["Regular Bow. Comes with 50x arrows.","Pretty bad but does the job.","Uses reqular arrows if no Arrow card is selected"],
             "item_id":[37,0],
             "levelReq":2,
-            "cost":304123
+            "cost":1
         },
         "1":{
             "name":"Dagger",
@@ -44,6 +44,15 @@
             "item_id":[27,2],
             "levelReq":10,
             "cost":1
+        },
+        "5":{
+            "name":"Long Bow",
+            "rarity":"Rare",
+            "type":"Weapon",
+            "info":["Shoots long distance"],
+            "item_id":[37,1],
+            "levelReq":1,
+            "cost":2
         }
     },
     "buffs":{

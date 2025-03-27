@@ -14,7 +14,7 @@
         "name":"Normal Arrow",
         "damage":3,
         "speed":12.0,
-        "max_distance":20,
+        "max_distance":4,
         "type":"Arrow",
         "buff":"none",
         "texture":"arrow_0"
@@ -24,7 +24,7 @@
         "name":"Fire Arrow",
         "damage":3,
         "speed":12.0,
-        "max_distance":20,
+        "max_distance":6,
         "type":"Arrow",
         "buff":"Fire",
         "texture":"arrow_1"

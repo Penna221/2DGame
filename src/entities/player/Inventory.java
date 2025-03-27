@@ -66,6 +66,7 @@ public class Inventory {
         switch (id) {
             case 0:
                 //Bow
+                System.out.println("BOW");
                 addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
                 Entity arrow = World.entityManager.generateEntityWithID(35,1, 0,0);
                 
@@ -88,6 +89,13 @@ public class Inventory {
             //Stick
                 addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
                 break;
+            case 5:
+            //long bow
+                addItem(World.entityManager.generateEntityWithID(c.itemID1, c.itemID2, 0,0));
+                Entity firearrow = World.entityManager.generateEntityWithID(35,2, 0,0);
+                setArrows(firearrow, (byte)50);
+                break;
+                
             default:
                 break;
         }

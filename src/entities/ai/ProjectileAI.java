@@ -12,6 +12,7 @@ import entities.EntityManager;
 import entities.swords.Swords;
 import gfx.AssetStorage;
 import gfx.Factory;
+import tiles.Tile;
 import tools.Timer;
 import ui.Task;
 import world.World;
@@ -42,7 +43,7 @@ public class ProjectileAI extends AI{
         name = e.projectileInfo.name;
         damage = e.projectileInfo.damage;
         speed = e.projectileInfo.speed;
-        maxDistance = e.projectileInfo.max_distance;
+        maxDistance = e.projectileInfo.max_distance*Tile.tileSize;
         type = e.projectileInfo.type;
         buff = e.projectileInfo.buff;
         texture = e.projectileInfo.texture;
@@ -98,6 +99,7 @@ public class ProjectileAI extends AI{
     public void update() {
         e.moveProjectile();
         e.updateBounds();
+        calculateDist();
         if(e.projectileInfo.type.equals("Magic")){
             switch (e.projectileInfo.id) {
                 case 4:
@@ -110,7 +112,21 @@ public class ProjectileAI extends AI{
         }
         
     }
+    private void calculateDist(){
+        int max = maxDistance;
+        if(e.bowInfo!=null){
+            max *=e.bowInfo.max_distance;
+        }else if(e.staffInfo!=null){
+            max *=e.staffInfo.max_distance;
+        }
+        int distX = (int)Math.abs(startX-e.x);
+        int distY = (int)Math.abs(startY-e.y);
+        int dist = (int)Math.sqrt((distX*distX) + (distY*distY));
 
+        if(dist>max){
+            World.entityManager.removeEntity(e);
+        }
+    }
     @Override
     public void render(Graphics g) {
         // e.drawBounds(g);
