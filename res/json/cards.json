@@ -16,7 +16,7 @@
             "info":["Small Dagger","Stabby Stab Stab."],
             "item_id":[27,1],
             "levelReq":0,
-            "cost":20
+            "cost":1
         },
         "2":{
             "name":"Magic Wand",
