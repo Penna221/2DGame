@@ -311,6 +311,7 @@
         "energy_empty":"res\\gfx\\entities\\icons\\energy_icon_empty.png",
         "double_damage":"res\\gfx\\entities\\icons\\double_damage.png",
         "dash_icon":"res\\gfx\\entities\\icons\\dash.png",
+        "no_collision_icon":"res\\gfx\\entities\\icons\\no_collision_icon.png",
 
         "guide":"res\\gfx\\entities\\guide\\guide.png",
         "rocks_0":"res\\gfx\\entities\\extra\\rocks_0.png",

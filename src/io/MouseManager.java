@@ -46,7 +46,11 @@ public class MouseManager implements MouseListener, MouseMotionListener, MouseWh
                 // Random r = new Random();
                 // int random = r.nextInt(4);
                 // World.generateProjectile(random, rotation, p1,World.player);
-                PlayerAI.doActionWithSelectedItem();
+                if(e.getButton()==MouseEvent.BUTTON1){
+                    PlayerAI.doActionWithSelectedItem();
+                }else if(e.getButton()==MouseEvent.BUTTON3){
+                    PlayerAI.doAbility();
+                }
                 // EntityManager.addAttackBox(b);
 
             }

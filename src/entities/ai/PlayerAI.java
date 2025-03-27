@@ -13,6 +13,7 @@ import javax.sound.sampled.Clip;
 import cards.Card;
 import entities.Entity;
 import entities.effects.SlowEffect;
+import entities.player.Ability;
 import entities.player.HUD;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
@@ -44,6 +45,8 @@ public class PlayerAI extends AI{
     public static ArrayList<Card> buffCards = new ArrayList<Card>();
     public static ArrayList<Card> weaponCards = new ArrayList<Card>();
     public static ArrayList<Card> abilityCards = new ArrayList<Card>();
+
+    public static Ability ability1;
 
     public PlayerAI(Entity entity) {
         super(entity);
@@ -106,7 +109,11 @@ public class PlayerAI extends AI{
 
     @Override
     public void update() {
-        e.slowdown(0.8);
+        if(e.noCollision){
+            e.slowdown(0.9);
+        }else{
+            e.slowdown(0.8);
+        }
         // System.out.println("player update");
         e.texture = e.currentAnimation.getFrame();
         //texture = Factory.rotateImage(texture, angle);
@@ -157,6 +164,11 @@ public class PlayerAI extends AI{
                 World.player.applyEffect(new SlowEffect(10000, World.player, 0.3));
             energy = 0;
             
+        }
+    }
+    public static void doAbility(){
+        if(ability1!=null){
+            ability1.perform();
         }
     }
     public static void doActionWithSelectedItem(){

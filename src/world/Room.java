@@ -59,6 +59,9 @@ public class Room {
             }else{
                 solid = false;
             }
+            if(e.noCollision){
+                solid = false;
+            }
             World.collisionBoxes.add(new CollisionBox(e,e.bounds,solid));
         }
     }

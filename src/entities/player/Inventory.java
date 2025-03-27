@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import cards.Card;
 import entities.Entity;
+import entities.ai.PlayerAI;
 import entities.bows.Bows;
 import entities.swords.Swords;
 import gfx.AssetStorage;
@@ -127,7 +128,14 @@ public class Inventory {
         }
     }
     private void handleAbilityCard(Card c){
-        
+        int id = c.id;
+        switch (id) {
+            case 0:
+                PlayerAI.ability1 = Ability.abilities.get(0);
+                break;
+            default:
+                break;
+        }
     }
     public void addSlot(byte amount){
         int newSize = inventorySlots.length+amount;

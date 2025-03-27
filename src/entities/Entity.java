@@ -87,6 +87,7 @@ public class Entity {
     public Timer particleGenerationTimer;
     public static boolean drawBounds = false;
     public Room homeRoom;
+    public boolean noCollision = false;
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -443,7 +444,9 @@ public class Entity {
         boolean inMap = checkIfInWorldBounds();
         if(inMap){
             // canMove = checkTilesX();
-            canMove = checkCollisionX();
+            if(!noCollision){
+                canMove = checkCollisionX();
+            }
         }else{
             canMove = true;
         }
@@ -467,7 +470,9 @@ public class Entity {
         boolean inMap = checkIfInWorldBounds();
         if(inMap){
             // canMove = checkTilesY();
-            canMove = checkCollisionY();
+            if(!noCollision){
+                canMove = checkCollisionY();
+            }
         }else{
             canMove = true;
         }
@@ -488,6 +493,7 @@ public class Entity {
     }
     
     private boolean checkCollisionX(){
+        
         // System.out.println("collision box: " + World.collisionBoxes.size());
         for(CollisionBox b : World.collisionBoxes){
             if(!b.solid){
