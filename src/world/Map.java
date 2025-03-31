@@ -965,7 +965,7 @@ public class Map {
                     boxes.add(b);
             }
         }
-        World.collisionBoxes = boxes;
+        World.tileCollisionBoxes = boxes;
 
         // System.out.println("endX " +endX);
         // System.out.println("endY " +endY);

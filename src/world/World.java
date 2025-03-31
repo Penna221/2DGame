@@ -49,7 +49,8 @@ public class World {
     public static boolean cursorFocus = false;
     private static Transition transition;
     public static boolean drawCollisionBoxes = false;
-    public static ArrayList<CollisionBox> collisionBoxes = new ArrayList<CollisionBox>();
+    public static ArrayList<CollisionBox> entityCollisionBoxes = new ArrayList<CollisionBox>();
+    public static ArrayList<CollisionBox> tileCollisionBoxes = new ArrayList<CollisionBox>();
     public static HashMap<String, BufferedImage> overlays = new HashMap<String, BufferedImage>();
 
     public static int playerLevel = 1;
@@ -235,7 +236,16 @@ public class World {
                 // overlay.clear();
             }
             if (drawCollisionBoxes) {
-                for (CollisionBox box : collisionBoxes) {
+                for (CollisionBox box : entityCollisionBoxes) {
+                    if (box.solid) {
+                        g.setColor(Color.WHITE);
+                    } else {
+                        g.setColor(Color.BLUE);
+                    }
+                    g.drawRect((int) (box.r.x - camera.getXOffset()), (int) (box.r.y - camera.getYOffset()),
+                            box.r.width, box.r.height);
+                }
+                for (CollisionBox box : tileCollisionBoxes) {
                     if (box.solid) {
                         g.setColor(Color.WHITE);
                     } else {

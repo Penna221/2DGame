@@ -425,6 +425,7 @@ public class Entity {
             }
         }
         
+        
     }
     
     public void slowdown(double factor){
@@ -443,9 +444,12 @@ public class Entity {
         boolean inMap = checkIfInWorldBounds();
         if(inMap){
             // canMove = checkTilesX();
+            ArrayList<CollisionBox> boxesToCheck = new ArrayList<CollisionBox>();
+            boxesToCheck.addAll(World.tileCollisionBoxes);
             if(!noCollision){
-                canMove = checkCollisionX();
+                boxesToCheck.addAll(World.entityCollisionBoxes);
             }
+            canMove = checkCollisionX(boxesToCheck);
         }else{
             canMove = true;
         }
@@ -469,9 +473,12 @@ public class Entity {
         boolean inMap = checkIfInWorldBounds();
         if(inMap){
             // canMove = checkTilesY();
+            ArrayList<CollisionBox> boxesToCheck = new ArrayList<CollisionBox>();
+            boxesToCheck.addAll(World.tileCollisionBoxes);
             if(!noCollision){
-                canMove = checkCollisionY();
+                boxesToCheck.addAll(World.entityCollisionBoxes);
             }
+            canMove = checkCollisionY(boxesToCheck);
         }else{
             canMove = true;
         }
@@ -491,10 +498,8 @@ public class Entity {
         return canMove;
     }
     
-    private boolean checkCollisionX(){
-        
-        // System.out.println("collision box: " + World.collisionBoxes.size());
-        for(CollisionBox b : World.collisionBoxes){
+    private boolean checkCollisionX(ArrayList<CollisionBox> boxes){
+        for(CollisionBox b : boxes){
             if(!b.solid){
                 continue;
             }
@@ -546,8 +551,8 @@ public class Entity {
 
         return true;
     }
-    private boolean checkCollisionY(){
-        for(CollisionBox b : World.collisionBoxes){
+    private boolean checkCollisionY(ArrayList<CollisionBox> boxes){
+        for(CollisionBox b : boxes){
             if(!b.solid){
                 continue;
             }
