@@ -26,7 +26,7 @@
         "light_transparency":0.55,
         "invisTime":1000,
         "immune":[""],
-        "solid":false,
+        "solid":true,
         "movable":false
     },
     "anchor":{
