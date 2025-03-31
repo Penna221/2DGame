@@ -275,11 +275,13 @@ public class EntityManager {
                     if(World.player.bounds.intersects(room.bounds)){
                         roomsToUpdate.add(room);
                         room.resetEntityClocks();
+                        System.out.println("Add room to list");
                     }
                 }
             }
             //For every room loaded, update entities.
             // System.out.println("RoomsTo Update: ");
+            World.entityCollisionBoxes.clear();
             for(Room room : roomsToUpdate){
                 room.updateCollisionBoxes();
             }

@@ -47,7 +47,11 @@ public class Room {
         return choises;
     }
     public void resetEntityClocks(){
+        System.out.println("Resetting cloks");
         for(Entity e : entities){
+            e.ai.lateInit();
+        }
+        for(Entity e :toAdd){
             e.ai.lateInit();
         }
     }

@@ -238,7 +238,7 @@ public class World {
             if (drawCollisionBoxes) {
                 for (CollisionBox box : entityCollisionBoxes) {
                     if (box.solid) {
-                        g.setColor(Color.WHITE);
+                        g.setColor(Color.RED);
                     } else {
                         g.setColor(Color.BLUE);
                     }
