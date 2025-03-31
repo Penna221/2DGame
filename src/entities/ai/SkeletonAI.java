@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 
 import entities.Entity;
+import entities.abilities.Abilities;
 import entities.swords.Swords;
 import tools.Timer;
 import ui.Task;
@@ -32,7 +33,7 @@ public class SkeletonAI extends EnemyAI{
         if(World.lineOfSightBetween(e, World.player)){
             if(attackRadius.intersects(World.player.bounds)){
                 animate = false;
-                float rot = World.getAngleBetween(World.player,e);
+                float rot = aimAtPlayer();
                 float calcRot = rot+180;
                 
                 if(calcRot <90 || calcRot > 270){
@@ -40,12 +41,13 @@ public class SkeletonAI extends EnemyAI{
                 }else{
                     e.setAnimation(e.info.animations.get("attack_right"));
                 }
-                
+                // Abilities.dash(e, aimAtPlayer());
                 e.texture = e.currentAnimation.getFrame();
                 Swords.createSwordAttack(e, null, Swords.poke, rot, 1, new Point((int)(e.bounds.getCenterX()),(int)(e.bounds.getCenterY())));
                 // EntityManager.addAttackBox(new AttackBox(e, 1, e.bounds,null,World.getAngleBetween(e,World.player),AttackBox.MELEE));
             }else{
                 animate = true;
+                
             }
         }
     }

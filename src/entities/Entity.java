@@ -20,7 +20,6 @@ import entities.ai.CobwebAI;
 import entities.ai.CollectableAI;
 import entities.ai.DoorAI;
 import entities.ai.EmptyAI;
-import entities.ai.Enemy1AI;
 import entities.ai.FireplaceAI;
 import entities.ai.GoblinAI;
 import entities.ai.GuideAI;
@@ -88,6 +87,9 @@ public class Entity {
     public static boolean drawBounds = false;
     public Room homeRoom;
     public boolean noCollision = false;
+
+
+
     public Entity(EntityInfo info, double x, double y){
         this.x = x;
         this.y = y;
@@ -115,9 +117,6 @@ public class Entity {
                 break;
             case "door":
                 ai = new DoorAI(this);
-                break;
-            case "enemy_1":
-                ai = new Enemy1AI(this);
                 break;
             case "trader":
                 ai = new TraderAI(this);
@@ -864,6 +863,7 @@ public class Entity {
             checkIfHit();
             
         }
+        
         effects.addAll(toAdd);
         toAdd.clear();
         for(Effect e : effects){

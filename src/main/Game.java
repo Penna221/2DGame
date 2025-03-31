@@ -13,8 +13,8 @@ import java.io.File;
 import cards.Card;
 
 import java.awt.Image;
+
 import entities.bows.Bows;
-import entities.player.Ability;
 import entities.potions.Potions;
 import entities.projectiles.Projectiles;
 import entities.staves.Staves;
@@ -276,13 +276,6 @@ public class Game extends Engine{
             goAway();
         }
         
-        status = "Loading Abilities";
-        try {
-            Ability.createAbilities();
-        } catch (Exception e) {
-            status = "Error occured while loading Abilities";
-            goAway();
-        }
         updateCursor("default_cursor");
 
 

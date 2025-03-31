@@ -88,6 +88,11 @@ public abstract class EnemyAI extends AI{
             }
         }
     }
+
+    public float aimAtPlayer(){
+        return World.getAngleBetween(World.player,e);
+    }
+
     public void rangedAttack(){
 
     }

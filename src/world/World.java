@@ -492,7 +492,6 @@ public class World {
         }
         return true;
     }
-
     public static float getAngleBetween(Entity a, Entity b) {
         Point2D p1 = new Point((int) a.bounds.getCenterX(), (int) a.bounds.getCenterY());
         Point2D p2 = new Point((int) b.bounds.getCenterX(), (int) b.bounds.getCenterY());

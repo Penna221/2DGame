@@ -12,8 +12,8 @@ import javax.sound.sampled.Clip;
 
 import cards.Card;
 import entities.Entity;
+import entities.abilities.Abilities;
 import entities.effects.SlowEffect;
-import entities.player.Ability;
 import entities.player.HUD;
 import entities.player.Inventory;
 import entities.player.Inventory.Slot;
@@ -46,8 +46,7 @@ public class PlayerAI extends AI{
     public static ArrayList<Card> weaponCards = new ArrayList<Card>();
     public static ArrayList<Card> abilityCards = new ArrayList<Card>();
 
-    public static Ability ability1;
-
+    public static ArrayList<Card> usableAbilities = new ArrayList<Card>();
     public PlayerAI(Entity entity) {
         super(entity);
         if(hud==null){
@@ -167,8 +166,17 @@ public class PlayerAI extends AI{
         }
     }
     public static void doAbility(){
-        if(ability1!=null){
-            ability1.perform();
+        if(usableAbilities.size()==0 || usableAbilities==null){
+            System.out.println("No Abilities to use");
+            return;
+        }
+        switch (usableAbilities.get(0).id) {
+            case 0:
+                Abilities.dash(World.player, World.getPlayerRotationToCursor());
+                break;
+        
+            default:
+                break;
         }
     }
     public static void doActionWithSelectedItem(){
