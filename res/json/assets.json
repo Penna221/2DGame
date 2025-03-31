@@ -332,6 +332,7 @@
         "magic_wand":"res\\gfx\\entities\\items\\magic_wand.png",
         "bow":"res\\gfx\\entities\\items\\bow.png",
         "longbow":"res\\gfx\\entities\\items\\long_bow.png",
+        "heart_shard":"res\\gfx\\entities\\items\\heart_shard.png",
 
         "portrait_test":"res\\gfx\\entities\\portraits\\p_test.png",
         "portrait_witch":"res\\gfx\\entities\\portraits\\p_witch.png",

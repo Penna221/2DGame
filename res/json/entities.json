@@ -1377,6 +1377,29 @@
         "immune":[""],
         "solid":true,
         "movable":false
+    },
+    "heart shard":{
+        "id":62,
+        "type":"Collectable",
+        "name":"Heart Shard",
+        "texture":"heart_shard",
+        "speed":0.0,
+        "health":20,
+        "animations":{
+            "idle":""
+        },
+        "ai":"Collectable",
+        "width":5,
+        "height":5,
+        "tunnel":"",
+        "light_source":true,
+        "light_radius":200,
+        "light_color":"#FF0000",
+        "light_transparency":0.6,
+        "invisTime":1000,
+        "immune":[""],
+        "solid":false,
+        "movable":true
     }
 
 }

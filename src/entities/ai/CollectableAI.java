@@ -27,10 +27,15 @@ public class CollectableAI extends AI{
     }
     private void checkForPickup(){
         if(e.bounds.intersects(World.player.bounds)){
-            boolean added = PlayerAI.inv.addItem(e);
-            if(added){
+            if(e.info.name.equals("Heart Shard")){
+                World.player.heal(1);
                 World.entityManager.removeEntity(e);
-                SoundPlayer.playSound("pickup",true,false);
+            }else{
+                boolean added = PlayerAI.inv.addItem(e);
+                if(added){
+                    World.entityManager.removeEntity(e);
+                    SoundPlayer.playSound("pickup",true,false);
+                }
             }
         }
     }

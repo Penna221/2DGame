@@ -215,6 +215,8 @@ public class Entity {
         }else{
             //LOOT?
             LootTables.generateLoot(name, x, y);
+            Entity e2 = World.entityManager.spawnEntity(62,0, (int)x,y);
+            // e2.ai = new CollectableAI(e2);
             World.entityManager.removeEntity(this);
         }
 
