@@ -1,10 +1,10 @@
 {
     "gold_chest":{
-        "Coin":{
-            "id":2,
-            "id2":-1,
+        "xp":{
+            "id":63,
+            "id2":0,
             "min":3,
-            "max":10
+            "max":20
         },
         "Health Potion":{
             "id":26,
@@ -20,11 +20,17 @@
         }
     },
     "Skeleton":{
-        "Coin":{
-            "id":2,
-            "id2":-1,
-            "min":3,
-            "max":10
+        "xp":{
+            "id":63,
+            "id2":0,
+            "min":0,
+            "max":2
+        },
+        "hp":{
+            "id":62,
+            "id2":0,
+            "min":0,
+            "max":2
         }
     },
     "Guide":{
@@ -33,6 +39,12 @@
             "id2":-1,
             "min":1,
             "max":1
+        },
+        "xp":{
+            "id":63,
+            "id2":0,
+            "min":10,
+            "max":10
         }
     },
     "Hole Monster":{
@@ -41,18 +53,18 @@
             "id2":0,
             "min":3,
             "max":10
+        },
+        "xp":{
+            "id":63,
+            "id2":0,
+            "min":0,
+            "max":2
         }
     },
     "Big Spider":{
-        "Coin":{
-            "id":2,
-            "id2":-1,
-            "min":5,
-            "max":10
-        },
-        "Spider Egg":{
-            "id":46,
-            "id2":-1,
+        "xp":{
+            "id":63,
+            "id2":0,
             "min":1,
             "max":4
         }

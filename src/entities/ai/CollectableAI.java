@@ -30,7 +30,13 @@ public class CollectableAI extends AI{
             if(e.info.name.equals("Heart Shard")){
                 World.player.heal(1);
                 World.entityManager.removeEntity(e);
-            }else{
+                SoundPlayer.playSound("pick2",true,false);
+            }else if(e.info.name.equals("Experience Point")){
+                SoundPlayer.playSound("pick2",true,false);
+                World.entityManager.removeEntity(e);
+            }
+            
+            else{
                 boolean added = PlayerAI.inv.addItem(e);
                 if(added){
                     World.entityManager.removeEntity(e);
