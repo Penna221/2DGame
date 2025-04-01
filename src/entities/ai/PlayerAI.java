@@ -13,6 +13,7 @@ import javax.sound.sampled.Clip;
 import cards.Card;
 import entities.Entity;
 import entities.abilities.Abilities;
+import entities.effects.AbilitySickness;
 import entities.effects.SlowEffect;
 import entities.player.HUD;
 import entities.player.Inventory;
@@ -166,6 +167,9 @@ public class PlayerAI extends AI{
         }
     }
     public static void doAbility(){
+        if(World.player.checkEffect("Ability Sickness")){
+            return;
+        }
         if(usableAbilities.size()==0 || usableAbilities==null){
             System.out.println("No Abilities to use");
             return;
@@ -178,6 +182,7 @@ public class PlayerAI extends AI{
             default:
                 break;
         }
+        World.player.applyEffect(new AbilitySickness(5000, World.player));
     }
     public static void doActionWithSelectedItem(){
         Slot selectedSlot = inv.getSelectedSlot();

@@ -48,8 +48,6 @@ public class MouseManager implements MouseListener, MouseMotionListener, MouseWh
                 // World.generateProjectile(random, rotation, p1,World.player);
                 if(e.getButton()==MouseEvent.BUTTON1){
                     PlayerAI.doActionWithSelectedItem();
-                }else if(e.getButton()==MouseEvent.BUTTON3){
-                    PlayerAI.doAbility();
                 }
                 // EntityManager.addAttackBox(b);
 
@@ -67,6 +65,31 @@ public class MouseManager implements MouseListener, MouseMotionListener, MouseWh
         if(State.currentState==State.inventoryState){
             InventoryBag.pickSlot();
         }
+
+        if(State.getState()==State.gameState){
+            if(!GameState.paused){
+                // Rectangle r = new Rectangle(World.player.bounds);
+                // AttackBox b = new AttackBox(World.player, 3,r,World.player);
+                // World.player.giveMomentum(45, 50);
+
+                // Point2D p1 = new Point((int)(World.player.x),(int)(World.player.y));
+                // Point2D p2 = new Point((int)(mouseX +World.camera.getXOffset()),(int)(mouseY+World.camera.getYOffset()));
+                // System.out.println(p1);
+                // System.out.println(p2);
+                // float rotation = World.getAngleBetweenPoints(p2,p1);
+
+                // Random r = new Random();
+                // int random = r.nextInt(4);
+                // World.generateProjectile(random, rotation, p1,World.player);
+                if(e.getButton()==MouseEvent.BUTTON3){
+                    PlayerAI.doAbility();
+                }
+                // EntityManager.addAttackBox(b);
+
+            }
+        }
+
+
         
         // if(PauseMenu.currentContainer!=null){
         //     PauseMenu.currentContainer.sendPress();

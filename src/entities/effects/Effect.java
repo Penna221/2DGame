@@ -20,7 +20,9 @@ public abstract class Effect {
         timer = new Timer(duration, task);
     }
     public void update(){
-        t.update();
+        if(t!=null){
+            t.update();
+        }
         timer.update();
         
     }
