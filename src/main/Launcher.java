@@ -26,16 +26,12 @@ public class Launcher {
             int width = kv.findChild("width").getInteger();
             int height = kv.findChild("height").getInteger();
             String title = kv.findChild("title").getString();
-            int overall_scale = kv.findChild("overall_scale").getInteger();
-            int tile_scale = kv.findChild("tile_scale").getInteger();
-            Tile.scale = tile_scale*overall_scale;
-            int entity_scale = kv.findChild("entity_scale").getInteger();
-            EntityManager.scale = entity_scale*overall_scale;
+            float overall_scale = kv.findChild("overall_scale").getFloat();
+            Tile.scale = overall_scale;
+            EntityManager.scale = overall_scale;
             System.out.println("Width:" + width);
             System.out.println("Height:" + height);
             System.out.println("Title:" + title);
-            System.out.println("Entity Scale: " + entity_scale);
-            System.out.println("Tile Scale: " + tile_scale);
             System.out.println("Over All Scale: " + overall_scale);
             new Launcher(width,height,title);
             

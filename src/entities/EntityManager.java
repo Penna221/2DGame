@@ -37,7 +37,7 @@ public class EntityManager {
     public ArrayList<Entity> entities;
     private ArrayList<Entity> toRemove;
     private ArrayList<Entity> toAdd;
-    public static int scale = 1;
+    public static float scale = 1;
     public static HashMap<Integer,EntityInfo> entityInfos;
 
 

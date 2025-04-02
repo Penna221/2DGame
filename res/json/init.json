@@ -2,7 +2,5 @@
 	"width": 1250,
 	"height": 850,
 	"title": "2D Game",
-	"tile_scale":2,
-	"entity_scale":2,
-	"overall_scale":2
+	"overall_scale":3.0
 }

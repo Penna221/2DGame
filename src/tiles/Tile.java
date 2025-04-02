@@ -15,7 +15,7 @@ public class Tile {
     public boolean solid;
     public BufferedImage texture;
     public String name;
-    public static int scale = 1;
+    public static float scale = 1;
     public Tile(int id, boolean solid, BufferedImage img, String name){
         this.id = id;
         this.solid = solid;
@@ -36,7 +36,7 @@ public class Tile {
         //info.printAll(1);
         String tileSheet = info.findChild("tileSheet").getString();
         int tileSize = info.findChild("tileSize").getInteger();
-        Tile.tileSize = tileSize*scale;
+        
         //  TILES
         KeyValuePair tiles2 = kv.findChild("tiles");
         
@@ -55,6 +55,7 @@ public class Tile {
             new Tile(id,solid,cropped,name);
             
         }
+        Tile.tileSize = (int)(tileSize*scale);
     }
     public static Tile getTileByID(int id){
         if(id==-1){
