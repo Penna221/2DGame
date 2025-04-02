@@ -14,6 +14,7 @@ import gfx.Factory;
 import main.Game;
 import main.Launcher;
 import tiles.Tile;
+import ui.Text;
 import ui.UIFactory;
 import world.Room;
 import world.World;
@@ -28,9 +29,11 @@ public class HUD {
     public boolean showExtra = false;
     public int roomCount = 1;
     public ArrayList<BufferedImage> toDraw = new ArrayList<BufferedImage>();
+    public Text xpText;
     public HUD(){
         
         World.overlays.put("hud", overlay);
+        xpText = new Text("XP: ",0,0,500,false,false);
     }
     public void update(){
         draw();
@@ -56,13 +59,14 @@ public class HUD {
         if(World.player.effects.size()!=0){
             drawEffectIcons();
         }
-        
+        drawXP();
         for(BufferedImage i : toDraw){
             g.drawImage(i, 0, 0, null);
         }
         if(showExtra){
             drawExtra(g);
         }
+        
         toDraw.clear();
         World.overlays.put("hud", overlay);
     }
@@ -200,5 +204,21 @@ public class HUD {
         }
         toDraw.add(i);
 
+    }
+    public void drawXP(){
+        BufferedImage i = Factory.generateNewOverlayImage();
+        Graphics gg = i.createGraphics();
+        
+        BufferedImage orb = AssetStorage.scaleImage(AssetStorage.images.get("xp"), 1.5f);
+        
+        xpText.updateText("XP: "+PlayerAI.xp);
+        BufferedImage tt = xpText.textImage;
+        tt = AssetStorage.scaleImage(tt, 0.4f);
+        // int drawX = 100;
+        int drawX = Game.w.getWidth()-tt.getWidth()-20;
+        int drawY = Game.w.getHeight()-tt.getHeight()-20;
+        gg.drawImage(tt,drawX ,drawY, null);
+        gg.drawImage(orb,drawX-orb.getWidth()*2,drawY +tt.getHeight()/2 - orb.getHeight()/2,null);
+        toDraw.add(i);
     }
 }

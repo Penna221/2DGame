@@ -115,7 +115,7 @@ public class SelectCardsState extends State{
             selectedCards.addAll(selectedBuffs);
 
 
-
+            PlayerAI.xp = 0;
             SavedGame.currentSave.inventory.applyCards(selectedCards);
             GameState.paused = true;
             World.load("dungeon","");

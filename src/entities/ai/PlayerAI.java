@@ -46,7 +46,7 @@ public class PlayerAI extends AI{
     public static ArrayList<Card> buffCards = new ArrayList<Card>();
     public static ArrayList<Card> weaponCards = new ArrayList<Card>();
     public static ArrayList<Card> abilityCards = new ArrayList<Card>();
-
+    public static int xp = 0;
     public static ArrayList<Card> usableAbilities = new ArrayList<Card>();
     public PlayerAI(Entity entity) {
         super(entity);

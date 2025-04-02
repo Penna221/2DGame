@@ -34,6 +34,7 @@ public class CollectableAI extends AI{
             }else if(e.info.name.equals("Experience Point")){
                 SoundPlayer.playSound("pick2",true,false);
                 World.entityManager.removeEntity(e);
+                PlayerAI.xp++;
             }
             
             else{
