@@ -8,6 +8,7 @@ import entities.Entity;
 import gfx.AssetStorage;
 import gfx.Transition;
 import io.KeyManager;
+import save.SavedGame;
 import states.GameState;
 import states.SelectCardsState;
 import states.State;
@@ -47,6 +48,11 @@ public class DoorAI extends AI{
                     State.setState(State.selectCardsState, true);
                     Transition.canContinue2 = true;
                     Transition.canFinish = true;
+                }else if(e.info.tunnel.equals("start")){
+                    SavedGame.currentSave.inventory.applyCards(null);
+                    PauseMenu.setContainer(null);
+                    World.load(e.info.tunnel,"");
+                    GameState.paused = false;
                 }else{
                     PauseMenu.setContainer(null);
                     World.load(e.info.tunnel,"");

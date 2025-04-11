@@ -716,17 +716,12 @@ public class Entity {
         return true;
     }
     public void init() {
+        health =info.health;
+        maxHealth = health;
         setAI();
         texture = info.texture;
         speed = info.speed;
-        health =info.health;
-        maxHealth = health;
-        if(info.name.equals("Player")){
-            if(SavedGame.currentSave!=null){
-                health = SavedGame.currentSave.playerHealth;
-                maxHealth = SavedGame.currentSave.playerMaxHealth;
-            }
-        }
+        
         name = info.name;
         calculateBounds();
         Task par = new Task(){

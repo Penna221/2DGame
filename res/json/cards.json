@@ -83,6 +83,25 @@
             "texture":"double_damage",
             "levelReq":2,
             "cost":1
+        },
+        "3":{
+            "name":"A Bit Healthier",
+            "rarity":"Rare",
+            "type":"Buff",
+            "info":["You gain 2 extra hearts."],
+            "item_id":[62,0],
+            "levelReq":2,
+            "cost":1
+        },
+        "4":{
+            "name":"A Lot Healthier",
+            "rarity":"Rare",
+            "type":"Buff",
+            "info":["You gain 5 extra hearts."],
+            "item_id":[62,0],
+            "texture":"heart_full",
+            "levelReq":2,
+            "cost":1
         }
     },
     "abilities":{

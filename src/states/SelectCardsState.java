@@ -111,16 +111,17 @@ public class SelectCardsState extends State{
                 if(selectedWeapon!=null){
                     selectedCards.add(selectedWeapon);
                 }
-            selectedCards.addAll(selectedAbilities);
-            selectedCards.addAll(selectedBuffs);
+                selectedCards.addAll(selectedAbilities);
+                selectedCards.addAll(selectedBuffs);
 
 
-            PlayerAI.xp = 0;
-            SavedGame.currentSave.inventory.applyCards(selectedCards);
-            GameState.paused = true;
-            World.load("dungeon","");
-            State.setState(gameState, false);
-            return;
+                PlayerAI.xp = 0;
+                
+                SavedGame.currentSave.inventory.applyCards(selectedCards);
+                GameState.paused = true;
+                World.load("dungeon","");
+                State.setState(gameState, false);
+                return;
             }
         };
         okButton.setTask(t5);

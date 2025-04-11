@@ -52,7 +52,12 @@ public class Inventory {
 
     public void applyCards(ArrayList<Card> cards){
         clearInventory();
+        PlayerAI.additionalHealth = 0;
         PlayerAI.usableAbilities.clear();
+        if(cards==null){
+            updateInventory();
+            return;
+        }
         for(Card c : cards){
             if(c.type.equals("Weapon")){
                 handleWeaponCard(c);
@@ -117,12 +122,16 @@ public class Inventory {
             case 2:
                 System.out.println("Sword Double Damage card functionality not implemented yet.");
                 //Sword double damage
-                
                 break;
             case 3:
-                System.out.println("Bow Double Damage card functionality not implemented yet.");
-                //Bow double damage
-                
+                System.out.println("A Bit Healthier.");
+                //gain 2 hearts
+                PlayerAI.additionalHealth += 4;
+                break;
+            case 4:
+                System.out.println("A Lot Healthier.");
+                //gain 5 hearts
+                PlayerAI.additionalHealth += 10;
                 break;
                 
             default:

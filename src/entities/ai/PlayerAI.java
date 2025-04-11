@@ -48,6 +48,7 @@ public class PlayerAI extends AI{
     public static ArrayList<Card> abilityCards = new ArrayList<Card>();
     public static int xp = 0;
     public static ArrayList<Card> usableAbilities = new ArrayList<Card>();
+    public static int additionalHealth = 0;
     public PlayerAI(Entity entity) {
         super(entity);
         if(hud==null){
@@ -94,6 +95,10 @@ public class PlayerAI extends AI{
             }
         };
         regenEnergyTimer = new Timer(1000,regenEnergyTask);
+
+        e.maxHealth += additionalHealth;
+        e.health = e.maxHealth;
+
     }
 
     @Override

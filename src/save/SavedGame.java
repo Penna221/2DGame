@@ -28,8 +28,6 @@ import world.World;
 public class SavedGame {
     public String saveName;
     public Inventory inventory;
-    public int playerHealth;
-    public int playerMaxHealth;
     public int dungeonCounter;
     public int questPoints;
     public int mana;
@@ -40,13 +38,11 @@ public class SavedGame {
     public static SavedGame currentSave;
     public int playerLevel;
     private ArrayList<Card> wc, bc, ac;
-    public SavedGame(String saveName, Inventory inv, int playerHealth, int maxHealth,int dungeonCounter,
+    public SavedGame(String saveName, Inventory inv,int dungeonCounter,
      int playerLevel, int questPoints,ArrayList<Card> wc, ArrayList<Card> bc, ArrayList<Card> ac,
      int mana){
         this.saveName = saveName;
         this.inventory = inv;
-        this.playerHealth = playerHealth;
-        this.playerMaxHealth = maxHealth;
         this.dungeonCounter = dungeonCounter;
         this.playerLevel = playerLevel;
         this.questPoints = questPoints;
@@ -56,7 +52,7 @@ public class SavedGame {
         this.mana = mana;
     }
     public static void startNewSave(String name){
-        currentSave = new SavedGame(name, new Inventory(), 10, 10, 1,1, 1,null,null,null,3);
+        currentSave = new SavedGame(name, new Inventory(), 1,1, 1,null,null,null,3);
     }
     public static void tryLoad(String save){
         currentSave = savedGames.get(save);
@@ -65,8 +61,6 @@ public class SavedGame {
         PlayerAI.inv = currentSave.inventory;
         PlayerAI.inv.updateInventory();
 
-        World.player.health = currentSave.playerHealth;
-        World.player.maxHealth = currentSave.playerMaxHealth;
         World.dungeonCounter = currentSave.dungeonCounter;
         World.playerLevel = currentSave.playerLevel;
         PlayerAI.questPoints = currentSave.questPoints;
@@ -141,8 +135,6 @@ public class SavedGame {
             JSON json = new JSON(playerData);
             KeyValuePair s = json.parse("JSON");
             KeyValuePair stats = s.findChild("stats");
-            int ph = stats.findChild("health").getInteger();
-            int mph = stats.findChild("maxHealth").getInteger();
             int dungeonCounter = stats.findChild("dungeonCounter").getInteger();
             int playerLevel = stats.findChild("playerLevel").getInteger();
             int questPoints = stats.findChild("questPoints").getInteger();
@@ -157,7 +149,7 @@ public class SavedGame {
             ArrayList<Card> weaponCards = readCards(wc,"Weapon");
             ArrayList<Card> buffCards = readCards(bc, "Buff");
             ArrayList<Card> abilityCards = readCards(ac, "Ability");
-            SavedGame sa = new SavedGame(folder.getName(),newInventory,ph,mph,dungeonCounter,playerLevel,questPoints,weaponCards,buffCards, abilityCards, mana);
+            SavedGame sa = new SavedGame(folder.getName(),newInventory,dungeonCounter,playerLevel,questPoints,weaponCards,buffCards, abilityCards, mana);
             savedGames.put(folder.getName(),sa);
 
         }
@@ -255,18 +247,12 @@ public class SavedGame {
         JSON p_data = new JSON();
         
         //Stats
-        currentSave.playerHealth = World.player.health;
-        currentSave.playerMaxHealth = World.player.maxHealth;
         ArrayList<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>();
-        KeyValuePair health_val = new KeyValuePair("health",new NumberValue(World.player.health));
-        KeyValuePair maxhealth_val = new KeyValuePair("maxHealth",new NumberValue(World.player.maxHealth));
         KeyValuePair dungeonCounter_val = new KeyValuePair("dungeonCounter",new NumberValue(World.dungeonCounter));
         KeyValuePair playerLevel_val = new KeyValuePair("playerLevel",new NumberValue(World.playerLevel));
         KeyValuePair questPoints_val = new KeyValuePair("questPoints",new NumberValue(PlayerAI.questPoints));
         KeyValuePair mana_val = new KeyValuePair("mana",new NumberValue(PlayerAI.mana));
         ArrayList<KeyValuePair> stats_vals = new ArrayList<KeyValuePair>();
-        stats_vals.add(health_val);
-        stats_vals.add(maxhealth_val);
         stats_vals.add(dungeonCounter_val);
         stats_vals.add(playerLevel_val);
         stats_vals.add(questPoints_val);

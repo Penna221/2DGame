@@ -17,6 +17,7 @@ import java.util.Set;
 
 import entities.Entity;
 import entities.EntityManager;
+import entities.ai.PlayerAI;
 import entities.collision.CollisionBox;
 import entities.projectiles.Projectile;
 import entities.projectiles.Projectiles;
@@ -67,12 +68,7 @@ public class World {
     }
 
     public static void load(String worldName, String savedGame) {
-        if (SavedGame.currentSave != null) {
-            if (player != null) {
-                SavedGame.currentSave.playerHealth = player.health;
-                SavedGame.currentSave.playerMaxHealth = player.maxHealth;
-            }
-        }
+        
         entityManager.loading = true;
         entityManager.clearEntities();
         entityManager.update();

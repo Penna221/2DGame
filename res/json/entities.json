@@ -5,7 +5,7 @@
         "name":"Player",
         "texture":"mushroomDude",
         "speed":4.2,
-        "health":10,
+        "health":6,
         "animations":{
             "idle":"player_idle",
             "walk_west":"player_walk_west",
