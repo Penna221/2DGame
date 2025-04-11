@@ -21,7 +21,7 @@ public class UIFactory {
 
     //Alphabet stuff
     private static int alphabetHeight;
-    private static double scale;
+    private static float scale;
     private static int spaceWidth = 25;
     private static int spacing = 5;
     public static HashMap<String,BufferedImage> alphabetCharacters;
@@ -91,13 +91,14 @@ public class UIFactory {
             BufferedImage letter = loadCharacter(k);
             alphabetCharacters.put(name, letter);
         }
+        alphabetHeight*=scale;
     }
     private static BufferedImage loadCharacter(KeyValuePair kv){
         String textureAsset = kv.findChild("texture").getString();
         BufferedImage original = AssetStorage.images.get(textureAsset);
         BufferedImage colored = putColorOnImage(original);
-
-        return colored;
+        BufferedImage scaled = AssetStorage.scaleImage(colored, scale);
+        return scaled;
     }
     private static BufferedImage putColorOnImage(BufferedImage img){
         BufferedImage newImage = new BufferedImage(img.getWidth(),img.getHeight(),BufferedImage.TYPE_INT_ARGB);

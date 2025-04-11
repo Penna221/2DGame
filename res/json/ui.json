@@ -31,7 +31,7 @@
     },
     "alphabet":{
         "height":57,
-        "scale":2.0,
+        "scale":1.0,
         "spacing":6,
         "space":25,
         "char_A":{
