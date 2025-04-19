@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import cards.Card;
 import entities.Entity;
+import entities.EntityManager;
 import entities.abilities.Abilities;
 import entities.ai.PlayerAI;
 import entities.bows.Bows;
@@ -54,6 +55,7 @@ public class Inventory {
         clearInventory();
         PlayerAI.additionalHealth = 0;
         PlayerAI.usableAbilities.clear();
+        EntityManager.attackDamageMultiplier = 1f;
         if(cards==null){
             updateInventory();
             return;
@@ -122,6 +124,7 @@ public class Inventory {
             case 2:
                 System.out.println("Sword Double Damage card functionality not implemented yet.");
                 //Sword double damage
+                EntityManager.attackDamageMultiplier = 2f;
                 break;
             case 3:
                 System.out.println("A Bit Healthier.");

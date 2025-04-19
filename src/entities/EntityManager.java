@@ -40,6 +40,7 @@ public class EntityManager {
     public static float scale = 1;
     public static HashMap<Integer,EntityInfo> entityInfos;
 
+    public static float attackDamageMultiplier = 1f;
 
     private ArrayList<Entity> toView;
     public boolean loading = false;
@@ -334,8 +335,10 @@ public class EntityManager {
                         }
                         
                         if(canharm){
-                            System.out.println("Dealing ["+a.damage+"] damage to " + e.name);
-                            e.harm(a.damage);
+                            int modifiedDamage = (int)(attackDamageMultiplier*a.damage);
+                            System.out.println("Dealing ["+modifiedDamage+"] damage to " + e.name);
+                            
+                            e.harm(modifiedDamage);
                             e.giveMomentum(a.direction, 10);
                             if(a.source.info.type.equals("Projectile")){
                                 removeEntity(a.source);
