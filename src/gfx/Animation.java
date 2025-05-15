@@ -17,7 +17,9 @@ public class Animation {
     }
     public void restart(){
         index = 0;
+        
         lastTime = System.currentTimeMillis();
+        elapsedTime = 0;
     }
     public void animate(){
         now = System.currentTimeMillis();

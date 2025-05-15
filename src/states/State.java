@@ -2,11 +2,13 @@ package states;
 
 import java.awt.Graphics;
 
+import entities.EntityManager;
 import gfx.Transition;
 import main.Game;
 import sound.SoundPlayer;
 import ui.Container;
 import ui.PauseMenu;
+import world.Room;
 import world.World;
 
 public abstract class State {
@@ -41,7 +43,6 @@ public abstract class State {
     public static void setState(State s, boolean trans){
         PauseMenu.setContainer(null);
         Container.focus = false;
-        Game.updateCursor("default_cursor");
         if(currentState !=nullState){
             //System.out.println("clearing buttons");
         }
@@ -51,6 +52,9 @@ public abstract class State {
             currentState.updateOnceBetweenTransitions();
             if(s.equals(gameState)){
                 // World.playMusic();
+                for(Room r : World.entityManager.roomsToUpdate){
+                    r.resetEntityClocks();
+                }
             }
             return;
         }
@@ -69,6 +73,9 @@ public abstract class State {
                         canContinue = true;
                         if(s.equals(gameState)){
                             // World.playMusic();
+                            for(Room r : World.entityManager.roomsToUpdate){
+                                r.resetEntityClocks();
+                            }
                         }
                     }
                 };

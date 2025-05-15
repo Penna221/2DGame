@@ -18,7 +18,9 @@ public class FireplaceAI extends AI {
 
     @Override
     public void lateInit() {
+        System.out.println("fireplace reset");
         e.currentAnimation = e.info.animations.get("idle");
+        
         e.currentAnimation.restart();
         attackRadius = e.generateSurroundingCircle(120);
         Task attackTask = new Task(){

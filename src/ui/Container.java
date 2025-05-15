@@ -248,15 +248,7 @@ public class Container extends UIElement{
                 ((Container)e).update();
             }  
         }
-        if(focus){
-            if(type.equals("text")){
-                Game.updateCursor("write_cursor");
-            }else{
-                Game.updateCursor("pointer_cursor");
-            }
-        }else{
-            Game.updateCursor("default_cursor");
-        }
+        
         if(changing){
             // updateList();
             updateBounds();

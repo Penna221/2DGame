@@ -204,11 +204,7 @@ public class World {
             map.updateVisible(player);
             entityManager.update();
             particleManager.update();
-            if (cursorFocus) {
-                Game.updateCursor("pointer_cursor");
-            } else {
-                Game.updateCursor("default_cursor");
-            }
+            
         } else {
         }
         transition.update();
