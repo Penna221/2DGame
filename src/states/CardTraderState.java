@@ -15,6 +15,9 @@ import ui.ScrollableCardContainer;
 import ui.Task;
 import ui.Text;
 import world.World;
+/*
+ * This is NOT USED. 
+ */
 public class CardTraderState extends State{
     private Text questPoints;
     private Container container;

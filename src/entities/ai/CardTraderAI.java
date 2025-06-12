@@ -7,10 +7,11 @@ import java.awt.image.BufferedImage;
 import entities.Entity;
 import gfx.AssetStorage;
 import io.KeyManager;
-import states.GameState;
-import ui.PauseMenu;
 import world.World;
 
+/*
+ * This is NOT USED
+ */
 public class CardTraderAI extends AI{
     private Ellipse2D.Double interactCircle;
     private boolean talk = false;
@@ -35,9 +36,9 @@ public class CardTraderAI extends AI{
         }
     }
     private void openTradingMenu(){
-        PauseMenu.generateNewContainer("enter_card_trader");
-        PauseMenu.setContainer(PauseMenu.containers.get("enter_card_trader"));
-        GameState.paused = true;
+        // PauseMenu.generateNewContainer("enter_card_trader");
+        // PauseMenu.setContainer(PauseMenu.containers.get("enter_card_trader"));
+        // GameState.paused = true;
     }
     @Override
     public void render(Graphics g) {

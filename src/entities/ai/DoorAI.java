@@ -45,7 +45,9 @@ public class DoorAI extends AI{
         Task t = new Task(){
             public void perform(){
                 if(e.info.tunnel.equals("dungeon")){
-                    State.setState(State.selectCardsState, true);
+                    GameState.paused = true;
+                    World.load("dungeon","");
+                    State.setState(State.gameState, false);
                     Transition.canContinue2 = true;
                     Transition.canFinish = true;
                 }else if(e.info.tunnel.equals("start")){
