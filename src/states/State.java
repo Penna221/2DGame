@@ -35,6 +35,7 @@ public abstract class State {
         newGameState = new NewGameState();
         cardTraderState = new CardTraderState();
         inventoryState = new InventoryState();
+        //SelectCardsState NOT USED
         selectCardsState = new SelectCardsState();
         nullState = new NullState();
         nullState.init();

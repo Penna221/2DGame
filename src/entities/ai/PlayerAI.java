@@ -191,13 +191,14 @@ public class PlayerAI extends AI{
     }
     public static void doActionWithSelectedItem(){
         Slot selectedSlot = inv.getSelectedSlot();
-        if(selectedSlot.item==null){
-            return;
-        }
         int x1 = (int)(World.player.bounds.getCenterX());
         int y1 = (int)(World.player.bounds.getCenterY());
         Point2D origin = new Point(x1,y1);
         float rotation = World.getPlayerRotationToCursor();
+        if(selectedSlot.item==null){
+            punch(origin);
+            return;
+        }
         
         
         switch (selectedSlot.item.info.id) {
@@ -229,6 +230,10 @@ public class PlayerAI extends AI{
             default:
                 break;
         }
+    }
+    private static void punch(Point2D origin){
+        Swords.punch(World.player, null, Swords.poke, World.getPlayerRotationToCursor(),1,origin);
+        reduceEnergy(1);
     }
     public static void swordAttack(Slot selectedSlot, Point2D origin){
         int neededEnergy = 1;

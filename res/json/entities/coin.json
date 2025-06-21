@@ -1,0 +1,22 @@
+{
+    "id":2,
+    "type":"Collectable",
+    "name":"Coin",
+    "texture":"coin_1",
+    "speed":0.0,
+    "health":2,
+    "animations":{
+        "idle":"coin_idle"
+    },
+    "ai":"Collectable",
+    "width":16,
+    "height":16,
+    "light_source":true,
+    "light_radius":100,
+    "light_color":"#000000",
+    "light_transparency":0.3,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":false,
+    "movable":false
+}

@@ -11,7 +11,6 @@ import java.util.Map;
 
 import entities.bows.Bow;
 import entities.bows.Bows;
-import entities.collision.CollisionBox;
 import entities.potions.Potion;
 import entities.potions.Potions;
 import entities.projectiles.Projectile;
@@ -55,52 +54,79 @@ public class EntityManager {
     }
     public void loadEntityData(){
         entityInfos = new HashMap<Integer,EntityInfo>();
-        JSON json2 = new JSON(new File("res\\json\\entities.json"));
-        KeyValuePair kv2 = json2.parse("");
-        for(KeyValuePair c : kv2.getObject()){
-            int id = c.findChild("id").getInteger();
-            String name = c.findChild("name").getString();
+        File[] files = new File("res\\json\\entities").listFiles();
+        if(files == null){
+            System.out.println("No entity files found!");
+            return;
+        }
+        for(File f : files){
+            if(f.isDirectory()){
+                continue;
+            }
+            if(!f.getName().endsWith(".json")){
+                continue;
+            }
+            EntityInfo e = loadEntityFile(f);
             
-            double speed = c.findChild("speed").getFloat();
-            int health = c.findChild("health").getInteger();
-            String type = c.findChild("type").getString();
-            String tunnel = "";
-            
+            if(e==null){
+                System.out.println("Error parsing " + f.getName());
+                continue;
+            }
+            if(entityInfos.containsKey(e.id)){
+                System.out.println("Entity with id " + e.id + " already exists! Skipping " + f.getName());
+                continue;
+            }
+            entityInfos.put(e.id, e);
+            System.out.println("Loaded entity: " + e.name + " with id: " + e.id);
+        }
+        
+        
 
-            String ai = c.findChild("ai").getString();
-            if(ai.equals("door")){
-                tunnel = c.findChild("tunnel").getString();
-            }
-            // System.out.println("SCALE IS " + scale);
-            int width = (int) (c.findChild("width").getInteger()*scale);
-            int height = (int) (c.findChild("height").getInteger()*scale);
-            boolean isLight = c.findChild("light_source").getBoolean();
-            int light_radius = c.findChild("light_radius").getInteger();
-            String color_string = c.findChild("light_color").getString();
-            Color light_color = Color.decode(color_string);
-            double light_transparency = c.findChild("light_transparency").getFloat();
-            int invisTime = c.findChild("invisTime").getInteger();
-            DataType[] imm = c.findChild("immune").getArray();
-            String[] immuneList = new String[imm.length];
-            boolean solid = c.findChild("solid").getBoolean();
-            boolean movable = c.findChild("movable").getBoolean();
-            for(int i = 0; i < imm.length; i++){
-                immuneList[i] = imm[i].getString();
-            }
+    }
+    private EntityInfo loadEntityFile(File f){
+        JSON json = new JSON(f);
+        KeyValuePair c = json.parse("");
+        int id = c.findChild("id").getInteger();
+        String name = c.findChild("name").getString();
+        
+        double speed = c.findChild("speed").getFloat();
+        int health = c.findChild("health").getInteger();
+        String type = c.findChild("type").getString();
+        String tunnel = "";
+        
 
-            HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
-            KeyValuePair animations = c.findChild("animations");
-            
-            for(KeyValuePair ans: animations.getObject()){
-                String a = ans.getKey();
-                String b = ans.getString();
-                hashMap.put(a, Animations.animations.get(b));    
-            }
-            BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
-            entityInfos.put(id, new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime, immuneList,solid,movable));
+        String ai = c.findChild("ai").getString();
+        if(ai.equals("door")){
+            tunnel = c.findChild("tunnel").getString();
+        }
+        // System.out.println("SCALE IS " + scale);
+        int width = (int) (c.findChild("width").getInteger()*scale);
+        int height = (int) (c.findChild("height").getInteger()*scale);
+        boolean isLight = c.findChild("light_source").getBoolean();
+        int light_radius = c.findChild("light_radius").getInteger();
+        String color_string = c.findChild("light_color").getString();
+        Color light_color = Color.decode(color_string);
+        double light_transparency = c.findChild("light_transparency").getFloat();
+        int invisTime = c.findChild("invisTime").getInteger();
+        DataType[] imm = c.findChild("immune").getArray();
+        String[] immuneList = new String[imm.length];
+        boolean solid = c.findChild("solid").getBoolean();
+        boolean movable = c.findChild("movable").getBoolean();
+        for(int i = 0; i < imm.length; i++){
+            immuneList[i] = imm[i].getString();
         }
 
-
+        HashMap<String, Animation> hashMap = new HashMap<String,Animation>();
+        KeyValuePair animations = c.findChild("animations");
+        
+        for(KeyValuePair ans: animations.getObject()){
+            String a = ans.getKey();
+            String b = ans.getString();
+            hashMap.put(a, Animations.animations.get(b));    
+        }
+        BufferedImage texture = AssetStorage.images.get(c.findChild("texture").getString());
+        return new EntityInfo(id,name,type, texture,speed,health,hashMap,ai,width,height,tunnel,isLight,light_radius,light_color,light_transparency,invisTime, immuneList,solid,movable);
+        
     }
     public Entity spawnEntity(int id,int subID, double x, double y){
         boolean solid = World.map.checkIfSolid((int)(x/Tile.tileSize), (int)(y/Tile.tileSize));

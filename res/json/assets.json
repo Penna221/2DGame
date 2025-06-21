@@ -341,6 +341,7 @@
         "portrait_blacksmith":"res\\gfx\\entities\\portraits\\p_blacksmith.png",
         "swing_1":"res\\gfx\\animations\\attack\\swing_1.png",
         "poke":"res\\gfx\\animations\\attack\\poke.png",
+        "punch":"res\\gfx\\animations\\attack\\punch.png",
         
         "fireplace_1":"res\\gfx\\entities\\fireplace\\fireplace_1.png",
         "fireplace_2":"res\\gfx\\entities\\fireplace\\fireplace_2.png",

@@ -1,0 +1,23 @@
+{
+    "id":13,
+    "type":"door",
+    "name":"Goblin tunnel",
+    "texture":"ladder_hole",
+    "speed":0.0,
+    "health":20,
+    "animations":{
+        "idle":"player_idle"
+    },
+    "ai":"door",
+    "width":16,
+    "height":16,
+    "tunnel":"cave_goblin",
+    "light_source":true,
+    "light_radius":200,
+    "light_color":"#000000",
+    "light_transparency":0.3,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":true,
+    "movable":false
+}

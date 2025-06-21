@@ -1,0 +1,22 @@
+{
+    "id":25,
+    "type":"Creature",
+    "name":"Witch",
+    "texture":"witch_idle_0",
+    "speed":1.0,
+    "health":1000,
+    "animations":{
+        "idle":"witch_idle"
+    },
+    "ai":"witch",
+    "width":16,
+    "height":16,
+    "light_source":false,
+    "light_radius":500,
+    "light_color":"#FFA000",
+    "light_transparency":0.55,
+    "invisTime":1000,
+    "immune":["Magic"],
+    "solid":true,
+    "movable":false
+}

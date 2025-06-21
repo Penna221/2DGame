@@ -1,0 +1,23 @@
+{
+    "id":16,
+    "type":"Door",
+    "name":"Spider Cave",
+    "texture":"ladder_hole",
+    "speed":1.0,
+    "health":20,
+    "animations":{
+        "idle":"player_idle"
+    },
+    "ai":"door",
+    "width":16,
+    "height":16,
+    "tunnel":"cave_spider",
+    "light_source":false,
+    "light_radius":0,
+    "light_color":"#000000",
+    "light_transparency":1.0,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":true,
+    "movable":false
+}

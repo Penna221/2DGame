@@ -1,0 +1,22 @@
+{
+    "id":23,
+    "type":"Structure",
+    "name":"Candelabra",
+    "texture":"candelabra",
+    "speed":1.0,
+    "health":100,
+    "animations":{
+        "idle":""
+    },
+    "ai":"empty",
+    "width":16,
+    "height":32,
+    "light_source":true,
+    "light_radius":500,
+    "light_color":"#FFA000",
+    "light_transparency":0.55,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":false,
+    "movable":false
+}

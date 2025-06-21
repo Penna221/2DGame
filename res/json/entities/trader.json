@@ -1,0 +1,23 @@
+{
+    "id":12,
+    "type":"Creature",
+    "name":"Trader",
+    "texture":"trader",
+    "speed":0.0,
+    "health":1000,
+    "animations":{
+        "idle":"trader_idle",
+        "trade":"trader_stand"
+    },
+    "ai":"trader",
+    "width":32,
+    "height":32,
+    "light_source":false,
+    "light_radius":200,
+    "light_color":"#FFFFFF",
+    "light_transparency":0.5,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":true,
+    "movable":false
+}

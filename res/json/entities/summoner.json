@@ -1,0 +1,23 @@
+{
+    "id":50,
+    "type":"Creature",
+    "name":"Summoner",
+    "texture":"summoner_idle_1",
+    "speed":4.5,
+    "health":200,
+    "animations":{
+        "idle":"summoner_idle",
+        "attack":"summoner_attack"
+    },
+    "ai":"summoner",
+    "width":16,
+    "height":16,
+    "light_source":false,
+    "light_radius":550,
+    "light_color":"#AAAA00",
+    "light_transparency":0.78,
+    "invisTime":100,
+    "immune":["Projectile","Magic"],
+    "solid":true,
+    "movable":true
+}

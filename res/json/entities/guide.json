@@ -1,0 +1,22 @@
+{
+    "id":31,
+    "type":"Creature",
+    "name":"Guide",
+    "texture":"guide",
+    "speed":1.0,
+    "health":1000,
+    "animations":{
+        "idle":"guide_idle"
+    },
+    "ai":"guide",
+    "width":16,
+    "height":16,
+    "light_source":true,
+    "light_radius":500,
+    "light_color":"#FFA000",
+    "light_transparency":0.55,
+    "invisTime":1000,
+    "immune":["Melee"],
+    "solid":true,
+    "movable":false
+}

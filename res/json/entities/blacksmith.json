@@ -1,0 +1,22 @@
+{
+    "id":19,
+    "type":"Creature",
+    "name":"Blacksmith",
+    "texture":"blacksmith_idle_0",
+    "speed":1.0,
+    "health":1000,
+    "animations":{
+        "idle":"blacksmith_idle"
+    },
+    "ai":"blacksmith",
+    "width":16,
+    "height":16,
+    "light_source":false,
+    "light_radius":350,
+    "light_color":"#AAAA00",
+    "light_transparency":0.8,
+    "invisTime":1000,
+    "immune":["Melee"],
+    "solid":true,
+    "movable":false
+}

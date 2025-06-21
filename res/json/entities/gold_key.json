@@ -1,0 +1,23 @@
+{
+    "id":58,
+    "type":"key",
+    "name":"Gold key",
+    "texture":"gold_key",
+    "speed":0.0,
+    "health":2,
+    "animations":{
+        "idle":""
+    },
+    "ai":"Collectable",
+    "width":16,
+    "height":16,
+    "tunnel":"",
+    "light_source":true,
+    "light_radius":200,
+    "light_color":"#000000",
+    "light_transparency":0.6,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":false,
+    "movable":false
+}

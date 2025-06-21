@@ -1,0 +1,23 @@
+{
+    "id":54,
+    "type":"door",
+    "name":"Dungeon Tunnel",
+    "texture":"ladder_hole",
+    "speed":0.0,
+    "health":2,
+    "animations":{
+        "idle":""
+    },
+    "ai":"door",
+    "width":16,
+    "height":16,
+    "tunnel":"dungeon",
+    "light_source":true,
+    "light_radius":200,
+    "light_color":"#000000",
+    "light_transparency":0.6,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":true,
+    "movable":false
+}

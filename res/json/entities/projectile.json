@@ -1,0 +1,22 @@
+{
+    "id":35,
+    "type":"Projectile",
+    "name":"Projectile",
+    "texture":"iron_sword",
+    "speed":0.0,
+    "health":1,
+    "animations":{
+        "idle":""
+    },
+    "ai":"projectile",
+    "width":10,
+    "height":10,
+    "light_source":false,
+    "light_radius":200,
+    "light_color":"#FFA000",
+    "light_transparency":0.11,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":false,
+    "movable":false
+}

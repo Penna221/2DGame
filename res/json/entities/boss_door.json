@@ -1,0 +1,23 @@
+{
+    "id":10,
+    "type":"door",
+    "name":"Boss Door",
+    "texture":"boss_door",
+    "speed":0.0,
+    "health":2,
+    "animations":{
+        "idle":""
+    },
+    "ai":"door",
+    "width":32,
+    "height":32,
+    "tunnel":"boss_arena",
+    "light_source":true,
+    "light_radius":200,
+    "light_color":"#000000",
+    "light_transparency":0.6,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":true,
+    "movable":false
+}

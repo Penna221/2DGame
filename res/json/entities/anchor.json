@@ -1,0 +1,22 @@
+{
+    "id":1,
+    "type":"anchor",
+    "name":"Connection Anchor",
+    "texture":"connection_anchor",
+    "speed":0,
+    "health":1,
+    "animations":{
+        "idle":""
+    },
+    "ai":"empty",
+    "width":16,
+    "height":16,
+    "light_source":false,
+    "light_radius":0,
+    "light_color":"#000000",
+    "light_transparency":1.0,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":false,
+    "movable":false
+}

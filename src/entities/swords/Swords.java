@@ -81,7 +81,26 @@ public class Swords {
         }
         reader.close();
     }
-    public static void createSwordAttack(Entity source, Entity ignore, Polygon s, float direction, int damage, Point2D origin){
+    public static void punch(Entity source, Entity ignore, Polygon s, float direction, int damage, Point2D origin){
+        Polygon transformedPolygon = calculateTransformation(s, direction, origin);
+        
+        AttackBox a = new AttackBox(source, damage, transformedPolygon, ignore, direction,AttackBox.MELEE);
+        EntityManager.addAttackBox(a);
+
+        double rads = Math.toRadians(direction);
+        double unitX = Math.cos(rads);
+        double unitY = Math.sin(rads);
+        int xOffset = (int)(unitX * 80);
+        int yOffset = (int)(unitY * 80);
+        Particle p = new Particle("punch_attack",300,direction);
+        
+        p.setPosition((int)origin.getX()+xOffset,(int)origin.getY()+yOffset);
+        World.particleManager.addParticle(p);
+        Random r = new Random();
+        int r1 = 1+ r.nextInt(3);
+        SoundPlayer.playSound("sword_swing_"+r1,true,false);
+    }
+    private static Polygon calculateTransformation(Polygon s, float direction, Point2D origin){
         double scaleFactor = 30.0;
         double translateX = origin.getX(); 
         double translateY = origin.getY();
@@ -91,7 +110,12 @@ public class Swords {
         transform.translate(translateX, translateY);
         transform.scale(scaleFactor, scaleFactor);
         transform.rotate(rotationAngle);
-        Polygon transformedPolygon = Factory.transformPolygon(s, transform);
+        return Factory.transformPolygon(s, transform);
+        
+    }
+    public static void createSwordAttack(Entity source, Entity ignore, Polygon s, float direction, int damage, Point2D origin){
+        
+        Polygon transformedPolygon = calculateTransformation(s, direction, origin);
         AttackBox a = new AttackBox(source, damage, transformedPolygon, ignore, direction,AttackBox.MELEE);
         EntityManager.addAttackBox(a);
 

@@ -95,6 +95,10 @@
         "images":["poke"],
         "times":[300]
     },
+    "punch_attack":{
+        "images":["punch"],
+        "times":[300]
+    },
     "fire":{
         "images":["fire_1","fire_2","fire_3","fire_4","fire_5","fire_6","fire_7"],
         "times":[100,100,100,100,100,100,100]

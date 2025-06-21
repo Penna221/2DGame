@@ -1,0 +1,22 @@
+{
+    "id":39,
+    "type":"Spell",
+    "name":"Spell",
+    "texture":"spell_tome_1",
+    "speed":0.0,
+    "health":1,
+    "animations":{
+        "idle":""
+    },
+    "ai":"Collectable",
+    "width":32,
+    "height":32,
+    "light_source":true,
+    "light_radius":50,
+    "light_color":"#FFA000",
+    "light_transparency":0.11,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":false,
+    "movable":false
+}

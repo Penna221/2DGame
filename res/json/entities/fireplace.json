@@ -1,0 +1,22 @@
+{
+    "id":48,
+    "type":"Decoration",
+    "name":"Fireplace",
+    "texture":"fireplace_1",
+    "speed":0.0,
+    "health":1,
+    "animations":{
+        "idle":"fireplace"
+    },
+    "ai":"fireplace",
+    "width":32,
+    "height":32,
+    "light_source":true,
+    "light_radius":550,
+    "light_color":"#AAAA00",
+    "light_transparency":0.78,
+    "invisTime":1000,
+    "immune":[""],
+    "solid":false,
+    "movable":false
+}
