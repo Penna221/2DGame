@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 import cards.Card;
@@ -35,7 +34,6 @@ import ui.UIFactory;
 import utils.pennanen.Engine;
 import world.Biome;
 import world.Map;
-import world.World;
 public class Game extends Engine{
 
     private int width, height;
@@ -61,6 +59,7 @@ public class Game extends Engine{
             public void run(){
                 try {
                     init2();
+                    
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

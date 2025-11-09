@@ -12,7 +12,6 @@ public class Projectiles {
     public static void load() throws Exception{
         File f = new File("res\\json\\projectiles.json");
         String path = f.getParent();
-        System.out.println(path);
         JSON json = new JSON(f);
         json.readFile(false);
         KeyValuePair kv = json.parse("json");

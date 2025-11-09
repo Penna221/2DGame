@@ -67,7 +67,7 @@ public class UIFactory {
 
     private static void loadAlphabet(KeyValuePair kv){
         ArrayList<KeyValuePair> data = kv.getObject();
-
+        System.out.println("Loading Alphabet");
         alphabetCharacters = new HashMap<String,BufferedImage>();
 
         for(KeyValuePair k : data){

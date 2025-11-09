@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import json.JSON;
 import json.KeyValuePair;
+import pennanen.spriteloader.Sprite;
+import pennanen.spriteloader.SpriteLoader;
 
 public class AssetStorage {
     public static HashMap<String,BufferedImage> images = new HashMap<String,BufferedImage>();
@@ -14,18 +16,14 @@ public class AssetStorage {
     public HashMap<String,String> texts;
     
     public static void loadImages()throws Exception{
-        JSON json = new JSON(new File("res\\json\\assets.json"));
-        KeyValuePair s = json.parse("JSON");
-        KeyValuePair imgObject = s.findChild("images");
-        for(KeyValuePair i : imgObject.getObject()){
-            String name = i.getKey();
-            String path = i.getString();
-            
-            BufferedImage img = ImageLoader.load(path);
-            if(img!=null){
-                images.put(name, img);
-            }
+       
+
+        HashMap<String,Sprite> sprites = SpriteLoader.loadSprites(new File("res/gfx"), new File("res/json"));
+        for(String key : sprites.keySet()){
+            Sprite spr = sprites.get(key);
+            images.put(key, spr.image);
         }
+
     }
     public static void loadTexts() throws Exception{
         JSON json = new JSON(new File("res\\json\\assets.json"));
