@@ -54,7 +54,7 @@ public class SelectCardsState extends State{
     public void init() {
         availableMana = PlayerAI.mana;
         container = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
-        title = new Text("Choose your Weapon", 0, 0, 700, true,true);
+        title = new Text("Choose your Weapon", 0, 0, 700, true,true,Game.mediumFont);
         selectedCards = new ArrayList<Card>();
         selectedAbilities = new ArrayList<Card>();
         selectedBuffs = new ArrayList<Card>();
@@ -77,7 +77,7 @@ public class SelectCardsState extends State{
         scrollSelect[2] = scrollObj3;
         swapContainer.setPosition((int)(container.bounds.getWidth()/2- swapContainer.bounds.getWidth()/2), 200);
         scrollObj.updateContent();
-        ClickButton nextButton = new ClickButton(0, 0,new Text("Next", 0,0,0,false,false));
+        ClickButton nextButton = new ClickButton(0, 0,new Text("Next", 0,0,0,false,false,Game.mediumFont));
         Task t3 = new Task(){
             public void perform(){
                 //APPLY EFFECTS
@@ -91,7 +91,7 @@ public class SelectCardsState extends State{
         nextButton.setPosition((int)(swapContainer.bounds.getX() + swapContainer.bounds.getWidth() - nextButton.bounds.getWidth()),(int)(swapContainer.bounds.getY() + swapContainer.bounds.getHeight()));
         container.addElement(nextButton);
 
-        ClickButton previousButton = new ClickButton(0, 0,new Text("Previous", 0,0,0,false,false));
+        ClickButton previousButton = new ClickButton(0, 0,new Text("Previous", 0,0,0,false,false,Game.mediumFont));
         previousButton.setPosition((int)(swapContainer.bounds.getX()),(int)(swapContainer.bounds.getY() + swapContainer.bounds.getHeight()));
         
         Task t4 = new Task(){
@@ -104,7 +104,7 @@ public class SelectCardsState extends State{
         container.addElement(previousButton);
         container.addElement(title);
         
-        ClickButton okButton = new ClickButton(0, 0,new Text("OK", 0,0,0,false,false));
+        ClickButton okButton = new ClickButton(0, 0,new Text("OK", 0,0,0,false,false,Game.mediumFont));
         okButton.setPosition((int)(swapContainer.bounds.getX() + swapContainer.bounds.getWidth()/2 - okButton.bounds.getWidth()/2),(int)(swapContainer.bounds.getY() + swapContainer.bounds.getHeight()));
         Task t5 = new Task(){
             public void perform(){
@@ -129,7 +129,7 @@ public class SelectCardsState extends State{
         container.addElement(okButton);
 
         infoContainer = new Container(0,(int)(nextButton.bounds.getY()+nextButton.bounds.getHeight()+50), Game.w.getWidth(),200);
-        info = new Text("Available points:" + availableMana, 0,0,(int)(infoContainer.bounds.getWidth()),false,true);
+        info = new Text("Available points:" + availableMana, 0,0,(int)(infoContainer.bounds.getWidth()),false,true,Game.mediumFont);
         // updateContent();
         infoContainer.addElement(info);
         container.addElement(infoContainer);

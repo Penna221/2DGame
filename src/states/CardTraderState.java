@@ -79,7 +79,7 @@ public class CardTraderState extends State{
 
 
 
-        selectButton = new ClickButton(0, 0, new Text("Select", 0, 0, 0,false,false));
+        selectButton = new ClickButton(0, 0, new Text("Select", 0, 0, 0,false,false,Game.mediumFont));
         selectButton.setPosition((int)(scroll.bounds.getX() + scroll.bounds.getWidth()/2 - selectButton.bounds.getWidth()/2),(int)(scroll.bounds.getY() + scroll.bounds.getHeight()));
         
         
@@ -91,7 +91,7 @@ public class CardTraderState extends State{
         });
         container.addElement(selectButton);
         
-        returnButton = new ClickButton(0,0,new Text("Return",0,0,0,false,false));
+        returnButton = new ClickButton(0,0,new Text("Return",0,0,0,false,false,Game.mediumFont));
         returnButton.setTask(new Task(){
             @Override
             public void perform(){
@@ -104,9 +104,9 @@ public class CardTraderState extends State{
         returnButton.setPosition(selectButton.bounds.x - returnButton.bounds.width-10, selectButton.bounds.y);
         container.addElement(returnButton);
         
-        title = new Text("Pick a card", 0, 0, 0, true,false);
+        title = new Text("Pick a card", 0, 0, 0, true,false,Game.mediumFont);
         container.addElement(title);
-        questPoints = new Text("Available Quest points: " + PlayerAI.questPoints, title.bounds.width+20,0,0,false,false);
+        questPoints = new Text("Available Quest points: " + PlayerAI.questPoints, title.bounds.width+20,0,0,false,false,Game.mediumFont);
         container.addElement(questPoints);
         container.addElement(scroll);
         container.updateBounds();

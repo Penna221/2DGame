@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import io.KeyManager;
+import main.Game;
 
 public class TextField extends FunctionalElement{
 
@@ -13,7 +14,7 @@ public class TextField extends FunctionalElement{
     public TextField(int x, int y){
         super(x,y);
         bounds = new Rectangle(x,y,300,80);
-        text = new Text("  ", bounds.x,bounds.y,0,false,false);
+        text = new Text("  ", bounds.x,bounds.y,0,false,false,Game.mediumFont);
         task = new Task(){
             public void perform(){
                 if(!focus){
@@ -24,9 +25,9 @@ public class TextField extends FunctionalElement{
                 }else{
                     String a = KeyManager.text;
                     if(a.length()>0){
-                        text = new Text(a, bounds.x,bounds.y,0,false,false);
+                        text = new Text(a, bounds.x,bounds.y,0,false,false,Game.mediumFont);
                     }else{
-                        text = new Text("  ", bounds.x,bounds.y,0,false,false);
+                        text = new Text("  ", bounds.x,bounds.y,0,false,false,Game.mediumFont);
                     }
                     text.updateBounds();
                     

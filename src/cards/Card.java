@@ -14,6 +14,7 @@ import gfx.Factory;
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
+import main.Game;
 import ui.UIFactory;
 import world.World;
 
@@ -77,7 +78,7 @@ public class Card {
         int buffer = 10;
         int maxW = texture.getWidth()-buffer*2;
         g = texture.getGraphics();
-        BufferedImage title = UIFactory.generateText(name, 400);
+        BufferedImage title = UIFactory.generateText(Game.mediumFont,name, 400);
         if(title.getWidth()>maxW){
             title = UIFactory.scaleToWidth(title, maxW);
         }
@@ -90,7 +91,7 @@ public class Card {
         BufferedImage image = new BufferedImage(manaball.getWidth(), manaball.getHeight(),BufferedImage.TYPE_INT_ARGB);
         Graphics g = image.createGraphics();
         g.drawImage(manaball, 0,0,null);
-        BufferedImage manacost = UIFactory.generateText(""+cost, 400);
+        BufferedImage manacost = UIFactory.generateText(Game.smallFont,""+cost, 400);
         manacost =AssetStorage.scaleImage(manacost,0.5f);
         g.drawImage(manacost, image.getWidth()/2-manacost.getWidth()/2,image.getHeight()/2 - manacost.getHeight()/2, null);
         // image = AssetStorage.scaleImage(image, 2.3f);

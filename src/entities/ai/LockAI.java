@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import entities.Entity;
 import gfx.AssetStorage;
 import io.KeyManager;
+import main.Game;
 import states.GameState;
 import ui.ClickButton;
 import ui.Container;
@@ -68,14 +69,14 @@ public class LockAI extends AI{
                 GameState.paused = false;
             }
         };
-        ClickButton yesButton = new ClickButton(0,250,new Text("Open",0,0,0,false,false));
+        ClickButton yesButton = new ClickButton(0,250,new Text("Open",0,0,0,false,false,Game.mediumFont));
         yesButton.setTask(open);
         
         boolean b = PlayerAI.inv.checkIfEnoughItemsWithID(neededKey.info.id, neededKey.subID, amount);
         if(!b){
             yesButton.disabled = true;
         }
-        ClickButton noButton = new ClickButton(0,250,new Text("Leave",0,0,0,false,false));
+        ClickButton noButton = new ClickButton(0,250,new Text("Leave",0,0,0,false,false,Game.mediumFont));
         noButton.setTask(unPause);
         ArrayList<ClickButton> buttons = new ArrayList<ClickButton>();
         buttons.add(yesButton);

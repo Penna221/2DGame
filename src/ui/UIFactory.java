@@ -1,7 +1,10 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import java.util.Queue;
 import gfx.AssetStorage;
 import json.JSON;
 import json.KeyValuePair;
+import main.Game;
 public class UIFactory {
     
     public static UIData containerData;
@@ -130,77 +134,134 @@ public class UIFactory {
 
         return AssetStorage.scaleImage(texture,scaleFactor);
     }
-    
-    public static BufferedImage generateText(String text, int maxWidth){
-        int len = calculateWidth(text);
-        if(len >= maxWidth){
-            String[] words = chopText(text,maxWidth);
-            Deque<String> remainingWords = new LinkedList<String>();
 
-            for (String aa : words) {
-                remainingWords.offer(aa);
-            }
+    public static int getStringWidth(Font font, String text) {
+        BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        g.setFont(font);
+        FontMetrics metrics = g.getFontMetrics();
+        int width = metrics.stringWidth(text);
+        g.dispose();
+        return width;
+    }
 
 
-            ArrayList<BufferedImage> rows = new ArrayList<BufferedImage>();
-            int totalWidth = 0;
-            String wordsForRow = "";
-            
-            
-            
-            while(true){
-                //Take one word to process.
-                String currentWord= "";
-                currentWord = remainingWords.peek();
-                
-                if(currentWord==null){
-                    //Run out of words. Look if wordsForRow has something. if it does -> add it as lastrow. or if not -> Break from the loop.
-                    if(!wordsForRow.isEmpty()){
-                        wordsForRow = wordsForRow.substring(0,wordsForRow.length()-1);
-                        rows.add(generateImageFromText(wordsForRow));
-                    }
-                    break;
-                }
-                //At this point there is something to be processed.
 
-                //calculate the width of the word.
-                int l = calculateWidth(currentWord + " ");
-                totalWidth += l;
-                //Add the length to totalWidth. If total is less than maxWidth: add the currentword to wordsForRow.
-                //Then just go to process next word. 
-                if(totalWidth<maxWidth){
-                    wordsForRow += remainingWords.poll() + " ";
-                    continue;
-                }
-                //BUT if it is more than or equal to maxWidth
-                //-> process the wordsForRow. if it is has something in it, add it to rows arraylist.
-                // if wordsForRow is empty, currently processed word is toolong, it needs to be chopped into pieces.
-                //Add the chopped parts back to the deque.
-                //Remove the toolong word from the remaining words.
-                else{
-                    if(wordsForRow.length()==0){
-                        remainingWords.poll();
-                        String[] ex = processTooLongWord(currentWord,maxWidth);
-                        for(int i = ex.length-1; i>=0; i--){
-                            remainingWords.addFirst(ex[i]);
-                        }
-                        totalWidth = 0;
-                        continue;
-                    }else{
-                        wordsForRow = wordsForRow.trim();
-                        rows.add(generateImageFromText(wordsForRow));
-                        wordsForRow = "";
-                        totalWidth = 0;
-                    }
-                }
-            }
-            return combineMultipleRows(rows);
-            
-            
-        }else{
-            return generateImageFromText(text);
-
+    public static BufferedImage generateText(Font f, String text, int maxWidth){
+        if(f==null){
+            f = Game.mediumFont;
         }
+        int height = f.getSize();
+        int width = getStringWidth(f, text);
+        if(width <= maxWidth){
+            BufferedImage img = new BufferedImage(width,height,BufferedImage.TYPE_INT_ARGB);
+            Graphics g = img.createGraphics();
+            g.setFont(f);
+            g.setColor(textData.fgColor);
+            g.drawString(text, 0, f.getSize()-10);
+            return img;
+        
+        }else{
+            //Need to wrap text.
+            ArrayList<BufferedImage> rows = new ArrayList<BufferedImage>();
+            String[] words = text.split(" ");
+            String currentLine = "";
+            for(String word : words){
+                String testLine = currentLine + word + " ";
+                int testWidth = getStringWidth(f, testLine);
+                if(testWidth > maxWidth){
+                    //Current line is full. add it to rows.
+                    BufferedImage lineImage = new BufferedImage(getStringWidth(f, currentLine), height, BufferedImage.TYPE_INT_ARGB);
+                    Graphics g = lineImage.createGraphics();
+                    g.setFont(f);
+                    g.setColor(textData.fgColor);
+                    g.drawString(currentLine, 0, f.getSize()-10);
+                    rows.add(lineImage);
+                    currentLine = word + " ";
+                }else{
+                    currentLine = testLine;
+                }
+            }
+            //Add last line
+            if(!currentLine.isEmpty()){
+                BufferedImage lineImage = new BufferedImage(getStringWidth(f, currentLine), height, BufferedImage.TYPE_INT_ARGB);
+                Graphics g = lineImage.createGraphics();
+                g.setFont(f);
+                g.setColor(textData.fgColor);
+                g.drawString(currentLine, 0, f.getSize()-10);
+                rows.add(lineImage);
+            }
+            //Combine rows
+            return combineMultipleRows(rows);
+        }
+
+
+        // int len = calculateWidth(text);
+        // if(len >= maxWidth){
+        //     String[] words = chopText(text,maxWidth);
+        //     Deque<String> remainingWords = new LinkedList<String>();
+
+        //     for (String aa : words) {
+        //         remainingWords.offer(aa);
+        //     }
+        //     ArrayList<BufferedImage> rows = new ArrayList<BufferedImage>();
+        //     int totalWidth = 0;
+        //     String wordsForRow = "";
+            
+            
+        //     while(true){
+        //         //Take one word to process.
+        //         String currentWord= "";
+        //         currentWord = remainingWords.peek();
+                
+        //         if(currentWord==null){
+        //             //Run out of words. Look if wordsForRow has something. if it does -> add it as lastrow. or if not -> Break from the loop.
+        //             if(!wordsForRow.isEmpty()){
+        //                 wordsForRow = wordsForRow.substring(0,wordsForRow.length()-1);
+        //                 rows.add(generateImageFromText(wordsForRow));
+        //             }
+        //             break;
+        //         }
+        //         //At this point there is something to be processed.
+
+        //         //calculate the width of the word.
+        //         int l = calculateWidth(currentWord + " ");
+        //         totalWidth += l;
+        //         //Add the length to totalWidth. If total is less than maxWidth: add the currentword to wordsForRow.
+        //         //Then just go to process next word. 
+        //         if(totalWidth<maxWidth){
+        //             wordsForRow += remainingWords.poll() + " ";
+        //             continue;
+        //         }
+        //         //BUT if it is more than or equal to maxWidth
+        //         //-> process the wordsForRow. if it is has something in it, add it to rows arraylist.
+        //         // if wordsForRow is empty, currently processed word is toolong, it needs to be chopped into pieces.
+        //         //Add the chopped parts back to the deque.
+        //         //Remove the toolong word from the remaining words.
+        //         else{
+        //             if(wordsForRow.length()==0){
+        //                 remainingWords.poll();
+        //                 String[] ex = processTooLongWord(currentWord,maxWidth);
+        //                 for(int i = ex.length-1; i>=0; i--){
+        //                     remainingWords.addFirst(ex[i]);
+        //                 }
+        //                 totalWidth = 0;
+        //                 continue;
+        //             }else{
+        //                 wordsForRow = wordsForRow.trim();
+        //                 rows.add(generateImageFromText(wordsForRow));
+        //                 wordsForRow = "";
+        //                 totalWidth = 0;
+        //             }
+        //         }
+        //     }
+        //     return combineMultipleRows(rows);
+            
+            
+        // }else{
+        //     return generateImageFromText(text);
+
+        // }
     }
     private static String[] processTooLongWord(String word, int maxWidth){
 
@@ -307,15 +368,16 @@ public class UIFactory {
         int w = img.getWidth();
         int h = img.getHeight();
         BufferedImage bb = AssetStorage.images.get("border");
-        int buffer = 20;
-        int nw = w+(buffer*2)+(bb.getWidth()*2*thick);
-        int nh = h+(buffer*2)+(bb.getWidth()*2*thick);
+        int bufferWidth = 50;
+        int bufferHeight = 2;
+        int nw = w+(bufferWidth*2)+(bb.getWidth()*2*thick);
+        int nh = h+(bufferHeight*2)+(bb.getWidth()*2*thick);
         BufferedImage newImage = new BufferedImage(nw,nh,BufferedImage.TYPE_INT_ARGB);
         Graphics g = newImage.createGraphics();
         BufferedImage border = drawBorder(nw,nh,thick);
 
         g.drawImage(border, 0,0, null);
-        g.drawImage(img, buffer+bb.getWidth()*thick, buffer+bb.getHeight()*thick, null);
+        g.drawImage(img, bufferWidth+bb.getWidth()*thick, bufferHeight+bb.getHeight()*thick, null);
         return newImage;
     }
 
@@ -367,7 +429,7 @@ public class UIFactory {
 
         //Draw Amount
         float percentage = 0.45f;
-        BufferedImage i = UIFactory.generateText(""+amount,200);
+        BufferedImage i = UIFactory.generateText(Game.smallFont,""+amount,200);
         int h = img.getHeight();
         int newHeight = (int)(h*percentage);
         BufferedImage i2 = UIFactory.scaleToHeight(i,newHeight);

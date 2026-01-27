@@ -67,13 +67,13 @@ public class PauseMenu {
                     State.setState(State.loadState, false);
                 }
             };
-            ClickButton loadButton = new ClickButton(0,0,new Text("LOAD", 0,0,0,false,false));
+            ClickButton loadButton = new ClickButton(0,0,new Text("LOAD", 0,0,0,false,false,Game.smallFont));
             loadButton.setTask(loadSave);
-            loadButton.scaleWithFactor(0.9f);
-            ClickButton deleteButton = new ClickButton(0,0,new Text("DELETE", 0,0,0,false,false));
+            // loadButton.scaleWithFactor(0.9f);
+            ClickButton deleteButton = new ClickButton(0,0,new Text("DELETE", 0,0,0,false,false,Game.smallFont));
             deleteButton.setTask(deleteSave);
-            deleteButton.scaleWithFactor(0.8f);
-            Text saveName = new Text(s.saveName, 0,0,150,false,false);
+            // deleteButton.scaleWithFactor(0.8f);
+            Text saveName = new Text(s.saveName, 0,0,150,false,false,Game.mediumFont);
             saveContainer.addElement(saveName);
             saveContainer.addElement(loadButton);
             saveContainer.addElement(deleteButton);
@@ -178,11 +178,11 @@ public class PauseMenu {
                 State.setState(State.menuState,false);
             }
         };
-        ClickButton back = new ClickButton(0,0,new Text("Return", 0, 0, 0, false,false));
+        ClickButton back = new ClickButton(0,0,new Text("Return", 0, 0, 0, false,false,Game.smallFont));
         back.setTask(backTask);
         c.addElement(back);
         
-        Text info = new Text("Click box, type text, press ENTER.", 240, 40, 400, false,false);
+        Text info = new Text("Click box, type text, press ENTER.", 240, 40, 400, false,false,Game.mediumFont);
         c.addElement(info);
         TextField field = new TextField(240,250);
         c.addElement(field);
@@ -194,7 +194,7 @@ public class PauseMenu {
                 }
             }
         };
-        ClickButton okButton = new ClickButton(240,350,new Text("START", 0, 0, 0, false,false));
+        ClickButton okButton = new ClickButton(240,350,new Text("START", 0, 0, 0, false,false,Game.smallFont));
         okButton.setTask(accept);
         c.addElement(okButton);
         return c;
@@ -207,7 +207,7 @@ public class PauseMenu {
 
         Container c = new Container(x,y,w,h);
         c.fillBg = true;
-        Text title = new Text("Game over!", 0, 0, 0, true,false);
+        Text title = new Text("Game over!", 0, 0, 0, true,false,Game.mediumFont);
         // c.setHeader(title);
         c.addElement(title);
         Task t = new Task(){
@@ -218,7 +218,7 @@ public class PauseMenu {
             }
         };
 
-        ClickButton backToMenu = new ClickButton(0, 0, new Text("Back to Menu",0,0,0,false,false));
+        ClickButton backToMenu = new ClickButton(0, 0, new Text("Back to Menu",0,0,0,false,false,Game.mediumFont));
         backToMenu.setTask(t);
         backToMenu.setPosition(0,h-backToMenu.bounds.height-10);
         c.addElement(backToMenu);
@@ -228,7 +228,7 @@ public class PauseMenu {
     }
     private static Container createMenuStateContainer(){
         Container container = new Container(0, 0, Game.w.getWidth(),Game.w.getHeight());
-        Text title = new Text("Game Title", 0, 50, 0, true,false);
+        Text title = new Text("Game Title", 0, 50, 0, true,false,Game.largeFont);
         Task t = new Task(){
             public void perform(){
                 State.setState(State.newGameState,false);
@@ -239,13 +239,13 @@ public class PauseMenu {
                 State.setState(State.loadState, false);
             }
         };
-        ClickButton newGameButton = new ClickButton(100, 200, new Text("New Game",0,0,0,false,false));
+        ClickButton newGameButton = new ClickButton(100, 200, new Text("New",0,0,0,false,false,Game.smallFont));
         newGameButton.setTask(t);
-        ClickButton loadGameButton = new ClickButton(100, 320,new Text("Load Game",0,0,0,false,false));
+        ClickButton loadGameButton = new ClickButton(100, 320,new Text("Load",0,0,0,false,false,Game.smallFont));
         loadGameButton.setTask(load);
         
         Task t2 = new Task(){public void perform(){System.exit(0);}};
-        ClickButton exitButton = new ClickButton(100, 440, new Text("Exit",0,0,0,false,false));
+        ClickButton exitButton = new ClickButton(100, 440, new Text("Exit",0,0,0,false,false,Game.smallFont));
         exitButton.setTask(t2);
         int bottomRow = Game.w.getHeight()-100;
         BufferedImage gear = AssetStorage.images.get("gear");
@@ -288,9 +288,9 @@ public class PauseMenu {
                 GameState.paused = false;
             }
         };
-        ClickButton returnButton = new ClickButton(0,250,new Text("Return to game",w/2,0,0,false,false));
+        ClickButton returnButton = new ClickButton(0,250,new Text("Return to game",w/2,0,0,false,false,Game.mediumFont));
         returnButton.setTask(t1);
-        ClickButton settingsButton = new ClickButton(0,250,new Text("Settings",w/2,0,0,false,false));
+        ClickButton settingsButton = new ClickButton(0,250,new Text("Settings",w/2,0,0,false,false,Game.mediumFont));
         
         
         Task t2 = new Task(){
@@ -301,7 +301,7 @@ public class PauseMenu {
                 Transition.canFinish = true;
             }
         };
-        ClickButton exitButton = new ClickButton(0,250,new Text("Save and exit",w/2,0,0,false,false));
+        ClickButton exitButton = new ClickButton(0,250,new Text("Save and exit",w/2,0,0,false,false,Game.mediumFont));
         exitButton.setTask(t2);
         c.addElement(returnButton);
         c.addElement(settingsButton);
@@ -312,9 +312,9 @@ public class PauseMenu {
     }
     private static Container createYesNoDialog(String question, Task t1,Task t2){
         ArrayList<ClickButton> options = new ArrayList<ClickButton>();
-        ClickButton b1 = new ClickButton(0, 0, new Text("Yes",0,0,100,false,false));
+        ClickButton b1 = new ClickButton(0, 0, new Text("Yes",0,0,100,false,false,Game.mediumFont));
         b1.setTask(t1);
-        ClickButton b2 = new ClickButton(0, 0, new Text("No",0,0,100,false,false));
+        ClickButton b2 = new ClickButton(0, 0, new Text("No",0,0,100,false,false,Game.mediumFont));
         b2.setTask(t2);
         options.add(b1);
         options.add(b2);
@@ -334,7 +334,7 @@ public class PauseMenu {
         //CREATE LEFT AND RIGHT SIDE.
         //LEFT HAS QUESTION, RIGHT HAS ANSWER OPTIONS.
         Container leftSide = new Container(0,0,leftSideWidth, h-20);
-        Text title = new Text(question, 0, 0, leftSideWidth, false,true);
+        Text title = new Text(question, 0, 0, leftSideWidth, false,true,Game.mediumFont);
         leftSide.addElement(title);
         //Center in container
         leftSide.centerAndSpaceHorizontally(10);
@@ -377,7 +377,7 @@ public class PauseMenu {
         
         // Image i = new Image(EntityManager.entityInfos.get(19).texture, 0, 0);
         Container downSide = createEntryDialog(t1,question);
-        Text nameText = new Text(name, 0, 0, downSide.bounds.width/2, false,false);
+        Text nameText = new Text(name, 0, 0, downSide.bounds.width/2, false,false,Game.mediumFont);
         nameText.fillBg = true;
         BufferedImage portrait = AssetStorage.images.get(p_name);
         Image i = new Image(portrait, 0,0);
@@ -399,7 +399,7 @@ public class PauseMenu {
         return createEntryDialog(t,"Go through?");
     }
     private static Container createBlacksmithContainer(){
-        return createShopContainer(Market.lists.get("blacksmith"), new Text("BlackSmith", 0, 0, 0, true,false));
+        return createShopContainer(Market.lists.get("blacksmith"), new Text("BlackSmith", 0, 0, 0, true,false,Game.mediumFont));
     }
     private static Container createShopContainer(ArrayList<Market> market, UIElement header){
         Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
@@ -411,7 +411,7 @@ public class PauseMenu {
                 Transition.canFinish = true;
             }
         };
-        ClickButton returnButton = new ClickButton(0,0,new Text("Return", 0, 0, 0, false,false));
+        ClickButton returnButton = new ClickButton(0,0,new Text("Return", 0, 0, 0, false,false,Game.mediumFont));
         returnButton.setTask(returnTask);
         c.addElement(returnButton);
 
@@ -665,7 +665,7 @@ public class PauseMenu {
         
         Container downHalf= new Container(0,0,(int)(rightSide.bounds.getWidth()),(int)(rightSide.bounds.getHeight()/2));
         
-        ClickButton buyButton = new ClickButton(0,0,new Text("Buy",0,0,(int)downHalf.bounds.getWidth(),false,false));
+        ClickButton buyButton = new ClickButton(0,0,new Text("Buy",0,0,(int)downHalf.bounds.getWidth(),false,false,Game.mediumFont));
         if(enough){
             buyButton.disabled = false;
             buyButton.setTask(t);
@@ -699,11 +699,11 @@ public class PauseMenu {
 
     }
     private static Container createWitchContainer(){
-        return createShopContainer(Market.lists.get("witch"), new Text("Witch", 0, 0, 0, true,false));
+        return createShopContainer(Market.lists.get("witch"), new Text("Witch", 0, 0, 0, true,false,Game.mediumFont));
         
     }
     private static Container createTraderContainer(){
-        return createShopContainer(Market.lists.get("trader"), new Text("Cave Trader", 0, 0, 0, true,false));
+        return createShopContainer(Market.lists.get("trader"), new Text("Cave Trader", 0, 0, 0, true,false,Game.mediumFont));
         
     }
     public static void setContainer(Container cc){

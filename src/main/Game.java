@@ -34,6 +34,7 @@ import ui.UIFactory;
 import utils.pennanen.Engine;
 import world.Biome;
 import world.Map;
+import java.awt.GraphicsEnvironment;
 public class Game extends Engine{
 
     private int width, height;
@@ -45,6 +46,9 @@ public class Game extends Engine{
     public static MouseManager mm;
     public String status = "Loading";
     private boolean loading = true;
+    public static Font smallFont;
+    public static Font mediumFont;
+    public static Font largeFont;
     public Game(int width, int height, String title){
         this.width = width;
         this.height = height;
@@ -54,6 +58,10 @@ public class Game extends Engine{
     public void init() {
         System.out.println("Creating Window");
         w = new Window(title,width,height);
+
+        smallFont = loadFont("C:\\Code\\fonts\\cairovixel Font\\Cairopixel.ttf", 20f);
+        mediumFont = loadFont("C:\\Code\\fonts\\cairovixel Font\\Cairopixel.ttf", 40f);
+        largeFont = loadFont("C:\\Code\\fonts\\cairovixel Font\\Cairopixel.ttf", 70f);
         Thread t = new Thread(){
             @Override
             public void run(){
@@ -67,6 +75,17 @@ public class Game extends Engine{
             }
         };
         t.start();
+    }
+    public static Font loadFont(String path, float size) {
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            return font.deriveFont(size);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) size);
+        }
     }
     private void goAway(){
         try {
@@ -344,10 +363,10 @@ public class Game extends Engine{
         if(loading){
             g.setColor(Color.black);
             g.fillRect(0, 0, w.getWidth(), w.getHeight());
-            Font font = new Font("Arial", Font.PLAIN, 25);
+            
             g.setColor(Color.yellow);
-            g.setFont(font);
-            FontMetrics fontMetrics = g.getFontMetrics(font);
+            g.setFont(largeFont);
+            FontMetrics fontMetrics = g.getFontMetrics(largeFont);
             int stringWidth = fontMetrics.stringWidth(status);
             int stringHeight = fontMetrics.getHeight();
             

@@ -33,7 +33,7 @@ public class HUD {
     public HUD(){
         
         World.overlays.put("hud", overlay);
-        xpText = new Text("XP: ",0,0,500,false,false);
+        xpText = new Text("XP: ",0,0,500,false,false,Game.mediumFont);
     }
     public void update(){
         draw();

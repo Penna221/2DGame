@@ -3,6 +3,7 @@ package entities.player;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import main.Game;
 import ui.Container;
 import ui.Text;
 
@@ -25,7 +26,7 @@ public class InfoPacket {
     private void generate(){
         c = new Container(0,0,800,250);
         for(String s : rows){
-            Text t = new Text(s, 0,0,(int)(c.bounds.getWidth()),false,false);
+            Text t = new Text(s, 0,0,(int)(c.bounds.getWidth()),false,false,Game.smallFont);
             c.addElement(t);
         }
         c.fillBg = true;

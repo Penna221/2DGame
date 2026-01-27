@@ -1,11 +1,13 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import main.Game;
 import sound.SoundPlayer;
 public class Text extends UIElement{
     public BufferedImage textImage;
@@ -16,7 +18,8 @@ public class Text extends UIElement{
     public Color overrideColor;
     public boolean done = false;
     public static boolean typing = false;
-    public Text(String text, int x, int y, int maxWidth, boolean border, boolean easeIn) {
+    private Font font;
+    public Text(String text, int x, int y, int maxWidth, boolean border, boolean easeIn,Font font) {
         super(x, y);
         this.border = border;
         this.maxWidth = maxWidth;
@@ -24,8 +27,8 @@ public class Text extends UIElement{
             this.maxWidth = 400;
         }
         this.text = text;
-
-        textImage = UIFactory.generateText(text, this.maxWidth);
+        this.font = font;
+        textImage = UIFactory.generateText(font,text, this.maxWidth);
         if(border){
             textImage = UIFactory.generateBorder(textImage,UIFactory.textData.borderThickness);
         }
@@ -69,7 +72,7 @@ public class Text extends UIElement{
 
     public void updateText(String text){
         this.text = text;
-        textImage = UIFactory.generateText(text,maxWidth);
+        textImage = UIFactory.generateText(Game.mediumFont,text, this.maxWidth);
         if(border){
             textImage = UIFactory.generateBorder(textImage,UIFactory.textData.borderThickness);
         }
