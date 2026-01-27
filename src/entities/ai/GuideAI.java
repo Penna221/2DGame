@@ -16,7 +16,6 @@ public class GuideAI extends AI{
     private boolean talk = false;
     public GuideAI(Entity entity) {
         super(entity);
-        //TODO Auto-generated constructor stub
     }
     @Override
     public void lateInit() {

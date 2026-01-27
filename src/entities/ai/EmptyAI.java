@@ -8,7 +8,6 @@ public class EmptyAI extends AI{
 
     public EmptyAI(Entity entity) {
         super(entity);
-        //TODO Auto-generated constructor stub
     }
 
     @Override
