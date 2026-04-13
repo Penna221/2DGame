@@ -46,7 +46,7 @@ public void getRandomImage(){
     Random random = new Random();
     int r = random.nextInt(keys.length-1);
     System.out.println("logo index of " + r + " is "+ keys[r]);
-    logo = AssetStorage.images.get(keys[r]);
+    logo = AssetStorage.images.get("loading");
     }
     public void update(){
         if(running){
@@ -85,7 +85,7 @@ public void getRandomImage(){
             if(mapped > 255){
                 mapped = 255;
             }
-            c = new Color(255,0,0,mapped);
+            c = new Color(0,0,0,mapped);
             
             lastTime = now;
         }
