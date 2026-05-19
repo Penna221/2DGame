@@ -3,14 +3,10 @@ package entities.ai;
 import java.awt.Graphics;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import entities.Entity;
-import entities.EntityManager;
 import gfx.AssetStorage;
 import io.KeyManager;
-import loot.LootItem;
-import loot.LootTable;
 import loot.LootTables;
 import world.World;
 

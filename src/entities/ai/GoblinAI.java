@@ -1,14 +1,9 @@
 package entities.ai;
 
 import java.awt.Graphics;
-import java.awt.geom.Ellipse2D;
 
-import entities.AttackBox;
 import entities.Entity;
-import entities.EntityManager;
 import entities.swords.Swords;
-import tools.Timer;
-import ui.Task;
 import world.World;
 
 public class GoblinAI extends EnemyAI{

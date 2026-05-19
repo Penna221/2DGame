@@ -6,10 +6,8 @@ import java.awt.image.BufferedImage;
 
 import entities.Entity;
 import gfx.AssetStorage;
-import gfx.Transition;
 import io.KeyManager;
 import states.GameState;
-import states.State;
 import ui.PauseMenu;
 import world.World;
 

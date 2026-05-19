@@ -17,7 +17,6 @@ import java.util.Set;
 
 import entities.Entity;
 import entities.EntityManager;
-import entities.ai.PlayerAI;
 import entities.collision.CollisionBox;
 import entities.projectiles.Projectile;
 import entities.projectiles.Projectiles;

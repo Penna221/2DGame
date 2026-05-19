@@ -46,7 +46,6 @@ import gfx.Transition;
 import loot.LootTables;
 import main.Game;
 import particles.Particle;
-import save.SavedGame;
 import sound.SoundPlayer;
 import states.State;
 import tiles.Tile;

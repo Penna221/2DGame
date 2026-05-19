@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cards.Card;
 import entities.Entity;
 import entities.EntityInfo;
 import entities.EntityManager;
@@ -25,7 +24,6 @@ import save.SavedGame;
 import states.GameState;
 import states.State;
 import utils.pennanen.GameInstance;
-import world.World;
 
 public class PauseMenu {
     

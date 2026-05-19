@@ -10,7 +10,6 @@ import gfx.Transition;
 import io.KeyManager;
 import save.SavedGame;
 import states.GameState;
-import states.SelectCardsState;
 import states.State;
 import ui.Container;
 import ui.PauseMenu;

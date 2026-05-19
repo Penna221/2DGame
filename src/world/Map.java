@@ -17,7 +17,6 @@ import javax.imageio.ImageIO;
 import entities.Entity;
 import entities.ai.PlayerAI;
 import entities.collision.CollisionBox;
-import main.Game;
 import tiles.Tile;
 import utils.pennanen.GameInstance;
 

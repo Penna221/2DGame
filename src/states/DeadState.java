@@ -3,7 +3,6 @@ package states;
 import java.awt.Graphics;
 
 import gfx.Transition;
-import main.Game;
 import ui.Container;
 import ui.PauseMenu;
 import utils.pennanen.GameInstance;

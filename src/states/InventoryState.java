@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import cards.Card;
 import entities.ai.PlayerAI;
-import main.Game;
 import ui.ClickButton;
 import ui.Container;
 import ui.PauseMenu;

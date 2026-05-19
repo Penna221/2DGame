@@ -9,7 +9,6 @@ import entities.Entity;
 import entities.ai.CollectableAI;
 import json.JSON;
 import json.KeyValuePair;
-import world.Room;
 import world.World;
 
 public class LootTables {

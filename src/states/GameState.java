@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import entities.ai.PlayerAI;
 import entities.player.Inventory;
 import save.SavedGame;
-import sound.SoundPlayer;
 import ui.Container;
 import ui.PauseMenu;
 import world.World;

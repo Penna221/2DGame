@@ -7,5 +7,10 @@
         "c:\\Code\\GITHUB_projects\\2DGame\\lib\\json.jar",
         "c:\\Code\\GITHUB_projects\\2DGame\\lib\\engine.jar"
     ],
-    "java.dependency.packagePresentation": "flat"
+    "java.dependency.packagePresentation": "flat",
+    "editor.codeActionsOnSave": [
+        "source.addMissingImports",
+        "source.fixAll.eslint",
+        "source.organizeImports" // <- AND THIS
+    ]
 }

@@ -2,9 +2,7 @@ package states;
 
 import java.awt.Graphics;
 
-import entities.EntityManager;
 import gfx.Transition;
-import main.Game;
 import sound.SoundPlayer;
 import ui.Container;
 import ui.PauseMenu;

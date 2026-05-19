@@ -2,12 +2,7 @@ package states;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
-import entities.EntityInfo;
-import entities.EntityManager;
-import loot.Market;
-import main.Game;
 import ui.Container;
 import ui.PauseMenu;
 import utils.pennanen.GameInstance;

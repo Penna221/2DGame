@@ -12,7 +12,6 @@ import sound.SoundPlayer;
 import states.GameState;
 import states.State;
 import ui.PauseMenu;
-import world.Camera;
 import world.World;
 
 public class KeyManager implements KeyListener{

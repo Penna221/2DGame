@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import main.Game;
-
 public class Container extends UIElement{
     public ArrayList<UIElement> elements;
     public ArrayList<UIElement> change;

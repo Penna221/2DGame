@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import main.Game;
 import utils.pennanen.GameInstance;
 public class Transition{
     

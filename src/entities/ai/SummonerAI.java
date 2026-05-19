@@ -1,12 +1,10 @@
 package entities.ai;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.util.Random;
 
 import entities.Entity;
-import sound.SoundPlayer;
 import tools.Timer;
 import ui.Task;
 import world.World;

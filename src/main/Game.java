@@ -4,15 +4,13 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.image.BufferStrategy;
 import java.io.File;
 
 import cards.Card;
-
-import java.awt.Image;
-
 import entities.bows.Bows;
 import entities.potions.Potions;
 import entities.projectiles.Projectiles;
@@ -35,11 +33,8 @@ import utils.pennanen.Engine;
 import utils.pennanen.GameInstance;
 import world.Biome;
 import world.Map;
-import java.awt.GraphicsEnvironment;
 public class Game extends Engine{
 
-    private int width, height;
-    private String title;
 
     public static MouseManager mm;
     public String status = "Loading";
@@ -48,9 +43,6 @@ public class Game extends Engine{
     public static Font mediumFont;
     public static Font largeFont;
     public Game(int width, int height, String title){
-        this.width = width;
-        this.height = height;
-        this.title = title;
     }
     @Override
     public void init() {

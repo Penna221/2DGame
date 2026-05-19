@@ -2,13 +2,11 @@ package entities.ai;
 
 import java.awt.Graphics;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 import entities.AttackBox;
 import entities.Entity;
-import entities.EntityManager;
 import entities.swords.Swords;
 import gfx.AssetStorage;
 import gfx.Factory;

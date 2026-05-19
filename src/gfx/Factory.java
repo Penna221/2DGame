@@ -8,7 +8,6 @@ import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import main.Game;
 import utils.pennanen.GameInstance;
 
 public class Factory {

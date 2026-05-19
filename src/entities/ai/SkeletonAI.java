@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 
 import entities.Entity;
-import entities.abilities.Abilities;
 import entities.swords.Swords;
 import tools.Timer;
 import ui.Task;

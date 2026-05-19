@@ -6,11 +6,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.accessibility.AccessibleStateSet;
-
 import entities.Entity;
 import gfx.AssetStorage;
-import gfx.Factory;
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;

@@ -13,10 +13,8 @@ public class Launcher {
     public Launcher(int w, int h, String t){
 
         g = new Game(w,h,t);
-        GameInstance game = new GameInstance(g,600,400,"My Game");
+        GameInstance game = new GameInstance(g,w,h,t);
         game.engine.start();
-        // System.out.println("OpenGL Enabled: " + System.getProperty("sun.java2d.opengl"));
-        // System.exit(0);
     }
     public static void main(String[] args) {
         File f = new File("res\\json\\init.json");
