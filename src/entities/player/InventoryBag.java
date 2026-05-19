@@ -9,6 +9,7 @@ import entities.ai.PlayerAI;
 import entities.player.Inventory.Slot;
 import gfx.Transition;
 import main.Game;
+import utils.pennanen.GameInstance;
 import world.World;
 
 public class InventoryBag{
@@ -173,8 +174,8 @@ public class InventoryBag{
         //Create hotbar. Put them in their position.
         int latestX = 0;
         for(int i = 0; i < hotbarlength; i++){
-            int y = Game.w.getHeight() - (int)(3*slotSize*1.3);
-            int startX = Game.w.getWidth()/2- (hotbarSlots.length/2)*(spacing+slotSize);
+            int y = GameInstance.window.height - (int)(3*slotSize*1.3);
+            int startX = GameInstance.window.width/2- (hotbarSlots.length/2)*(spacing+slotSize);
             int x = startX + i*(spacing+slotSize);
             latestX = x;
             Rectangle r = new Rectangle(x,y,slotSize,slotSize);
@@ -184,7 +185,7 @@ public class InventoryBag{
         }
         int currentIndex = hotbarlength;
         for(int i = 0; i < specialLength; i++){
-            int yy = Game.w.getHeight() - (int)(3*slotSize*1.3);;
+            int yy = GameInstance.window.height - (int)(3*slotSize*1.3);;
             int xx = latestX +spacing+(slotSize*2)+ (i*(spacing+slotSize))+spacing;
             Rectangle r = new Rectangle(xx,yy,slotSize,slotSize);
             Slot s = specialSlots[i];
@@ -197,8 +198,8 @@ public class InventoryBag{
         int perRow = inventorySlots.length/rows;
         int remainder = inventorySlots.length%rows;
         
-        int y = Game.w.getHeight()/3 - (int)(2*slotSize*1.3);
-        int startX = Game.w.getWidth()/2- (perRow/2)*(spacing+slotSize);
+        int y = GameInstance.window.height/3 - (int)(2*slotSize*1.3);
+        int startX = GameInstance.window.width/2- (perRow/2)*(spacing+slotSize);
         for(int row = 0; row < rows; row++){
             for(int i = 0; i < perRow; i++){
                 Rectangle r = new Rectangle(startX + i*(slotSize+spacing),y + row*(slotSize+spacing),slotSize,slotSize);

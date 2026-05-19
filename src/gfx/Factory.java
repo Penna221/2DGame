@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import utils.pennanen.GameInstance;
 
 public class Factory {
     public static BufferedImage rotateImage(BufferedImage img,double angle){
@@ -52,7 +53,7 @@ public class Factory {
         return flippedImage;
     }
     public static BufferedImage generateNewOverlayImage(){
-        return new BufferedImage(Game.w.getWidth(),Game.w.getHeight(),BufferedImage.TYPE_INT_ARGB);
+        return new BufferedImage(GameInstance.window.width,GameInstance.window.height,BufferedImage.TYPE_INT_ARGB);
     }
     public static void drawCenteredAt(Graphics g, BufferedImage img, Point p, double scale){
         int w = (int)(img.getWidth()*scale);

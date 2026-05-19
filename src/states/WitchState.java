@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import main.Game;
 import ui.Container;
 import ui.PauseMenu;
+import utils.pennanen.GameInstance;
 
 public class WitchState extends State{
     private Container c;
@@ -21,7 +22,7 @@ public class WitchState extends State{
     @Override
     public void render(Graphics g) {
         g.setColor(Color.black);
-        g.fillRect(0, 0, Game.w.getWidth(), Game.w.getHeight());
+        g.fillRect(0, 0, GameInstance.window.width, GameInstance.window.height);
         g.setColor(Color.red);
         g.drawString("Witch State", 25, 25);
         c.render(g);

@@ -20,6 +20,7 @@ import main.Game;
 import tiles.Tile;
 import tools.Timer;
 import ui.Task;
+import utils.pennanen.GameInstance;
 public class Camera {
     private Color shadowColor;
     private VolatileImage shadowMap;
@@ -47,8 +48,8 @@ public class Camera {
         int g = 0;
         int b = 0;
         int a = 255;
-        screenWidth = Game.w.getWidth();
-        screenHeight = Game.w.getHeight();
+        screenWidth = GameInstance.window.width;
+        screenHeight = GameInstance.window.height;
         shadowColor = new Color(r,g,b,a);
         gc = GraphicsEnvironment
                 .getLocalGraphicsEnvironment()
@@ -60,8 +61,8 @@ public class Camera {
         centeredEntity = e;
     }
     private void centerOnEntity(){
-        xOffset = centeredEntity.x - Game.w.getWidth()/2 + centeredEntity.bounds.getWidth()/2;
-        yOffset = centeredEntity.y - Game.w.getHeight()/2 + centeredEntity.bounds.getHeight()/2;
+        xOffset = centeredEntity.x - GameInstance.window.width/2 + centeredEntity.bounds.getWidth()/2;
+        yOffset = centeredEntity.y - GameInstance.window.height/2 + centeredEntity.bounds.getHeight()/2;
         // System.out.println(xOffset + "  " + yOffset);
 
     }

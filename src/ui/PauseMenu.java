@@ -24,6 +24,7 @@ import main.Game;
 import save.SavedGame;
 import states.GameState;
 import states.State;
+import utils.pennanen.GameInstance;
 import world.World;
 
 public class PauseMenu {
@@ -40,10 +41,10 @@ public class PauseMenu {
         
     }
     public static Container generateSavedGamesContainer(){
-        int w = Game.w.getWidth()/2;
-        int h = (int)(Game.w.getHeight()*0.75);
-        int x = Game.w.getWidth() /2 - w/2;
-        int y = Game.w.getHeight() /2 - h/3;
+        int w = GameInstance.window.width/2;
+        int h = (int)(GameInstance.window.height*0.75);
+        int x = GameInstance.window.width /2 - w/2;
+        int y = GameInstance.window.height /2 - h/3;
 
         Container c = new Container(x,y,w,h);
         c.fillBg = true;
@@ -172,7 +173,7 @@ public class PauseMenu {
         }
     }
     private static Container createNewGamePauseMenu(){
-        Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
+        Container c = new Container(0,0,GameInstance.window.width,GameInstance.window.height);
         Task backTask = new Task(){
             public void perform(){
                 State.setState(State.menuState,false);
@@ -200,10 +201,10 @@ public class PauseMenu {
         return c;
     }
     private static Container createDeadPauseMenu(){
-        int w = Game.w.getWidth()/2;
-        int h = (int)(Game.w.getHeight()*0.75);
-        int x = Game.w.getWidth() /2 - w/2;
-        int y = Game.w.getHeight() /2 - h/3;
+        int w = GameInstance.window.width/2;
+        int h = (int)(GameInstance.window.height*0.75);
+        int x = GameInstance.window.width /2 - w/2;
+        int y = GameInstance.window.height /2 - h/3;
 
         Container c = new Container(x,y,w,h);
         c.fillBg = true;
@@ -227,7 +228,7 @@ public class PauseMenu {
         return c;
     }
     private static Container createMenuStateContainer(){
-        Container container = new Container(0, 0, Game.w.getWidth(),Game.w.getHeight());
+        Container container = new Container(0, 0, GameInstance.window.width,GameInstance.window.height);
         Text title = new Text("Game Title", 0, 50, 0, true,false,Game.largeFont);
         Task t = new Task(){
             public void perform(){
@@ -247,7 +248,7 @@ public class PauseMenu {
         Task t2 = new Task(){public void perform(){System.exit(0);}};
         ClickButton exitButton = new ClickButton(100, 440, new Text("Exit",0,0,0,false,false,Game.smallFont));
         exitButton.setTask(t2);
-        int bottomRow = Game.w.getHeight()-100;
+        int bottomRow = GameInstance.window.height-100;
         BufferedImage gear = AssetStorage.images.get("gear");
         Task t3 = new Task(){
             public void perform(){
@@ -279,8 +280,8 @@ public class PauseMenu {
     private static Container createBasicPauseMenu(){
         int w = 600;
         int h = 700;
-        int x = Game.w.getWidth() /2 - w/2;
-        int y = Game.w.getHeight() /2 - h/2;
+        int x = GameInstance.window.width /2 - w/2;
+        int y = GameInstance.window.height /2 - h/2;
         Container c = new Container(x,y,w,h);
         Task t1 = new Task(){
             public void perform(){
@@ -324,10 +325,10 @@ public class PauseMenu {
     private static Container createBasicDialog(String question,ArrayList<ClickButton> options){
         
         int buffer = 100;
-        int w = (Game.w.getWidth()/4*3)-buffer;
-        int h = Game.w.getHeight()/3;
-        int x = Game.w.getWidth()/2-w/2;
-        int y = Game.w.getHeight()-h-50;
+        int w = (GameInstance.window.width/4*3)-buffer;
+        int h = GameInstance.window.height/3;
+        int x = GameInstance.window.width/2-w/2;
+        int y = GameInstance.window.height-h-50;
         Container c = new Container(x,y,w,h);
         
         int leftSideWidth = w/2;
@@ -373,7 +374,7 @@ public class PauseMenu {
     }
     private static Container createNPCEntryDialog(Task t1, String name, String question,String p_name){
 
-        Container entryDialog = new Container(0, 0, Game.w.getWidth(), Game.w.getHeight());
+        Container entryDialog = new Container(0, 0, GameInstance.window.width, GameInstance.window.height);
         
         // Image i = new Image(EntityManager.entityInfos.get(19).texture, 0, 0);
         Container downSide = createEntryDialog(t1,question);
@@ -402,7 +403,7 @@ public class PauseMenu {
         return createShopContainer(Market.lists.get("blacksmith"), new Text("BlackSmith", 0, 0, 0, true,false,Game.mediumFont));
     }
     private static Container createShopContainer(ArrayList<Market> market, UIElement header){
-        Container c = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
+        Container c = new Container(0,0,GameInstance.window.width,GameInstance.window.height);
         c.setHeader(header);
         Task returnTask = new Task(){
             public void perform(){
@@ -417,7 +418,7 @@ public class PauseMenu {
 
         Container list =  new Container(0, 0, 700,600);
         list.fillBg = true;
-        int listX = (int) (Game.w.getWidth()/2 - list.bounds.getWidth()/2);
+        int listX = (int) (GameInstance.window.width/2 - list.bounds.getWidth()/2);
         int listY = (int) (c.header.bounds.y+ c.header.bounds.getHeight());
         list.setPosition(listX,listY);
         

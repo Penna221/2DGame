@@ -10,6 +10,7 @@ import ui.ClickButton;
 import ui.Container;
 import ui.PauseMenu;
 import ui.Task;
+import utils.pennanen.GameInstance;
 
 public class InventoryState extends State{
     private Container container;
@@ -37,7 +38,7 @@ public class InventoryState extends State{
 
     @Override
     public void init() {
-        container = new Container(0, 0, Game.w.getWidth(), Game.w.getHeight());
+        container = new Container(0, 0, GameInstance.window.width, GameInstance.window.height);
         for(Card c : PlayerAI.weaponCards){
             ClickButton ca = generateCardButton(c);
             container.addElement(ca);

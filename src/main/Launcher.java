@@ -6,14 +6,17 @@ import entities.EntityManager;
 import json.JSON;
 import json.KeyValuePair;
 import tiles.Tile;
+import utils.pennanen.GameInstance;
 
 public class Launcher {
     public static Game g;
     public Launcher(int w, int h, String t){
+
         g = new Game(w,h,t);
+        GameInstance game = new GameInstance(g,600,400,"My Game");
+        game.engine.start();
         // System.out.println("OpenGL Enabled: " + System.getProperty("sun.java2d.opengl"));
         // System.exit(0);
-        g.start();
     }
     public static void main(String[] args) {
         File f = new File("res\\json\\init.json");

@@ -17,13 +17,14 @@ import gfx.AssetStorage;
 import gfx.Factory;
 import main.Game;
 import ui.UIFactory;
+import utils.pennanen.GameInstance;
 import world.World;
 
 public class Inventory {
     
     public Slot[] inventorySlots;
     public Slot[] hotbarSlots;
-    private int y = Game.w.getHeight() - 40;
+    private int y = GameInstance.window.height - 40;
     private int spacing = 30;
     private int slotSize = 40;
     private BufferedImage overlay;
@@ -484,8 +485,8 @@ public class Inventory {
         int toShow = hotbarSlots.length;
         overlay = Factory.generateNewOverlayImage();
         g = overlay.createGraphics();
-        int startX = Game.w.getWidth()/2- (toShow/2)*(spacing+slotSize);
-        y = Game.w.getHeight() - 50;
+        int startX = GameInstance.window.width/2- (toShow/2)*(spacing+slotSize);
+        y = GameInstance.window.height - 50;
         int latestX = startX;
         for(int i = 0; i < toShow; i++){
             Slot s = hotbarSlots[i];

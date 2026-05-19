@@ -14,6 +14,7 @@ import ui.PauseMenu;
 import ui.ScrollableCardContainer;
 import ui.Task;
 import ui.Text;
+import utils.pennanen.GameInstance;
 import world.World;
 
 public class SelectCardsState extends State{
@@ -53,7 +54,7 @@ public class SelectCardsState extends State{
     @Override
     public void init() {
         availableMana = PlayerAI.mana;
-        container = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
+        container = new Container(0,0,GameInstance.window.width,GameInstance.window.height);
         title = new Text("Choose your Weapon", 0, 0, 700, true,true,Game.mediumFont);
         selectedCards = new ArrayList<Card>();
         selectedAbilities = new ArrayList<Card>();
@@ -128,7 +129,7 @@ public class SelectCardsState extends State{
         
         container.addElement(okButton);
 
-        infoContainer = new Container(0,(int)(nextButton.bounds.getY()+nextButton.bounds.getHeight()+50), Game.w.getWidth(),200);
+        infoContainer = new Container(0,(int)(nextButton.bounds.getY()+nextButton.bounds.getHeight()+50), GameInstance.window.width,200);
         info = new Text("Available points:" + availableMana, 0,0,(int)(infoContainer.bounds.getWidth()),false,true,Game.mediumFont);
         // updateContent();
         infoContainer.addElement(info);

@@ -6,6 +6,7 @@ import gfx.Transition;
 import main.Game;
 import ui.Container;
 import ui.PauseMenu;
+import utils.pennanen.GameInstance;
 
 public class DeadState extends State{
 
@@ -14,8 +15,8 @@ public class DeadState extends State{
     @Override
     public void update() {
         if(running){
-            int x = Game.w.getWidth() /2 - container.bounds.width/2;
-            int y = Game.w.getHeight() /2- container.bounds.height/2;
+            int x = GameInstance.window.width /2 - container.bounds.width/2;
+            int y = GameInstance.window.height /2- container.bounds.height/2;
             container.setPosition(x, y);
             
             // container.centerElements();

@@ -16,6 +16,7 @@ import main.Launcher;
 import tiles.Tile;
 import ui.Text;
 import ui.UIFactory;
+import utils.pennanen.GameInstance;
 import world.Room;
 import world.World;
 public class HUD {
@@ -74,8 +75,8 @@ public class HUD {
         int startY = 100;
         int entityCount = 0;
         int fps = Launcher.g.getCurrentFPS();
-        int width = Game.w.getWidth();
-        int height = Game.w.getHeight();
+        int width = GameInstance.window.width;
+        int height = GameInstance.window.height;
         String roomName = "";
         
         for(Room r : World.entityManager.roomsToUpdate){
@@ -215,8 +216,8 @@ public class HUD {
         BufferedImage tt = xpText.textImage;
         tt = AssetStorage.scaleImage(tt, 0.4f);
         // int drawX = 100;
-        int drawX = Game.w.getWidth()-tt.getWidth()-20;
-        int drawY = Game.w.getHeight()-tt.getHeight()-20;
+        int drawX = GameInstance.window.width-tt.getWidth()-20;
+        int drawY = GameInstance.window.height-tt.getHeight()-20;
         gg.drawImage(tt,drawX ,drawY, null);
         gg.drawImage(orb,drawX-orb.getWidth()*2,drawY +tt.getHeight()/2 - orb.getHeight()/2,null);
         toDraw.add(i);

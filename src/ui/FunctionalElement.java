@@ -5,6 +5,7 @@ import entities.player.InfoPacket;
 import io.KeyManager;
 import main.Game;
 import sound.SoundPlayer;
+import utils.pennanen.GameInstance;
 public abstract class FunctionalElement extends UIElement{
     public Color bg, brd;
     public boolean focused;
@@ -41,11 +42,11 @@ public abstract class FunctionalElement extends UIElement{
                     if(iy < 0){
                          iy = 0;
                     }
-                    if(ix + infoPacket.c.bounds.getWidth() > Game.w.getWidth()){
-                        ix = (int)(Game.w.getWidth()-infoPacket.c.bounds.getWidth());
+                    if(ix + infoPacket.c.bounds.getWidth() > GameInstance.window.width){
+                        ix = (int)(GameInstance.window.width-infoPacket.c.bounds.getWidth());
                     }
-                    if(iy + infoPacket.c.bounds.getHeight() > Game.w.getHeight()){
-                        iy = (int)(Game.w.getHeight()-infoPacket.c.bounds.getHeight());
+                    if(iy + infoPacket.c.bounds.getHeight() > GameInstance.window.height){
+                        iy = (int)(GameInstance.window.height-infoPacket.c.bounds.getHeight());
                     }
                     infoPacket.update(ix,iy);
                 }

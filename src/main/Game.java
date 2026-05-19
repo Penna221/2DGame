@@ -32,6 +32,7 @@ import tiles.Tile;
 import ui.PauseMenu;
 import ui.UIFactory;
 import utils.pennanen.Engine;
+import utils.pennanen.GameInstance;
 import world.Biome;
 import world.Map;
 import java.awt.GraphicsEnvironment;
@@ -39,10 +40,7 @@ public class Game extends Engine{
 
     private int width, height;
     private String title;
-    public static Window w;
 
-    private BufferStrategy bs;
-    private Graphics g;
     public static MouseManager mm;
     public String status = "Loading";
     private boolean loading = true;
@@ -57,7 +55,6 @@ public class Game extends Engine{
     @Override
     public void init() {
         System.out.println("Creating Window");
-        w = new Window(title,width,height);
 
         smallFont = loadFont("C:\\Code\\fonts\\cairovixel Font\\Cairopixel.ttf", 20f);
         mediumFont = loadFont("C:\\Code\\fonts\\cairovixel Font\\Cairopixel.ttf", 40f);
@@ -212,12 +209,12 @@ public class Game extends Engine{
         status = "Loading Input";
         try {
             KeyManager km = new KeyManager();
-            w.getCanvas().addKeyListener(km);
+            GameInstance.window.canvas.addKeyListener(km);
             mm = new MouseManager();
-            w.getCanvas().addMouseListener(mm);
-            w.getCanvas().addMouseMotionListener(mm);
-            w.getCanvas().addMouseWheelListener(mm);
-            w.getCanvas().requestFocus();
+            GameInstance.window.canvas.addMouseListener(mm);
+            GameInstance.window.canvas.addMouseMotionListener(mm);
+            GameInstance.window.canvas.addMouseWheelListener(mm);
+            GameInstance.window.canvas.requestFocus();
         } catch (Exception e) {
             status = "Error occured while loading IO";
             goAway();
@@ -338,42 +335,10 @@ public class Game extends Engine{
             }
             Cursor customCursor = toolkit.createCustomCursor(cursorImage, new Point(x,y), "Custom Cursor");
             // Set the cursor for the frame
-            w.frame.setCursor(customCursor);
+            GameInstance.window.frame.setCursor(customCursor);
         }else{
             System.out.println("Could not set cursor");
         }
-    }
-
-
-    @Override
-    public void render() {
-        bs = w.getCanvas().getBufferStrategy();
-        if(bs == null){
-            w.getCanvas().createBufferStrategy(3);
-            return;
-        }
-        g = bs.getDrawGraphics();
-        g.clearRect(0, 0, w.getWidth(), w.getHeight());
-        g.setColor(Color.black);
-        g.fillRect(0, 0, w.getWidth(), w.getHeight());
-
-        if(State.getState()!=null){
-            State.getState().render(g);
-        }
-        if(loading){
-            g.setColor(Color.black);
-            g.fillRect(0, 0, w.getWidth(), w.getHeight());
-            
-            g.setColor(Color.yellow);
-            g.setFont(largeFont);
-            FontMetrics fontMetrics = g.getFontMetrics(largeFont);
-            int stringWidth = fontMetrics.stringWidth(status);
-            int stringHeight = fontMetrics.getHeight();
-            
-            g.drawString(status, w.getWidth()/2-stringWidth/2,w.getHeight()/2-stringHeight/2);
-        }
-        g.dispose();
-        bs.show();
     }
 
     @Override
@@ -383,6 +348,30 @@ public class Game extends Engine{
                 State.getState().update();
             }
         }
+    }
+    @Override
+    public void render(Graphics g) {
+        
+        g.clearRect(0, 0, GameInstance.window.width, GameInstance.window.height);
+        g.setColor(Color.black);
+        g.fillRect(0, 0, GameInstance.window.width, GameInstance.window.height);
+
+        if(State.getState()!=null){
+            State.getState().render(g);
+        }
+        if(loading){
+            g.setColor(Color.black);
+            g.fillRect(0, 0, GameInstance.window.width, GameInstance.window.height);
+
+            g.setColor(Color.yellow);
+            g.setFont(largeFont);
+            FontMetrics fontMetrics = g.getFontMetrics(largeFont);
+            int stringWidth = fontMetrics.stringWidth(status);
+            int stringHeight = fontMetrics.getHeight();
+            
+            g.drawString(status, GameInstance.window.width/2-stringWidth/2, GameInstance.window.height/2-stringHeight/2);
+        }
+        
     }
     
 }

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import main.Game;
+import utils.pennanen.GameInstance;
 public class Transition{
     
     public boolean running = false;
@@ -119,11 +120,11 @@ public void getRandomImage(){
             int nh = lo.getHeight()*scale;
 
             g.setColor(c);
-            g.fillRect(0, 0, Game.w.getWidth(), Game.w.getHeight());
+            g.fillRect(0, 0, GameInstance.window.width, GameInstance.window.height);
             g.setColor(Color.white);
             if(!canContinue2){
                 g.drawString("loading", 10,25);
-                g.drawImage(lo, Game.w.getWidth()/2 - nw/2, Game.w.getHeight()/2 - nh/2, nw,nh, null);
+                g.drawImage(lo, GameInstance.window.width/2 - nw/2, GameInstance.window.height/2 - nh/2, nw,nh, null);
             }
             l = n;
         }

@@ -19,6 +19,7 @@ import entities.ai.PlayerAI;
 import entities.collision.CollisionBox;
 import main.Game;
 import tiles.Tile;
+import utils.pennanen.GameInstance;
 
 public class Map {
     public int[][] map;
@@ -929,8 +930,8 @@ public class Map {
         int centerX = (int)(e.x/Tile.tileSize);
         int centerY = (int)(e.y/Tile.tileSize);
         // System.out.println("Updatevisible: " + centerX + " " + centerY);
-        int screenWidth = Game.w.getWidth();
-        int screenHeight = Game.w.getHeight();
+        int screenWidth = GameInstance.window.width;
+        int screenHeight = GameInstance.window.height;
         int wTiles = screenWidth/Tile.tileSize;
         int hTiles = screenHeight/Tile.tileSize;
         int buffer = 6;

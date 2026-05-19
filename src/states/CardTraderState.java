@@ -14,6 +14,7 @@ import ui.PauseMenu;
 import ui.ScrollableCardContainer;
 import ui.Task;
 import ui.Text;
+import utils.pennanen.GameInstance;
 import world.World;
 /*
  * This is NOT USED. 
@@ -52,7 +53,7 @@ public class CardTraderState extends State{
 
     @Override
     public void init() {
-        container = new Container(0,0,Game.w.getWidth(),Game.w.getHeight());
+        container = new Container(0,0,GameInstance.window.width,GameInstance.window.height);
         
         ArrayList<Card> allCards = getRandomSelection(5);
 
