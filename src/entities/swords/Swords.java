@@ -18,6 +18,7 @@ import json.JSON;
 import json.KeyValuePair;
 import particles.Particle;
 import sound.SoundPlayer;
+import tools.PathChanger;
 import world.World;
 
 public class Swords {
@@ -27,7 +28,7 @@ public class Swords {
     public static Polygon cone = new Polygon();
 
     public static void load() throws Exception{
-        File f = new File("res\\json\\swords.json");
+        File f = new File(PathChanger.changePath("res\\json\\swords.json"));
         String path = f.getParent();
         JSON json = new JSON(f);
         json.readFile(false);
@@ -46,7 +47,7 @@ public class Swords {
         }
 
         //LOAD ATTACK SHAPES
-        File p = new File("res\\csv\\poke.csv");
+        File p = new File(PathChanger.changePath("res\\csv\\poke.csv"));
         BufferedReader reader = new BufferedReader(new FileReader(p));
         String line;
         while((line = reader.readLine())!=null){
@@ -57,7 +58,7 @@ public class Swords {
         }
         System.out.println("loaded "+ poke.npoints +" points for poke");
         reader.close();
-        File p2 = new File("res\\csv\\swing.csv");
+        File p2 = new File(PathChanger.changePath("res\\csv\\swing.csv"));
         reader = new BufferedReader(new FileReader(p2));
         line = "";
         while((line = reader.readLine())!=null){
@@ -68,7 +69,7 @@ public class Swords {
         }
         reader.close();
         reader.close();
-        File p3 = new File("res\\csv\\cone.csv");
+        File p3 = new File(PathChanger.changePath("res\\csv\\cone.csv"));
         reader = new BufferedReader(new FileReader(p3));
         line = "";
         while((line = reader.readLine())!=null){

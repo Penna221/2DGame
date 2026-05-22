@@ -8,6 +8,7 @@ import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
 import json.ObjectValue;
+import tools.PathChanger;
 
 public class Market {
     public MarketItem sellItem;
@@ -18,7 +19,7 @@ public class Market {
         this.priceItems = priceItems;
     }
     public static void load() throws Exception{
-        JSON json = new JSON(new File("res\\json\\market.json"));
+        JSON json = new JSON(new File(PathChanger.changePath("res\\json\\market.json")));
         json.readFile(false);
         KeyValuePair kv = json.parse("json");
         ArrayList<KeyValuePair> market = kv.getObject();

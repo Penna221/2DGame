@@ -2,18 +2,20 @@ package gfx;
 
 import java.io.File;
 import java.util.HashMap;
+
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
+import tools.PathChanger;
 
 public class Animations {
     public static HashMap<String,Animation> animations;
     public static void loadAnimations() throws Exception{
         animations = new HashMap<String,Animation>();
         System.out.println("# Loading animations");
+        String filepath = "res\\json\\animations.json";
         
-
-        JSON json = new JSON(new File("res\\json\\animations.json"));
+        JSON json = new JSON(new File(PathChanger.changePath(filepath)));
         KeyValuePair s = json.parse("JSON");
         for(KeyValuePair animation : s.getObject()){
             String key = animation.getKey();

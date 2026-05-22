@@ -6,11 +6,12 @@ import java.util.HashMap;
 
 import json.JSON;
 import json.KeyValuePair;
+import tools.PathChanger;
 
 public class Staves {
     public static HashMap<Integer, Staff> staves= new HashMap<Integer,Staff>();
     public static void load() throws Exception{
-        File f = new File("res\\json\\staves.json");
+        File f = new File(PathChanger.changePath("res\\json\\staves.json"));
         String path = f.getParent();
         JSON json = new JSON(f);
         json.readFile(false);

@@ -7,6 +7,7 @@ import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
 import tiles.Tile;
+import tools.PathChanger;
 
 public class Biome {
     public String name;
@@ -31,7 +32,7 @@ public class Biome {
     }
     public static void loadBiomeData() throws Exception{
         biomes = new HashMap<String,Biome>();
-        JSON json = new JSON(new File("res\\json\\biomes.json"));
+        JSON json = new JSON(new File(PathChanger.changePath("res\\json\\biomes.json")));
         KeyValuePair kv = json.parse("json");
         for(KeyValuePair bi : kv.getObject()){
             String name = bi.getKey();

@@ -6,12 +6,13 @@ import java.util.HashMap;
 
 import json.JSON;
 import json.KeyValuePair;
+import tools.PathChanger;
 
 
 public class Bows {
     public static HashMap<Integer, Bow> bows= new HashMap<Integer,Bow>();
     public static void load() throws Exception{
-        File f = new File("res\\json\\bows.json");
+        File f = new File(PathChanger.changePath("res\\json\\bows.json"));
         String path = f.getParent();
         JSON json = new JSON(f);
         json.readFile(false);

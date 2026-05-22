@@ -9,13 +9,14 @@ import entities.Entity;
 import entities.ai.CollectableAI;
 import json.JSON;
 import json.KeyValuePair;
+import tools.PathChanger;
 import world.World;
 
 public class LootTables {
     public static HashMap<String,LootTable> lootTables = new HashMap<String,LootTable>();
     public static void loadLootTables() throws Exception{
         System.out.println("Loading Loot Tables");
-        JSON json = new JSON(new File("res\\json\\loot.json"));
+        JSON json = new JSON(new File(PathChanger.changePath("res\\json\\loot.json")));
         KeyValuePair s = json.parse("JSON");
         ArrayList<KeyValuePair> tables = s.getObject();
         for(KeyValuePair k : tables){

@@ -9,6 +9,7 @@ import json.JSON;
 import json.KeyValuePair;
 import pennanen.spriteloader.Sprite;
 import pennanen.spriteloader.SpriteLoader;
+import tools.PathChanger;
 
 public class AssetStorage {
     public static HashMap<String,BufferedImage> images = new HashMap<String,BufferedImage>();
@@ -26,7 +27,7 @@ public class AssetStorage {
 
     }
     public static void loadTexts() throws Exception{
-        JSON json = new JSON(new File("res\\json\\assets.json"));
+        JSON json = new JSON(new File(PathChanger.changePath("res\\json\\assets.json")));
         KeyValuePair s = json.parse("JSON");
         KeyValuePair textObject = s.findChild("texts");
         //textObject.printAll(0);
@@ -34,13 +35,13 @@ public class AssetStorage {
     public static void loadSounds() throws Exception{
         
         System.out.println("Loading Sounds");
-        JSON json = new JSON(new File("res\\json\\assets.json"));
+        JSON json = new JSON(new File(PathChanger.changePath("res\\json\\assets.json")));
         KeyValuePair s = json.parse("JSON");
         KeyValuePair soundObject = s.findChild("sounds");
         for(KeyValuePair i : soundObject.getObject()){
             String name = i.getKey();
             String path = i.getString();
-            File f = new File(path);
+            File f = new File(PathChanger.changePath(path));
             if(f.exists()){
                 System.out.println("Loaded sound: " + name);
                 sounds.put(name, f);

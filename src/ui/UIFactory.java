@@ -14,6 +14,7 @@ import gfx.AssetStorage;
 import json.JSON;
 import json.KeyValuePair;
 import main.Game;
+import tools.PathChanger;
 public class UIFactory {
     
     public static UIData containerData;
@@ -28,7 +29,7 @@ public class UIFactory {
     public static HashMap<String,BufferedImage> alphabetCharacters;
 
     public static void loadUIData()throws Exception{
-        JSON json = new JSON(new File("res\\json\\ui.json"));
+        JSON json = new JSON(new File(PathChanger.changePath("res\\json\\ui.json")));
         KeyValuePair kv = json.parse("");
 
         KeyValuePair container = kv.findChild("container");

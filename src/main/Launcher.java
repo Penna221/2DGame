@@ -1,6 +1,8 @@
 package main;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import entities.EntityManager;
 import json.JSON;
@@ -17,11 +19,13 @@ public class Launcher {
         game.engine.start();
     }
     public static void main(String[] args) {
-        File f = new File("res\\json\\init.json");
-        if(!f.exists()){
+        Path path = Paths.get("res/json/init.json");
+        File selectedFile = new File(path.toUri());
+        
+        if(!selectedFile.exists()){
             System.out.println("Init file not found.");
         }else{
-            JSON json = new JSON(f);
+            JSON json = new JSON(selectedFile);
             KeyValuePair kv = json.parse("JSON");
             
             int width = kv.findChild("width").getInteger();

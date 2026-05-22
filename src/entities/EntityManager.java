@@ -26,6 +26,7 @@ import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
 import tiles.Tile;
+import tools.PathChanger;
 import world.Camera;
 import world.Room;
 import world.World;
@@ -54,7 +55,7 @@ public class EntityManager {
     }
     public void loadEntityData(){
         entityInfos = new HashMap<Integer,EntityInfo>();
-        File[] files = new File("res\\json\\entities").listFiles();
+        File[] files = new File(PathChanger.changePath("res\\json\\entities")).listFiles();
         if(files == null){
             System.out.println("No entity files found!");
             return;

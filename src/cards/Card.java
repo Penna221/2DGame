@@ -12,6 +12,7 @@ import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
 import main.Game;
+import tools.PathChanger;
 import ui.UIFactory;
 import world.World;
 
@@ -99,7 +100,7 @@ public class Card {
 
 
     public static void loadCards(){
-        File f = new File("res\\json\\cards.json");
+        File f = new File(PathChanger.changePath("res\\json\\cards.json"));
         JSON json = new JSON(f);
         json.readFile(false);
         KeyValuePair kv = json.parse("json");

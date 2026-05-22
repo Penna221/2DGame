@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
+import tools.PathChanger;
 
 public class QuestionStorage {
     public static ArrayList<Question> math_easy, math_medium;
     public static ArrayList<Question> geo_easy, geo_medium;
     public static void load(){
-        JSON math_json = new JSON(new File("res\\json\\questions_math.json"));
+        JSON math_json = new JSON(new File(PathChanger.changePath("res\\json\\questions_math.json")));
         KeyValuePair m1 = math_json.parse("JSON");
         KeyValuePair m2 = m1.findChild("easy");
         
@@ -24,7 +25,7 @@ public class QuestionStorage {
         loadQuestions(m3,math_medium);
         
 
-        JSON geo_json = new JSON(new File("res\\json\\questions_geography.json"));
+        JSON geo_json = new JSON(new File(PathChanger.changePath("res\\json\\questions_geography.json")));
         KeyValuePair g1 = geo_json.parse("JSON");
         KeyValuePair g2 = g1.findChild("easy");
         KeyValuePair g3 = g1.findChild("medium");

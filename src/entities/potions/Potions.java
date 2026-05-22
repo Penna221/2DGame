@@ -13,12 +13,13 @@ import entities.effects.SpeedEffect;
 import json.JSON;
 import json.KeyValuePair;
 import sound.SoundPlayer;
+import tools.PathChanger;
 
 
 public class Potions {
     public static HashMap<Integer, Potion> potions = new HashMap<Integer,Potion>();    
     public static void load() throws Exception{
-        File f = new File("res\\json\\potions.json");
+        File f = new File(PathChanger.changePath("res\\json\\potions.json"));
         String path = f.getParent();
         JSON json = new JSON(f);
         json.readFile(false);

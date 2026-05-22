@@ -7,6 +7,7 @@ import gfx.AssetStorage;
 import json.DataType;
 import json.JSON;
 import json.KeyValuePair;
+import tools.PathChanger;
 
 public class Tile {
     public static int tileSize;
@@ -25,7 +26,7 @@ public class Tile {
     }
     
     public static void loadTilesV2() throws Exception{
-        File f = new File("res\\json\\tiles_v2.json");
+        File f = new File(PathChanger.changePath(PathChanger.changePath("res\\json\\tiles_v2.json")));
         boolean ok = true;
         String path = f.getParent();
         JSON json = new JSON(f);
